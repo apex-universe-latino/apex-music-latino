@@ -120,7 +120,10 @@
         nav.id = 'apex-nav';
         nav.innerHTML = `
             <div class="flex items-center gap-12">
-                <a href="/" class="text-2xl font-bold tracking-tighter text-neutral-100" style="font-family: var(--font-headline);">Apex Music Latino</a>
+                <a href="/" class="flex items-center gap-3">
+    <img src="/assetts/apex_music_latino_logo.jpg" alt="Apex Music Latino" class="h-10 w-10 rounded-full object-cover"/>
+    <span class="text-xl font-bold tracking-tighter text-neutral-100 hidden sm:inline" style="font-family: var(--font-headline);">Apex Music Latino</span>
+</a>
                 <div class="hidden lg:flex items-center gap-6 overflow-x-auto py-2" style="scrollbar-width: none;">
                     ${genreSelectorHTML()}
                 </div>

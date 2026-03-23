@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bienvenidos a Apex Music Latino — Arcoiris</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --crimson: #e60000;
+    --black: #111111;
+    --dark-gray: #333333;
+    --medium-gray: #666666;
+    --light-gray: #f5f5f5;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: var(--black);
+    background: var(--white);
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 277mm;
+    margin: 0 auto;
+    padding: 20mm 22mm 25mm 22mm;
+    background: var(--white);
+    position: relative;
+  }
+
+  .page + .page {
+    border-top: 1px solid #ddd;
+  }
+
+  /* --- Logo --- */
+  .logo-container {
+    text-align: center;
+    margin-bottom: 10mm;
+  }
+
+  .logo-container img {
+    width: 200px;
+    height: auto;
+  }
+
+  /* --- Typography --- */
+  h1 {
+    font-size: 26pt;
+    font-weight: 800;
+    color: var(--black);
+    letter-spacing: -0.5px;
+    margin-bottom: 4mm;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 18pt;
+    font-weight: 700;
+    color: var(--crimson);
+    margin-bottom: 5mm;
+    margin-top: 2mm;
+    padding-bottom: 3mm;
+    border-bottom: 2px solid var(--crimson);
+  }
+
+  h3 {
+    font-size: 12pt;
+    font-weight: 700;
+    color: var(--black);
+    margin-top: 5mm;
+    margin-bottom: 2mm;
+  }
+
+  .subtitle {
+    font-size: 15pt;
+    font-weight: 400;
+    color: var(--medium-gray);
+    margin-bottom: 6mm;
+  }
+
+  .phase-badge {
+    display: inline-block;
+    background: var(--crimson);
+    color: var(--white);
+    font-size: 9pt;
+    font-weight: 700;
+    padding: 2mm 5mm;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8mm;
+  }
+
+  p {
+    margin-bottom: 3mm;
+    color: var(--dark-gray);
+  }
+
+  .letter-block {
+    margin: 6mm 0;
+    padding: 5mm 6mm;
+    background: var(--light-gray);
+    border-left: 4px solid var(--crimson);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .letter-block p {
+    color: var(--dark-gray);
+    font-size: 10.5pt;
+  }
+
+  .letter-block.en {
+    border-left-color: var(--black);
+  }
+
+  /* --- Tool Cards --- */
+  .tool-card {
+    background: var(--white);
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 5mm 6mm;
+    margin-bottom: 5mm;
+    page-break-inside: avoid;
+  }
+
+  .tool-card h3 {
+    margin-top: 0;
+    font-size: 12pt;
+    color: var(--crimson);
+  }
+
+  .tool-card .url-label {
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: var(--medium-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .tool-card .url-value {
+    font-size: 9.5pt;
+    font-weight: 500;
+    color: var(--crimson);
+    word-break: break-all;
+  }
+
+  .tool-card .url-value a {
+    color: var(--crimson);
+    text-decoration: none;
+  }
+
+  .tool-card .url-value a:hover {
+    text-decoration: underline;
+  }
+
+  .tool-card ul {
+    margin: 2mm 0 0 5mm;
+    padding: 0;
+  }
+
+  .tool-card ul li {
+    font-size: 10pt;
+    color: var(--dark-gray);
+    margin-bottom: 1.5mm;
+  }
+
+  .tool-card .important {
+    background: #fff3f3;
+    border: 1px solid var(--crimson);
+    border-radius: 3px;
+    padding: 2mm 3mm;
+    margin-top: 3mm;
+    font-size: 9.5pt;
+    font-weight: 600;
+    color: var(--crimson);
+  }
+
+  .credential-box {
+    display: inline-block;
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Courier New', monospace;
+    font-size: 10pt;
+    padding: 1mm 3mm;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+  }
+
+  /* --- Steps --- */
+  .steps-list {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+    margin: 4mm 0;
+  }
+
+  .steps-list li {
+    counter-increment: step;
+    position: relative;
+    padding: 2mm 0 2mm 10mm;
+    font-size: 10.5pt;
+    color: var(--dark-gray);
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .steps-list li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 2mm;
+    width: 6mm;
+    height: 6mm;
+    background: var(--crimson);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 8pt;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .steps-list li:last-child {
+    border-bottom: none;
+  }
+
+  .sub-items {
+    list-style: none;
+    padding: 0;
+    margin: 2mm 0 0 4mm;
+  }
+
+  .sub-items li {
+    padding: 1mm 0;
+    font-size: 10pt;
+    border-bottom: none;
+  }
+
+  .sub-items li::before {
+    content: none;
+  }
+
+  .sub-items li strong {
+    color: var(--black);
+  }
+
+  /* --- Strategy Columns --- */
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm;
+    margin: 4mm 0;
+  }
+
+  .strategy-box {
+    background: var(--light-gray);
+    border-radius: 6px;
+    padding: 4mm 5mm;
+    page-break-inside: avoid;
+  }
+
+  .strategy-box h3 {
+    font-size: 10.5pt;
+    color: var(--crimson);
+    margin-top: 0;
+    margin-bottom: 2mm;
+  }
+
+  .strategy-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .strategy-box ul li {
+    font-size: 9.5pt;
+    color: var(--dark-gray);
+    padding: 1mm 0;
+    padding-left: 3mm;
+    position: relative;
+  }
+
+  .strategy-box ul li::before {
+    content: "\2022";
+    color: var(--crimson);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+  }
+
+  /* --- Journey Timeline --- */
+  .journey-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 2mm 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 10pt;
+  }
+
+  .journey-item .icon {
+    width: 7mm;
+    flex-shrink: 0;
+    font-size: 12pt;
+    text-align: center;
+  }
+
+  .journey-item .label {
+    flex: 1;
+    color: var(--dark-gray);
+  }
+
+  .journey-item .label strong {
+    color: var(--black);
+  }
+
+  .journey-item.active {
+    background: #f0fff0;
+    border-radius: 3px;
+    padding: 2mm 2mm;
+  }
+
+  /* --- Next Steps Cards --- */
+  .next-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm;
+    margin: 4mm 0;
+  }
+
+  .next-card {
+    border: 1px solid #e0e0e0;
+    border-top: 3px solid var(--crimson);
+    border-radius: 0 0 6px 6px;
+    padding: 4mm 5mm;
+    page-break-inside: avoid;
+  }
+
+  .next-card h3 {
+    font-size: 10pt;
+    color: var(--crimson);
+    margin: 0 0 2mm 0;
+  }
+
+  .next-card p {
+    font-size: 9.5pt;
+    margin: 0;
+  }
+
+  /* --- Contact Footer --- */
+  .contact-section {
+    text-align: center;
+    padding-top: 10mm;
+  }
+
+  .contact-section .company-name {
+    font-size: 20pt;
+    font-weight: 800;
+    color: var(--black);
+    margin-bottom: 2mm;
+  }
+
+  .contact-section .tagline {
+    font-size: 10pt;
+    color: var(--medium-gray);
+    margin-bottom: 6mm;
+  }
+
+  .contact-links {
+    margin: 6mm 0;
+  }
+
+  .contact-links a {
+    display: block;
+    font-size: 10pt;
+    color: var(--crimson);
+    text-decoration: none;
+    margin-bottom: 2mm;
+  }
+
+  .contact-links a:hover {
+    text-decoration: underline;
+  }
+
+  .contact-label {
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: var(--medium-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .quote-block {
+    margin: 8mm auto;
+    max-width: 130mm;
+    padding: 5mm 6mm;
+    border-top: 2px solid var(--crimson);
+    border-bottom: 2px solid var(--crimson);
+  }
+
+  .quote-block p {
+    font-size: 12pt;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--black);
+    text-align: center;
+    margin-bottom: 2mm;
+  }
+
+  .quote-block p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* --- Dividers --- */
+  .divider {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 6mm 0;
+  }
+
+  /* --- Page Footer --- */
+  .page-footer {
+    position: absolute;
+    bottom: 10mm;
+    left: 22mm;
+    right: 22mm;
+    text-align: center;
+    font-size: 7.5pt;
+    color: #bbb;
+    border-top: 1px solid #eee;
+    padding-top: 2mm;
+  }
+
+  a {
+    color: var(--crimson);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* ============================
+     PRINT STYLES
+     ============================ */
+  @media print {
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    body {
+      background: white;
+    }
+
+    .page {
+      width: 100%;
+      min-height: auto;
+      height: 277mm;
+      margin: 0;
+      padding: 18mm 20mm 22mm 20mm;
+      page-break-after: always;
+      border: none;
+      overflow: hidden;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    .tool-card,
+    .strategy-box,
+    .next-card {
+      break-inside: avoid;
+    }
+
+    .no-print {
+      display: none;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--crimson);
+    }
+
+    .letter-block {
+      background: var(--light-gray) !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .phase-badge {
+      background: var(--crimson) !important;
+      color: var(--white) !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .steps-list li::before {
+      background: var(--crimson) !important;
+      color: var(--white) !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .strategy-box {
+      background: var(--light-gray) !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .next-card {
+      border-top-color: var(--crimson) !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .credential-box {
+      background: var(--black) !important;
+      color: var(--white) !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .journey-item.active {
+      background: #f0fff0 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+
+  /* Screen-only spacing between pages */
+  @media screen {
+    .page {
+      margin-bottom: 10mm;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+      border: 1px solid #eee;
+    }
+
+    body {
+      background: #e8e8e8;
+      padding: 20px 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     PAGE 1: WELCOME
+     ============================================================ -->
+<div class="page">
+  <div class="logo-container">
+    <img src="/assetts/apex_music_latino_logo.jpg" alt="Apex Music Latino">
+  </div>
+
+  <h1>Bienvenidos a Apex Music Latino</h1>
+  <p class="subtitle">Welcome to the Apex Music Latino Family</p>
+
+  <div class="phase-badge">Fase Beta &middot; Beta Phase &middot; Marzo 2026</div>
+
+  <div class="letter-block">
+    <p><strong>Estimado equipo Arcoiris,</strong></p>
+    <p>Es un honor darles la bienvenida a la familia Apex Music Latino. Han sido seleccionados como uno de nuestros primeros artistas en nuestra fase beta, lo que significa que tendr&aacute;n acceso prioritario a todas nuestras herramientas y servicios mientras construimos juntos el futuro de la m&uacute;sica latina.</p>
+  </div>
+
+  <div class="letter-block en">
+    <p><strong>Dear Arcoiris team,</strong></p>
+    <p>It is an honor to welcome you to the Apex Music Latino family. You have been selected as one of our first artists in our beta phase, which means you will have priority access to all our tools and services as we build the future of Latin music together.</p>
+  </div>
+
+  <div class="page-footer">Apex Music Latino &mdash; Una empresa de Datos Maestros &mdash; Confidencial / Confidential</div>
+</div>
+
+<!-- ============================================================
+     PAGE 2: YOUR TOOLS
+     ============================================================ -->
+<div class="page">
+  <h2>Lo Que Tienen / What You Get</h2>
+
+  <div class="tool-card">
+    <h3>1. Tu Landing Page / EPK (Electronic Press Kit)</h3>
+    <p class="url-label">URL</p>
+    <p class="url-value"><a href="https://apexmusiclatino.com/genre/tango/arcoiris/">https://apexmusiclatino.com/genre/tango/arcoiris/</a></p>
+    <ul>
+      <li>Tu p&aacute;gina profesional con bio, m&uacute;sica, videos, links y merch</li>
+      <li>Dise&ntilde;o adaptativo que cambia seg&uacute;n el g&eacute;nero (tango = crimson elegante)</li>
+      <li>Carrusel de im&aacute;genes del show &ldquo;Artistas en Escena&rdquo;</li>
+    </ul>
+  </div>
+
+  <div class="tool-card">
+    <h3>2. Tu C&oacute;digo QR de Captura de Fans</h3>
+    <p class="url-label">URL del QR</p>
+    <p class="url-value"><a href="https://apexmusiclatino.com/genre/tango/arcoiris/?qr=1">https://apexmusiclatino.com/genre/tango/arcoiris/?qr=1</a></p>
+    <ul>
+      <li>Este c&oacute;digo QR activa un formulario de captura de datos</li>
+      <li>Cada fan recibe un Fan ID &uacute;nico (ejemplo: AML-TN-ARC-001)</li>
+      <li>Recolecta: nombre, email, tel&eacute;fono, t&iacute;tulo, dispositivo, ubicaci&oacute;n</li>
+      <li>Oferta actual: Clase de tango GRATIS + curso 24 pasos ($300 valor)</li>
+    </ul>
+    <div class="important">IMPORTANTE: Este QR es permanente. Impr&iacute;melo en banners, flyers, tarjetas.</div>
+  </div>
+
+  <div class="tool-card">
+    <h3>3. Tu Link para Redes Sociales</h3>
+    <p class="url-label">Link compartible</p>
+    <p class="url-value"><a href="https://apexmusiclatino.com/genre/tango/arcoiris/?qr=1">https://apexmusiclatino.com/genre/tango/arcoiris/?qr=1</a></p>
+    <ul>
+      <li>Usa este link en tu bio de Instagram, Facebook, TikTok</li>
+      <li>P&eacute;galo en tus publicaciones y anuncios</li>
+      <li>Cada clic captura datos de fans autom&aacute;ticamente</li>
+    </ul>
+  </div>
+
+  <div class="tool-card">
+    <h3>4. Tu Portal de Artista (Backend)</h3>
+    <p class="url-label">URL</p>
+    <p class="url-value"><a href="https://apexmusiclatino.com/artist-portal/">https://apexmusiclatino.com/artist-portal/</a></p>
+    <p class="url-label">Login</p>
+    <p><span class="credential-box">arcoiris / arcoiris</span></p>
+    <ul>
+      <li>Dashboard con estad&iacute;sticas en tiempo real</li>
+      <li>FRM (Fan Relationship Management) &mdash; ve tus fans capturados</li>
+      <li>Editor de EPK &mdash; actualiza tu bio, im&aacute;genes, videos, shows</li>
+      <li>Generador de QR codes</li>
+      <li>Marketing Hub (pr&oacute;ximamente)</li>
+    </ul>
+  </div>
+
+  <div class="page-footer">Apex Music Latino &mdash; Una empresa de Datos Maestros &mdash; P&aacute;gina 2</div>
+</div>
+
+<!-- ============================================================
+     PAGE 3: CUSTOMIZE YOUR LANDING PAGE
+     ============================================================ -->
+<div class="page">
+  <h2>Personaliza Tu EPK / Customize Your Landing Page</h2>
+
+  <ol class="steps-list">
+    <li>Ve a <a href="https://apexmusiclatino.com/artist-portal/">https://apexmusiclatino.com/artist-portal/</a></li>
+    <li>Inicia sesi&oacute;n con: <span class="credential-box">arcoiris / arcoiris</span></li>
+    <li>Haz clic en <strong>&ldquo;EPK&rdquo;</strong> en el men&uacute; lateral</li>
+    <li>
+      Edita cada secci&oacute;n:
+      <ul class="sub-items">
+        <li><strong>Banner:</strong> Cambia la imagen o video principal</li>
+        <li><strong>Bio:</strong> Escribe tu historia en espa&ntilde;ol e ingl&eacute;s</li>
+        <li><strong>Discograf&iacute;a:</strong> Agrega tus lanzamientos con links de Spotify</li>
+        <li><strong>Video Oficial:</strong> Pega el URL de tu video</li>
+        <li><strong>Links Sociales:</strong> Instagram, YouTube, TikTok, Spotify, Apple Music</li>
+        <li><strong>Merch:</strong> Agrega productos con precios</li>
+        <li><strong>Shows:</strong> Agrega pr&oacute;ximos eventos con fechas y venues</li>
+      </ul>
+    </li>
+    <li>Haz clic en <strong>&ldquo;Guardar&rdquo;</strong> despu&eacute;s de cada cambio</li>
+    <li>Haz clic en <strong>&ldquo;Preview EPK&rdquo;</strong> para ver tu p&aacute;gina en vivo</li>
+  </ol>
+
+  <div class="page-footer">Apex Music Latino &mdash; Una empresa de Datos Maestros &mdash; P&aacute;gina 3</div>
+</div>
+
+<!-- ============================================================
+     PAGE 4: FAN CAPTURE STRATEGY
+     ============================================================ -->
+<div class="page">
+  <h2>C&oacute;mo Usar el QR Code / Fan Capture Strategy</h2>
+
+  <div class="strategy-grid">
+    <div class="strategy-box">
+      <h3>En Shows y Eventos</h3>
+      <ul>
+        <li>Imprime el QR code en banners grandes (m&iacute;nimo 30x30 cm)</li>
+        <li>Ponlo visible en la entrada y en el escenario</li>
+        <li>Anuncia: &ldquo;Escanea el c&oacute;digo para una clase de tango GRATIS&rdquo;</li>
+        <li>Cada persona que escanea se convierte en un fan registrado</li>
+      </ul>
+    </div>
+    <div class="strategy-box">
+      <h3>En Redes Sociales</h3>
+      <ul>
+        <li>Agrega el link en tu bio de Instagram</li>
+        <li>Comparte el link en tus stories con &ldquo;Desliza arriba&rdquo;</li>
+        <li>Publica el QR code como imagen en tus posts</li>
+        <li>Usa en anuncios de Facebook/Instagram</li>
+      </ul>
+    </div>
+    <div class="strategy-box">
+      <h3>En Material Impreso</h3>
+      <ul>
+        <li>Tarjetas de presentaci&oacute;n con QR</li>
+        <li>Flyers de eventos</li>
+        <li>Posters en academias de tango</li>
+        <li>Men&uacute;s de restaurantes aliados</li>
+      </ul>
+    </div>
+    <div class="strategy-box">
+      <h3>M&eacute;tricas a Monitorear</h3>
+      <ul>
+        <li>Total de fans capturados (ve en tu portal &rarr; FRM)</li>
+        <li>Tasa de conversi&oacute;n del QR</li>
+        <li>Dispositivos m&aacute;s usados (iPhone vs Android)</li>
+        <li>Ciudades de donde vienen tus fans</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="page-footer">Apex Music Latino &mdash; Una empresa de Datos Maestros &mdash; P&aacute;gina 4</div>
+</div>
+
+<!-- ============================================================
+     PAGE 5: NEXT STEPS
+     ============================================================ -->
+<div class="page">
+  <h2>Customer Journey de 24 Pasos (Pr&oacute;ximamente)</h2>
+
+  <p>Estamos construyendo un sistema automatizado de 24 pasos que guiar&aacute; a cada fan desde el primer contacto hasta convertirse en un superfan:</p>
+
+  <div style="margin: 5mm 0;">
+    <div class="journey-item active">
+      <span class="icon">&#10003;</span>
+      <span class="label"><strong>D&iacute;a 0:</strong> Bienvenida + Fan ID <span style="color: var(--crimson); font-weight: 600;">(YA ACTIVO)</span></span>
+    </div>
+    <div class="journey-item">
+      <span class="icon">&#9993;</span>
+      <span class="label"><strong>D&iacute;a 1:</strong> Email con historia de Arcoiris</span>
+    </div>
+    <div class="journey-item">
+      <span class="icon">&#9993;</span>
+      <span class="label"><strong>D&iacute;a 3:</strong> Detalles de la clase de tango gratis</span>
+    </div>
+    <div class="journey-item">
+      <span class="icon">&#9993;</span>
+      <span class="label"><strong>D&iacute;a 7:</strong> Preview del curso de 24 pasos</span>
+    </div>
+    <div class="journey-item">
+      <span class="icon">&#8230;</span>
+      <span class="label"><strong>D&iacute;as 8&ndash;24:</strong> Contenido progresivo, ofertas de merch, invitaciones a eventos...</span>
+    </div>
+  </div>
+
+  <h2 style="margin-top: 8mm;">Qu&eacute; Viene Despu&eacute;s</h2>
+
+  <div class="next-grid">
+    <div class="next-card">
+      <h3>Email Autom&aacute;tico</h3>
+      <p>Cada fan recibir&aacute; un email de bienvenida personalizado con su Fan ID y acceso a la oferta especial.</p>
+    </div>
+    <div class="next-card">
+      <h3>SMS / WhatsApp</h3>
+      <p>Notificaciones de eventos y promociones directamente al tel&eacute;fono de tus fans.</p>
+    </div>
+    <div class="next-card">
+      <h3>Sentiment Analysis</h3>
+      <p>Monitoreo de comentarios positivos y negativos en redes sociales en tiempo real.</p>
+    </div>
+    <div class="next-card">
+      <h3>Marketing Outreach</h3>
+      <p>Campa&ntilde;as de email para conseguir gigs en venues, festivales y eventos corporativos.</p>
+    </div>
+    <div class="next-card">
+      <h3>Distribuci&oacute;n Digital</h3>
+      <p>Subir m&uacute;sica a Spotify, Apple Music, Amazon Music, YouTube Music y m&aacute;s.</p>
+    </div>
+    <div class="next-card">
+      <h3>Analytics Avanzado</h3>
+      <p>Reportes detallados de engagement, alcance, y ROI de cada campa&ntilde;a.</p>
+    </div>
+  </div>
+
+  <div class="page-footer">Apex Music Latino &mdash; Una empresa de Datos Maestros &mdash; P&aacute;gina 5</div>
+</div>
+
+<!-- ============================================================
+     PAGE 6: CONTACT
+     ============================================================ -->
+<div class="page">
+  <div class="contact-section" style="padding-top: 25mm;">
+    <div class="logo-container">
+      <img src="/assetts/apex_music_latino_logo.jpg" alt="Apex Music Latino">
+    </div>
+
+    <p class="company-name">Apex Music Latino</p>
+    <p class="tagline">Una empresa de Datos Maestros<br>Powered by CUBO Data Engine</p>
+
+    <hr class="divider">
+
+    <div class="contact-links">
+      <p class="contact-label">Website</p>
+      <a href="https://apexmusiclatino.com">https://apexmusiclatino.com</a>
+
+      <p class="contact-label" style="margin-top: 3mm;">Artist Portal</p>
+      <a href="https://apexmusiclatino.com/artist-portal/">https://apexmusiclatino.com/artist-portal/</a>
+
+      <p class="contact-label" style="margin-top: 3mm;">Admin</p>
+      <a href="https://apexmusiclatino.com/admin/">https://apexmusiclatino.com/admin/</a>
+    </div>
+
+    <div class="quote-block">
+      <p>&ldquo;No solo firmamos artistas. Los convertimos en empresas.&rdquo;</p>
+      <p>&ldquo;We don&rsquo;t just sign artists. We turn them into companies.&rdquo;</p>
+    </div>
+  </div>
+
+  <div class="page-footer">Apex Music Latino &mdash; Una empresa de Datos Maestros &mdash; Marzo 2026</div>
+</div>
+
+</body>
+</html>
