@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Apex Music Latino | The Passion of Data</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "on-primary": "#003907",
+                "tertiary": "#fcf8f8",
+                "surface-container-highest": "#353534",
+                "on-surface": "#e5e2e1",
+                "inverse-on-surface": "#313030",
+                "primary-fixed-dim": "#00e639",
+                "error": "#ffb4ab",
+                "surface-container": "#201f1f",
+                "on-secondary-fixed": "#001f24",
+                "on-primary-fixed-variant": "#00530e",
+                "surface-container-lowest": "#0e0e0e",
+                "inverse-primary": "#006e16",
+                "on-surface-variant": "#b9ccb2",
+                "on-secondary-fixed-variant": "#004f58",
+                "surface-container-high": "#2a2a2a",
+                "on-tertiary-fixed": "#1c1b1b",
+                "on-primary-container": "#007117",
+                "tertiary-fixed-dim": "#c8c6c5",
+                "tertiary-fixed": "#e5e2e1",
+                "surface-container-low": "#1c1b1b",
+                "secondary": "#bdf4ff",
+                "on-error": "#690005",
+                "error-container": "#93000a",
+                "surface-bright": "#3a3939",
+                "on-tertiary-container": "#616060",
+                "primary-container": "#00ff41",
+                "on-secondary-container": "#00616d",
+                "on-error-container": "#ffdad6",
+                "surface": "#131313",
+                "outline-variant": "#3b4b37",
+                "secondary-container": "#00e3fd",
+                "inverse-surface": "#e5e2e1",
+                "surface-tint": "#00e639",
+                "primary": "#ebffe2",
+                "secondary-fixed-dim": "#00daf3",
+                "outline": "#84967e",
+                "on-tertiary-fixed-variant": "#474746",
+                "primary-fixed": "#72ff70",
+                "on-background": "#e5e2e1",
+                "surface-variant": "#353534",
+                "background": "#131313",
+                "secondary-fixed": "#9cf0ff",
+                "on-primary-fixed": "#002203",
+                "tertiary-container": "#dfdcdb",
+                "on-secondary": "#00363d",
+                "surface-dim": "#131313",
+                "on-tertiary": "#313030",
+                /* Custom Crimson/Blood Red for Tango Variation */
+                "tango-accent": "#e60000",
+                "tango-glow": "rgba(230, 0, 0, 0.4)"
+              },
+              fontFamily: {
+                "headline": ["Space Grotesk"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+            },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        .glass-panel {
+            background: rgba(53, 53, 52, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .tango-gradient {
+            background: linear-gradient(135deg, #131313 0%, #353534 100%);
+        }
+        .crimson-glow {
+            box-shadow: 0 0 40px rgba(230, 0, 0, 0.15);
+        }
+        .data-grid-texture {
+            background-image: radial-gradient(circle, #e60000 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.05;
+        }
+      </style>
+</head>
+<body class="bg-surface text-on-surface font-body overflow-x-hidden selection:bg-tango-accent selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-8 h-20 w-full max-w-none bg-zinc-950/60 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] font-['Space_Grotesk'] tracking-tight">
+<div class="text-2xl font-bold tracking-tighter text-tango-accent uppercase">
+            Apex Music Latino
+        </div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-tango-accent border-b-2 border-tango-accent pb-1" href="#">Marketplace</a>
+<a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Academy</a>
+<a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Artist OS</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-zinc-400 hover:text-tango-accent transition-all duration-300">notifications</button>
+<button class="material-symbols-outlined text-zinc-400 hover:text-tango-accent transition-all duration-300">account_circle</button>
+</div>
+</nav>
+<!-- SideNavBar (Contextual: Genres) -->
+<aside class="fixed left-0 top-20 h-[calc(100vh-5rem)] w-64 bg-zinc-950/80 backdrop-blur-2xl border-r border-white/10 flex flex-col py-6 z-40 font-['Space_Grotesk'] font-light">
+<div class="px-6 mb-8">
+<h3 class="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-1">Genres</h3>
+<p class="text-sm text-zinc-400">Curated Soundscapes</p>
+</div>
+<nav class="flex flex-col">
+<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">mic</span>
+<span>Rap</span>
+</a>
+<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">equalizer</span>
+<span>Reggaeton</span>
+</a>
+<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">electric_bolt</span>
+<span>Rock</span>
+</a>
+<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span>Electronic</span>
+</a>
+<!-- Active Tab: Tango -->
+<a class="flex items-center gap-4 bg-tango-accent/10 text-tango-accent border-r-4 border-tango-accent px-6 py-4 transition-all" href="#">
+<span class="material-symbols-outlined">theater_comedy</span>
+<span>Tango</span>
+</a>
+<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">blur_on</span>
+<span>Afro/Latin Fusion</span>
+</a>
+</nav>
+<div class="mt-auto px-6">
+<button class="w-full py-3 text-xs uppercase tracking-widest border border-tango-accent/30 text-tango-accent hover:bg-tango-accent hover:text-white transition-all duration-300">Explore All</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-20 min-h-screen">
+<!-- Hero Section -->
+<section class="relative h-[870px] flex items-center px-12 overflow-hidden bg-surface-container-low">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/40 to-transparent z-10"></div>
+<img alt="" class="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-1000" data-alt="Cinematic shot of tango dancers in dramatic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvyGjUrcUbBZ5FJXLDLpGZdllaZEswCQNhLIQP7RNuipdEk3Di3-GXlZ8jsDevnl9u-_4YIAD4eZoHB1QiVoALucNd3jl8vf005Do0Sb7d1Ee57YgO1hlkK_XNe_5fsMic9mtRlUs27HL7UPuVgjejNGgCoUtrFJX6Gk9-VDJ1mCQGfuv2OcyvHUGzh61Rq5kZExSOatPC7Lv5QvXdL4ChkC3F_3EAKqnZZEaOj0q-rEP965UL-1_FpHLEW86Qh56P8lBPg1JFvoM"/>
+</div>
+<div class="relative z-20 max-w-4xl">
+<div class="flex items-center gap-4 mb-6">
+<span class="h-px w-12 bg-tango-accent"></span>
+<span class="text-tango-accent font-headline tracking-[0.4em] text-sm uppercase">The Global Empire Standard</span>
+</div>
+<h1 class="text-[6rem] leading-[0.9] font-headline font-bold tracking-tighter mb-8 text-on-surface">
+                    The Passion <br/>Of <span class="text-tango-accent italic">Data.</span>
+</h1>
+<p class="text-xl text-on-surface/60 max-w-xl font-light leading-relaxed mb-10">
+                    Transforming the soul of Latin rhythm into algorithmic dominance. We don't just distribute music; we engineer legacy through intense intelligence.
+                </p>
+<div class="flex gap-6">
+<button class="px-10 py-4 bg-gradient-to-r from-tango-accent to-[#8b0000] text-white font-headline font-bold rounded-md hover:scale-105 transition-transform">
+                        Launch Artist OS
+                    </button>
+<button class="px-10 py-4 glass-panel border border-white/10 text-on-surface font-headline font-medium rounded-md hover:bg-white/10 transition-all">
+                        View Marketplace
+                    </button>
+</div>
+</div>
+<!-- Data Pulse Overlay -->
+<div class="absolute bottom-12 right-12 text-right hidden lg:block">
+<div class="text-tango-accent text-5xl font-headline font-bold">12.4M</div>
+<div class="text-xs tracking-widest text-zinc-500 uppercase">Real-time Streams</div>
+</div>
+</section>
+<!-- CUBO Data Intelligence Bento Grid -->
+<section class="py-24 px-12 bg-surface">
+<div class="mb-16">
+<h2 class="text-4xl font-headline font-bold mb-2">CUBO Intelligence</h2>
+<div class="h-1 w-20 bg-tango-accent"></div>
+</div>
+<div class="grid grid-cols-12 gap-6 h-[700px]">
+<!-- Main Intelligence Node -->
+<div class="col-span-12 md:col-span-7 bg-surface-container-high relative overflow-hidden group border border-white/5 rounded-xl">
+<div class="data-grid-texture absolute inset-0"></div>
+<div class="p-10 relative z-10 flex flex-col h-full">
+<span class="material-symbols-outlined text-tango-accent text-4xl mb-6" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<h3 class="text-3xl font-headline font-bold mb-4">Predictive Pulse</h3>
+<p class="text-zinc-400 max-w-md mb-8">CUBO analyzes millions of data points across Latin America to predict the next breakout rhythm before it hits the clubs.</p>
+<div class="mt-auto">
+<img alt="" class="w-full h-48 object-cover rounded-lg grayscale hover:grayscale-0 transition-all" data-alt="Digital audio waveform and data visualization" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJgBR8zt0kk7RB-9OR3QV8hBBZUBCBxW0EocYsI1f15fLVKqYyBIX-Ok9uxEHsibtabR5SqTAO2nEkz8Ohazc3bC0J4U_lPr_0UqqpSTFhW5KRoULDEGMY6aKw4ZzpUAWMcs1CrjE7db6oUrUwmZ6kpcM6sawGUzLCpoVpiz6kNvjfh0XyqPUrhx8fLCCHTg9sTTsbEQrSKPyU2c0WMNDeHNu4nq9BALMNQRb3eLp2hY0jmEuHbfWnRIJVw5bnl6RtpsHkJfMnZds"/>
+</div>
+</div>
+</div>
+<!-- Secondary Metric -->
+<div class="col-span-12 md:col-span-5 bg-surface-container-lowest border border-white/5 rounded-xl p-10 flex flex-col justify-center items-center text-center">
+<div class="w-32 h-32 rounded-full border-4 border-tango-accent border-t-transparent animate-spin-slow mb-8"></div>
+<h3 class="text-2xl font-headline font-medium mb-2">Market Sentiment</h3>
+<p class="text-zinc-500 text-sm">Real-time tracking of cultural relevance metrics.</p>
+</div>
+<!-- Sub-features -->
+<div class="col-span-12 md:col-span-4 bg-surface-container-low border border-white/5 rounded-xl p-8 hover:bg-surface-container-high transition-colors">
+<h4 class="text-tango-accent font-headline font-bold mb-2">Territory Heat</h4>
+<p class="text-xs text-zinc-400 leading-relaxed">Granular insights into local radio and streaming trends in Buenos Aires and beyond.</p>
+</div>
+<div class="col-span-12 md:col-span-4 bg-surface-container-low border border-white/5 rounded-xl p-8 hover:bg-surface-container-high transition-colors">
+<h4 class="text-tango-accent font-headline font-bold mb-2">Social Echo</h4>
+<p class="text-xs text-zinc-400 leading-relaxed">Tracking the viral momentum of the Tango-Electronic fusion across global platforms.</p>
+</div>
+<div class="col-span-12 md:col-span-4 bg-surface-container-low border border-white/5 rounded-xl p-8 hover:bg-surface-container-high transition-colors">
+<h4 class="text-tango-accent font-headline font-bold mb-2">Revenue Forecast</h4>
+<p class="text-xs text-zinc-400 leading-relaxed">Projecting artist earnings based on historic and trending performance data.</p>
+</div>
+</div>
+</section>
+<!-- Artist OS Feature -->
+<section class="py-24 px-12 bg-surface-container-low relative overflow-hidden">
+<div class="flex flex-col md:flex-row items-center gap-16">
+<div class="w-full md:w-1/2">
+<h2 class="text-5xl font-headline font-bold mb-8 leading-tight">Your Career,<br/><span class="text-tango-accent">Mastered.</span></h2>
+<ul class="space-y-6">
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-tango-accent mt-1">check_circle</span>
+<div>
+<h5 class="font-headline font-bold text-lg">Smart Distribution</h5>
+<p class="text-zinc-400 text-sm">One-click release to all major platforms with optimized metadata for Latin markets.</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-tango-accent mt-1">check_circle</span>
+<div>
+<h5 class="font-headline font-bold text-lg">Rights Management</h5>
+<p class="text-zinc-400 text-sm">Automated royalty tracking and legal frameworks protecting your intellectual property.</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-tango-accent mt-1">check_circle</span>
+<div>
+<h5 class="font-headline font-bold text-lg">Collaborator Network</h5>
+<p class="text-zinc-400 text-sm">Direct access to world-class producers, mixing engineers, and graphic designers.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="w-full md:w-1/2 relative">
+<div class="absolute -inset-4 bg-tango-accent/20 blur-3xl rounded-full"></div>
+<div class="relative glass-panel rounded-2xl border border-white/10 p-6 shadow-2xl">
+<img alt="" class="rounded-lg shadow-inner grayscale contrast-125" data-alt="Professional music production dashboard on a screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdg1M7dmEekFpEMItNRV6DuVE_1b8taLsCADSHKfA4MfFKqOjkhBgpJUKX0sb2tYwgvyHN1k5-WtziDlVE8Wi9te-lZQP5HhnF-BN5M_YW5dKx1Wze3vOz8naP2Qjh4hNu2bGhL_WP6G5_9YkHwkgVR8VGcGXmHQ94Om9tpcNayfMo-2KIX9W6_kHh7y1RTIPqrrbnwja0xjmxSs0QIJ8G-ehG8DdYOyiRgX7HgQS2W2wRFO4ROOUqxr_mS7dWbs8MFq5OCPrPgMo"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Marketplace Curated Section -->
+<section class="py-24 px-12 bg-surface">
+<div class="flex justify-between items-end mb-16">
+<div>
+<h2 class="text-4xl font-headline font-bold mb-2">Marketplace</h2>
+<p class="text-zinc-500">Exclusive Sound Packs &amp; Samples</p>
+</div>
+<button class="text-tango-accent font-headline tracking-widest text-sm hover:underline">BROWSE ALL</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+<!-- Card 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-square bg-surface-container-high relative overflow-hidden mb-4 rounded-md">
+<img alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Abstract red and black art piece" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcRUX0GIrSKa71DhtkU9zMVkjcxM7p3Y1qC5r20s8qleNSK3p3_9unAE3Ru6s-19Hg659tMfr-c4Fw9KSvBa6vygp9Zb5cM4KcBvFCy8HNHKfXC3aczD_1ruCzru5pax8MotaSdztMLqWiRgJQu7WsMziIOCtkhhKJJSOB1puPUisDU_LHLsvhm1POE1Tf7oreFOiP0CSpdILl-HVYs6plJ2QeBqnrJ7piYbTQLjXhqrlCAHVGa2QW1Vfb2n3JJVkvhImnTi_BY-0"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-5xl">play_circle</span>
+</div>
+</div>
+<h4 class="font-headline font-bold text-on-surface">Buenos Aires Nights</h4>
+<p class="text-zinc-500 text-xs">Accoustic Strings &amp; Dramatic Percussion</p>
+<p class="text-tango-accent font-bold mt-2">$24.99</p>
+</div>
+<!-- Card 2 -->
+<div class="group cursor-pointer">
+<div class="aspect-square bg-surface-container-high relative overflow-hidden mb-4 rounded-md">
+<img alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Downtempo music equipment in dark room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwlYJ4FivNEVqPtzKzq_227nxlUqBvLtM-jx_BB2WKkBkxku7sErge44_vfmE_CTqCqJm-2XadcDZg4s44NGI59YyTxcQCSQnHa_qkD1ZidIcyyNnQp1QdLYlzf859Ezj7ivZkDVFMl59HAAW8mbddA9YyAYFfnWKqpeGYQ8n8CJCjREl6swvJsJEg3X8bQway9xIdYIr_xVjjNaajMFIg0fMb6tBQ7SQ2l-QzG95fe0GwDjxX4xBVx-8TjUhcWvaNdjvQ6X6kKSc"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-5xl">play_circle</span>
+</div>
+</div>
+<h4 class="font-headline font-bold text-on-surface">Neo-Tango Toolkit</h4>
+<p class="text-zinc-500 text-xs">Hybrid Synthesizers &amp; Bandoneon Textures</p>
+<p class="text-tango-accent font-bold mt-2">$39.00</p>
+</div>
+<!-- Card 3 -->
+<div class="group cursor-pointer">
+<div class="aspect-square bg-surface-container-high relative overflow-hidden mb-4 rounded-md">
+<img alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Modern jazz/tango performance photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc2myCyUXtlUy3rZUJ9t7yuL4X2K2l8gLii7pe2f-5eMNTnXEwkCN4IQIgZRjRYyfuHTbc65NXWoEf-RLvdICdeMQ1th8c_NtIhuraF0CLpaSFJdGRCanf5-jBeQs65vbxwi8vfZHEVVWGGh1LfT-BJ2H-fDL9gj3WO3GWWmhONZhSr5f_Iz3U00anOiN--UlUsX3TybYyaEP-eWSMVxqK4v1tLSFBOJ0QPJKNFisLV5rEyJoBgnlgU3G4WxAZJ2EjQ9c_QLuU9O8"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-5xl">play_circle</span>
+</div>
+</div>
+<h4 class="font-headline font-bold text-on-surface">Passion Vocal Stems</h4>
+<p class="text-zinc-500 text-xs">Emotional operatic and spoken word hooks</p>
+<p class="text-tango-accent font-bold mt-2">$19.99</p>
+</div>
+<!-- Card 4 -->
+<div class="group cursor-pointer">
+<div class="aspect-square bg-surface-container-high relative overflow-hidden mb-4 rounded-md">
+<img alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Crowd at a high-end music venue" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8dD8760wPtHcrc6yNKp6S9KdwOMSymy_1ATS4M8DZJINX2Fb3BGif2Gnl7xErgQSbRmbUCg-QMMKnZWR8f7gmcRJhSLw1Q4uxzEywt65dwcCbVOnmrlDK0RR4NwQ4-H09DTJPx3scPtoCDqOdzcJd6QfcPbk7uiCcBAZPpdtGQjPaGYYJkp3DIRjnP-Q7qq1mEKo7WqLIt6q8oNXwGSd_bMrLXAU0OK38_ove9juRq0o-LFgUQZYPiit8jKHDyUF8SDvOI0IEvYg"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-5xl">play_circle</span>
+</div>
+</div>
+<h4 class="font-headline font-bold text-on-surface">Rhythm Empire</h4>
+<p class="text-zinc-500 text-xs">Industrial Tango beat construction kit</p>
+<p class="text-tango-accent font-bold mt-2">$45.00</p>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="py-20 px-12 bg-surface-container-lowest border-t border-white/5">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="col-span-2">
+<div class="text-2xl font-bold tracking-tighter text-tango-accent uppercase mb-6">Apex Music Latino</div>
+<p class="text-zinc-500 max-w-sm mb-8 leading-relaxed">The premier ecosystem for the evolution of Latin music. Driven by data, inspired by passion, built for the future.</p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-zinc-500 hover:text-tango-accent transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-zinc-500 hover:text-tango-accent transition-colors" href="#"><span class="material-symbols-outlined">camera</span></a>
+<a class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-zinc-500 hover:text-tango-accent transition-colors" href="#"><span class="material-symbols-outlined">video_library</span></a>
+</div>
+</div>
+<div>
+<h5 class="font-headline font-bold text-on-surface mb-6">Navigation</h5>
+<ul class="space-y-4 text-zinc-500 text-sm">
+<li><a class="hover:text-tango-accent transition-colors" href="#">Marketplace</a></li>
+<li><a class="hover:text-tango-accent transition-colors" href="#">Artist OS</a></li>
+<li><a class="hover:text-tango-accent transition-colors" href="#">Academy</a></li>
+<li><a class="hover:text-tango-accent transition-colors" href="#">CUBO Data</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-headline font-bold text-on-surface mb-6">Support</h5>
+<ul class="space-y-4 text-zinc-500 text-sm">
+<li><a class="hover:text-tango-accent transition-colors" href="#">Documentation</a></li>
+<li><a class="hover:text-tango-accent transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-tango-accent transition-colors" href="#">Terms of Service</a></li>
+<li><a class="hover:text-tango-accent transition-colors" href="#">Contact</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-20 pt-8 border-t border-white/5 text-zinc-600 text-[10px] tracking-[0.2em] uppercase flex justify-between">
+<div>© 2024 Apex Music Latino. All rights reserved.</div>
+<div>Engineered for Excellence.</div>
+</div>
+</footer>
+</main>
+<script src="/js/apex-engine.js"></script>
+</body></html>

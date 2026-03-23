@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-fixed": "#002203",
+              "tertiary-fixed": "#e5e2e1",
+              "primary": "#ebffe2",
+              "on-error": "#690005",
+              "on-error-container": "#ffdad6",
+              "inverse-primary": "#006e16",
+              "surface-variant": "#353534",
+              "primary-container": "#00ff41",
+              "on-tertiary-container": "#616060",
+              "tertiary-fixed-dim": "#c8c6c5",
+              "surface-dim": "#131313",
+              "surface-container-high": "#2a2a2a",
+              "on-tertiary": "#313030",
+              "on-surface-variant": "#b9ccb2",
+              "on-surface": "#e5e2e1",
+              "surface-container-highest": "#353534",
+              "secondary-container": "#00e3fd",
+              "surface-bright": "#3a3939",
+              "on-primary-fixed-variant": "#00530e",
+              "inverse-on-surface": "#313030",
+              "on-secondary": "#00363d",
+              "secondary-fixed": "#9cf0ff",
+              "surface-tint": "#00e639",
+              "primary-fixed-dim": "#00e639",
+              "secondary": "#bdf4ff",
+              "error-container": "#93000a",
+              "on-primary": "#003907",
+              "surface-container": "#201f1f",
+              "surface": "#131313",
+              "tertiary": "#fcf8f8",
+              "background": "#131313",
+              "secondary-fixed-dim": "#00daf3",
+              "on-primary-container": "#007117",
+              "error": "#ffb4ab",
+              "on-background": "#e5e2e1",
+              "on-tertiary-fixed-variant": "#474746",
+              "tertiary-container": "#dfdcdb",
+              "on-secondary-fixed-variant": "#004f58",
+              "on-tertiary-fixed": "#1c1b1b",
+              "surface-container-low": "#1c1b1b",
+              "on-secondary-container": "#00616d",
+              "inverse-surface": "#e5e2e1",
+              "outline-variant": "#3b4b37",
+              "on-secondary-fixed": "#001f24",
+              "surface-container-lowest": "#0e0e0e",
+              "primary-fixed": "#72ff70",
+              "outline": "#84967e"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        .glass-panel {
+            background: rgba(53, 53, 52, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .data-pulse-bg {
+            background-image: radial-gradient(circle, #00ff41 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.05;
+        }
+        .asymmetric-clip {
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- Top Navigation Anchor -->
+<nav class="fixed top-0 w-full z-50 bg-[#131313]/60 backdrop-blur-xl flex justify-between items-center px-8 h-16 w-full shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold tracking-tighter text-[#00FF41] font-['Space_Grotesk']">CUBO AI</span>
+<div class="hidden md:flex gap-6">
+<a class="text-[#00FF41] border-b-2 border-[#00FF41] pb-1 font-['Space_Grotesk'] tracking-tight transition-colors duration-300" href="#">Studio</a>
+<a class="text-[#e5e2e1]/60 font-['Space_Grotesk'] tracking-tight hover:text-[#00FF41] transition-colors duration-300" href="#">Assets</a>
+<a class="text-[#e5e2e1]/60 font-['Space_Grotesk'] tracking-tight hover:text-[#00FF41] transition-colors duration-300" href="#">Analytics</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#e5e2e1]/60 hover:text-[#00FF41] active:scale-95 transition-all">notifications</button>
+<button class="material-symbols-outlined text-[#e5e2e1]/60 hover:text-[#00FF41] active:scale-95 transition-all">settings</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="User Profile Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARzF_3GRp_lIerKs3ZmtH9s4wvcqKCX5EDT9RkHLKpynXI055V63g1auHviClPPzzZh5WTx7G0aDRERiUrLYOQnXe0AoLvErU7m6mKmxMZFoGOmTgixssgk8iHBcMUlF5KeRsxZBcsd5de488sG0qgE_3yO3d-X-PJKNKV2TAI_zB2WTn8j6tiq5DswqeDCxn3y_-WJG4Q8TUWArPujPD5M415SI7FA4TpV047KfBd_IqWfgdEZFeMHjAJmF0xtjBHHcr2TfvChHY"/>
+</div>
+</div>
+</nav>
+<!-- Side Navigation Blueprint -->
+<aside class="fixed left-0 top-0 h-screen w-64 z-40 bg-[#131313] flex flex-col py-24 px-4 gap-6 hidden md:flex border-r border-outline-variant/10">
+<div class="mb-4">
+<div class="flex items-center gap-3 px-2 mb-2">
+<span class="text-[#00FF41] font-black italic font-['Space_Grotesk'] text-lg">APEX STUDIO</span>
+</div>
+<p class="text-[10px] text-[#e5e2e1]/40 uppercase tracking-[0.2em] px-2">AI-Driven Creation</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-[#00FF41] font-bold border-r-4 border-[#00FF41] bg-[#1c1b1b] transition-all font-['Space_Grotesk'] text-sm uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                Generator
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#e5e2e1]/40 hover:bg-[#1c1b1b] hover:text-[#00FF41] transition-all font-['Space_Grotesk'] text-sm uppercase tracking-widest group" href="#">
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">auto_awesome_motion</span>
+                Library
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#e5e2e1]/40 hover:bg-[#1c1b1b] hover:text-[#00FF41] transition-all font-['Space_Grotesk'] text-sm uppercase tracking-widest group" href="#">
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">qr_code_2</span>
+                QR Lab
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#e5e2e1]/40 hover:bg-[#1c1b1b] hover:text-[#00FF41] transition-all font-['Space_Grotesk'] text-sm uppercase tracking-widest group" href="#">
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">view_carousel</span>
+                Carousel Designer
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#e5e2e1]/40 hover:bg-[#1c1b1b] hover:text-[#00FF41] transition-all font-['Space_Grotesk'] text-sm uppercase tracking-widest group" href="#">
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">smart_toy</span>
+                AI Chat
+            </a>
+</nav>
+<div class="mt-auto flex flex-col gap-2 pb-8">
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary-fixed font-bold py-3 rounded-md flex items-center justify-center gap-2 active:scale-95 transition-transform mb-4">
+<span class="material-symbols-outlined text-xl">add</span>
+                New Project
+            </button>
+<a class="flex items-center gap-3 px-4 py-2 text-[#e5e2e1]/40 hover:text-[#00FF41] transition-colors text-xs uppercase tracking-widest font-['Space_Grotesk']" href="#">
+<span class="material-symbols-outlined text-lg">help_outline</span>
+                Support
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-[#e5e2e1]/40 hover:text-[#00FF41] transition-colors text-xs uppercase tracking-widest font-['Space_Grotesk']" href="#">
+<span class="material-symbols-outlined text-lg">person</span>
+                Account
+            </a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="md:ml-64 pt-24 pb-12 px-8 min-h-screen relative overflow-hidden">
+<div class="absolute inset-0 data-pulse-bg pointer-events-none"></div>
+<!-- Hero Header -->
+<header class="max-w-6xl mx-auto mb-16 relative">
+<div class="absolute -top-12 -left-12 w-64 h-64 bg-primary-container/10 blur-[120px] rounded-full"></div>
+<h1 class="font-headline text-6xl md:text-8xl font-bold tracking-tighter leading-[0.9] mb-4">
+                CUBO AI: <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-container">Digital Asset Generator</span>
+</h1>
+<p class="font-body text-xl text-on-surface-variant max-w-2xl leading-relaxed">
+                Generate data-capturing QR codes, social carousels, and smart assets to own your fan ecosystem.
+            </p>
+</header>
+<!-- Bento Grid Layout -->
+<section class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(300px,_auto)]">
+<!-- QR Code Lab - Large Feature -->
+<div class="md:col-span-8 glass-panel rounded-xl overflow-hidden group flex flex-col md:flex-row relative border border-outline-variant/10">
+<div class="p-8 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-3 mb-6">
+<span class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary-container text-on-primary-fixed">
+<span class="material-symbols-outlined">qr_code_2</span>
+</span>
+<h2 class="font-headline text-2xl font-bold">Generador de QR</h2>
+</div>
+<p class="text-on-surface-variant mb-8 text-lg">Crea códigos QR personalizados que capturan datos de audiencia en tiempo real.</p>
+<div class="space-y-4">
+<div class="flex items-center gap-4 p-4 rounded-lg bg-surface-container-low border border-outline-variant/10">
+<span class="material-symbols-outlined text-secondary-container">link</span>
+<input class="bg-transparent border-none focus:ring-0 text-on-surface w-full font-label" placeholder="https://fanlink.to/apex-exclusive" type="text"/>
+</div>
+<button class="px-6 py-3 bg-primary-container text-on-primary-fixed font-bold rounded-lg hover:scale-[1.02] transition-transform">Generar Asset</button>
+</div>
+</div>
+</div>
+<div class="w-full md:w-1/3 bg-surface-container-high p-8 flex items-center justify-center relative">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent"></div>
+<div class="relative w-48 h-48 bg-white p-3 rounded-xl shadow-2xl">
+<img class="w-full h-full grayscale opacity-80 mix-blend-multiply" data-alt="Branded QR Code Preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwtkVpGxlcUgSsXxAyV-Q0gihmWiRBbxqm0YNPwhePvFzKfS_JpcHpKKmeMG1EaAXvj7bCpPWRDToA-FAcvd8riOdWJEozLZvCFTLTzEFZuPw7ETcCFViUGfEg2kcYLhdAhlCfjcHsbmxIfpnFruoMg4p3nVzH6Cffp0rtdwjYpwEPwI4U2tbJjtSZOl5zs1DuRnVWUP-T4_zZT2RtuvaN4NOP2nLx75_oMQUbieKU_eMS2SEBQ1JF1WjWENRil1h8OxPzY8Rd26U"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center border-2 border-primary">
+<span class="text-primary font-bold italic text-[10px]">APEX</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats Card -->
+<div class="md:col-span-4 bg-surface-container-low rounded-xl p-8 border border-outline-variant/5 flex flex-col justify-between relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/5 blur-3xl group-hover:bg-secondary-container/10 transition-colors"></div>
+<div>
+<span class="text-xs font-headline tracking-[0.3em] text-[#e5e2e1]/40 uppercase mb-2 block">Live Insights</span>
+<h3 class="text-4xl font-headline font-bold text-secondary-container">2.4k</h3>
+<p class="text-sm text-on-surface-variant">Escaneos únicos esta semana</p>
+</div>
+<div class="h-24 flex items-end gap-1">
+<div class="flex-1 bg-secondary-container/20 h-[30%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary-container/20 h-[45%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary-container/20 h-[70%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary-container/40 h-[60%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary-container/60 h-[90%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary-container h-[100%] rounded-t-sm"></div>
+</div>
+</div>
+<!-- Carousel Designer - Interactive Block -->
+<div class="md:col-span-7 glass-panel rounded-xl overflow-hidden border border-outline-variant/10 flex flex-col">
+<div class="p-8 border-b border-outline-variant/10 flex justify-between items-center">
+<div>
+<h2 class="font-headline text-2xl font-bold">Diseñador de Carruseles</h2>
+<p class="text-on-surface-variant text-sm">Contenido impulsado por datos de fans.</p>
+</div>
+<div class="flex gap-2">
+<button class="material-symbols-outlined p-2 rounded-full hover:bg-surface-variant transition-colors">refresh</button>
+<button class="material-symbols-outlined p-2 rounded-full hover:bg-surface-variant transition-colors">edit</button>
+</div>
+</div>
+<div class="p-8 flex-1 bg-surface-container-lowest/50 flex gap-4 overflow-x-auto">
+<!-- Slide 1 -->
+<div class="min-w-[200px] h-[280px] bg-surface-container-high rounded-lg p-4 flex flex-col justify-end relative overflow-hidden group/slide border border-outline-variant/10">
+<img class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover/slide:scale-110 transition-transform duration-700" data-alt="Concert stage with vibrant lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDX9wwoOORXWyT9KrZ66OfSkXIef_xW-5gIFkdWeLHH-T-5NSLeba3_mh0fqid8IO0pE2PxZnraYtDCVRh_XcMncnNPMmqR9R7ECuK55K9mdj-I58yTQRT_jAVmdGkHaKDunt1tqyHytgBfSuoqnoYbmp9Go5JPneuKMmy0QIyFKhiRL89M49dKX9DqXTslJuo4tq1PaMSZRptizl6akTXDYgkddZYBxkpay-Rv0pGYHq40n12CcyH7p07Fy3u6qtnsLfvr1NxrVHA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+<div class="relative">
+<p class="text-[10px] text-primary-container font-bold mb-1">DATA: MADRID</p>
+<h4 class="font-headline text-sm font-bold leading-tight">LOS FANS MÁS ACTIVOS</h4>
+</div>
+</div>
+<!-- Slide 2 -->
+<div class="min-w-[200px] h-[280px] bg-surface-container-high rounded-lg p-4 flex flex-col justify-end relative overflow-hidden group/slide border border-outline-variant/10">
+<img class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover/slide:scale-110 transition-transform duration-700" data-alt="Dynamic abstract energy background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9JGPdb2VAJSNFNWz4ZvjYHNqlfVaYaYgRh6svnMp_wbfAQT-D1SogBfd2LHr_Zl6Vexse8uPF1qYDp0VYqG5Bq8lLqNa2nITgmCR5npwRT2iuxZE20gJG8lOgGB4rJxsImtRsxtOlISN7jRW6N1wyYzhadT14aZpKDFdMACVt4LOHv4HdMf2Mdv5ge2l1GR7SXOdLWUFaU5Wm1QgXUx6xL6OOYe0KePqr6p_Xc5EnuabwSvtw1W7tM81CbkdkTqTFVNB_1KolSeU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+<div class="relative">
+<p class="text-[10px] text-secondary-container font-bold mb-1">METRIC: GROWTH</p>
+<h4 class="font-headline text-sm font-bold leading-tight">TOP 5% MUNDIAL</h4>
+</div>
+</div>
+<!-- Slide 3 (Add New) -->
+<div class="min-w-[200px] h-[280px] border-2 border-dashed border-outline-variant/30 rounded-lg flex flex-col items-center justify-center gap-3 hover:border-primary-container/40 transition-colors group cursor-pointer">
+<span class="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">add_circle</span>
+<span class="text-xs uppercase tracking-widest font-headline">Añadir Slide AI</span>
+</div>
+</div>
+</div>
+<!-- Smart Asset Library -->
+<div class="md:col-span-5 bg-surface-container rounded-xl overflow-hidden border border-outline-variant/10">
+<div class="p-6 border-b border-outline-variant/10 bg-surface-container-high/30">
+<h2 class="font-headline text-xl font-bold">Librería de Assets</h2>
+</div>
+<div class="p-4 space-y-3">
+<div class="flex items-center gap-4 p-3 hover:bg-surface-container-high transition-colors rounded-lg group">
+<div class="w-12 h-12 bg-surface-container-highest rounded flex items-center justify-center overflow-hidden">
+<img class="w-8 h-8 opacity-60 group-hover:opacity-100 transition-opacity" data-alt="QR Code for World Tour" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcWIlFZPhsDZTDd9-Iw3jdTKWtlP338sl4N0zVkF57jfMrGUl6gh8uQJmH_FPPdLblSWE6tCaJWVNxXB6LNpiyPsCWDDEIRk4P1jmOfQI6AFmobtvov902SmpZct_CaKs1vygZvNVi7LkXO5vvuDtIPycC1SR24npTXWLHcmdujfE6lOz_qMNJL8TaFJ2xX-QwTX8SYrsru0Ye9Saap2detZIRN_cqWmmGTj2-eZeI_xcNvoQv5Ohyu_WtRkcCxfvY0VG-nIhFYqw"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium">QR_Tour_BuenosAires_01</p>
+<p class="text-[10px] text-on-surface-variant/60 uppercase">Creado hace 2h • 456 escaneos</p>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">download</button>
+</div>
+<div class="flex items-center gap-4 p-3 hover:bg-surface-container-high transition-colors rounded-lg group">
+<div class="w-12 h-12 bg-surface-container-highest rounded flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-secondary-container">view_carousel</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium">Carousel_Insights_IG_V1</p>
+<p class="text-[10px] text-on-surface-variant/60 uppercase">Creado ayer • Draft</p>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">edit</button>
+</div>
+<div class="flex items-center gap-4 p-3 hover:bg-surface-container-high transition-colors rounded-lg group">
+<div class="w-12 h-12 bg-surface-container-highest rounded flex items-center justify-center overflow-hidden">
+<img class="w-8 h-8 opacity-60 group-hover:opacity-100 transition-opacity" data-alt="Fan Club QR Code" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeCW7aET33KGdDV4P3kv-k4xF-xMftwXv6wKxEGNDqpZosD5aWuaD_Oyhq2Nv4q0yuyMABzTOGo3i4X4oiRW0H-pAI_Y0ZV93nM2a3zl4TSkTWRWtLSAD5LFU5pwExwggMd3jBAdddAkrRXh1YGolB8EDRvDguKBxazX4PQG9nz7eU9c9lZjwI_6QEoWlr1QmvCrKfN5BwoJI27gUVTchNPKsHxZm_CkaHiquqeAlDKyVbuTPZg_g-LsxOiRt2Tpj8hEzKx5ggB0A"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium">Fan_Club_Exclusive_QR</p>
+<p class="text-[10px] text-on-surface-variant/60 uppercase">Creado hace 3d • 1.2k escaneos</p>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">download</button>
+</div>
+</div>
+<div class="p-4 mt-2">
+<button class="w-full py-2 text-xs font-bold uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors border border-outline-variant/20 rounded-lg">Ver todos los assets</button>
+</div>
+</div>
+</section>
+<!-- Floating Integrated CUBO AI Chat -->
+<div class="fixed bottom-8 right-8 w-80 md:w-96 z-50">
+<div class="glass-panel rounded-2xl border border-primary-container/20 shadow-2xl flex flex-col max-h-[500px]">
+<div class="p-4 border-b border-outline-variant/10 flex items-center justify-between bg-primary-container/5 rounded-t-2xl">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-primary-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed text-lg" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<span class="font-headline font-bold text-sm">CUBO AI ASSISTANT</span>
+</div>
+<div class="flex gap-2">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">minimize</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">close</button>
+</div>
+</div>
+<div class="p-6 overflow-y-auto space-y-4 flex-1 scrollbar-hide">
+<div class="flex gap-3">
+<div class="w-6 h-6 bg-surface-container-high rounded flex items-center justify-center flex-shrink-0 mt-1">
+<span class="material-symbols-outlined text-[14px]">smart_toy</span>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg rounded-tl-none text-xs leading-relaxed border border-outline-variant/5">
+                            ¿Qué asset deseas crear hoy? Puedo generar un QR para tu show o un carrusel con insights de tus fans.
+                        </div>
+</div>
+<div class="flex gap-3 justify-end">
+<div class="bg-primary-container/10 p-3 rounded-lg rounded-tr-none text-xs leading-relaxed text-primary-container border border-primary-container/10">
+                            "Crea un código QR para mi show en Buenos Aires con una estética de Tango rojo profundo."
+                        </div>
+</div>
+<div class="flex gap-3">
+<div class="w-6 h-6 bg-surface-container-high rounded flex items-center justify-center flex-shrink-0 mt-1">
+<span class="material-symbols-outlined text-[14px]">smart_toy</span>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg rounded-tl-none text-xs leading-relaxed border border-outline-variant/5">
+                            Perfecto. Generando asset con paleta <span class="text-[#FF0000] font-bold">Deep Tango Red</span> y tracking activo para Buenos Aires...
+                        </div>
+</div>
+</div>
+<div class="p-4 bg-surface-container-high/50 rounded-b-2xl">
+<div class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant/20 rounded-full px-4 py-2">
+<input class="bg-transparent border-none focus:ring-0 text-xs w-full font-label" placeholder="Escribe tu comando AI..." type="text"/>
+<button class="material-symbols-outlined text-primary-container hover:scale-110 transition-transform">send</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Mobile Nav Pivot -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-[#131313]/90 backdrop-blur-xl border-t border-outline-variant/10 flex justify-around items-center h-16">
+<button class="flex flex-col items-center gap-1 text-[#00FF41]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="text-[10px] uppercase font-headline font-bold">Gen</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-[#e5e2e1]/40">
+<span class="material-symbols-outlined">auto_awesome_motion</span>
+<span class="text-[10px] uppercase font-headline">Lib</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-[#e5e2e1]/40">
+<span class="material-symbols-outlined">qr_code_2</span>
+<span class="text-[10px] uppercase font-headline">Lab</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-[#e5e2e1]/40">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="text-[10px] uppercase font-headline">Chat</span>
+</button>
+</nav>
+</body></html>

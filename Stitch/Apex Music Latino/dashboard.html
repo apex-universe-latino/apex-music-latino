@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Artist OS | Apex Music Latino</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary": "#bdf4ff",
+              "error-container": "#93000a",
+              "on-primary": "#003907",
+              "surface-container": "#201f1f",
+              "surface": "#131313",
+              "background": "#131313",
+              "tertiary": "#fcf8f8",
+              "on-primary-container": "#007117",
+              "error": "#ffb4ab",
+              "secondary-fixed-dim": "#00daf3",
+              "on-background": "#e5e2e1",
+              "on-tertiary-fixed-variant": "#474746",
+              "on-secondary-fixed-variant": "#004f58",
+              "tertiary-container": "#dfdcdb",
+              "on-tertiary-fixed": "#1c1b1b",
+              "surface-container-low": "#1c1b1b",
+              "on-secondary-container": "#00616d",
+              "inverse-surface": "#e5e2e1",
+              "on-secondary-fixed": "#001f24",
+              "outline-variant": "#3b4b37",
+              "surface-container-lowest": "#0e0e0e",
+              "primary-fixed": "#72ff70",
+              "outline": "#84967e",
+              "on-primary-fixed": "#002203",
+              "tertiary-fixed": "#e5e2e1",
+              "primary": "#ebffe2",
+              "on-error": "#690005",
+              "inverse-primary": "#006e16",
+              "on-error-container": "#ffdad6",
+              "primary-container": "#00ff41",
+              "on-tertiary-container": "#616060",
+              "surface-variant": "#353534",
+              "surface-container-high": "#2a2a2a",
+              "surface-dim": "#131313",
+              "on-surface-variant": "#b9ccb2",
+              "on-tertiary": "#313030",
+              "tertiary-fixed-dim": "#c8c6c5",
+              "on-surface": "#e5e2e1",
+              "secondary-container": "#00e3fd",
+              "surface-container-highest": "#353534",
+              "surface-bright": "#3a3939",
+              "on-primary-fixed-variant": "#00530e",
+              "inverse-on-surface": "#313030",
+              "on-secondary": "#00363d",
+              "secondary-fixed": "#9cf0ff",
+              "surface-tint": "#00e639",
+              "primary-fixed-dim": "#00e639"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .glass-panel {
+        background: rgba(53, 53, 52, 0.4);
+        backdrop-filter: blur(20px);
+      }
+      .data-pulse-bg {
+        background-image: radial-gradient(circle, #00ff41 1px, transparent 1px);
+        background-size: 24px 24px;
+        opacity: 0.05;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-neutral-950/60 backdrop-blur-xl flex justify-between items-center px-8 h-20 w-full shadow-[0_8px_32px_0_rgba(0,0,0,0.8)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-bold tracking-tighter text-neutral-100 font-headline">Apex Music Latino</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="font-headline tracking-tight text-green-400 border-b-2 border-green-400 pb-1" href="#">Ecosystem</a>
+<a class="font-headline tracking-tight text-neutral-400 hover:text-neutral-100 transition-colors" href="#">Marketplace</a>
+<a class="font-headline tracking-tight text-neutral-400 hover:text-neutral-100 transition-colors" href="#">Academy</a>
+<a class="font-headline tracking-tight text-neutral-400 hover:text-neutral-100 transition-colors" href="#">Artist OS</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="bg-neutral-800/40 p-2 rounded-lg hover:bg-neutral-800/40 transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined text-on-surface">grid_view</span>
+</div>
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-2 rounded font-medium hover:opacity-90 active:scale-95 duration-200">
+                Join Apex
+            </button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User Profile" data-alt="Close up portrait of a modern artist profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkJsVzxIukN0XF2gC_y4a85QB05Kyye5ODNLcLxqY09EaidGES2iA6tSUzeDo3DRNe3hFwzHtFPl4oQL-aaesQ4yUUKf3aL9A9EJVZKuz_b0L4_8-SEUFy3-5pzOnAK5GWTN-KsDFakuWMkVyb_UctMYpzXanuIahAqaHqcM_lxq9I6mAkYTPj_5sT1UcSMSEwOUczmQ4JwWKJIq4ydEdXhPeBH2xM8DCF0WzA0gmdwXD9mzfmLvEuq6AWGEJoUPfpIdpb60gUHWs"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full z-40 flex flex-col bg-neutral-900/80 backdrop-blur-2xl h-screen w-64 border-r border-neutral-800/30 font-['Inter'] text-sm font-medium pt-24">
+<div class="px-6 mb-8">
+<h2 class="text-lg font-black text-neutral-100 uppercase tracking-tighter">Artist OS</h2>
+<p class="text-[10px] text-primary-fixed opacity-70">Data Engine v2.1</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 bg-green-500/10 text-green-400 border-r-4 border-green-500 px-4 py-3 hover:text-neutral-100 transition-all translate-x-1" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 text-neutral-500 px-4 py-3 hover:bg-neutral-800/50 hover:text-neutral-100 transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+                Fan CRM
+            </a>
+<a class="flex items-center gap-3 text-neutral-500 px-4 py-3 hover:bg-neutral-800/50 hover:text-neutral-100 transition-all" href="#">
+<span class="material-symbols-outlined">payments</span>
+                Revenue
+            </a>
+<a class="flex items-center gap-3 text-neutral-500 px-4 py-3 hover:bg-neutral-800/50 hover:text-neutral-100 transition-all" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+                Analytics
+            </a>
+<a class="flex items-center gap-3 text-neutral-500 px-4 py-3 hover:bg-neutral-800/50 hover:text-neutral-100 transition-all" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+                Kujo AI
+            </a>
+</nav>
+<div class="px-4 py-6 mt-auto border-t border-neutral-800/20">
+<button class="w-full bg-surface-container-high border border-outline-variant/30 text-on-surface py-2 rounded-md mb-4 hover:bg-surface-bright transition-colors">
+                Upgrade Plan
+            </button>
+<div class="space-y-1">
+<a class="flex items-center gap-3 text-neutral-500 px-2 py-2 hover:text-neutral-100 transition-all" href="#">
+<span class="material-symbols-outlined text-sm">settings</span>
+                    Settings
+                </a>
+<a class="flex items-center gap-3 text-neutral-500 px-2 py-2 hover:text-neutral-100 transition-all" href="#">
+<span class="material-symbols-outlined text-sm">help_outline</span>
+                    Support
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-28 px-8 pb-12 min-h-screen">
+<!-- Hero Header Section -->
+<header class="mb-12 relative">
+<div class="flex flex-col md:flex-row justify-between items-end gap-6">
+<div>
+<h1 class="text-6xl font-headline font-bold tracking-tighter leading-none mb-2">
+                        Welcome back, <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-fixed to-secondary-fixed">ELÍSEO</span>
+</h1>
+<p class="text-on-surface-variant font-body max-w-xl">Your performance is up 24% this week. CUBO predicts a breakthrough in the Southern Cone market within 14 days.</p>
+</div>
+<div class="flex gap-4">
+<div class="glass-panel p-4 rounded-xl border border-outline-variant/20 flex flex-col items-end">
+<span class="text-[10px] uppercase tracking-widest text-secondary-fixed opacity-60">Market Index</span>
+<span class="text-2xl font-headline font-bold text-secondary-fixed">+8.2%</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Bento Grid: Key Metrics -->
+<div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-6 mb-12">
+<!-- Monthly Listeners -->
+<div class="lg:col-span-3 bg-surface-container-low p-6 rounded-xl border border-outline-variant/10 relative overflow-hidden group">
+<div class="absolute inset-0 data-pulse-bg"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-8">
+<span class="material-symbols-outlined text-primary-fixed">hearing</span>
+<span class="text-[10px] font-bold text-primary-container bg-primary-container/10 px-2 py-0.5 rounded">+12%</span>
+</div>
+<p class="text-sm font-label text-on-surface-variant uppercase tracking-widest mb-1">Monthly Listeners</p>
+<h3 class="text-4xl font-headline font-bold">1.2M</h3>
+</div>
+</div>
+<!-- Fan Growth -->
+<div class="lg:col-span-3 bg-surface-container-low p-6 rounded-xl border border-outline-variant/10 relative overflow-hidden group">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-8">
+<span class="material-symbols-outlined text-secondary-fixed">trending_up</span>
+<span class="text-[10px] font-bold text-secondary-container bg-secondary-container/10 px-2 py-0.5 rounded">HOT</span>
+</div>
+<p class="text-sm font-label text-on-surface-variant uppercase tracking-widest mb-1">Fan Growth</p>
+<h3 class="text-4xl font-headline font-bold">42.8K</h3>
+</div>
+</div>
+<!-- Total Revenue -->
+<div class="lg:col-span-6 bg-surface-container-low p-6 rounded-xl border border-outline-variant/10 relative overflow-hidden">
+<div class="flex justify-between items-start mb-8">
+<div class="flex gap-4">
+<div class="p-2 bg-surface-container-high rounded text-primary-fixed">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+<div>
+<p class="text-sm font-label text-on-surface-variant uppercase tracking-widest mb-1">Total Revenue (Gross)</p>
+<h3 class="text-4xl font-headline font-bold">$184,200.50</h3>
+</div>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-on-surface-variant uppercase mb-1">Payout Status</p>
+<span class="text-primary-fixed text-xs flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-fixed animate-pulse"></span> Ready for withdrawal
+                        </span>
+</div>
+</div>
+<!-- Revenue Breakdown -->
+<div class="grid grid-cols-3 gap-4 pt-4 border-t border-outline-variant/10">
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase">Streaming</p>
+<p class="text-lg font-bold font-headline">$92k</p>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase">Merch</p>
+<p class="text-lg font-bold font-headline">$45k</p>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase">Brand Deals</p>
+<p class="text-lg font-bold font-headline">$47k</p>
+</div>
+</div>
+</div>
+</div>
+<!-- CUBO Data Engine: Intelligence Visualization -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+<div class="lg:col-span-8 bg-surface-container-low p-8 rounded-xl relative border border-outline-variant/10 overflow-hidden">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h4 class="text-2xl font-headline font-bold">CUBO Audience Intelligence</h4>
+<p class="text-sm text-on-surface-variant">Real-time demographic and velocity tracking</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-xs bg-surface-container-high border border-outline-variant/20 rounded">Week</button>
+<button class="px-3 py-1 text-xs bg-primary-container/20 text-primary-container border border-primary-container/40 rounded">Month</button>
+</div>
+</div>
+<!-- Visualization Placeholder -->
+<div class="h-64 flex items-end gap-2 px-2 pb-4">
+<div class="flex-1 bg-surface-container-highest rounded-t hover:bg-primary-fixed-dim transition-colors h-[40%] relative group">
+<span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] opacity-0 group-hover:opacity-100">22%</span>
+</div>
+<div class="flex-1 bg-surface-container-highest rounded-t hover:bg-primary-fixed-dim transition-colors h-[60%] relative group"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t hover:bg-primary-fixed-dim transition-colors h-[45%] relative group"></div>
+<div class="flex-1 bg-primary-container/40 rounded-t h-[85%] border-t-2 border-primary-container relative group">
+<span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-primary-fixed font-bold">PEAK</span>
+</div>
+<div class="flex-1 bg-surface-container-highest rounded-t hover:bg-primary-fixed-dim transition-colors h-[55%] relative group"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t hover:bg-primary-fixed-dim transition-colors h-[70%] relative group"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t hover:bg-primary-fixed-dim transition-colors h-[65%] relative group"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t hover:bg-primary-fixed-dim transition-colors h-[40%] relative group"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t hover:bg-primary-fixed-dim transition-colors h-[90%] relative group"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t hover:bg-primary-fixed-dim transition-colors h-[50%] relative group"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t hover:bg-primary-fixed-dim transition-colors h-[30%] relative group"></div>
+</div>
+<div class="flex justify-between mt-4 px-2 text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">
+<span>JAN 01</span>
+<span>JAN 15</span>
+<span>JAN 30</span>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Campaigns -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant/10">
+<h5 class="text-sm font-label text-on-surface-variant uppercase tracking-widest mb-4">Live Campaigns</h5>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-secondary-container/20 flex items-center justify-center text-secondary-fixed">
+<span class="material-symbols-outlined">campaign</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold">Tiktok Sped Up: "Girasol"</p>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full mt-1">
+<div class="bg-secondary-fixed h-1.5 rounded-full" style="width: 75%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-primary-container/20 flex items-center justify-center text-primary-fixed">
+<span class="material-symbols-outlined">ads_click</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold">CDMX Discovery Ads</p>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full mt-1">
+<div class="bg-primary-fixed h-1.5 rounded-full" style="width: 42%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Insights -->
+<div class="bg-primary-container text-on-primary-container p-6 rounded-xl relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-9xl">lightbulb</span>
+</div>
+<h5 class="text-xs font-bold uppercase mb-2">CUBO Insight</h5>
+<p class="text-lg font-headline font-bold leading-tight">Fan retention in Madrid is dropping. Launching a localized "Meet &amp; Greet" contest could recover 15% churn.</p>
+</div>
+</div>
+</section>
+<!-- Rights & Transparency -->
+<section class="mb-24">
+<h4 class="text-2xl font-headline font-bold mb-6">Rights &amp; Royalty Integrity</h4>
+<div class="bg-surface-container-low rounded-xl border border-outline-variant/10 divide-y divide-outline-variant/10">
+<div class="grid grid-cols-12 p-4 text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">
+<div class="col-span-4">Asset Name</div>
+<div class="col-span-2">Ownership Split</div>
+<div class="col-span-2">Royalty Pool</div>
+<div class="col-span-2">Admin Status</div>
+<div class="col-span-2 text-right">Actions</div>
+</div>
+<!-- Asset Row 1 -->
+<div class="grid grid-cols-12 p-4 items-center group hover:bg-surface-container-highest transition-colors">
+<div class="col-span-4 flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-container-high rounded overflow-hidden">
+<img alt="Song Cover" data-alt="Abstract vibrant album cover art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZTLS3cM-jSoPjYewhQvpRCmZRKNcc7FN0LFjg1doVo5N_pQREwUZErjGbdsGtnKLz6NSQg43IVpC-kHGa9mNZO0S_NNZdZZvdWKLmQB-hbZ9335bmPD_QRYiLqFApMtjkDCwwg5HqvagUPo-7kz6KQDp5L6Sz1U3riUhhS-YJqzKT3lmdZ977Ppcocd0AhY5mnwSEkTvgiXGvyWEFwgDMWK3nY6JwV0Ot2eVpTDfXvrzZdlnkIYxsxRT8uQwm8ISTlz053_P31fQ"/>
+</div>
+<div>
+<p class="font-bold">Girasol (Original Mix)</p>
+<p class="text-[10px] text-on-surface-variant">ISRC: US-APX-24-001</p>
+</div>
+</div>
+<div class="col-span-2 text-sm font-headline">50% (Master)</div>
+<div class="col-span-2 text-sm">$12,402.00</div>
+<div class="col-span-2">
+<span class="px-2 py-0.5 rounded-full bg-primary-container/10 text-primary-fixed text-[10px] border border-primary-container/20">VERIFIED</span>
+</div>
+<div class="col-span-2 text-right">
+<button class="text-on-surface-variant hover:text-primary-fixed transition-colors">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</div>
+<!-- Asset Row 2 -->
+<div class="grid grid-cols-12 p-4 items-center group hover:bg-surface-container-highest transition-colors">
+<div class="col-span-4 flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-container-high rounded overflow-hidden">
+<img alt="Song Cover" data-alt="Modern electronic music visual art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWfX_1TWBRwmQShoSSduMW-p6dAYg8EtsRB2nvquxtmeobNi4GHOuw86M1NbWFpID5XC7O-A9XTIfEV0NxZCrf5JuYmby_HgfucGtcQY2iNnuGIWFffJ-CkvOrlqNNTwamQdJ8Th57HRJI7Ij5lkvE_dfq-TgPNYFHkZWig8NtPHBHWI4attHjid7pf1_fUfa-AA73yKLG906RMKOII1ohroqWAK79_T9OzSmAWDiZVO1gClYFMf862Y0uw4oEygVxYJ8YMqWmVRA"/>
+</div>
+<div>
+<p class="font-bold">Noche de Fuego (Remix)</p>
+<p class="text-[10px] text-on-surface-variant">ISRC: US-APX-24-005</p>
+</div>
+</div>
+<div class="col-span-2 text-sm font-headline">25% (Sync Only)</div>
+<div class="col-span-2 text-sm">$3,150.80</div>
+<div class="col-span-2">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/10 text-secondary-fixed text-[10px] border border-secondary-container/20">PENDING SPLITS</span>
+</div>
+<div class="col-span-2 text-right">
+<button class="text-on-surface-variant hover:text-primary-fixed transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating AI Assistant (Kujo) -->
+<div class="fixed bottom-8 right-8 z-[60] flex flex-col items-end gap-4">
+<!-- Kujo Active Window (Hidden by default, shown for UI demonstration) -->
+<div class="w-80 glass-panel rounded-2xl border border-primary-container/30 shadow-2xl overflow-hidden flex flex-col mb-2">
+<div class="bg-primary-container/10 p-4 border-b border-primary-container/20 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary font-bold text-sm">smart_toy</span>
+</div>
+<div>
+<h6 class="text-sm font-bold font-headline">Kujo AI</h6>
+<p class="text-[10px] text-primary-fixed uppercase tracking-widest">Active Assistant</p>
+</div>
+</div>
+<div class="p-4 h-48 overflow-y-auto space-y-4 font-body text-xs">
+<div class="bg-surface-container-high p-3 rounded-lg rounded-tl-none">
+                    Hola! I've analyzed your recent collab proposal. Should I generate a 50/50 split agreement with a "Buyout Option"?
+                </div>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1 bg-primary-container/20 border border-primary-container/40 rounded-full hover:bg-primary-container/30 transition-colors">Generate Contract</button>
+<button class="px-3 py-1 bg-secondary-container/20 border border-secondary-container/40 rounded-full hover:bg-secondary-container/30 transition-colors">Marketing Strategy</button>
+</div>
+</div>
+<div class="p-3 bg-surface-container-highest flex items-center gap-2">
+<input class="bg-transparent border-none focus:ring-0 text-xs flex-1 text-on-surface" placeholder="Ask Kujo about royalties..." type="text"/>
+<button class="text-primary-fixed">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+<!-- Toggle Button -->
+<button class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-fixed to-primary-container text-on-primary shadow-xl shadow-primary-container/20 flex items-center justify-center group active:scale-95 duration-200">
+<span class="material-symbols-outlined text-3xl font-bold group-hover:scale-110 transition-transform">smart_toy</span>
+</button>
+</div>
+<!-- Footer -->
+<footer class="bg-neutral-950 w-full py-12 px-8 border-t border-neutral-800/20 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-col gap-2">
+<span class="font-['Space_Grotesk'] font-bold text-neutral-100 text-xl">Apex Music Latino</span>
+<p class="font-['Inter'] text-xs uppercase tracking-widest text-neutral-600">© 2024 Apex Music Latino. Powered by CUBO Data Engine.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-neutral-600 hover:text-green-300 transition-colors opacity-80 hover:opacity-100" href="#">Transparency</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-neutral-600 hover:text-green-300 transition-colors opacity-80 hover:opacity-100" href="#">Rights</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-neutral-600 hover:text-green-300 transition-colors opacity-80 hover:opacity-100" href="#">Privacy</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-neutral-600 hover:text-green-300 transition-colors opacity-80 hover:opacity-100" href="#">Terms</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-neutral-600 hover:text-green-300 transition-colors opacity-80 hover:opacity-100" href="#">API</a>
+</div>
+</footer>
+</body></html>

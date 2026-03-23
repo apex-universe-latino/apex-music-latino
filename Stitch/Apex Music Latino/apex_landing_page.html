@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Apex Music Latino | Turn Artists Into Empires</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary": "#bdf4ff",
+                        "error-container": "#93000a",
+                        "on-primary": "#003907",
+                        "surface-container": "#201f1f",
+                        "surface": "#131313",
+                        "background": "#131313",
+                        "tertiary": "#fcf8f8",
+                        "on-primary-container": "#007117",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#00daf3",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "tertiary-container": "#dfdcdb",
+                        "on-tertiary-fixed": "#1c1b1b",
+                        "surface-container-low": "#1c1b1b",
+                        "on-secondary-container": "#00616d",
+                        "inverse-surface": "#e5e2e1",
+                        "on-secondary-fixed": "#001f24",
+                        "outline-variant": "#3b4b37",
+                        "surface-container-lowest": "#0e0e0e",
+                        "primary-fixed": "#72ff70",
+                        "outline": "#84967e",
+                        "on-primary-fixed": "#002203",
+                        "tertiary-fixed": "#e5e2e1",
+                        "primary": "#ebffe2",
+                        "on-error": "#690005",
+                        "inverse-primary": "#006e16",
+                        "on-error-container": "#ffdad6",
+                        "primary-container": "#00ff41",
+                        "on-tertiary-container": "#616060",
+                        "surface-variant": "#353534",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-dim": "#131313",
+                        "on-surface-variant": "#b9ccb2",
+                        "on-tertiary": "#313030",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "on-surface": "#e5e2e1",
+                        "secondary-container": "#00e3fd",
+                        "surface-container-highest": "#353534",
+                        "surface-bright": "#3a3939",
+                        "on-primary-fixed-variant": "#00530e",
+                        "inverse-on-surface": "#313030",
+                        "on-secondary": "#00363d",
+                        "secondary-fixed": "#9cf0ff",
+                        "surface-tint": "#00e639",
+                        "primary-fixed-dim": "#00e639"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(53, 53, 52, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .text-gradient-primary {
+            background: linear-gradient(45deg, #ebffe2, #00ff41);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-gradient-primary {
+            background: linear-gradient(45deg, #ebffe2, #00ff41);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full z-50 bg-neutral-950/60 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] h-20 flex justify-between items-center px-8">
+<div class="flex items-center gap-12">
+<span class="text-2xl font-bold tracking-tighter text-neutral-100 font-headline">Apex Music Latino</span>
+<!-- Genre Selector (Contextual Requirement) -->
+<div class="hidden lg:flex items-center gap-6 overflow-x-auto no-scrollbar py-2">
+<button class="text-xs uppercase tracking-widest font-bold text-primary-container border-b border-primary-container pb-1">All Genres</button>
+<button class="text-xs uppercase tracking-widest font-medium text-neutral-500 hover:text-neutral-100 transition-colors">Rap</button>
+<button class="text-xs uppercase tracking-widest font-medium text-neutral-500 hover:text-neutral-100 transition-colors">Reggaeton</button>
+<button class="text-xs uppercase tracking-widest font-medium text-neutral-500 hover:text-neutral-100 transition-colors">Rock</button>
+<button class="text-xs uppercase tracking-widest font-medium text-neutral-500 hover:text-neutral-100 transition-colors">Electronic</button>
+<button class="text-xs uppercase tracking-widest font-medium text-neutral-500 hover:text-neutral-100 transition-colors">Afro/Latin</button>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="hidden md:flex gap-6 font-headline tracking-tight">
+<a class="text-green-400 border-b-2 border-green-400 pb-1" href="#">Ecosystem</a>
+<a class="text-neutral-400 hover:text-neutral-100 transition-colors" href="#">Marketplace</a>
+<a class="text-neutral-400 hover:text-neutral-100 transition-colors" href="#">Academy</a>
+<a class="text-neutral-400 hover:text-neutral-100 transition-colors" href="#">Artist OS</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-neutral-400 hover:text-primary-container transition-colors">grid_view</button>
+<button class="px-6 py-2 bg-gradient-primary text-on-primary font-bold rounded-lg text-sm hover:scale-95 transition-transform duration-200">Join Apex</button>
+</div>
+</div>
+</nav>
+<main class="relative">
+<!-- Hero Section -->
+<section class="relative min-h-screen flex flex-col justify-center px-8 md:px-24 pt-20 overflow-hidden">
+<!-- Background Dynamic AI visuals placeholder -->
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10"></div>
+<div class="absolute inset-0 opacity-40 mix-blend-screen overflow-hidden">
+<div class="w-full h-full bg-[radial-gradient(circle_at_50%_50%,_rgba(0,255,65,0.15)_0%,_transparent_70%)] animate-pulse"></div>
+</div>
+<img alt="" class="w-full h-full object-cover grayscale opacity-30" data-alt="Abstract cinematic motion graphics with neon green pulses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvvmobvQ4yPOkJXbeb3aTAt5tnhPjYcFlFomMDj-oDYH3pDV37cagvCvnv9T9IdOsuSYQsX_1G9J-5aSYVNcduMokraXtRTHQFZZYAJGr5dq-ynnj5ncOCiGwRJgx6l6mllmxffKWi-c6XBP1lHwVbimCWkKhIncghLzKN9Ysy-gXm2Rit4MoHpfk38g1sXjB4_Y8WhOzQOHm8W9Tdftxx73ArQuxKZqXzOp3UPVJ7hRxENJCPS3q1w0pZqQxLIzUR3UifV9wG2UU"/>
+</div>
+<div class="relative z-20 max-w-5xl">
+<p class="text-primary-container font-headline text-lg tracking-[0.4em] uppercase mb-6">Established 2024</p>
+<h1 class="font-headline text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-[0.9] mb-8">
+                    Turn Artists Into <span class="text-gradient-primary">Empires.</span>
+</h1>
+<p class="max-w-2xl text-xl md:text-2xl text-on-surface-variant font-light leading-relaxed mb-12">
+                    Apex Music Latino is where music, data, and influence become one system. The next era of Latin sound is engineered here.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="px-8 py-4 bg-gradient-primary text-on-primary font-bold rounded-lg flex items-center gap-3 hover:scale-105 transition-transform">
+                        Discover Artists <span class="material-symbols-outlined">north_east</span>
+</button>
+<button class="px-8 py-4 glass-panel border border-outline-variant/20 font-bold rounded-lg hover:bg-surface-container-high transition-colors">
+                        Join Apex
+                    </button>
+<button class="px-8 py-4 text-primary-fixed hover:underline font-bold decoration-2 underline-offset-8 transition-all">
+                        Explore Marketplace
+                    </button>
+</div>
+</div>
+<!-- Stats Bar -->
+<div class="absolute bottom-12 left-8 md:left-24 right-8 flex flex-wrap gap-12 z-20">
+<div>
+<span class="block text-3xl font-headline font-bold text-neutral-100">140M+</span>
+<span class="text-xs uppercase tracking-widest text-neutral-500 font-bold">Monthly Streams</span>
+</div>
+<div>
+<span class="block text-3xl font-headline font-bold text-neutral-100">12</span>
+<span class="text-xs uppercase tracking-widest text-neutral-500 font-bold">Chart Toppers</span>
+</div>
+<div>
+<span class="block text-3xl font-headline font-bold text-neutral-100">820k</span>
+<span class="text-xs uppercase tracking-widest text-neutral-500 font-bold">Active Fan CRM</span>
+</div>
+</div>
+</section>
+<!-- Powered by CUBO Section -->
+<section class="py-32 px-8 md:px-24 bg-surface-container-low">
+<div class="grid lg:grid-cols-2 gap-24 items-center">
+<div>
+<div class="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-primary-container/20 bg-primary-container/5 text-primary-container mb-8">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="text-xs font-bold uppercase tracking-widest">Next-Gen Intelligence</span>
+</div>
+<h2 class="font-headline text-5xl md:text-6xl font-bold tracking-tight mb-8">Powered by <span class="text-primary-container">CUBO</span> — Data Intelligence for Artists</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-12 max-w-xl">
+                        Built by <span class="text-on-surface font-semibold">Datos Maestros</span> — trusted by global enterprises. We bring industrial-grade analytics to the creative frontline.
+                    </p>
+<div class="grid sm:grid-cols-2 gap-8">
+<div class="space-y-4">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">group</span>
+<h4 class="font-headline font-bold text-xl">Fan CRM</h4>
+<p class="text-sm text-neutral-500">Deeper relationships through segmented audience behavioral patterns.</p>
+</div>
+<div class="space-y-4">
+<span class="material-symbols-outlined text-secondary-container" style="font-variation-settings: 'FILL' 1;">insights</span>
+<h4 class="font-headline font-bold text-xl">Audience Intelligence</h4>
+<p class="text-sm text-neutral-500">Real-time demographic and psychographic data visualization.</p>
+</div>
+<div class="space-y-4">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+<h4 class="font-headline font-bold text-xl">Campaign Tracking</h4>
+<p class="text-sm text-neutral-500">Full attribution modeling across all social and streaming nodes.</p>
+</div>
+<div class="space-y-4">
+<span class="material-symbols-outlined text-secondary-container" style="font-variation-settings: 'FILL' 1;">payments</span>
+<h4 class="font-headline font-bold text-xl">Revenue Dashboards</h4>
+<p class="text-sm text-neutral-500">Live royalty tracking and diverse income stream forecasting.</p>
+</div>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute -inset-4 bg-primary-container/10 blur-3xl rounded-full group-hover:bg-primary-container/20 transition-all duration-700"></div>
+<div class="relative glass-panel rounded-2xl border border-outline-variant/10 p-2 overflow-hidden aspect-square flex items-center justify-center">
+<img alt="" class="w-full h-full object-cover rounded-xl grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Futuristic data visualization dashboard for artist revenue" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmRY8hahFSLXc11q1JDfpWRtyg5YaJdKwf6XNuMpkuO4d8l3cCNoJ07mp2B6buSIwIc_opRdy485_MwRMr_I8ILpWvdn7SZYSijkJkZsy9fZlKJukKYYnuXckoQRa-aC51hhw7_4XosRU68x1zUS6YaO9IHYacP0YA6-oi6FRd_4R5ekcjf-U2pb3IHx1h5nkuLze6vsuSESkokeXGHPu01tI73y5QmsKzXKWjUPdPfQIOgKQbGgIAZI0P10DymhCn3xaIepY94M0"/>
+<!-- Floating Data Node -->
+<div class="absolute top-8 right-8 p-6 glass-panel rounded-xl border border-primary-container/20 shadow-2xl">
+<div class="flex items-center gap-4 mb-2">
+<div class="w-2 h-2 rounded-full bg-primary-container animate-ping"></div>
+<span class="text-[10px] uppercase tracking-widest font-bold">Live Data Insights</span>
+</div>
+<div class="text-2xl font-headline font-bold text-primary-container">+24.8%</div>
+<div class="text-[10px] text-neutral-400">Fan Retention Growth</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Artist OS Product Showcase (Bento Grid) -->
+<section class="py-32 px-8 md:px-24">
+<div class="text-center mb-24">
+<h2 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter mb-6">Artist OS</h2>
+<p class="text-primary-container font-bold tracking-widest uppercase mb-12">"Shopify + HubSpot for Artists"</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto lg:h-[700px]">
+<div class="md:col-span-8 glass-panel rounded-3xl border border-outline-variant/10 p-12 relative overflow-hidden group">
+<div class="relative z-10 h-full flex flex-col justify-end">
+<h3 class="text-4xl font-headline font-bold mb-4">EPK Builder &amp; Smartlinks</h3>
+<p class="text-on-surface-variant max-w-md">The terminal for your professional identity. Automated electronic press kits and high-converting launch pages.</p>
+</div>
+<img alt="" class="absolute inset-0 w-full h-full object-cover opacity-20 grayscale group-hover:scale-110 transition-transform duration-1000" data-alt="Minimalist artist profile interface design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxRSfCi8zEKzhwCIRCX0rPYbshgbYUvw1PCYS9W9vmej_rI98c0lyo8v6nce0uXTgaPIOe46lrfnDcT-TWzyo-ZQgTaqp9-torADZrJtpTeVgtAT5A48uk7NWtdodtxBk8THi2lRsA5WKmDCHo_7PWxgI0OS8xy0OUVPzEyOXTm63ipQET7ziNhKotuCSg7kFqWahgR-C5_Fv28AgTUivIrz1LLI0YIdqDeFrxI5b61yDbm2ZsG4shP4IQNQkxZTLaZERPWq_qOWs"/>
+</div>
+<div class="md:col-span-4 bg-surface-container-high rounded-3xl p-12 flex flex-col justify-between border border-outline-variant/10 group hover:border-primary-container/30 transition-colors">
+<div>
+<span class="material-symbols-outlined text-4xl text-primary-container mb-6">shopping_bag</span>
+<h3 class="text-3xl font-headline font-bold mb-4">Merch &amp; Tickets</h3>
+<p class="text-sm text-on-surface-variant">Direct-to-fan commerce engine. No middlemen, no friction. Just your art and your audience.</p>
+</div>
+<button class="w-full py-4 border border-outline-variant/30 rounded-lg font-bold hover:bg-white/5 transition-colors">Setup Store</button>
+</div>
+<div class="md:col-span-4 glass-panel rounded-3xl border border-outline-variant/10 p-8 group hover:bg-surface-container-highest transition-colors">
+<div class="w-12 h-12 bg-secondary-container/10 flex items-center justify-center rounded-lg mb-6">
+<span class="material-symbols-outlined text-secondary-container">query_stats</span>
+</div>
+<h3 class="text-2xl font-headline font-bold mb-4">Analytics Engine</h3>
+<p class="text-sm text-on-surface-variant">Global heatmaps of where your fans are listening, buying, and engaging.</p>
+</div>
+<div class="md:col-span-8 bg-gradient-to-br from-surface-container-high to-background rounded-3xl border border-outline-variant/10 p-12 flex items-center gap-12 group">
+<div class="flex-1">
+<h3 class="text-3xl font-headline font-bold mb-4">Fan CRM Integration</h3>
+<p class="text-on-surface-variant">Every ticket sold and every merch drop builds your permanent database. Owned audience, guaranteed influence.</p>
+</div>
+<div class="hidden lg:flex gap-2">
+<div class="w-12 h-32 bg-primary-container/10 rounded-full flex flex-col items-center justify-center gap-4">
+<div class="w-2 h-2 rounded-full bg-primary-container animate-bounce"></div>
+</div>
+<div class="w-12 h-32 bg-secondary-container/10 rounded-full flex flex-col items-center justify-center gap-4">
+<div class="w-2 h-2 rounded-full bg-secondary-container"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Apex Academy Section -->
+<section class="py-32 px-8 md:px-24 bg-surface-container-lowest relative overflow-hidden">
+<!-- Decorative "Data-Pulse" texture -->
+<div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#00ff41 1px, transparent 1px); background-size: 24px 24px;"></div>
+<div class="relative z-10">
+<div class="flex flex-col md:flex-row justify-between items-end gap-12 mb-20">
+<div class="max-w-2xl">
+<h2 class="font-headline text-5xl md:text-7xl font-bold tracking-tight mb-8">Apex Academy</h2>
+<p class="text-xl text-on-surface-variant">The blueprint for modern music careers. Move from amateur to executive through structured intellectual property mastery.</p>
+</div>
+<div class="flex gap-4">
+<span class="px-4 py-2 bg-primary-container/10 text-primary-container text-xs font-bold uppercase rounded tracking-widest">Free + Paid Tiers</span>
+</div>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Academy Card -->
+<div class="glass-panel p-10 rounded-2xl border border-outline-variant/10 hover:-translate-y-2 transition-transform duration-500">
+<span class="text-primary-container font-headline font-black text-6xl opacity-20 block mb-6">01</span>
+<h4 class="text-2xl font-bold mb-4">Contracts &amp; Law</h4>
+<ul class="space-y-4 mb-10 text-on-surface-variant text-sm">
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Contracts 101</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Royalties &amp; Publishing</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Sample Clearances</li>
+</ul>
+</div>
+<!-- Academy Card -->
+<div class="bg-surface-container-high p-10 rounded-2xl border border-primary-container/30 hover:-translate-y-2 transition-transform duration-500">
+<span class="text-primary-container font-headline font-black text-6xl opacity-40 block mb-6">02</span>
+<h4 class="text-2xl font-bold mb-4">Brand Strategy</h4>
+<ul class="space-y-4 mb-10 text-on-surface-variant text-sm">
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Identity &amp; Positioning</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Content Strategy</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Social Engine Design</li>
+</ul>
+</div>
+<!-- Academy Card -->
+<div class="glass-panel p-10 rounded-2xl border border-outline-variant/10 hover:-translate-y-2 transition-transform duration-500">
+<span class="text-primary-container font-headline font-black text-6xl opacity-20 block mb-6">03</span>
+<h4 class="text-2xl font-bold mb-4">Business Systems</h4>
+<ul class="space-y-4 mb-10 text-on-surface-variant text-sm">
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Scale &amp; Distribution</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Financial Optimization</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Team Architecture</li>
+</ul>
+</div>
+</div>
+<div class="mt-20 flex justify-center">
+<button class="group flex flex-col items-center gap-4">
+<span class="px-12 py-5 bg-gradient-primary text-on-primary font-bold text-lg rounded-xl group-hover:scale-105 transition-transform">Learn. Build. Scale.</span>
+<span class="text-xs uppercase tracking-[0.4em] font-bold text-neutral-500">Apply for 2024 cohort</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-neutral-950 w-full py-12 px-8 border-t border-neutral-800/20 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-col gap-4">
+<span class="font-headline font-bold text-2xl text-neutral-100 tracking-tighter">Apex Music Latino</span>
+<p class="font-body text-xs uppercase tracking-widest text-neutral-600">© 2024 Apex Music Latino. Powered by CUBO Data Engine.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-body text-xs uppercase tracking-widest text-neutral-600 hover:text-green-300 transition-colors" href="#">Transparency</a>
+<a class="font-body text-xs uppercase tracking-widest text-neutral-600 hover:text-green-300 transition-colors" href="#">Rights</a>
+<a class="font-body text-xs uppercase tracking-widest text-neutral-600 hover:text-green-300 transition-colors" href="#">Privacy</a>
+<a class="font-body text-xs uppercase tracking-widest text-neutral-600 hover:text-green-300 transition-colors" href="#">Terms</a>
+<a class="font-body text-xs uppercase tracking-widest text-neutral-600 hover:text-green-300 transition-colors" href="#">API</a>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-neutral-900 flex items-center justify-center opacity-80 hover:opacity-100 cursor-pointer">
+<span class="material-symbols-outlined text-sm">public</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-neutral-900 flex items-center justify-center opacity-80 hover:opacity-100 cursor-pointer">
+<span class="material-symbols-outlined text-sm">alternate_email</span>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-container": "#616060",
+              "on-primary-fixed-variant": "#00530e",
+              "tertiary-fixed-dim": "#c8c6c5",
+              "on-error": "#690005",
+              "surface-tint": "#00e639",
+              "tertiary-fixed": "#e5e2e1",
+              "outline-variant": "#3b4b37",
+              "inverse-primary": "#006e16",
+              "primary-fixed-dim": "#00e639",
+              "outline": "#84967e",
+              "on-primary-fixed": "#002203",
+              "on-secondary": "#00363d",
+              "on-surface": "#e5e2e1",
+              "surface-container-low": "#1c1b1b",
+              "primary": "#ebffe2",
+              "inverse-on-surface": "#313030",
+              "surface-container": "#201f1f",
+              "surface": "#131313",
+              "secondary-container": "#00e3fd",
+              "error-container": "#93000a",
+              "inverse-surface": "#e5e2e1",
+              "background": "#131313",
+              "on-tertiary-fixed": "#1c1b1b",
+              "on-primary": "#003907",
+              "tertiary-container": "#dfdcdb",
+              "on-secondary-fixed-variant": "#004f58",
+              "on-primary-container": "#007117",
+              "surface-variant": "#353534",
+              "surface-container-high": "#2a2a2a",
+              "on-tertiary-fixed-variant": "#474746",
+              "primary-container": "#00ff41",
+              "secondary-fixed-dim": "#00daf3",
+              "surface-bright": "#3a3939",
+              "surface-container-lowest": "#0e0e0e",
+              "error": "#ffb4ab",
+              "secondary-fixed": "#9cf0ff",
+              "on-secondary-fixed": "#001f24",
+              "primary-fixed": "#72ff70",
+              "on-tertiary": "#313030",
+              "on-secondary-container": "#00616d",
+              "surface-dim": "#131313",
+              "on-background": "#e5e2e1",
+              "on-surface-variant": "#b9ccb2",
+              "surface-container-highest": "#353534",
+              "tertiary": "#fcf8f8",
+              "secondary": "#bdf4ff",
+              "on-error-container": "#ffdad6"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-panel {
+        background: rgba(53, 53, 52, 0.4);
+        backdrop-filter: blur(20px);
+      }
+      .data-pulse-bg {
+        background-image: radial-gradient(circle, #00ff41 1px, transparent 1px);
+        background-size: 24px 24px;
+        opacity: 0.05;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-hidden">
+<!-- SideNavBar (Authority: JSON + Design System) -->
+<aside class="h-screen w-64 fixed left-0 top-0 z-40 bg-[#1c1b1b] border-r border-[#e5e2e1]/10 shadow-[20px_0_40px_rgba(0,0,0,0.5)] flex flex-col pt-20 pb-8">
+<div class="px-6 mb-10">
+<h1 class="font-headline font-black text-[#00FF41] tracking-widest text-xl">KUBO DATA</h1>
+<p class="font-inter text-[10px] font-medium tracking-wide text-[#e5e2e1]/40 mt-1 uppercase">V3.0 Intelligent Intelligence</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Inactive -->
+<a class="flex items-center gap-3 px-4 py-3 text-[#e5e2e1]/40 hover:text-[#e5e2e1]/80 hover:bg-[#2a2a2a] font-inter text-xs font-medium tracking-wide transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Active: Onboarding -->
+<a class="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-[#00FF41]/10 to-transparent text-[#00FF41] border-l-4 border-[#00FF41] font-inter text-xs font-medium tracking-wide transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="dataset">dataset</span>
+<span>Onboarding</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center gap-3 px-4 py-3 text-[#e5e2e1]/40 hover:text-[#e5e2e1]/80 hover:bg-[#2a2a2a] font-inter text-xs font-medium tracking-wide transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span>KUBO Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#e5e2e1]/40 hover:text-[#e5e2e1]/80 hover:bg-[#2a2a2a] font-inter text-xs font-medium tracking-wide transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span>Royalties</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#e5e2e1]/40 hover:text-[#e5e2e1]/80 hover:bg-[#2a2a2a] font-inter text-xs font-medium tracking-wide transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span>Submit EPK</span>
+</a>
+</nav>
+<div class="px-4 mt-auto space-y-4">
+<button class="w-full py-3 bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold text-xs uppercase tracking-widest rounded-md hover:opacity-90 transition-all">
+                Upgrade to Pro
+            </button>
+<div class="pt-4 border-t border-[#e5e2e1]/5">
+<a class="flex items-center gap-3 px-4 py-2 text-[#e5e2e1]/40 hover:text-[#e5e2e1]/80 transition-colors text-xs" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help_outline">help_outline</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-[#e5e2e1]/40 hover:text-[#e5e2e1]/80 transition-colors text-xs" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="logout">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen relative flex flex-col items-center justify-center p-8">
+<div class="absolute inset-0 data-pulse-bg pointer-events-none"></div>
+<!-- Center Onboarding Container -->
+<div class="max-w-4xl w-full z-10 space-y-12">
+<!-- Stepper Component -->
+<div class="flex justify-between items-center w-full max-w-2xl mx-auto mb-16 relative">
+<div class="absolute top-1/2 left-0 w-full h-px bg-surface-container-highest -translate-y-1/2 -z-10"></div>
+<!-- Step 1: Active -->
+<div class="flex flex-col items-center gap-3 bg-background px-4">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary shadow-[0_0_15px_rgba(0,255,65,0.3)]">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span class="font-label text-[10px] uppercase tracking-[0.2em] text-primary-fixed">Identidad</span>
+</div>
+<!-- Step 2: Current -->
+<div class="flex flex-col items-center gap-3 bg-background px-4">
+<div class="w-10 h-10 rounded-full border-2 border-secondary-container flex items-center justify-center text-secondary-container">
+<span class="text-xs font-bold font-headline">02</span>
+</div>
+<span class="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface">Redes Sociales</span>
+</div>
+<!-- Step 3: Pending -->
+<div class="flex flex-col items-center gap-3 bg-background px-4">
+<div class="w-10 h-10 rounded-full border-2 border-surface-container-highest flex items-center justify-center text-on-tertiary-container">
+<span class="text-xs font-bold font-headline">03</span>
+</div>
+<span class="font-label text-[10px] uppercase tracking-[0.2em] text-on-tertiary-container">Distribución</span>
+</div>
+</div>
+<!-- Content Area: Asymmetric Layout -->
+<div class="grid grid-cols-12 gap-8 items-start">
+<!-- Onboarding Flow -->
+<div class="col-span-12 lg:col-span-8 space-y-10">
+<header>
+<h2 class="font-headline text-5xl font-bold tracking-tighter text-on-surface mb-4">
+                            Configura tu <span class="text-secondary-container">Ecosistema</span>
+</h2>
+<p class="font-body text-on-surface-variant text-lg max-w-lg leading-relaxed">
+                            Estamos configurando tu <span class="text-primary-fixed font-semibold">Customer 360 View</span> para que Kubo empiece a unificar tus datos.
+                        </p>
+</header>
+<!-- Question 1: Instagram Handle -->
+<section class="glass-panel p-8 rounded-xl border border-outline-variant/10 space-y-4">
+<label class="block font-headline text-xl text-on-surface font-medium">
+                            ¿Cuál es tu handle principal en Instagram?
+                        </label>
+<div class="relative group">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-bold text-xl">@</span>
+<input class="w-full bg-surface-container-highest border-none focus:ring-1 focus:ring-secondary-fixed-dim rounded-lg py-4 pl-12 pr-4 text-on-surface font-headline text-xl placeholder:text-on-surface/20 transition-all" placeholder="username" type="text"/>
+</div>
+</section>
+<!-- Question 2: Spotify Connection -->
+<section class="glass-panel p-8 rounded-xl border border-outline-variant/10 flex items-center justify-between gap-6">
+<div class="space-y-1">
+<label class="block font-headline text-xl text-on-surface font-medium">
+                                Conecta tu cuenta de Spotify for Artists
+                            </label>
+<p class="text-xs text-on-surface-variant uppercase tracking-wider">Sincronización de streams en tiempo real</p>
+</div>
+<button class="px-8 py-4 bg-surface-bright border border-secondary-fixed/20 hover:border-secondary-fixed text-secondary-fixed rounded-lg font-headline font-bold flex items-center gap-3 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="podcasts">podcasts</span>
+                            Conectar API
+                        </button>
+</section>
+<div class="flex justify-end pt-4">
+<button class="px-12 py-5 bg-gradient-to-br from-primary to-primary-container text-on-primary font-black font-headline text-sm uppercase tracking-widest rounded-md shadow-[0_10px_30px_-10px_rgba(0,255,65,0.4)] hover:-translate-y-1 transition-all">
+                            Siguiente Paso
+                        </button>
+</div>
+</div>
+<!-- AI Sidebar Bubble (Kujo) -->
+<div class="col-span-12 lg:col-span-4 lg:sticky lg:top-32">
+<div class="relative group">
+<!-- AI Avatar/Glow -->
+<div class="absolute -top-12 -left-4 w-24 h-24 bg-primary-container/20 blur-[40px] rounded-full group-hover:bg-primary-container/30 transition-all"></div>
+<div class="bg-surface-container-low p-6 rounded-2xl border border-primary-container/10 relative overflow-hidden">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-sm" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<span class="font-headline font-bold text-primary-fixed text-sm tracking-widest">KUJO AI</span>
+</div>
+<p class="font-body text-sm leading-relaxed text-on-surface italic">
+                                "Conectar tus redes me permite analizar tu audiencia y generar mejores estrategias de marketing."
+                            </p>
+<div class="mt-4 flex gap-1">
+<div class="w-1 h-1 rounded-full bg-primary-container/40"></div>
+<div class="w-1 h-1 rounded-full bg-primary-container/40"></div>
+<div class="w-1 h-1 rounded-full bg-primary-container/40"></div>
+</div>
+<!-- Decorative image placeholder -->
+<div class="mt-8 opacity-20 grayscale hover:grayscale-0 transition-all duration-700">
+<img class="w-full h-32 object-cover rounded-lg" data-alt="Abstract digital neural network nodes in neon green" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBw641u5S-4jjDeHEKq6i-uG8hWDsYiJbTHGUdMfTevY9M-l0PIg2NMLqBQXqfxUoE7pHQdFnrZXsmPNvC1vGIimjF5gZryLqJqpY_HtFZk2LOhLNfnFWWSXnYySn0JlusfbTTdAtZ1yiRR8aWVoZq5dpULTCwtWqP72hYVnlHrRRGELOqewkyVOFqQeTCvI5LWlBAHiw-VqVj8Zl2rIlym6MwzviiWkJ8zhtn8d2DRQOpluSU0nA56LArYbR97F2As9I7g7DUf2xA"/>
+</div>
+</div>
+</div>
+<!-- Insight Card Small -->
+<div class="mt-6 p-4 rounded-xl border border-outline-variant/10 bg-surface-container-lowest/50 flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary-fixed text-2xl" data-icon="verified_user">verified_user</span>
+<div>
+<p class="text-[10px] uppercase tracking-tighter text-on-surface-variant font-bold">Privacidad de Datos</p>
+<p class="text-xs text-on-surface">Cifrado de grado bancario AES-256 activado.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Background Decorative Elements -->
+<div class="fixed top-0 right-0 w-[500px] h-[500px] bg-secondary-container/5 blur-[120px] rounded-full -z-10 translate-x-1/2 -translate-y-1/2"></div>
+<div class="fixed bottom-0 left-64 w-[300px] h-[300px] bg-primary-container/5 blur-[100px] rounded-full -z-10 -translate-x-1/2 translate-y-1/2"></div>
+</body></html>

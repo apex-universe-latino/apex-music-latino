@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Apex Academy | Learn. Build. Scale.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#1c1b1b",
+              "primary-container": "#00ff41",
+              "primary-fixed-dim": "#00e639",
+              "primary-fixed": "#72ff70",
+              "surface-dim": "#131313",
+              "outline-variant": "#3b4b37",
+              "on-primary-fixed-variant": "#00530e",
+              "secondary-fixed-dim": "#00daf3",
+              "surface-container-lowest": "#0e0e0e",
+              "background": "#131313",
+              "secondary-fixed": "#9cf0ff",
+              "primary": "#ebffe2",
+              "on-tertiary": "#313030",
+              "on-secondary-fixed": "#001f24",
+              "surface-variant": "#353534",
+              "on-primary-fixed": "#002203",
+              "on-tertiary-fixed-variant": "#474746",
+              "tertiary-container": "#dfdcdb",
+              "surface-tint": "#00e639",
+              "on-primary-container": "#007117",
+              "inverse-on-surface": "#313030",
+              "outline": "#84967e",
+              "on-error": "#690005",
+              "error-container": "#93000a",
+              "tertiary": "#fcf8f8",
+              "error": "#ffb4ab",
+              "tertiary-fixed": "#e5e2e1",
+              "on-surface": "#e5e2e1",
+              "on-tertiary-container": "#616060",
+              "on-secondary": "#00363d",
+              "on-surface-variant": "#b9ccb2",
+              "on-secondary-fixed-variant": "#004f58",
+              "inverse-primary": "#006e16",
+              "surface-container-high": "#2a2a2a",
+              "surface": "#131313",
+              "on-background": "#e5e2e1",
+              "on-tertiary-fixed": "#1c1b1b",
+              "surface-container-highest": "#353534",
+              "secondary-container": "#00e3fd",
+              "on-error-container": "#ffdad6",
+              "surface-container": "#201f1f",
+              "surface-bright": "#3a3939",
+              "secondary": "#bdf4ff",
+              "inverse-surface": "#e5e2e1",
+              "on-primary": "#003907",
+              "tertiary-fixed-dim": "#c8c6c5",
+              "on-secondary-container": "#00616d"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(53, 53, 52, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .text-gradient-primary {
+            background: linear-gradient(45deg, #ebffe2, #00ff41);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .data-grid-texture {
+            background-image: radial-gradient(#00ff41 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.05;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131313]/60 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+<div class="flex justify-between items-center px-8 h-20 w-full max-w-none">
+<div class="text-2xl font-black tracking-tighter text-[#00FF41] font-headline uppercase">
+                Apex Academy
+            </div>
+<div class="hidden md:flex items-center gap-12 font-headline tracking-tight uppercase text-sm font-bold">
+<a class="text-[#00FF41] border-b-2 border-[#00FF41] pb-1 transition-all duration-300" href="#">Academy</a>
+<a class="text-[#e5e2e1] hover:text-[#00FF41] transition-colors transition-all duration-300" href="#">Marketplace</a>
+<a class="text-[#e5e2e1] hover:text-[#00FF41] transition-colors transition-all duration-300" href="#">Artist OS</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-[#e5e2e1] hover:bg-[#00FF41]/10 p-2 rounded-full transition-all duration-300 active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-[#e5e2e1] hover:bg-[#00FF41]/10 p-2 rounded-full transition-all duration-300 active:scale-95">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative min-h-screen flex flex-col justify-center px-8 md:px-24 pt-20 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-30 mix-blend-luminosity" data-alt="Cinematic recording studio background with dark lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAVWoANdjPLmzclBT9LKfL4dUQooezHL8kL06TT0nm5nJgYjX1lRTH6aafkb6NuUt6BHRqaA7tX25tdheAiApSllHGqtZ6mnxg_lCMC-s7Z8qz2Txmn6dcmXDt0aKzuZggX1enW5ct_yMbBrBe9GXdTs2_4Js1Taoq9RvTZ_sDkN3VBtCBnqhcu6MN3vvu2HbXYQ2iklRR3sz5gyynebYAL8D5_VQxkDoYw25HtV2J9henyhJarXe9nfad3PVpofKkkzz6oCo4NWU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50"></div>
+</div>
+<div class="relative z-10 max-w-5xl">
+<span class="text-primary-container font-headline tracking-[0.3em] uppercase text-xs mb-6 block font-bold">The Future of Sound</span>
+<h1 class="font-headline text-6xl md:text-9xl font-black tracking-tighter leading-tight mb-8">
+                LEARN.<br/>BUILD.<br/><span class="text-gradient-primary">SCALE.</span>
+</h1>
+<p class="text-on-surface-variant text-xl md:text-2xl max-w-2xl font-light mb-12 leading-relaxed">
+                Master the music business with industry titans. From distribution logic to global publishing systems.
+            </p>
+<div class="flex flex-col md:flex-row gap-6">
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary font-headline font-bold py-5 px-10 rounded-md active:scale-95 transition-all shadow-xl shadow-primary-container/10">
+                    GET STARTED NOW
+                </button>
+<button class="glass-panel border border-outline-variant/30 text-on-surface font-headline font-bold py-5 px-10 rounded-md active:scale-95 transition-all">
+                    EXPLORE COURSES
+                </button>
+</div>
+</div>
+<div class="absolute right-0 bottom-24 hidden lg:block w-1/3">
+<div class="glass-panel p-8 rounded-lg border-l-4 border-primary-container">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<span class="font-headline font-bold text-lg tracking-tight uppercase">Real-time Insights</span>
+</div>
+<p class="text-sm text-on-surface-variant font-body">Access 15,000+ data points on current Latin market trends directly from the dashboard.</p>
+</div>
+</div>
+</header>
+<!-- Bento Grid Course Preview -->
+<section class="py-32 px-8 md:px-24 bg-surface-container-low relative">
+<div class="absolute inset-0 data-grid-texture pointer-events-none"></div>
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+<div class="max-w-xl">
+<h2 class="font-headline text-5xl font-black tracking-tighter uppercase mb-4">CURATED ACADEMY</h2>
+<p class="text-on-surface-variant">The tools once reserved for major labels, now accessible to the new independent elite.</p>
+</div>
+<div class="text-right">
+<span class="text-primary-container text-6xl font-black font-headline">24+</span>
+<p class="uppercase text-[10px] tracking-widest text-on-surface/40 mt-1">Specialized Modules</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Course Card 1 -->
+<div class="md:col-span-2 group relative overflow-hidden rounded-xl h-[400px] bg-surface-container-high transition-transform hover:scale-[1.01]">
+<img class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" data-alt="Microphone in a recording booth" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXnbDmJydf5ptjqEqmRtW7Jxg5nnH0qslprP5kL6Qa1dgVwTILqcHpFHfs6fu3T2KSqwwYHmmwW5W9TD2i5jXhhoJxKORrV6KGqiqvV6pMBezhMlMfg-P_H_nyVm93MGc8vs-7C3fvOCy_mPfVnf-6aqqf1bxnkXdB4RlpBXGZoyyPRJz0p5KyQvvN4_N3_V_Ml44PpvSbFChD6o9Xc6xoMvLjiLiYx00zIdDYDv-9mb8MLvNgMp_HU9bBPhUq9T-W00lK0oPUgPA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim to-transparent"></div>
+<div class="absolute bottom-0 p-10 w-full">
+<div class="flex justify-between items-end">
+<div>
+<span class="px-3 py-1 bg-primary-container/20 text-primary-container text-[10px] font-bold tracking-widest uppercase rounded-full mb-4 inline-block">Advanced</span>
+<h3 class="font-headline text-3xl font-bold uppercase mb-2">Global Publishing Logic</h3>
+<p class="text-on-surface-variant text-sm mb-6 max-w-sm">Master the complex web of royalties and mechanicals across 180+ territories.</p>
+<div class="w-full bg-surface-variant h-1 rounded-full overflow-hidden">
+<div class="bg-primary-container w-[75%] h-full"></div>
+</div>
+<div class="flex justify-between text-[10px] uppercase tracking-widest mt-2 text-on-surface/40">
+<span>Progress</span>
+<span>75% Complete</span>
+</div>
+</div>
+<button class="w-14 h-14 rounded-full bg-primary-container flex items-center justify-center text-on-primary shadow-lg shadow-primary-container/20 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Course Card 2 -->
+<div class="group relative overflow-hidden rounded-xl h-[400px] bg-surface-container-high transition-transform hover:scale-[1.01]">
+<img class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" data-alt="Abstract vibrant gradient colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8LvMZrxrRPrDAyTXO3Z5ixuX9kxZp1Z7M3pIqE9ZCZghEWdzimoSv8XORTPLJgMtfX2cwTV6hqAmfAiFplm3ja9xNVVEYu7kE8Xv91H8qVkb2o-xCONu6kDqBYv3TlecHRHBEGGoy4q7hkXEdCDXpBOpmZqj6mlh04bCpzeM9nAOAxR4ir84uUH9_5Sj2DLuDjlIdGtXKqUTVLMbnPYvgIrnp_63MTGfCqlu2Z5ivvVA7gCdenuNVyjW59PqCUtpOooIEj_XOliU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim to-transparent"></div>
+<div class="absolute bottom-0 p-10 w-full">
+<span class="px-3 py-1 bg-secondary-container/20 text-secondary-fixed text-[10px] font-bold tracking-widest uppercase rounded-full mb-4 inline-block">Foundation</span>
+<h3 class="font-headline text-2xl font-bold uppercase mb-2">Contracts 101</h3>
+<p class="text-on-surface-variant text-sm mb-6">Securing your rights from day zero.</p>
+<button class="text-primary-container font-headline text-xs font-bold tracking-widest flex items-center gap-2 group-hover:translate-x-2 transition-transform">
+                        START LESSON <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Course Card 3 -->
+<div class="group relative overflow-hidden rounded-xl h-[400px] bg-surface-container-high transition-transform hover:scale-[1.01]">
+<img class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" data-alt="Modern office desk with creative setup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-_5rPRZU_lzlMNkYey1rgu1M8_mHL8Rd7gJSJ1Gyx7zooqyjCGUKCcawcy98l0l-o2AlxUmQExazEPoElePnOyt-aqpgjGEDqIm66GsLmyQoISGhdRn8Xcc9blgII5-r1bOX6Rcc9Qcr5jtXoReIEqhOyH8pMtx6rW1M_jtSNUX0lsru3Ec3sfrEoue0G5r94A3uY-makWM2qppCSPd5C3NZZ9MR1H2nU6J2ulfReh_FeepScR_qvk3P1tL5GkFoKMzvwwpPVhSs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim to-transparent"></div>
+<div class="absolute bottom-0 p-10 w-full">
+<span class="px-3 py-1 bg-primary-container/20 text-primary-container text-[10px] font-bold tracking-widest uppercase rounded-full mb-4 inline-block">Business</span>
+<h3 class="font-headline text-2xl font-bold uppercase mb-2">Systems &amp; Scaling</h3>
+<p class="text-on-surface-variant text-sm mb-6">Automation for independent labels.</p>
+<button class="text-primary-container font-headline text-xs font-bold tracking-widest flex items-center gap-2 group-hover:translate-x-2 transition-transform">
+                        LOCKED <span class="material-symbols-outlined text-sm">lock</span>
+</button>
+</div>
+</div>
+<!-- Instructor Card -->
+<div class="md:col-span-2 group relative overflow-hidden rounded-xl h-[400px] bg-surface-container-high">
+<div class="flex flex-col md:flex-row h-full">
+<div class="w-full md:w-1/2 h-64 md:h-full relative overflow-hidden">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Portrait of a successful music industry executive" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfsUGfTdyqsgTvDs3NpgF-hMKbT37g9zJiVgoZyQd63IVSnaXraIzWv2v99CptW87VDbI6atcICbj9gtSaBqmj6TfE60hJM4cKcXe_fVcalpDGb2qj41gxWkasr_FYhjM6vNIRNkXq6jpCuJNt8aznnKxaLgW_ThlQAqNbKmZn3tv5jYxCUwSRdPGUR2wQNCjDH9t9UEftHXfWbWn5fZzqAca0Akbk5Vxs8AgGhzgskRVG28CEjW5nunB_NGdUEx17fVv87zzlQRc"/>
+</div>
+<div class="w-full md:w-1/2 p-10 flex flex-col justify-center">
+<span class="font-headline text-[10px] tracking-[0.4em] uppercase text-on-surface/40 mb-2">Mastermind</span>
+<h3 class="font-headline text-4xl font-black uppercase mb-4">Enzo Rivera</h3>
+<p class="text-on-surface-variant text-sm font-light mb-8 leading-relaxed">
+                            Former Head of Strategy at global majors. Architect of 12 multi-platinum campaigns in the Latin sector.
+                        </p>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full glass-panel border border-outline-variant/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">verified</span>
+</div>
+<div class="w-10 h-10 rounded-full glass-panel border border-outline-variant/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">share</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Tier Selection Section -->
+<section class="py-32 px-8 md:px-24">
+<div class="text-center mb-20">
+<h2 class="font-headline text-5xl font-black tracking-tighter uppercase mb-4">CHOOSE YOUR PATH</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto">Select the tier that aligns with your professional ambition. From artist essentials to empire scaling.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+<!-- Free Tier -->
+<div class="glass-panel rounded-xl p-12 border border-outline-variant/10 relative group transition-all duration-500 hover:border-primary-container/30">
+<div class="flex justify-between items-start mb-12">
+<div>
+<h3 class="font-headline text-3xl font-bold uppercase mb-2">The Essentials</h3>
+<p class="text-on-surface-variant text-sm">Build your foundation.</p>
+</div>
+<span class="font-headline text-4xl font-black">$0</span>
+</div>
+<ul class="space-y-6 mb-12">
+<li class="flex items-center gap-4 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-primary-container">check_circle</span> Contracts 101 Basics
+                    </li>
+<li class="flex items-center gap-4 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-primary-container">check_circle</span> Branding Foundations
+                    </li>
+<li class="flex items-center gap-4 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-primary-container">check_circle</span> Distribution Checklist
+                    </li>
+<li class="flex items-center gap-4 text-on-surface-variant/30 text-sm">
+<span class="material-symbols-outlined">radio_button_unchecked</span> Advanced Publishing Systems
+                    </li>
+</ul>
+<button class="w-full border border-outline-variant/50 py-4 font-headline font-bold uppercase tracking-widest text-xs rounded-md hover:bg-on-surface hover:text-surface transition-all">
+                    START LEARNING FREE
+                </button>
+</div>
+<!-- Paid Tier -->
+<div class="bg-surface-container-high rounded-xl p-12 border-2 border-primary-container relative group overflow-hidden transition-all duration-500 shadow-2xl shadow-primary-container/5">
+<div class="absolute top-0 right-0 bg-primary-container text-on-primary-container px-4 py-1 font-headline text-[10px] font-black tracking-widest uppercase">
+                    Recommended
+                </div>
+<div class="flex justify-between items-start mb-12">
+<div>
+<h3 class="font-headline text-3xl font-bold uppercase mb-2">The Empire Builder</h3>
+<p class="text-on-surface-variant text-sm">Architect your legacy.</p>
+</div>
+<div class="text-right">
+<span class="font-headline text-4xl font-black">$499</span>
+<p class="text-[10px] text-on-surface/40 uppercase tracking-widest">One-time payment</p>
+</div>
+</div>
+<ul class="space-y-6 mb-12">
+<li class="flex items-center gap-4 text-on-surface text-sm">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span> Global Publishing &amp; Mechanicals
+                    </li>
+<li class="flex items-center gap-4 text-on-surface text-sm">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span> Advanced Business Systems
+                    </li>
+<li class="flex items-center gap-4 text-on-surface text-sm">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span> Data-Driven Content Strategy
+                    </li>
+<li class="flex items-center gap-4 text-on-surface text-sm">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span> Weekly Artist OS Masterminds
+                    </li>
+<li class="flex items-center gap-4 text-on-surface text-sm">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span> Legal Templates &amp; Vault Access
+                    </li>
+</ul>
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-4 font-headline font-bold uppercase tracking-widest text-xs rounded-md active:scale-95 transition-all">
+                    JOIN THE ELITE
+                </button>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-[#131313] w-full py-12 border-t border-[#1c1b1b] tonal-shift">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 w-full">
+<div class="mb-8 md:mb-0">
+<div class="text-lg font-bold text-[#e5e2e1] uppercase font-headline mb-2">Apex Academy</div>
+<p class="font-['Inter'] text-xs tracking-widest uppercase text-[#e5e2e1]/60">© 2024 Apex Music Latino. Cinematic Futurity.</p>
+</div>
+<div class="flex gap-8 font-['Inter'] text-xs tracking-widest uppercase">
+<a class="text-[#e5e2e1]/40 hover:text-[#00FF41] transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="text-[#e5e2e1]/40 hover:text-[#00FF41] transition-colors opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="text-[#e5e2e1]/40 hover:text-[#00FF41] transition-colors opacity-80 hover:opacity-100" href="#">Support</a>
+<a class="text-[#e5e2e1]/40 hover:text-[#00FF41] transition-colors opacity-80 hover:opacity-100" href="#">Contact</a>
+</div>
+</div>
+</footer>
+</body></html>

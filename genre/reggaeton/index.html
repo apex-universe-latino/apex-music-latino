@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Apex Music Latino | Reggaeton Empire</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary": "#ffbdde",
+                        "error-container": "#93000a",
+                        "on-primary": "#3d0019",
+                        "surface-container": "#201f1f",
+                        "surface": "#131313",
+                        "background": "#0c0c0c",
+                        "tertiary": "#fcf8f8",
+                        "on-primary-container": "#ff006e",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#f30082",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "on-secondary-fixed-variant": "#58002d",
+                        "tertiary-container": "#dfdcdb",
+                        "on-tertiary-fixed": "#1c1b1b",
+                        "surface-container-low": "#1c1b1b",
+                        "on-secondary-container": "#6d0038",
+                        "inverse-surface": "#e5e2e1",
+                        "on-secondary-fixed": "#240012",
+                        "outline-variant": "#4b373e",
+                        "surface-container-lowest": "#0e0e0e",
+                        "primary-fixed": "#ff70a6",
+                        "outline": "#967e88",
+                        "on-primary-fixed": "#22000e",
+                        "tertiary-fixed": "#e5e2e1",
+                        "primary": "#ffe2ec",
+                        "on-error": "#690005",
+                        "inverse-primary": "#6e0031",
+                        "on-error-container": "#ffdad6",
+                        "primary-container": "#ff007b",
+                        "on-tertiary-container": "#616060",
+                        "surface-variant": "#353434",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-dim": "#131313",
+                        "on-surface-variant": "#ccb2bc",
+                        "on-tertiary": "#313030",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "on-surface": "#e5e2e1",
+                        "secondary-container": "#fd0086",
+                        "surface-container-highest": "#353534",
+                        "surface-bright": "#3a3939",
+                        "on-primary-fixed-variant": "#530022",
+                        "inverse-on-surface": "#313030",
+                        "on-secondary": "#3d001f",
+                        "secondary-fixed": "#ff9cc8",
+                        "surface-tint": "#e6006e",
+                        "primary-fixed-dim": "#e6006e"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(53, 52, 53, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .text-gradient-primary {
+            background: linear-gradient(45deg, #ff007b, #ffbe0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-gradient-primary {
+            background: linear-gradient(45deg, #ff007b, #ffbe0b);
+        }
+        .bg-gradient-warm {
+            background: linear-gradient(45deg, #ff007b, #8338ec);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full z-50 bg-neutral-950/60 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] h-20 flex justify-between items-center px-8">
+<div class="flex items-center gap-12">
+<span class="text-2xl font-bold tracking-tighter text-neutral-100 font-headline">Apex Music Latino</span>
+<!-- Genre Selector -->
+<div class="hidden lg:flex items-center gap-6 overflow-x-auto no-scrollbar py-2">
+<button class="text-xs uppercase tracking-widest font-medium text-neutral-500 hover:text-neutral-100 transition-colors">All Genres</button>
+<button class="text-xs uppercase tracking-widest font-medium text-neutral-500 hover:text-neutral-100 transition-colors">Rap</button>
+<button class="text-xs uppercase tracking-widest font-bold text-primary-container border-b border-primary-container pb-1">Reggaeton</button>
+<button class="text-xs uppercase tracking-widest font-medium text-neutral-500 hover:text-neutral-100 transition-colors">Rock</button>
+<button class="text-xs uppercase tracking-widest font-medium text-neutral-500 hover:text-neutral-100 transition-colors">Electronic</button>
+<button class="text-xs uppercase tracking-widest font-medium text-neutral-500 hover:text-neutral-100 transition-colors">Afro/Latin</button>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="hidden md:flex gap-6 font-headline tracking-tight">
+<a class="text-primary-container border-b-2 border-primary-container pb-1" href="#">Ecosystem</a>
+<a class="text-neutral-400 hover:text-neutral-100 transition-colors" href="#">Marketplace</a>
+<a class="text-neutral-400 hover:text-neutral-100 transition-colors" href="#">Academy</a>
+<a class="text-neutral-400 hover:text-neutral-100 transition-colors" href="#">Artist OS</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-neutral-400 hover:text-primary-container transition-colors">grid_view</button>
+<button class="px-6 py-2 bg-gradient-primary text-on-primary font-bold rounded-lg text-sm hover:scale-95 transition-transform duration-200">Join Apex</button>
+</div>
+</div>
+</nav>
+<main class="relative">
+<!-- Hero Section -->
+<section class="relative min-h-screen flex flex-col justify-center px-8 md:px-24 pt-20 overflow-hidden">
+<!-- Background Dynamic AI visuals -->
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-10"></div>
+<div class="absolute inset-0 opacity-40 mix-blend-screen overflow-hidden">
+<div class="w-full h-full bg-[radial-gradient(circle_at_50%_50%,_rgba(255,0,123,0.2)_0%,_transparent_70%)] animate-pulse"></div>
+</div>
+<!-- Reggaeton Visual Background -->
+<img alt="Urban tropical cinematic background" class="w-full h-full object-cover grayscale opacity-20 contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANRJNn74j6N_FpaBx3DAjdefirjO32nwt4JhMwbwUcH8UWMpV-4JJVwzG05Z1A-TNi5UKo223jhTlWuTXMyluRj-lIxGxn1DGfYD6ZFUoRlwH4wOtrG5_KzXQp4DB7u3oBD2mO-efMwzpctoHLiE0y1SeiqAutmiVxnkLN6qKWefwIlBSK5y3VUJ_HIkSuXwfv_EYg79zk-wD6CuS6Ep3ml6ooh9ju3Nph4Q1TumUuD_Use-gjJQ5c16G4qr-nP-H4wNDJhqkJD3E"/>
+</div>
+<div class="relative z-20 max-w-5xl">
+<p class="text-primary-container font-headline text-lg tracking-[0.4em] uppercase mb-6">Reggaeton Intelligence</p>
+<h1 class="font-headline text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-[0.9] mb-8">
+                    Scale Your <span class="text-gradient-primary">Perreo.</span>
+</h1>
+<p class="max-w-2xl text-xl md:text-2xl text-on-surface-variant font-light leading-relaxed mb-12">
+                    Engineered for the Caribbean pulse. Apex Music Latino gives Reggaeton artists the data, distribution, and tools to dominate global charts.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="px-8 py-4 bg-gradient-primary text-on-primary font-bold rounded-lg flex items-center gap-3 hover:scale-105 transition-transform">
+                        Launch Campaign <span class="material-symbols-outlined">bolt</span>
+</button>
+<button class="px-8 py-4 glass-panel border border-outline-variant/20 font-bold rounded-lg hover:bg-surface-container-high transition-colors">
+                        Join the Movement
+                    </button>
+<button class="px-8 py-4 text-primary-fixed hover:underline font-bold decoration-2 underline-offset-8 transition-all">
+                        View Top Talent
+                    </button>
+</div>
+</div>
+<!-- Stats Bar -->
+<div class="absolute bottom-12 left-8 md:left-24 right-8 flex flex-wrap gap-12 z-20">
+<div>
+<span class="block text-3xl font-headline font-bold text-neutral-100">280M+</span>
+<span class="text-xs uppercase tracking-widest text-neutral-500 font-bold">Genre Streams</span>
+</div>
+<div>
+<span class="block text-3xl font-headline font-bold text-neutral-100">45</span>
+<span class="text-xs uppercase tracking-widest text-neutral-500 font-bold">Hot 100 Hits</span>
+</div>
+<div>
+<span class="block text-3xl font-headline font-bold text-neutral-100">1.2M</span>
+<span class="text-xs uppercase tracking-widest text-neutral-500 font-bold">Global Fan Network</span>
+</div>
+</div>
+</section>
+<!-- Powered by CUBO Section -->
+<section class="py-32 px-8 md:px-24 bg-surface-container-low">
+<div class="grid lg:grid-cols-2 gap-24 items-center">
+<div>
+<div class="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-primary-container/20 bg-primary-container/5 text-primary-container mb-8">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="text-xs font-bold uppercase tracking-widest">Tropical Industrial Logic</span>
+</div>
+<h2 class="font-headline text-5xl md:text-6xl font-bold tracking-tight mb-8">Powered by <span class="text-gradient-primary">CUBO</span> — The Rhythm of Data</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-12 max-w-xl">
+                        Identify where the vibe is hitting before it peaks. Our proprietary intelligence maps the global spread of urban Latin sounds in real-time.
+                    </p>
+<div class="grid sm:grid-cols-2 gap-8">
+<div class="space-y-4">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">groups</span>
+<h4 class="font-headline font-bold text-xl">Fan Segmenting</h4>
+<p class="text-sm text-neutral-500">Know exactly where to tour based on granular listening clusters.</p>
+</div>
+<div class="space-y-4">
+<span class="material-symbols-outlined text-secondary-container" style="font-variation-settings: 'FILL' 1;">celebration</span>
+<h4 class="font-headline font-bold text-xl">Vibe Analytics</h4>
+<p class="text-sm text-neutral-500">Predict the next viral dance challenge through behavioral signals.</p>
+</div>
+<div class="space-y-4">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">connected_tv</span>
+<h4 class="font-headline font-bold text-xl">Video Attribution</h4>
+<p class="text-sm text-neutral-500">Track visual influence from music videos to street fashion.</p>
+</div>
+<div class="space-y-4">
+<span class="material-symbols-outlined text-secondary-container" style="font-variation-settings: 'FILL' 1;">auto_graph</span>
+<h4 class="font-headline font-bold text-xl">Royalty Flow</h4>
+<p class="text-sm text-neutral-500">Instant visibility into your worldwide performance rights income.</p>
+</div>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute -inset-4 bg-primary-container/10 blur-3xl rounded-full group-hover:bg-primary-container/20 transition-all duration-700"></div>
+<div class="relative glass-panel rounded-2xl border border-outline-variant/10 p-2 overflow-hidden aspect-square flex items-center justify-center">
+<img alt="Vibrant dashboard showing Latin music heatmaps" class="w-full h-full object-cover rounded-xl grayscale group-hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKKfawZvxjPqD6NQkFACfm5DyaEYniuNDSxyi2o_IuEb5kW60nb0V3c2K8t-4g1Vr41Vc_83aFlgY5oemI_T8_LIAFAFWTDLBAXBcUM1MQXmwozhuPeOE1yM3eMAxHwgvWpcwsY5xA1vFDiEGchu24hOrjPeODu3jZKNT0X4UBzYekImnkALRgpM_AJZurtNPAS7N0iJZgxze8QFOj3aU4a4zPEUe7nEzt9ZjfAVTzP_yQqK2rQ3s8EB_oAJvMQBGgYyvvWcp0hAs"/>
+<!-- Floating Data Node -->
+<div class="absolute top-8 right-8 p-6 glass-panel rounded-xl border border-primary-container/20 shadow-2xl">
+<div class="flex items-center gap-4 mb-2">
+<div class="w-2 h-2 rounded-full bg-primary-container animate-ping"></div>
+<span class="text-[10px] uppercase tracking-widest font-bold">Trending: Medellin</span>
+</div>
+<div class="text-2xl font-headline font-bold text-primary-container">+42.1%</div>
+<div class="text-[10px] text-neutral-400">Regional Pulse Increase</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Artist OS Section -->
+<section class="py-32 px-8 md:px-24">
+<div class="text-center mb-24">
+<h2 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter mb-6">Urban Artist OS</h2>
+<p class="text-primary-container font-bold tracking-widest uppercase mb-12">"The Command Center for Modern Reggaeton"</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto lg:h-[700px]">
+<div class="md:col-span-8 glass-panel rounded-3xl border border-outline-variant/10 p-12 relative overflow-hidden group">
+<div class="relative z-10 h-full flex flex-col justify-end">
+<h3 class="text-4xl font-headline font-bold mb-4">EPK &amp; Press Kits</h3>
+<p class="text-on-surface-variant max-w-md">Professional, dynamic profiles that secure bookings and sponsorships automatically.</p>
+</div>
+<img alt="Aesthetic artist profile layout" class="absolute inset-0 w-full h-full object-cover opacity-20 grayscale group-hover:scale-110 transition-transform duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1a02J04Ye-YLJI6RQOtIEWsoak0rcH37rrc_1bbJ3Qt_08lTOOZK5bcq5pyuLN7ady7H1zSrasiDxDomppHCSFhqSZ0FFM21s0WCFaMsZU_jJwhWqvgfiqnW_grw2wpTdgelosT8tbNBOaRo2IxWtHSqK1JQBYbac5dF3jU4zxn8bA5Z8Zq2c2vzzuBwuSGFzrbSbv2R63eT95w0dMkSdZrfNSu-UX8uJic2hqQmWarLHv0GuorDTqtZWCdE-slH4bXATLL9jZcQ"/>
+</div>
+<div class="md:col-span-4 bg-surface-container-high rounded-3xl p-12 flex flex-col justify-between border border-outline-variant/10 group hover:border-primary-container/30 transition-colors">
+<div>
+<span class="material-symbols-outlined text-4xl text-primary-container mb-6">styler</span>
+<h3 class="text-3xl font-headline font-bold mb-4">Merch &amp; Style</h3>
+<p class="text-sm text-on-surface-variant">Drop collections and manage streetwear inventory directly through your fan portal.</p>
+</div>
+<button class="w-full py-4 border border-outline-variant/30 rounded-lg font-bold hover:bg-white/5 transition-colors">Launch Drop</button>
+</div>
+<div class="md:col-span-4 glass-panel rounded-3xl border border-outline-variant/10 p-8 group hover:bg-surface-container-highest transition-colors">
+<div class="w-12 h-12 bg-secondary-container/10 flex items-center justify-center rounded-lg mb-6">
+<span class="material-symbols-outlined text-secondary-container">language</span>
+</div>
+<h3 class="text-2xl font-headline font-bold mb-4">World Heatmaps</h3>
+<p class="text-sm text-on-surface-variant">See where your sound is crossing over into non-Spanish speaking territories.</p>
+</div>
+<div class="md:col-span-8 bg-gradient-to-br from-surface-container-high to-background rounded-3xl border border-outline-variant/10 p-12 flex items-center gap-12 group">
+<div class="flex-1">
+<h3 class="text-3xl font-headline font-bold mb-4">Direct-to-Fan CRM</h3>
+<p class="text-on-surface-variant">Collect fan data from every show and every stream. Own your list, own your career.</p>
+</div>
+<div class="hidden lg:flex gap-2">
+<div class="w-12 h-32 bg-primary-container/10 rounded-full flex flex-col items-center justify-center gap-4">
+<div class="w-2 h-2 rounded-full bg-primary-container animate-bounce"></div>
+</div>
+<div class="w-12 h-32 bg-secondary-container/10 rounded-full flex flex-col items-center justify-center gap-4">
+<div class="w-2 h-2 rounded-full bg-secondary-container"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Apex Academy Section -->
+<section class="py-32 px-8 md:px-24 bg-surface-container-lowest relative overflow-hidden">
+<!-- Decorative texture -->
+<div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#ff007b 1px, transparent 1px); background-size: 24px 24px;"></div>
+<div class="relative z-10">
+<div class="flex flex-col md:flex-row justify-between items-end gap-12 mb-20">
+<div class="max-w-2xl">
+<h2 class="font-headline text-5xl md:text-7xl font-bold tracking-tight mb-8">Urbano Academy</h2>
+<p class="text-xl text-on-surface-variant">Master the business behind the beats. From publishing rights to global distribution strategies.</p>
+</div>
+<div class="flex gap-4">
+<span class="px-4 py-2 bg-primary-container/10 text-primary-container text-xs font-bold uppercase rounded tracking-widest">Masterclasses Available</span>
+</div>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="glass-panel p-10 rounded-2xl border border-outline-variant/10 hover:-translate-y-2 transition-transform duration-500">
+<span class="text-primary-container font-headline font-black text-6xl opacity-20 block mb-6">01</span>
+<h4 class="text-2xl font-bold mb-4">Masters &amp; Publishing</h4>
+<ul class="space-y-4 mb-10 text-on-surface-variant text-sm">
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Sync Licensing</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> PRO Registrations</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Beat Royalties</li>
+</ul>
+</div>
+<div class="bg-surface-container-high p-10 rounded-2xl border border-primary-container/30 hover:-translate-y-2 transition-transform duration-500">
+<span class="text-primary-container font-headline font-black text-6xl opacity-40 block mb-6">02</span>
+<h4 class="text-2xl font-bold mb-4">Latin Branding</h4>
+<ul class="space-y-4 mb-10 text-on-surface-variant text-sm">
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Visual Identity</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> TikTok Velocity</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Fan Engagement</li>
+</ul>
+</div>
+<div class="glass-panel p-10 rounded-2xl border border-outline-variant/10 hover:-translate-y-2 transition-transform duration-500">
+<span class="text-primary-container font-headline font-black text-6xl opacity-20 block mb-6">03</span>
+<h4 class="text-2xl font-bold mb-4">Global Distribution</h4>
+<ul class="space-y-4 mb-10 text-on-surface-variant text-sm">
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Platform Strategy</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Logistics &amp; Touring</li>
+<li class="flex gap-3"><span class="material-symbols-outlined text-primary-container text-base">check</span> Scale Partnerships</li>
+</ul>
+</div>
+</div>
+<div class="mt-20 flex justify-center">
+<button class="group flex flex-col items-center gap-4">
+<span class="px-12 py-5 bg-gradient-primary text-on-primary font-bold text-lg rounded-xl group-hover:scale-105 transition-transform">Start Your Mastery</span>
+<span class="text-xs uppercase tracking-[0.4em] font-bold text-neutral-500">Join the Summer 2024 Session</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-neutral-950 w-full py-12 px-8 border-t border-neutral-800/20 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-col gap-4">
+<span class="font-headline font-bold text-2xl text-neutral-100 tracking-tighter">Apex Music Latino</span>
+<p class="font-body text-xs uppercase tracking-widest text-neutral-600">© 2024 Apex Music Latino. Built with CUBO Data Engine.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-body text-xs uppercase tracking-widest text-neutral-600 hover:text-primary-container transition-colors" href="#">Transparency</a>
+<a class="font-body text-xs uppercase tracking-widest text-neutral-600 hover:text-primary-container transition-colors" href="#">Rights</a>
+<a class="font-body text-xs uppercase tracking-widest text-neutral-600 hover:text-primary-container transition-colors" href="#">Privacy</a>
+<a class="font-body text-xs uppercase tracking-widest text-neutral-600 hover:text-primary-container transition-colors" href="#">Terms</a>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-neutral-900 flex items-center justify-center opacity-80 hover:opacity-100 cursor-pointer">
+<span class="material-symbols-outlined text-sm">public</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-neutral-900 flex items-center justify-center opacity-80 hover:opacity-100 cursor-pointer">
+<span class="material-symbols-outlined text-sm">alternate_email</span>
+</div>
+</div>
+</footer>
+<script src="/js/apex-engine.js"></script>
+</body></html>

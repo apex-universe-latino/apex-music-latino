@@ -1,0 +1,4 @@
+.vercel
+.env
+Artistas/*.mp4
+*.mp4

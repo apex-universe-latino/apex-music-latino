@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary": "#bdf4ff",
+              "error-container": "#93000a",
+              "on-primary": "#003907",
+              "surface-container": "#201f1f",
+              "surface": "#131313",
+              "background": "#131313",
+              "tertiary": "#fcf8f8",
+              "on-primary-container": "#007117",
+              "error": "#ffb4ab",
+              "secondary-fixed-dim": "#00daf3",
+              "on-background": "#e5e2e1",
+              "on-tertiary-fixed-variant": "#474746",
+              "on-secondary-fixed-variant": "#004f58",
+              "tertiary-container": "#dfdcdb",
+              "on-tertiary-fixed": "#1c1b1b",
+              "surface-container-low": "#1c1b1b",
+              "on-secondary-container": "#00616d",
+              "inverse-surface": "#e5e2e1",
+              "on-secondary-fixed": "#001f24",
+              "outline-variant": "#3b4b37",
+              "surface-container-lowest": "#0e0e0e",
+              "primary-fixed": "#72ff70",
+              "outline": "#84967e",
+              "on-primary-fixed": "#002203",
+              "tertiary-fixed": "#e5e2e1",
+              "primary": "#ebffe2",
+              "on-error": "#690005",
+              "inverse-primary": "#006e16",
+              "on-error-container": "#ffdad6",
+              "primary-container": "#00ff41",
+              "on-tertiary-container": "#616060",
+              "surface-variant": "#353534",
+              "surface-container-high": "#2a2a2a",
+              "surface-dim": "#131313",
+              "on-surface-variant": "#b9ccb2",
+              "on-tertiary": "#313030",
+              "tertiary-fixed-dim": "#c8c6c5",
+              "on-surface": "#e5e2e1",
+              "secondary-container": "#00e3fd",
+              "surface-container-highest": "#353534",
+              "surface-bright": "#3a3939",
+              "on-primary-fixed-variant": "#00530e",
+              "inverse-on-surface": "#313030",
+              "on-secondary": "#00363d",
+              "secondary-fixed": "#9cf0ff",
+              "surface-tint": "#00e639",
+              "primary-fixed-dim": "#00e639"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(53, 53, 52, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .text-gradient-primary {
+            background: linear-gradient(45deg, #ebffe2, #00ff41);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-gradient-primary {
+            background: linear-gradient(45deg, #ebffe2, #00ff41);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar Navigation Shell -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-8 h-20 w-full bg-neutral-950/60 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] font-['Space_Grotesk'] tracking-tight">
+<div class="text-2xl font-bold tracking-tighter text-neutral-100">Apex Music Latino</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-neutral-400 hover:text-neutral-100 transition-colors" href="#">Ecosystem</a>
+<a class="text-neutral-400 hover:text-neutral-100 transition-colors" href="#">Marketplace</a>
+<a class="text-neutral-400 hover:text-neutral-100 transition-colors" href="#">Academy</a>
+<a class="text-green-400 border-b-2 border-green-400 pb-1" href="#">Artist OS</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-neutral-400 hover:text-neutral-100 transition-all">grid_view</button>
+<button class="bg-gradient-primary text-on-primary px-6 py-2 rounded-lg font-bold hover:scale-95 duration-200 transition-transform">Join Apex</button>
+</div>
+</nav>
+<!-- SideNavBar (Hidden on Mobile) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full z-40 flex flex-col h-screen w-64 border-r border-neutral-800/30 bg-neutral-900/80 backdrop-blur-2xl font-['Inter'] text-sm font-medium pt-24">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Artist OS Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdecVDrHde_gIvFbgVh_sOXdhDDB6Wl7zL9D0c432AEu_mt2JZr2aPiaNC5y0T8H6xHKy5WoB8vIoHaV-8MZ8HhpovtZL_TT3bjaRxGhdclaY5VPU6hiLqE9cf7n5OD7sUA7NUFyhvbR_5bUwONFpEvWTlUawOeY-XIkhGzwk5I5XdFFeAkM4WzTMbFcGU_Racm0fIW014lkqZ92fbAgYZIunkSOibr98wLubC9QTiKi4MNJU9ABK0E6VnIzut3BHlTBUDm4ru4CU"/>
+</div>
+<div>
+<h3 class="text-lg font-black text-neutral-100 leading-none">Artist OS</h3>
+<p class="text-[10px] text-neutral-500 uppercase tracking-widest mt-1">Data Engine v2.1</p>
+</div>
+</div>
+</div>
+<nav class="flex-1">
+<a class="flex items-center gap-3 text-neutral-500 px-4 py-3 hover:bg-neutral-800/50 hover:text-neutral-100 transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 bg-green-500/10 text-green-400 border-r-4 border-green-500 px-4 py-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span> Fan CRM
+            </a>
+<a class="flex items-center gap-3 text-neutral-500 px-4 py-3 hover:bg-neutral-800/50 hover:text-neutral-100 transition-all" href="#">
+<span class="material-symbols-outlined">payments</span> Revenue
+            </a>
+<a class="flex items-center gap-3 text-neutral-500 px-4 py-3 hover:bg-neutral-800/50 hover:text-neutral-100 transition-all" href="#">
+<span class="material-symbols-outlined">leaderboard</span> Analytics
+            </a>
+<a class="flex items-center gap-3 text-neutral-500 px-4 py-3 hover:bg-neutral-800/50 hover:text-neutral-100 transition-all" href="#">
+<span class="material-symbols-outlined">smart_toy</span> Kujo AI
+            </a>
+</nav>
+<div class="p-4">
+<button class="w-full py-3 rounded-lg bg-surface-container-high border border-outline-variant/20 text-primary-fixed font-bold hover:bg-surface-container-highest transition-colors">Upgrade Plan</button>
+</div>
+<div class="border-t border-neutral-800/30 py-4">
+<a class="flex items-center gap-3 text-neutral-500 px-4 py-2 hover:text-neutral-100 transition-all" href="#">
+<span class="material-symbols-outlined text-sm">settings</span> Settings
+            </a>
+<a class="flex items-center gap-3 text-neutral-500 px-4 py-2 hover:text-neutral-100 transition-all" href="#">
+<span class="material-symbols-outlined text-sm">help_outline</span> Support
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-20">
+<!-- Hero Section -->
+<section class="relative min-h-[870px] flex items-end px-8 pb-20 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover scale-105" data-alt="Cinematic wide shot of Latin artist performing under neon lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaEhUNB5VfDMyPVoWimA-nJFn0l3t21GNtd71x8WeLcMbpWCewcP7ruh_1TOd9gyfrfALnxTNL2KBipNnB4qEA8IsBh6rUrNKDeNBOdxOz3rhd5woB0bvK5sAdogUJ00vNr1hFwgWZwr2wYiAxaS4X1EST2C0RqVhsJ_8IFsCrhnvvfkL1DObs8BmCDOvIFjhaTM6-IzQWBBAVDQHlqSE5BNIgnT20fmGkNmslsLU_MYKWDdczr9Waetn-fZ6y5M5MLau-1SxuMZI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-surface via-transparent to-transparent"></div>
+</div>
+<div class="relative z-10 w-full max-w-6xl">
+<div class="flex flex-col gap-2 mb-6">
+<span class="text-primary-container font-headline tracking-[0.3em] text-xs uppercase font-bold">Artist Profile v4.0</span>
+<h1 class="font-headline text-7xl md:text-9xl font-bold tracking-tighter leading-none -ml-1">ELÍSEO</h1>
+</div>
+<div class="flex flex-col md:flex-row items-start md:items-end gap-12">
+<div class="max-w-xl">
+<p class="text-on-surface-variant text-lg leading-relaxed font-light">
+                            Synthesizing traditional Afro-Caribbean rhythms with hyper-pop production. Elíseo is the architect of the 'Neo-Tropical' wave, amassing over 40M streams in the last quarter through raw storytelling and digital-first fan engagement.
+                        </p>
+<div class="flex gap-4 mt-8">
+<button class="bg-gradient-primary text-on-primary px-8 py-4 rounded-lg font-bold flex items-center gap-2 hover:scale-105 duration-300 transition-transform">
+<span class="material-symbols-outlined">calendar_month</span> Book Session
+                            </button>
+<button class="glass-panel text-on-surface px-8 py-4 rounded-lg font-bold border border-outline-variant/30 hover:bg-surface-container-highest transition-colors">
+                                View Press Kit
+                            </button>
+</div>
+</div>
+<div class="flex-1 grid grid-cols-3 gap-8 w-full">
+<div class="border-l border-primary-container/30 pl-4">
+<div class="text-primary-container font-headline text-3xl font-bold">12.4M</div>
+<div class="text-[10px] text-neutral-500 uppercase tracking-widest mt-1">Monthly Listeners</div>
+</div>
+<div class="border-l border-primary-container/30 pl-4">
+<div class="text-primary-container font-headline text-3xl font-bold">+84%</div>
+<div class="text-[10px] text-neutral-500 uppercase tracking-widest mt-1">Engagement YoY</div>
+</div>
+<div class="border-l border-primary-container/30 pl-4">
+<div class="text-primary-container font-headline text-3xl font-bold">2.1B</div>
+<div class="text-[10px] text-neutral-500 uppercase tracking-widest mt-1">Total Streams</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Content Grid (Bento Style) -->
+<section class="px-8 py-20 bg-surface">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 max-w-[1600px] mx-auto">
+<!-- Latest Release Player (Big) -->
+<div class="md:col-span-8 glass-panel rounded-xl overflow-hidden p-8 flex flex-col justify-between min-h-[500px] group border border-outline-variant/10">
+<div class="flex justify-between items-start">
+<div>
+<span class="text-xs font-bold text-primary-fixed-dim uppercase tracking-widest bg-primary-container/10 px-3 py-1 rounded-full">New Release</span>
+<h2 class="font-headline text-5xl font-bold mt-4">Sombras Digitales</h2>
+<p class="text-on-surface-variant mt-2 font-medium">EP • 6 Tracks • Released Nov 2024</p>
+</div>
+<button class="w-16 h-16 rounded-full bg-gradient-primary flex items-center justify-center text-on-primary shadow-lg shadow-primary-container/20 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="mt-12 space-y-4">
+<div class="flex items-center gap-6 p-4 rounded-lg hover:bg-surface-container-low transition-colors group/track">
+<span class="text-neutral-500 font-headline">01</span>
+<div class="flex-1">
+<div class="font-bold text-neutral-100">Frecuencia Cero</div>
+<div class="text-xs text-neutral-500">3:42</div>
+</div>
+<span class="material-symbols-outlined opacity-0 group-hover/track:opacity-100 text-primary-container transition-opacity">equalizer</span>
+</div>
+<div class="flex items-center gap-6 p-4 rounded-lg hover:bg-surface-container-low transition-colors group/track">
+<span class="text-neutral-500 font-headline">02</span>
+<div class="flex-1">
+<div class="font-bold text-neutral-100">Cielo de Neon</div>
+<div class="text-xs text-neutral-500">4:15</div>
+</div>
+<span class="material-symbols-outlined opacity-0 group-hover/track:opacity-100 text-primary-container transition-opacity">equalizer</span>
+</div>
+<div class="flex items-center gap-6 p-4 rounded-lg bg-surface-container-highest border border-primary-container/20 group/track">
+<span class="text-primary-container font-headline">03</span>
+<div class="flex-1">
+<div class="font-bold text-neutral-100">Sombras Digitales</div>
+<div class="text-xs text-neutral-500">2:58</div>
+</div>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">volume_up</span>
+</div>
+</div>
+</div>
+<!-- Fan Insights (Stats Card) -->
+<div class="md:col-span-4 bg-surface-container-low rounded-xl p-8 border border-outline-variant/10 flex flex-col justify-between">
+<div>
+<h3 class="font-headline text-2xl font-bold mb-8">Audience Data</h3>
+<!-- Mini Charts/Stats -->
+<div class="space-y-8">
+<div>
+<div class="flex justify-between text-xs uppercase tracking-widest text-neutral-500 mb-2">
+<span>Top Region: LATAM</span>
+<span>62%</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[62%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs uppercase tracking-widest text-neutral-500 mb-2">
+<span>Top Region: US Hispanic</span>
+<span>28%</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary-container w-[28%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs uppercase tracking-widest text-neutral-500 mb-2">
+<span>Europe / Others</span>
+<span>10%</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-neutral-600 w-[10%]"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 bg-surface-container-highest p-6 rounded-lg border border-outline-variant/10 relative overflow-hidden group">
+<div class="relative z-10">
+<div class="text-sm font-bold text-primary-fixed mb-1">Fan Sentiment</div>
+<div class="text-2xl font-headline font-black">High Octane</div>
+<p class="text-xs text-neutral-500 mt-2">Active fan discussion is peaking in Mexico City &amp; Madrid.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-9xl">analytics</span>
+</div>
+</div>
+</div>
+<!-- Video Feature -->
+<div class="md:col-span-7 h-[400px] rounded-xl overflow-hidden relative group">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Official music video still cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBKB3ijkUimKSmJBrSV6FtzNxeT1Y3vwkXBmHsusPuGHerKcoN26MNWRqLzPV6zmZU1Fdqou_VLMufLjvgUmVotKzfdAzYZ3RAoc3u-o5jLpNpspIEHZHr6CK4w5gttZ_WTU6SYoCYqdKReh6BYt3WAWWwbc7K5T959d2l2TOTGuhrsrbt-qiIbwhFSOZKSOF-W1clPi2LySvE07GfKO_IeWfJ1KyGZ3oSpV2DBQxmuAutdOa0ttguGjO3lUfDbb7aKgKz29aojbc"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+<button class="w-20 h-20 rounded-full border-2 border-white/40 flex items-center justify-center backdrop-blur-md hover:border-primary-container hover:text-primary-container transition-all">
+<span class="material-symbols-outlined text-4xl">play_circle</span>
+</button>
+</div>
+<div class="absolute bottom-6 left-6">
+<div class="text-xs uppercase tracking-[0.2em] font-bold text-white/70">Official Music Video</div>
+<div class="text-2xl font-headline font-bold text-white">Cielo de Neon (Live)</div>
+</div>
+</div>
+<!-- Smart Links / Socials -->
+<div class="md:col-span-5 glass-panel rounded-xl p-8 border border-outline-variant/10">
+<h3 class="font-headline text-2xl font-bold mb-6">Digital Hub</h3>
+<div class="space-y-3">
+<a class="flex items-center justify-between p-4 rounded-lg bg-surface-container-highest/60 hover:bg-primary-container/10 border border-outline-variant/10 transition-all group/link" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary-container">brand_awareness</span>
+<span class="font-medium">Spotify Artist Profile</span>
+</div>
+<span class="material-symbols-outlined text-neutral-600 group-hover/link:text-primary-container transition-colors">arrow_outward</span>
+</a>
+<a class="flex items-center justify-between p-4 rounded-lg bg-surface-container-highest/60 hover:bg-primary-container/10 border border-outline-variant/10 transition-all group/link" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary-container">video_library</span>
+<span class="font-medium">YouTube Official Channel</span>
+</div>
+<span class="material-symbols-outlined text-neutral-600 group-hover/link:text-primary-container transition-colors">arrow_outward</span>
+</a>
+<a class="flex items-center justify-between p-4 rounded-lg bg-surface-container-highest/60 hover:bg-primary-container/10 border border-outline-variant/10 transition-all group/link" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary-container">podcasts</span>
+<span class="font-medium">Apple Music Profile</span>
+</div>
+<span class="material-symbols-outlined text-neutral-600 group-hover/link:text-primary-container transition-colors">arrow_outward</span>
+</a>
+</div>
+<div class="flex justify-between items-center mt-12 pt-8 border-t border-outline-variant/10">
+<div class="flex gap-6">
+<button class="material-symbols-outlined text-neutral-400 hover:text-primary-container transition-colors">alternate_email</button>
+<button class="material-symbols-outlined text-neutral-400 hover:text-primary-container transition-colors">photo_camera</button>
+<button class="material-symbols-outlined text-neutral-400 hover:text-primary-container transition-colors">music_note</button>
+</div>
+<div class="text-[10px] text-neutral-500 uppercase tracking-widest font-bold">@Eliseo_Oficial</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer Shell -->
+<footer class="w-full py-12 px-8 border-t border-neutral-800/20 bg-neutral-950 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="font-['Space_Grotesk'] font-bold text-neutral-100 text-xl">Apex Music Latino</div>
+<div class="flex gap-8 font-['Inter'] text-xs uppercase tracking-widest text-neutral-600">
+<a class="hover:text-green-300 transition-colors" href="#">Transparency</a>
+<a class="hover:text-green-300 transition-colors" href="#">Rights</a>
+<a class="hover:text-green-300 transition-colors" href="#">Privacy</a>
+<a class="hover:text-green-300 transition-colors" href="#">Terms</a>
+<a class="hover:text-green-300 transition-colors" href="#">API</a>
+</div>
+<div class="font-['Inter'] text-xs uppercase tracking-widest text-neutral-600 text-center md:text-right">
+                © 2024 Apex Music Latino. Powered by CUBO Data Engine.
+            </div>
+</footer>
+</main>
+<!-- Contextual FAB (Hidden as per hierarchy on details page, but logic check performed) -->
+<!-- Suppressing FAB on Detail/EPK Focused view to maintain cinematic immersion -->
+</body></html>

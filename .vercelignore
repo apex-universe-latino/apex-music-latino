@@ -1,0 +1,7 @@
+Artistas/
+.env
+.vercel/
+node_modules/
+*.mp4
+*.mov
+*.avi
