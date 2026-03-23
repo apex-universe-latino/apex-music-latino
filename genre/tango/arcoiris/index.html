@@ -116,100 +116,85 @@
 <!-- ============================================ -->
 <!-- LEAD CAPTURE GATE OVERLAY                    -->
 <!-- ============================================ -->
-<div id="arcoiris-gate" class="fixed inset-0 z-[999] flex items-start md:items-center justify-center overflow-y-auto p-4 py-6 md:p-8" style="display:none;">
-  <!-- Video background with parallax -->
+<div id="arcoiris-gate" class="fixed inset-0 z-[999]" style="display:none;">
+  <!-- Video background -->
   <div class="absolute inset-0 z-0 overflow-hidden">
-    <video autoplay muted loop playsinline class="absolute w-full h-full object-cover scale-125" style="filter: brightness(0.25) saturate(1.3); transform: translateZ(0);" poster="/assetts/c003eb2d-ab8a-4c82-ad71-017894ab41f3.jpeg">
+    <video autoplay muted loop playsinline class="absolute w-full h-full object-cover" style="filter: brightness(0.25) saturate(1.3);" poster="/assetts/c003eb2d-ab8a-4c82-ad71-017894ab41f3.jpeg">
         <source src="/assetts/arcoiris-promo-web.mp4" type="video/mp4">
     </video>
-    <!-- Fallback image (shows if video fails) -->
     <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvyGjUrcUbBZ5FJXLDLpGZdllaZEswCQNhLIQP7RNuipdEk3Di3-GXlZ8jsDevnl9u-_4YIAD4eZoHB1QiVoALucNd3jl8vf005Do0Sb7d1Ee57YgO1hlkK_XNe_5fsMic9mtRlUs27HL7UPuVgjejNGgCoUtrFJX6Gk9-VDJ1mCQGfuv2OcyvHUGzh61Rq5kZExSOatPC7Lv5QvXdL4ChkC3F_3EAKqnZZEaOj0q-rEP965UL-1_FpHLEW86Qh56P8lBPg1JFvoM" alt="" class="absolute w-full h-full object-cover" style="filter: brightness(0.2) blur(3px);" aria-hidden="true"/>
-    <div class="absolute inset-0 bg-black/50"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
-    <div class="absolute inset-0 bg-gradient-to-br from-[#e60000]/20 via-transparent to-[#8b0000]/15"></div>
-    <!-- Animated crimson light streaks -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <div class="absolute w-96 h-96 rounded-full opacity-10" style="background: radial-gradient(circle, #e60000, transparent 70%); top: -10%; right: -10%; animation: float-slow 8s ease-in-out infinite;"></div>
-        <div class="absolute w-64 h-64 rounded-full opacity-10" style="background: radial-gradient(circle, #8b0000, transparent 70%); bottom: -5%; left: -5%; animation: float-slow 12s ease-in-out infinite reverse;"></div>
-    </div>
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-[#e60000]/15 via-transparent to-[#8b0000]/10"></div>
   </div>
 
-  <!-- Gate card -->
-  <div class="relative z-10 w-full max-w-lg animate-float" style="animation-duration: 8s;">
-    <div class="relative rounded-3xl overflow-hidden" style="background: rgba(19, 19, 19, 0.65); backdrop-filter: blur(40px) saturate(1.5); -webkit-backdrop-filter: blur(40px) saturate(1.5); border: 1px solid rgba(230, 0, 0, 0.2); box-shadow: 0 0 80px rgba(230, 0, 0, 0.12), 0 32px 64px rgba(0,0,0,0.5);">
+  <!-- Scrollable content layer -->
+  <div class="relative z-10 w-full h-full overflow-y-auto">
+    <div class="flex items-start md:items-center justify-center min-h-full px-4 py-8 md:p-8">
 
-      <!-- Top accent bar -->
-      <div class="h-1 w-full bg-gradient-tango"></div>
+      <!-- Gate card -->
+      <div class="w-full max-w-md" style="flex-shrink: 0;">
+        <div class="rounded-2xl" style="background: rgba(19, 19, 19, 0.8); backdrop-filter: blur(40px) saturate(1.5); -webkit-backdrop-filter: blur(40px) saturate(1.5); border: 1px solid rgba(230, 0, 0, 0.2); box-shadow: 0 0 60px rgba(230, 0, 0, 0.1), 0 20px 40px rgba(0,0,0,0.5);">
 
-      <div id="gate-card-content" class="p-5 md:p-10">
-        <!-- Logo / Badge -->
-        <div class="flex items-center gap-3 mb-6">
-          <span class="h-px w-10 bg-tango-accent"></span>
-          <span class="text-tango-accent font-headline tracking-[0.4em] text-[10px] uppercase font-bold bg-tango-accent/10 px-3 py-1 rounded-full border border-tango-accent/20">Acceso Exclusivo</span>
-        </div>
+          <!-- Top accent bar -->
+          <div class="h-1 w-full rounded-t-2xl bg-gradient-tango"></div>
 
-        <!-- Headline -->
-        <h2 class="font-headline text-2xl md:text-4xl font-bold leading-tight mb-2">
-          <span class="text-gradient-tango">Desbloquea</span> el Universo<br/>de Arcoiris
-        </h2>
-        <p class="text-zinc-500 text-xs uppercase tracking-widest mb-5 font-headline">Unlock the Arcoiris Universe</p>
-
-        <!-- Offer -->
-        <div class="rounded-xl p-4 mb-7" style="background: rgba(230, 0, 0, 0.08); border: 1px solid rgba(230, 0, 0, 0.15);">
-          <div class="flex items-start gap-3">
-            <span class="material-symbols-outlined text-tango-accent text-2xl mt-0.5" style="font-variation-settings: 'FILL' 1;">redeem</span>
-            <div>
-              <p class="text-on-surface font-bold text-sm leading-snug">Recibe GRATIS una clase de tango + acceso a nuestro curso de 24 pasos de tango (Próximamente)</p>
-              <p class="text-zinc-500 text-xs mt-1">Get a FREE tango class + access to our 24-step tango course (Coming Soon)</p>
-              <p class="text-tango-accent font-headline font-bold text-lg mt-2">Valor $300 USD <span class="text-zinc-500 text-xs font-normal line-through ml-1">$300</span> <span class="text-[#00e639] text-xs font-bold ml-1">GRATIS</span></p>
-              <p class="text-yellow-400 text-xs font-bold mt-2 flex items-center gap-1"><span class="material-symbols-outlined text-xs">timer</span> Oferta válida hasta el 31 de Marzo · Act now!</p>
+          <div id="gate-card-content" class="px-5 py-6 md:px-8 md:py-8">
+            <!-- Badge -->
+            <div class="flex items-center gap-2 mb-4">
+              <span class="h-px w-8 bg-tango-accent"></span>
+              <span class="text-tango-accent font-headline tracking-[0.3em] text-[9px] uppercase font-bold bg-tango-accent/10 px-2.5 py-0.5 rounded-full border border-tango-accent/20">Acceso Exclusivo</span>
             </div>
+
+            <!-- Headline -->
+            <h2 class="font-headline text-xl md:text-3xl font-bold leading-tight mb-1">
+              <span class="text-gradient-tango">Desbloquea</span> el Universo de Arcoiris
+            </h2>
+            <p class="text-zinc-500 text-[10px] uppercase tracking-widest mb-4 font-headline">Unlock the Arcoiris Universe</p>
+
+            <!-- Offer (compact) -->
+            <div class="rounded-lg p-3 mb-5" style="background: rgba(230, 0, 0, 0.08); border: 1px solid rgba(230, 0, 0, 0.15);">
+              <p class="text-on-surface font-bold text-xs leading-snug">Recibe GRATIS una clase de tango + curso de 24 pasos</p>
+              <p class="text-zinc-500 text-[10px] mt-0.5">FREE tango class + 24-step course (Coming Soon)</p>
+              <div class="flex items-center gap-2 mt-1.5">
+                <span class="text-tango-accent font-headline font-bold text-sm">Valor $300 USD</span>
+                <span class="text-[#00e639] text-xs font-bold">GRATIS</span>
+              </div>
+            </div>
+
+            <!-- Form -->
+            <form id="arcoiris-gate-form" class="space-y-2.5" novalidate>
+              <input type="text" id="gate-name" name="name" required placeholder="Nombre / Name" class="w-full px-4 py-3 rounded-lg text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-tango-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
+              <input type="email" id="gate-email" name="email" required placeholder="Email" class="w-full px-4 py-3 rounded-lg text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-tango-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
+              <input type="tel" id="gate-phone" name="phone" required placeholder="Tel&eacute;fono / Phone" class="w-full px-4 py-3 rounded-lg text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-tango-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
+              <input type="text" id="gate-title" name="title" placeholder="T&iacute;tulo (Bailar&iacute;n, Manager, Fan) &mdash; Opcional" class="w-full px-4 py-3 rounded-lg text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-tango-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
+
+              <!-- Terms -->
+              <div class="flex items-start gap-2 pt-1">
+                <input type="checkbox" id="gate-terms" required class="mt-0.5 w-4 h-4 rounded border-white/20 text-tango-accent focus:ring-tango-accent/30 bg-surface-container-highest/50 cursor-pointer" />
+                <label for="gate-terms" class="text-zinc-400 text-[11px] leading-snug cursor-pointer">
+                  Acepto los <a href="/legal/terms.html" target="_blank" class="text-tango-accent underline underline-offset-2" onclick="event.stopPropagation();">t&eacute;rminos</a> y pol&iacute;tica de privacidad.
+                </label>
+              </div>
+
+              <!-- Error -->
+              <div id="gate-error" class="hidden text-sm text-center py-2 px-3 rounded-lg bg-red-900/30 border border-red-500/20 text-red-300"></div>
+
+              <!-- Submit -->
+              <button type="submit" id="gate-submit-btn" class="w-full py-3.5 rounded-xl font-headline font-bold text-white text-sm tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2" style="background: linear-gradient(135deg, #e60000, #8b0000); margin-top: 8px;">
+                <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">lock_open</span>
+                Desbloquear Acceso
+              </button>
+            </form>
+
+            <!-- Footer -->
+            <p class="text-center text-[9px] text-zinc-600 mt-4 tracking-wider">
+              Powered by <span class="text-zinc-500">Apex Music Latino</span> &middot; Datos protegidos
+              <span class="material-symbols-outlined align-middle text-zinc-500" style="font-size: 10px;">shield</span>
+            </p>
           </div>
         </div>
-
-        <!-- Form -->
-        <form id="arcoiris-gate-form" class="space-y-3" novalidate>
-          <!-- Name -->
-          <div>
-            <input type="text" id="gate-name" name="name" required placeholder="Nombre / Name" class="w-full px-5 py-3.5 rounded-xl text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-tango-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
-          </div>
-          <!-- Email -->
-          <div>
-            <input type="email" id="gate-email" name="email" required placeholder="Email" class="w-full px-5 py-3.5 rounded-xl text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-tango-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
-          </div>
-          <!-- Phone -->
-          <div>
-            <input type="tel" id="gate-phone" name="phone" required placeholder="Tel&eacute;fono / Phone" class="w-full px-5 py-3.5 rounded-xl text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-tango-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
-          </div>
-          <!-- Title (optional) -->
-          <div>
-            <input type="text" id="gate-title" name="title" placeholder="T&iacute;tulo / Title (ej: Bailar&iacute;n, Manager, Fan) &mdash; Opcional" class="w-full px-5 py-3.5 rounded-xl text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-tango-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
-          </div>
-
-          <!-- Terms checkbox -->
-          <div class="flex items-start gap-3 pt-1">
-            <input type="checkbox" id="gate-terms" required class="mt-1 w-4 h-4 rounded border-white/20 text-tango-accent focus:ring-tango-accent/30 bg-surface-container-highest/50 cursor-pointer" />
-            <label for="gate-terms" class="text-zinc-400 text-xs leading-relaxed cursor-pointer">
-              Acepto los <a href="/legal/terms.html" target="_blank" class="text-tango-accent underline underline-offset-2 hover:text-white transition-colors" onclick="event.stopPropagation();">t&eacute;rminos y condiciones</a> y la pol&iacute;tica de privacidad.
-            </label>
-          </div>
-
-          <!-- Error message -->
-          <div id="gate-error" class="hidden text-sm text-center py-2 px-4 rounded-lg bg-red-900/30 border border-red-500/20 text-red-300"></div>
-
-          <!-- Submit button -->
-          <button type="submit" id="gate-submit-btn" class="w-full mt-2 py-4 rounded-xl font-headline font-bold text-white text-base tracking-wide transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-tango-accent/30 active:scale-[0.98] flex items-center justify-center gap-2" style="background: linear-gradient(135deg, #e60000, #8b0000, #e60000); background-size: 200% 200%; animation: shimmer 3s ease-in-out infinite;">
-            <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">lock_open</span>
-            Desbloquear Acceso Exclusivo
-          </button>
-        </form>
-
-        <!-- Privacy note -->
-        <p class="text-center text-[10px] text-zinc-600 mt-5 tracking-wider leading-relaxed">
-          Powered by <span class="text-zinc-500">Apex Music Latino</span> &middot; Tus datos est&aacute;n protegidos
-          <span class="material-symbols-outlined text-[10px] align-middle text-zinc-500" style="font-size: 12px;">shield</span>
-        </p>
       </div>
+
     </div>
   </div>
 </div>
