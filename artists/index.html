@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Artists | Apex Music Latino</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="/css/themes.css" rel="stylesheet"/>
+    <style>
+        .artist-card:hover img { filter: grayscale(0); transform: scale(1.05); }
+        .artist-card img { filter: grayscale(1); transition: all 0.7s; }
+    </style>
+</head>
+<body class="bg-[#131313] text-[#e5e2e1] overflow-x-hidden" style="font-family: 'Inter', sans-serif;">
+    <!-- Nav (replaced by nav.js) -->
+    <nav class="fixed top-0 w-full z-50"></nav>
+
+    <main class="pt-28 pb-20 px-8 md:px-24 max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="mb-16">
+            <p class="text-sm tracking-[0.4em] uppercase mb-4" style="color: var(--accent); font-family: 'Space Grotesk';">Apex Roster</p>
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tighter mb-6" style="font-family: 'Space Grotesk';">Our Artists</h1>
+            <p class="text-zinc-400 text-lg max-w-2xl">The next generation of Latin music. Every artist on our roster is backed by data intelligence, creative infrastructure, and a system designed to build empires.</p>
+        </div>
+
+        <!-- Genre Filter -->
+        <div class="flex flex-wrap gap-3 mb-12">
+            <button class="px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-white/20 bg-white/5 text-white">All</button>
+            <a href="/genre/reggaeton/" class="px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-pink-500/20 text-pink-400 hover:bg-pink-500/10 transition-colors">Reggaeton</a>
+            <a href="/genre/tango/" class="px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-red-500/20 text-red-400 hover:bg-red-500/10 transition-colors">Tango</a>
+            <a href="/genre/rap/" class="px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-cyan-500/20 text-cyan-400 hover:bg-cyan-500/10 transition-colors">Rap</a>
+            <a href="/genre/rock/" class="px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-orange-500/20 text-orange-400 hover:bg-orange-500/10 transition-colors">Rock</a>
+            <a href="/genre/electronic/" class="px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/10 transition-colors">Electronic</a>
+            <a href="/genre/afro-latin/" class="px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border border-yellow-500/20 text-yellow-400 hover:bg-yellow-500/10 transition-colors">Afro/Latin</a>
+        </div>
+
+        <!-- Artist Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Joey B -->
+            <a href="/genre/rap/joey-b/" class="artist-card group block">
+                <div class="aspect-[4/5] bg-zinc-900 rounded-xl overflow-hidden mb-5 relative">
+                    <img alt="Joey B" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1a02J04Ye-YLJI6RQOtIEWsoak0rcH37rrc_1bbJ3Qt_08lTOOZK5bcq5pyuLN7ady7H1zSrasiDxDomppHCSFhqSZ0FFM21s0WCFaMsZU_jJwhWqvgfiqnW_grw2wpTdgelosT8tbNBOaRo2IxWtHSqK1JQBYbac5dF3jU4zxn8bA5Z8Zq2c2vzzuBwuSGFzrbSbv2R63eT95w0dMkSdZrfNSu-UX8uJic2hqQmWarLHv0GuorDTqtZWCdE-slH4bXATLL9jZcQ"/>
+                    <div class="absolute top-4 left-4 flex gap-2">
+                        <span class="px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">Rap</span>
+                        <span class="px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Rising</span>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex justify-between text-xs text-zinc-300">
+                            <span>1.2M Fans</span>
+                            <span>8.4M Streams</span>
+                            <span>4.7% Eng.</span>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold mb-1" style="font-family: 'Space Grotesk';">Joey B</h3>
+                <p class="text-zinc-500 text-sm">Rap &middot; Mexico City &middot; <span class="text-cyan-400">View EPK</span></p>
+            </a>
+
+            <!-- Arcoiris -->
+            <a href="/genre/tango/arcoiris/" class="artist-card group block">
+                <div class="aspect-[4/5] bg-zinc-900 rounded-xl overflow-hidden mb-5 relative">
+                    <img alt="Arcoiris" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvyGjUrcUbBZ5FJXLDLpGZdllaZEswCQNhLIQP7RNuipdEk3Di3-GXlZ8jsDevnl9u-_4YIAD4eZoHB1QiVoALucNd3jl8vf005Do0Sb7d1Ee57YgO1hlkK_XNe_5fsMic9mtRlUs27HL7UPuVgjejNGgCoUtrFJX6Gk9-VDJ1mCQGfuv2OcyvHUGzh61Rq5kZExSOatPC7Lv5QvXdL4ChkC3F_3EAKqnZZEaOj0q-rEP965UL-1_FpHLEW86Qh56P8lBPg1JFvoM"/>
+                    <div class="absolute top-4 left-4 flex gap-2">
+                        <span class="px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-red-500/20 text-red-400 border border-red-500/30">Tango</span>
+                        <span class="px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-purple-500/20 text-purple-400 border border-purple-500/30">Verified</span>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex justify-between text-xs text-zinc-300">
+                            <span>845K Fans</span>
+                            <span>5.2M Streams</span>
+                            <span>6.1% Eng.</span>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold mb-1" style="font-family: 'Space Grotesk';">Arcoiris</h3>
+                <p class="text-zinc-500 text-sm">Neo-Tango &middot; Buenos Aires &middot; <span class="text-red-400">View EPK</span></p>
+            </a>
+
+            <!-- Andrade -->
+            <a href="/artists/" class="artist-card group block">
+                <div class="aspect-[4/5] bg-zinc-900 rounded-xl overflow-hidden mb-5 relative">
+                    <img alt="Andrade" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKKfawZvxjPqD6NQkFACfm5DyaEYniuNDSxyi2o_IuEb5kW60nb0V3c2K8t-4g1Vr41Vc_83aFlgY5oemI_T8_LIAFAFWTDLBAXBcUM1MQXmwozhuPeOE1yM3eMAxHwgvWpcwsY5xA1vFDiEGchu24hOrjPeODu3jZKNT0X4UBzYekImnkALRgpM_AJZurtNPAS7N0iJZgxze8QFOj3aU4a4zPEUe7nEzt9ZjfAVTzP_yQqK2rQ3s8EB_oAJvMQBGgYyvvWcp0hAs"/>
+                    <div class="absolute top-4 left-4 flex gap-2">
+                        <span class="px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-pink-500/20 text-pink-400 border border-pink-500/30">Reggaeton</span>
+                        <span class="px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-amber-500/20 text-amber-400 border border-amber-500/30">Top Tier</span>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex justify-between text-xs text-zinc-300">
+                            <span>2.1M Fans</span>
+                            <span>12.3M Streams</span>
+                            <span>5.8% Eng.</span>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold mb-1" style="font-family: 'Space Grotesk';">Andrade</h3>
+                <p class="text-zinc-500 text-sm">Reggaeton &middot; Medellin &middot; <span class="text-pink-400">View EPK</span></p>
+            </a>
+
+            <!-- La Sombra -->
+            <a href="/genre/electronic/" class="artist-card group block">
+                <div class="aspect-[4/5] bg-zinc-900 rounded-xl overflow-hidden mb-5 relative">
+                    <img alt="La Sombra" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJgBR8zt0kk7RB-9OR3QV8hBBZUBCBxW0EocYsI1f15fLVKqYyBIX-Ok9uxEHsibtabR5SqTAO2nEkz8Ohazc3bC0J4U_lPr_0UqqpSTFhW5KRoULDEGMY6aKw4ZzpUAWMcs1CrjE7db6oUrUwmZ6kpcM6sawGUzLCpoVpiz6kNvjfh0XyqPUrhx8fLCCHTg9sTTsbEQrSKPyU2c0WMNDeHNu4nq9BALMNQRb3eLp2hY0jmEuHbfWnRIJVw5bnl6RtpsHkJfMnZds"/>
+                    <div class="absolute top-4 left-4 flex gap-2">
+                        <span class="px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Electronic</span>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex justify-between text-xs text-zinc-300">
+                            <span>560K Fans</span>
+                            <span>3.8M Streams</span>
+                            <span>7.2% Eng.</span>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold mb-1" style="font-family: 'Space Grotesk';">La Sombra</h3>
+                <p class="text-zinc-500 text-sm">Electronic &middot; Bogota</p>
+            </a>
+
+            <!-- Fuego Roots -->
+            <a href="/genre/afro-latin/" class="artist-card group block">
+                <div class="aspect-[4/5] bg-zinc-900 rounded-xl overflow-hidden mb-5 relative">
+                    <img alt="Fuego Roots" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcRUX0GIrSKa71DhtkU9zMVkjcxM7p3Y1qC5r20s8qleNSK3p3_9unAE3Ru6s-19Hg659tMfr-c4Fw9KSvBa6vygp9Zb5cM4KcBvFCy8HNHKfXC3aczD_1ruCzru5pax8MotaSdztMLqWiRgJQu7WsMziIOCtkhhKJJSOB1puPUisDU_LHLsvhm1POE1Tf7oreFOiP0CSpdILl-HVYs6plJ2QeBqnrJ7piYbTQLjXhqrlCAHVGa2QW1Vfb2n3JJVkvhImnTi_BY-0"/>
+                    <div class="absolute top-4 left-4 flex gap-2">
+                        <span class="px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">Afro/Latin</span>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex justify-between text-xs text-zinc-300">
+                            <span>320K Fans</span>
+                            <span>2.1M Streams</span>
+                            <span>8.4% Eng.</span>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold mb-1" style="font-family: 'Space Grotesk';">Fuego Roots</h3>
+                <p class="text-zinc-500 text-sm">Afro-Latin Fusion &middot; Cali</p>
+            </a>
+
+            <!-- Piedra Viva -->
+            <a href="/genre/rock/" class="artist-card group block">
+                <div class="aspect-[4/5] bg-zinc-900 rounded-xl overflow-hidden mb-5 relative">
+                    <img alt="Piedra Viva" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8dD8760wPtHcrc6yNKp6S9KdwOMSymy_1ATS4M8DZJINX2Fb3BGif2Gnl7xErgQSbRmbUCg-QMMKnZWR8f7gmcRJhSLw1Q4uxzEywt65dwcCbVOnmrlDK0RR4NwQ4-H09DTJPx3scPtoCDqOdzcJd6QfcPbk7uiCcBAZPpdtGQjPaGYYJkp3DIRjnP-Q7qq1mEKo7WqLIt6q8oNXwGSd_bMrLXAU0OK38_ove9juRq0o-LFgUQZYPiit8jKHDyUF8SDvOI0IEvYg"/>
+                    <div class="absolute top-4 left-4 flex gap-2">
+                        <span class="px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-orange-500/20 text-orange-400 border border-orange-500/30">Rock</span>
+                        <span class="px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Rising</span>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex justify-between text-xs text-zinc-300">
+                            <span>180K Fans</span>
+                            <span>1.4M Streams</span>
+                            <span>9.1% Eng.</span>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold mb-1" style="font-family: 'Space Grotesk';">Piedra Viva</h3>
+                <p class="text-zinc-500 text-sm">Rock &middot; Santiago</p>
+            </a>
+        </div>
+
+        <!-- Join CTA -->
+        <div class="mt-24 text-center glass-panel rounded-2xl border border-white/5 p-16">
+            <h2 class="text-3xl md:text-5xl font-bold tracking-tighter mb-6" style="font-family: 'Space Grotesk';">Are You The Next Empire?</h2>
+            <p class="text-zinc-400 text-lg max-w-xl mx-auto mb-10">We're scouting talent across Latin America. If you've got the fire, we've got the system.</p>
+            <a href="/onboarding/" class="inline-block px-10 py-5 font-bold rounded-xl text-lg text-black gradient-accent hover:scale-105 transition-transform" style="font-family: 'Space Grotesk';">Apply to Join Apex</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-950 w-full py-16 px-8 border-t border-neutral-800/20"></footer>
+
+    <script src="/js/nav.js"></script>
+    <script src="/js/apex-engine.js"></script>
+</body>
+</html>

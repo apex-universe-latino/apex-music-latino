@@ -1,51 +1,239 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html class="dark" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apex Music Latino | Enter the Universe</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&display=swap" rel="stylesheet">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Apex Music Latino | Turn Artists Into Empires</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="/css/themes.css" rel="stylesheet"/>
     <style>
-        body { font-family: 'Space Grotesk', sans-serif; }
         .genre-card:hover .genre-bg { transform: scale(1.1); }
-        .genre-card:hover .genre-overlay { opacity: 0.8; }
+        .genre-card:hover .genre-overlay { opacity: 0.7; }
+        .hero-gradient { background: radial-gradient(circle at 50% 50%, rgba(0,255,65,0.08) 0%, transparent 70%); }
+        .text-gradient { background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .float { animation: float 6s ease-in-out infinite; }
     </style>
 </head>
-<body class="bg-black text-white overflow-hidden">
-    <div class="relative h-screen w-full flex flex-col items-center justify-center">
-        <!-- Floating Logo -->
-        <div class="absolute top-12 z-50 text-center">
-            <h1 class="text-4xl font-bold tracking-tighter uppercase mb-2">Apex Music Latino</h1>
-            <p class="text-xs tracking-[0.5em] text-zinc-500 uppercase">Choose Your Intelligence</p>
+<body class="bg-black text-white overflow-x-hidden" style="font-family: 'Inter', sans-serif;">
+    <!-- Nav -->
+    <nav class="fixed top-0 w-full z-50 bg-neutral-950/60 backdrop-blur-xl h-20 flex justify-between items-center px-8">
+        <span class="text-2xl font-bold tracking-tighter" style="font-family: 'Space Grotesk';">Apex Music Latino</span>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative min-h-screen flex flex-col items-center justify-center px-8 text-center overflow-hidden">
+        <div class="hero-gradient absolute inset-0 z-0"></div>
+        <div class="absolute inset-0 z-0 opacity-10">
+            <div class="w-full h-full" style="background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 32px 32px;"></div>
+        </div>
+        <div class="relative z-10 max-w-5xl">
+            <p class="text-sm tracking-[0.5em] uppercase mb-8" style="color: var(--accent); font-family: 'Space Grotesk';">The Future of Latin Music</p>
+            <h1 class="text-5xl md:text-7xl lg:text-9xl font-bold tracking-tighter leading-[0.9] mb-8" style="font-family: 'Space Grotesk';">
+                Turn Artists Into<br/><span class="text-gradient">Empires.</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-zinc-400 font-light max-w-2xl mx-auto mb-12">
+                Music. Data. Influence. One ecosystem. Powered by CUBO intelligence, built for Latin artists who refuse to be ordinary.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 mb-16">
+                <a href="/artists/" class="px-8 py-4 font-bold rounded-lg gradient-accent text-black hover:scale-105 transition-transform" style="font-family: 'Space Grotesk';">Discover Artists</a>
+                <a href="/onboarding/" class="px-8 py-4 font-bold rounded-lg glass-panel border border-white/10 hover:bg-white/10 transition-colors" style="font-family: 'Space Grotesk';">Join Apex</a>
+                <a href="/marketplace/" class="px-8 py-4 font-bold hover:underline decoration-2 underline-offset-8 transition-all" style="color: var(--accent); font-family: 'Space Grotesk';">Explore Marketplace</a>
+            </div>
         </div>
 
-        <div class="flex h-full w-full">
-            <!-- Reggaeton Side -->
-            <a href="/genre/reggaeton" class="genre-card relative flex-1 group overflow-hidden border-r border-white/10 transition-all duration-700 hover:flex-[1.5]">
-                <div class="genre-bg absolute inset-0 transition-transform duration-1000 bg-cover bg-center grayscale group-hover:grayscale-0" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuANRJNn74j6N_FpaBx3DAjdefirjO32nwt4JhMwbwUcH8UWMpV-4JJVwzG05Z1A-TNi5UKo223jhTlWuTXMyluRj-lIxGxn1DGfYD6ZFUoRlwH4wOtrG5_KzXQp4DB7u3oBD2mO-efMwzpctoHLiE0y1SeiqAutmiVxnkLN6qKWefwIlBSK5y3VUJ_HIkSuXwfv_EYg79zk-wD6CuS6Ep3ml6ooh9ju3Nph4Q1TumUuD_Use-gjJQ5c16G4qr-nP-H4wNDJhqkJD3E');"></div>
-                <div class="genre-overlay absolute inset-0 bg-neutral-900 group-hover:bg-[#ff007b]/40 transition-all duration-500 opacity-60"></div>
-                <div class="relative h-full flex flex-col items-center justify-center p-12 text-center">
-                    <h2 class="text-7xl font-bold tracking-tighter mb-4 transition-transform group-hover:scale-110">REGAETON</h2>
-                    <p class="text-sm tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">URBAN INTELLIGENCE</p>
+        <!-- Genre Selector -->
+        <div class="relative z-10 w-full max-w-6xl">
+            <p class="text-[10px] tracking-[0.4em] text-zinc-600 uppercase mb-8">Choose Your Universe</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="/genre/reggaeton/" class="genre-card group relative overflow-hidden rounded-xl aspect-[3/4] border border-white/5 hover:border-pink-500/30 transition-all">
+                    <div class="genre-bg absolute inset-0 transition-transform duration-1000 bg-cover bg-center grayscale group-hover:grayscale-0" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuANRJNn74j6N_FpaBx3DAjdefirjO32nwt4JhMwbwUcH8UWMpV-4JJVwzG05Z1A-TNi5UKo223jhTlWuTXMyluRj-lIxGxn1DGfYD6ZFUoRlwH4wOtrG5_KzXQp4DB7u3oBD2mO-efMwzpctoHLiE0y1SeiqAutmiVxnkLN6qKWefwIlBSK5y3VUJ_HIkSuXwfv_EYg79zk-wD6CuS6Ep3ml6ooh9ju3Nph4Q1TumUuD_Use-gjJQ5c16G4qr-nP-H4wNDJhqkJD3E');"></div>
+                    <div class="genre-overlay absolute inset-0 bg-neutral-900/60 group-hover:bg-pink-600/30 transition-all duration-500"></div>
+                    <div class="relative h-full flex flex-col items-center justify-end p-6 text-center">
+                        <span class="material-symbols-outlined text-3xl mb-2 text-white/60 group-hover:text-pink-400 transition-colors">equalizer</span>
+                        <h3 class="text-xl font-bold tracking-tight" style="font-family: 'Space Grotesk';">Reggaeton</h3>
+                        <p class="text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity text-pink-300 uppercase">Urban Intelligence</p>
+                    </div>
+                </a>
+                <a href="/genre/tango/" class="genre-card group relative overflow-hidden rounded-xl aspect-[3/4] border border-white/5 hover:border-red-500/30 transition-all">
+                    <div class="genre-bg absolute inset-0 transition-transform duration-1000 bg-cover bg-center grayscale group-hover:grayscale-0" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDvyGjUrcUbBZ5FJXLDLpGZdllaZEswCQNhLIQP7RNuipdEk3Di3-GXlZ8jsDevnl9u-_4YIAD4eZoHB1QiVoALucNd3jl8vf005Do0Sb7d1Ee57YgO1hlkK_XNe_5fsMic9mtRlUs27HL7UPuVgjejNGgCoUtrFJX6Gk9-VDJ1mCQGfuv2OcyvHUGzh61Rq5kZExSOatPC7Lv5QvXdL4ChkC3F_3EAKqnZZEaOj0q-rEP965UL-1_FpHLEW86Qh56P8lBPg1JFvoM');"></div>
+                    <div class="genre-overlay absolute inset-0 bg-neutral-900/60 group-hover:bg-red-600/30 transition-all duration-500"></div>
+                    <div class="relative h-full flex flex-col items-center justify-end p-6 text-center">
+                        <span class="material-symbols-outlined text-3xl mb-2 text-white/60 group-hover:text-red-400 transition-colors">theater_comedy</span>
+                        <h3 class="text-xl font-bold tracking-tight" style="font-family: 'Space Grotesk';">Tango</h3>
+                        <p class="text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity text-red-300 uppercase">Passion Data</p>
+                    </div>
+                </a>
+                <a href="/genre/rap/" class="genre-card group relative overflow-hidden rounded-xl aspect-[3/4] border border-white/5 hover:border-cyan-500/30 transition-all">
+                    <div class="genre-bg absolute inset-0 transition-transform duration-1000 bg-cover bg-center grayscale group-hover:grayscale-0" style="background-image: url('https://images8.alphacoders.com/562/thumb-1920-562785.jpg');"></div>
+                    <div class="genre-overlay absolute inset-0 bg-neutral-900/60 group-hover:bg-cyan-600/30 transition-all duration-500"></div>
+                    <div class="relative h-full flex flex-col items-center justify-end p-6 text-center">
+                        <span class="material-symbols-outlined text-3xl mb-2 text-white/60 group-hover:text-cyan-400 transition-colors">mic</span>
+                        <h3 class="text-xl font-bold tracking-tight" style="font-family: 'Space Grotesk';">Rap</h3>
+                        <p class="text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity text-cyan-300 uppercase">Street Intelligence</p>
+                    </div>
+                </a>
+                <a href="/genre/rock/" class="genre-card group relative overflow-hidden rounded-xl aspect-[3/4] border border-white/5 hover:border-orange-500/30 transition-all">
+                    <div class="genre-bg absolute inset-0 transition-transform duration-1000 bg-cover bg-center grayscale group-hover:grayscale-0" style="background-image: url('https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=600');"></div>
+                    <div class="genre-overlay absolute inset-0 bg-neutral-900/60 group-hover:bg-orange-600/30 transition-all duration-500"></div>
+                    <div class="relative h-full flex flex-col items-center justify-end p-6 text-center">
+                        <span class="material-symbols-outlined text-3xl mb-2 text-white/60 group-hover:text-orange-400 transition-colors">electric_bolt</span>
+                        <h3 class="text-xl font-bold tracking-tight" style="font-family: 'Space Grotesk';">Rock</h3>
+                        <p class="text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity text-orange-300 uppercase">Raw Power</p>
+                    </div>
+                </a>
+                <a href="/genre/electronic/" class="genre-card group relative overflow-hidden rounded-xl aspect-[3/4] border border-white/5 hover:border-emerald-500/30 transition-all">
+                    <div class="genre-bg absolute inset-0 transition-transform duration-1000 bg-cover bg-center grayscale group-hover:grayscale-0" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600');"></div>
+                    <div class="genre-overlay absolute inset-0 bg-neutral-900/60 group-hover:bg-emerald-600/30 transition-all duration-500"></div>
+                    <div class="relative h-full flex flex-col items-center justify-end p-6 text-center">
+                        <span class="material-symbols-outlined text-3xl mb-2 text-white/60 group-hover:text-emerald-400 transition-colors">settings_input_component</span>
+                        <h3 class="text-xl font-bold tracking-tight" style="font-family: 'Space Grotesk';">Electronic</h3>
+                        <p class="text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity text-emerald-300 uppercase">Cyber Pulse</p>
+                    </div>
+                </a>
+                <a href="/genre/afro-latin/" class="genre-card group relative overflow-hidden rounded-xl aspect-[3/4] border border-white/5 hover:border-yellow-500/30 transition-all">
+                    <div class="genre-bg absolute inset-0 transition-transform duration-1000 bg-cover bg-center grayscale group-hover:grayscale-0" style="background-image: url('https://images.unsplash.com/photo-1504704911898-68304a7d2e74?w=600');"></div>
+                    <div class="genre-overlay absolute inset-0 bg-neutral-900/60 group-hover:bg-yellow-600/30 transition-all duration-500"></div>
+                    <div class="relative h-full flex flex-col items-center justify-end p-6 text-center">
+                        <span class="material-symbols-outlined text-3xl mb-2 text-white/60 group-hover:text-yellow-400 transition-colors">blur_on</span>
+                        <h3 class="text-xl font-bold tracking-tight" style="font-family: 'Space Grotesk';">Afro/Latin</h3>
+                        <p class="text-[10px] tracking-widest opacity-0 group-hover:opacity-100 transition-opacity text-yellow-300 uppercase">Roots & Future</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Offer -->
+    <section class="py-32 px-8 md:px-24 bg-zinc-950">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl md:text-6xl font-bold tracking-tighter mb-6" style="font-family: 'Space Grotesk';">One Ecosystem.<br/><span class="text-gradient">Infinite Power.</span></h2>
+                <p class="text-zinc-400 text-lg max-w-2xl mx-auto">Everything an artist needs to build, grow, and own their empire — all in one place.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <a href="/dashboard/" class="glass-panel rounded-2xl border border-white/5 p-10 hover:border-white/20 hover:-translate-y-1 transition-all group">
+                    <span class="material-symbols-outlined text-3xl mb-6" style="color: var(--accent);">dashboard</span>
+                    <h3 class="text-2xl font-bold mb-3" style="font-family: 'Space Grotesk';">Artist OS</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed">EPK builder, smartlinks, merch store, ticketing, fan CRM, and analytics dashboard. Your career command center.</p>
+                </a>
+                <a href="/academy/" class="glass-panel rounded-2xl border border-white/5 p-10 hover:border-white/20 hover:-translate-y-1 transition-all group">
+                    <span class="material-symbols-outlined text-3xl mb-6" style="color: var(--accent);">school</span>
+                    <h3 class="text-2xl font-bold mb-3" style="font-family: 'Space Grotesk';">Apex Academy</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Contracts 101, royalties, publishing, branding, content strategy. Free + paid tiers. Learn. Build. Scale.</p>
+                </a>
+                <a href="/marketplace/" class="glass-panel rounded-2xl border border-white/5 p-10 hover:border-white/20 hover:-translate-y-1 transition-all group">
+                    <span class="material-symbols-outlined text-3xl mb-6" style="color: var(--accent);">storefront</span>
+                    <h3 class="text-2xl font-bold mb-3" style="font-family: 'Space Grotesk';">Marketplace</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Brands discover and hire artists based on audience data, engagement rate, and genre. Real influencer power.</p>
+                </a>
+                <a href="/studio/" class="glass-panel rounded-2xl border border-white/5 p-10 hover:border-white/20 hover:-translate-y-1 transition-all group">
+                    <span class="material-symbols-outlined text-3xl mb-6" style="color: var(--accent);">smart_toy</span>
+                    <h3 class="text-2xl font-bold mb-3" style="font-family: 'Space Grotesk';">AI Assistant</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Contract generation, royalty splits, marketing strategies, and cesion de imagen templates. Powered by Kujo AI.</p>
+                </a>
+                <div class="glass-panel rounded-2xl border border-white/5 p-10 hover:border-white/20 hover:-translate-y-1 transition-all group">
+                    <span class="material-symbols-outlined text-3xl mb-6" style="color: var(--accent);">analytics</span>
+                    <h3 class="text-2xl font-bold mb-3" style="font-family: 'Space Grotesk';">CUBO Data Engine</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Fan segmentation, audience intelligence, campaign tracking, revenue dashboards. Own your data, own your career.</p>
                 </div>
-            </a>
-
-            <!-- Tango Side -->
-            <a href="/genre/tango" class="genre-card relative flex-1 group overflow-hidden transition-all duration-700 hover:flex-[1.5]">
-                <div class="genre-bg absolute inset-0 transition-transform duration-1000 bg-cover bg-center grayscale group-hover:grayscale-0" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDvyGjUrcUbBZ5FJXLDLpGZdllaZEswCQNhLIQP7RNuipdEk3Di3-GXlZ8jsDevnl9u-_4YIAD4eZoHB1QiVoALucNd3jl8vf005Do0Sb7d1Ee57YgO1hlkK_XNe_5fsMic9mtRlUs27HL7UPuVgjejNGgCoUtrFJX6Gk9-VDJ1mCQGfuv2OcyvHUGzh61Rq5kZExSOatPC7Lv5QvXdL4ChkC3F_3EAKqnZZEaOj0q-rEP965UL-1_FpHLEW86Qh56P8lBPg1JFvoM');"></div>
-                <div class="genre-overlay absolute inset-0 bg-neutral-900 group-hover:bg-[#e60000]/40 transition-all duration-500 opacity-60"></div>
-                <div class="relative h-full flex flex-col items-center justify-center p-12 text-center">
-                    <h2 class="text-7xl font-bold tracking-tighter mb-4 transition-transform group-hover:scale-110">TANGO</h2>
-                    <p class="text-sm tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">PASSION DATA</p>
+                <div class="glass-panel rounded-2xl border border-white/5 p-10 hover:border-white/20 hover:-translate-y-1 transition-all group">
+                    <span class="material-symbols-outlined text-3xl mb-6" style="color: var(--accent);">verified</span>
+                    <h3 class="text-2xl font-bold mb-3" style="font-family: 'Space Grotesk';">Rights & Transparency</h3>
+                    <p class="text-zinc-400 text-sm leading-relaxed">Real-time royalty dashboards, clear splits, ownership visibility. No hidden games. No label traps.</p>
                 </div>
-            </a>
+            </div>
         </div>
+    </section>
 
-        <!-- Footer -->
-        <div class="absolute bottom-12 z-50">
-            <p class="text-[10px] tracking-[0.4em] text-zinc-600 uppercase">Powered by CUBO IQ Engine</p>
+    <!-- Featured Artists -->
+    <section class="py-32 px-8 md:px-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-end mb-16">
+                <div>
+                    <h2 class="text-4xl md:text-6xl font-bold tracking-tighter" style="font-family: 'Space Grotesk';">Featured Artists</h2>
+                    <p class="text-zinc-500 mt-2">Rising talent from the Apex universe</p>
+                </div>
+                <a href="/artists/" class="text-sm tracking-widest uppercase hover:underline" style="color: var(--accent); font-family: 'Space Grotesk';">View All</a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <a href="/genre/rap/joey-b/" class="group">
+                    <div class="aspect-square bg-zinc-900 rounded-xl overflow-hidden mb-4 relative">
+                        <div class="w-full h-full bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD1a02J04Ye-YLJI6RQOtIEWsoak0rcH37rrc_1bbJ3Qt_08lTOOZK5bcq5pyuLN7ady7H1zSrasiDxDomppHCSFhqSZ0FFM21s0WCFaMsZU_jJwhWqvgfiqnW_grw2wpTdgelosT8tbNBOaRo2IxWtHSqK1JQBYbac5dF3jU4zxn8bA5Z8Zq2c2vzzuBwuSGFzrbSbv2R63eT95w0dMkSdZrfNSu-UX8uJic2hqQmWarLHv0GuorDTqtZWCdE-slH4bXATLL9jZcQ');"></div>
+                        <div class="absolute top-4 left-4 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">Rap</div>
+                        <div class="absolute bottom-4 right-4 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-white/10 text-white">1.2M Fans</div>
+                    </div>
+                    <h3 class="text-xl font-bold" style="font-family: 'Space Grotesk';">Joey B</h3>
+                    <p class="text-zinc-500 text-sm">Rap &middot; Mexico City</p>
+                </a>
+                <a href="/genre/tango/arcoiris/" class="group">
+                    <div class="aspect-square bg-zinc-900 rounded-xl overflow-hidden mb-4 relative">
+                        <div class="w-full h-full bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDvyGjUrcUbBZ5FJXLDLpGZdllaZEswCQNhLIQP7RNuipdEk3Di3-GXlZ8jsDevnl9u-_4YIAD4eZoHB1QiVoALucNd3jl8vf005Do0Sb7d1Ee57YgO1hlkK_XNe_5fsMic9mtRlUs27HL7UPuVgjejNGgCoUtrFJX6Gk9-VDJ1mCQGfuv2OcyvHUGzh61Rq5kZExSOatPC7Lv5QvXdL4ChkC3F_3EAKqnZZEaOj0q-rEP965UL-1_FpHLEW86Qh56P8lBPg1JFvoM');"></div>
+                        <div class="absolute top-4 left-4 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-red-500/20 text-red-400 border border-red-500/30">Tango</div>
+                        <div class="absolute bottom-4 right-4 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-white/10 text-white">845K Fans</div>
+                    </div>
+                    <h3 class="text-xl font-bold" style="font-family: 'Space Grotesk';">Arcoiris</h3>
+                    <p class="text-zinc-500 text-sm">Neo-Tango &middot; Buenos Aires</p>
+                </a>
+                <a href="/artists/" class="group">
+                    <div class="aspect-square bg-zinc-900 rounded-xl overflow-hidden mb-4 relative">
+                        <div class="w-full h-full bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAKKfawZvxjPqD6NQkFACfm5DyaEYniuNDSxyi2o_IuEb5kW60nb0V3c2K8t-4g1Vr41Vc_83aFlgY5oemI_T8_LIAFAFWTDLBAXBcUM1MQXmwozhuPeOE1yM3eMAxHwgvWpcwsY5xA1vFDiEGchu24hOrjPeODu3jZKNT0X4UBzYekImnkALRgpM_AJZurtNPAS7N0iJZgxze8QFOj3aU4a4zPEUe7nEzt9ZjfAVTzP_yQqK2rQ3s8EB_oAJvMQBGgYyvvWcp0hAs');"></div>
+                        <div class="absolute top-4 left-4 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-pink-500/20 text-pink-400 border border-pink-500/30">Reggaeton</div>
+                        <div class="absolute bottom-4 right-4 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-white/10 text-white">2.1M Fans</div>
+                    </div>
+                    <h3 class="text-xl font-bold" style="font-family: 'Space Grotesk';">Andrade</h3>
+                    <p class="text-zinc-500 text-sm">Reggaeton &middot; Medellin</p>
+                </a>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Powered by CUBO -->
+    <section class="py-32 px-8 md:px-24 bg-zinc-950 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-[0.02]" style="background-image: radial-gradient(var(--accent) 1px, transparent 1px); background-size: 24px 24px;"></div>
+        <div class="max-w-7xl mx-auto relative z-10 text-center">
+            <p class="text-sm tracking-[0.4em] uppercase mb-6" style="color: var(--accent); font-family: 'Space Grotesk';">Data Intelligence</p>
+            <h2 class="text-4xl md:text-7xl font-bold tracking-tighter mb-8" style="font-family: 'Space Grotesk';">Powered by <span class="text-gradient">CUBO</span></h2>
+            <p class="text-zinc-400 text-xl max-w-2xl mx-auto mb-16">The data engine behind every decision. Fan intelligence, revenue tracking, audience segmentation — built by Datos Maestros.</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-4xl font-bold mb-2" style="font-family: 'Space Grotesk'; color: var(--accent);">12B+</div>
+                    <div class="text-xs tracking-widest text-zinc-500 uppercase">Data Points</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold mb-2" style="font-family: 'Space Grotesk'; color: var(--accent);">450+</div>
+                    <div class="text-xs tracking-widest text-zinc-500 uppercase">Artists Tracked</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold mb-2" style="font-family: 'Space Grotesk'; color: var(--accent);">32</div>
+                    <div class="text-xs tracking-widest text-zinc-500 uppercase">Countries</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold mb-2" style="font-family: 'Space Grotesk'; color: var(--accent);">98.7%</div>
+                    <div class="text-xs tracking-widest text-zinc-500 uppercase">Data Accuracy</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-32 px-8 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-4xl md:text-6xl font-bold tracking-tighter mb-6" style="font-family: 'Space Grotesk';">Ready to Build Your Empire?</h2>
+            <p class="text-zinc-400 text-lg mb-12">Join the movement. Whether you're an artist, manager, or brand — Apex has your lane.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/onboarding/" class="px-10 py-5 font-bold rounded-xl gradient-accent text-black text-lg hover:scale-105 transition-transform" style="font-family: 'Space Grotesk';">Join Apex Now</a>
+                <a href="/academy/" class="px-10 py-5 font-bold rounded-xl glass-panel border border-white/10 text-lg hover:bg-white/10 transition-colors" style="font-family: 'Space Grotesk';">Start Learning</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-950 w-full py-16 px-8 border-t border-neutral-800/20"></footer>
+
+    <script src="/js/nav.js"></script>
+    <script src="/js/apex-engine.js"></script>
 </body>
 </html>

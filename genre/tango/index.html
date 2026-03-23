@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
+<html class="dark" lang="en" data-genre="tango"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Apex Music Latino | The Passion of Data</title>
@@ -98,6 +98,7 @@
             opacity: 0.05;
         }
       </style>
+<link href="/css/themes.css" rel="stylesheet"/>
 </head>
 <body class="bg-surface text-on-surface font-body overflow-x-hidden selection:bg-tango-accent selection:text-white">
 <!-- TopNavBar -->
@@ -106,9 +107,9 @@
             Apex Music Latino
         </div>
 <div class="hidden md:flex items-center gap-8">
-<a class="text-tango-accent border-b-2 border-tango-accent pb-1" href="#">Marketplace</a>
-<a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Academy</a>
-<a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Artist OS</a>
+<a class="text-tango-accent border-b-2 border-tango-accent pb-1" href="/marketplace/">Marketplace</a>
+<a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="/academy/">Academy</a>
+<a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="/dashboard/">Artist OS</a>
 </div>
 <div class="flex items-center gap-6">
 <button class="material-symbols-outlined text-zinc-400 hover:text-tango-accent transition-all duration-300">notifications</button>
@@ -122,34 +123,34 @@
 <p class="text-sm text-zinc-400">Curated Soundscapes</p>
 </div>
 <nav class="flex flex-col">
-<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="#">
+<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="/genre/rap/">
 <span class="material-symbols-outlined">mic</span>
 <span>Rap</span>
 </a>
-<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="#">
+<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="/genre/reggaeton/">
 <span class="material-symbols-outlined">equalizer</span>
 <span>Reggaeton</span>
 </a>
-<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="#">
+<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="/genre/rock/">
 <span class="material-symbols-outlined">electric_bolt</span>
 <span>Rock</span>
 </a>
-<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="#">
+<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="/genre/electronic/">
 <span class="material-symbols-outlined">settings_input_component</span>
 <span>Electronic</span>
 </a>
 <!-- Active Tab: Tango -->
-<a class="flex items-center gap-4 bg-tango-accent/10 text-tango-accent border-r-4 border-tango-accent px-6 py-4 transition-all" href="#">
+<a class="flex items-center gap-4 bg-tango-accent/10 text-tango-accent border-r-4 border-tango-accent px-6 py-4 transition-all" href="/genre/tango/">
 <span class="material-symbols-outlined">theater_comedy</span>
 <span>Tango</span>
 </a>
-<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="#">
+<a class="flex items-center gap-4 text-zinc-500 hover:text-zinc-200 px-6 py-4 hover:bg-zinc-900/50 transition-all hover:translate-x-1 duration-200" href="/genre/afro-latin/">
 <span class="material-symbols-outlined">blur_on</span>
 <span>Afro/Latin Fusion</span>
 </a>
 </nav>
 <div class="mt-auto px-6">
-<button class="w-full py-3 text-xs uppercase tracking-widest border border-tango-accent/30 text-tango-accent hover:bg-tango-accent hover:text-white transition-all duration-300">Explore All</button>
+<a href="/" class="block w-full py-3 text-xs uppercase tracking-widest border border-tango-accent/30 text-tango-accent hover:bg-tango-accent hover:text-white transition-all duration-300 text-center">Explore All</a>
 </div>
 </aside>
 <!-- Main Content Canvas -->
@@ -274,7 +275,7 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
 <!-- Card 1 -->
-<div class="group cursor-pointer">
+<a href="/marketplace/" class="group cursor-pointer">
 <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-4 rounded-md">
 <img alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Abstract red and black art piece" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcRUX0GIrSKa71DhtkU9zMVkjcxM7p3Y1qC5r20s8qleNSK3p3_9unAE3Ru6s-19Hg659tMfr-c4Fw9KSvBa6vygp9Zb5cM4KcBvFCy8HNHKfXC3aczD_1ruCzru5pax8MotaSdztMLqWiRgJQu7WsMziIOCtkhhKJJSOB1puPUisDU_LHLsvhm1POE1Tf7oreFOiP0CSpdILl-HVYs6plJ2QeBqnrJ7piYbTQLjXhqrlCAHVGa2QW1Vfb2n3JJVkvhImnTi_BY-0"/>
 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -284,9 +285,9 @@
 <h4 class="font-headline font-bold text-on-surface">Buenos Aires Nights</h4>
 <p class="text-zinc-500 text-xs">Accoustic Strings &amp; Dramatic Percussion</p>
 <p class="text-tango-accent font-bold mt-2">$24.99</p>
-</div>
+</a>
 <!-- Card 2 -->
-<div class="group cursor-pointer">
+<a href="/marketplace/" class="group cursor-pointer">
 <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-4 rounded-md">
 <img alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Downtempo music equipment in dark room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwlYJ4FivNEVqPtzKzq_227nxlUqBvLtM-jx_BB2WKkBkxku7sErge44_vfmE_CTqCqJm-2XadcDZg4s44NGI59YyTxcQCSQnHa_qkD1ZidIcyyNnQp1QdLYlzf859Ezj7ivZkDVFMl59HAAW8mbddA9YyAYFfnWKqpeGYQ8n8CJCjREl6swvJsJEg3X8bQway9xIdYIr_xVjjNaajMFIg0fMb6tBQ7SQ2l-QzG95fe0GwDjxX4xBVx-8TjUhcWvaNdjvQ6X6kKSc"/>
 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -296,9 +297,9 @@
 <h4 class="font-headline font-bold text-on-surface">Neo-Tango Toolkit</h4>
 <p class="text-zinc-500 text-xs">Hybrid Synthesizers &amp; Bandoneon Textures</p>
 <p class="text-tango-accent font-bold mt-2">$39.00</p>
-</div>
+</a>
 <!-- Card 3 -->
-<div class="group cursor-pointer">
+<a href="/marketplace/" class="group cursor-pointer">
 <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-4 rounded-md">
 <img alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Modern jazz/tango performance photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc2myCyUXtlUy3rZUJ9t7yuL4X2K2l8gLii7pe2f-5eMNTnXEwkCN4IQIgZRjRYyfuHTbc65NXWoEf-RLvdICdeMQ1th8c_NtIhuraF0CLpaSFJdGRCanf5-jBeQs65vbxwi8vfZHEVVWGGh1LfT-BJ2H-fDL9gj3WO3GWWmhONZhSr5f_Iz3U00anOiN--UlUsX3TybYyaEP-eWSMVxqK4v1tLSFBOJ0QPJKNFisLV5rEyJoBgnlgU3G4WxAZJ2EjQ9c_QLuU9O8"/>
 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -308,9 +309,9 @@
 <h4 class="font-headline font-bold text-on-surface">Passion Vocal Stems</h4>
 <p class="text-zinc-500 text-xs">Emotional operatic and spoken word hooks</p>
 <p class="text-tango-accent font-bold mt-2">$19.99</p>
-</div>
+</a>
 <!-- Card 4 -->
-<div class="group cursor-pointer">
+<a href="/marketplace/" class="group cursor-pointer">
 <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-4 rounded-md">
 <img alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Crowd at a high-end music venue" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8dD8760wPtHcrc6yNKp6S9KdwOMSymy_1ATS4M8DZJINX2Fb3BGif2Gnl7xErgQSbRmbUCg-QMMKnZWR8f7gmcRJhSLw1Q4uxzEywt65dwcCbVOnmrlDK0RR4NwQ4-H09DTJPx3scPtoCDqOdzcJd6QfcPbk7uiCcBAZPpdtGQjPaGYYJkp3DIRjnP-Q7qq1mEKo7WqLIt6q8oNXwGSd_bMrLXAU0OK38_ove9juRq0o-LFgUQZYPiit8jKHDyUF8SDvOI0IEvYg"/>
 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -320,7 +321,7 @@
 <h4 class="font-headline font-bold text-on-surface">Rhythm Empire</h4>
 <p class="text-zinc-500 text-xs">Industrial Tango beat construction kit</p>
 <p class="text-tango-accent font-bold mt-2">$45.00</p>
-</div>
+</a>
 </div>
 </section>
 <!-- Footer -->
@@ -338,27 +339,28 @@
 <div>
 <h5 class="font-headline font-bold text-on-surface mb-6">Navigation</h5>
 <ul class="space-y-4 text-zinc-500 text-sm">
-<li><a class="hover:text-tango-accent transition-colors" href="#">Marketplace</a></li>
-<li><a class="hover:text-tango-accent transition-colors" href="#">Artist OS</a></li>
-<li><a class="hover:text-tango-accent transition-colors" href="#">Academy</a></li>
-<li><a class="hover:text-tango-accent transition-colors" href="#">CUBO Data</a></li>
+<li><a class="hover:text-tango-accent transition-colors" href="/marketplace/">Marketplace</a></li>
+<li><a class="hover:text-tango-accent transition-colors" href="/dashboard/">Artist OS</a></li>
+<li><a class="hover:text-tango-accent transition-colors" href="/academy/">Academy</a></li>
+<li><a class="hover:text-tango-accent transition-colors" href="/studio/">CUBO Data</a></li>
 </ul>
 </div>
 <div>
 <h5 class="font-headline font-bold text-on-surface mb-6">Support</h5>
 <ul class="space-y-4 text-zinc-500 text-sm">
-<li><a class="hover:text-tango-accent transition-colors" href="#">Documentation</a></li>
-<li><a class="hover:text-tango-accent transition-colors" href="#">Privacy Policy</a></li>
-<li><a class="hover:text-tango-accent transition-colors" href="#">Terms of Service</a></li>
-<li><a class="hover:text-tango-accent transition-colors" href="#">Contact</a></li>
+<li><a class="hover:text-tango-accent transition-colors" href="/academy/">Documentation</a></li>
+<li><a class="hover:text-tango-accent transition-colors" href="/academy/">Privacy Policy</a></li>
+<li><a class="hover:text-tango-accent transition-colors" href="/academy/">Terms of Service</a></li>
+<li><a class="hover:text-tango-accent transition-colors" href="/onboarding/">Contact</a></li>
 </ul>
 </div>
 </div>
 <div class="mt-20 pt-8 border-t border-white/5 text-zinc-600 text-[10px] tracking-[0.2em] uppercase flex justify-between">
-<div>© 2024 Apex Music Latino. All rights reserved.</div>
+<div>© 2026 Apex Music Latino. All rights reserved.</div>
 <div>Engineered for Excellence.</div>
 </div>
 </footer>
 </main>
+<script src="/js/nav.js"></script>
 <script src="/js/apex-engine.js"></script>
 </body></html>

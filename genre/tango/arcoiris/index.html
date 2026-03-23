@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es" data-genre="tango"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Arcoiris | Apex Music Latino</title>
+<meta name="description" content="Arcoiris - Neo-Tango colectivo de Buenos Aires. Electronic Press Kit oficial. Representados por Apex Music Latino."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-primary": "#003907",
+            "tertiary": "#fcf8f8",
+            "surface-container-highest": "#353534",
+            "on-surface": "#e5e2e1",
+            "inverse-on-surface": "#313030",
+            "primary-fixed-dim": "#00e639",
+            "error": "#ffb4ab",
+            "surface-container": "#201f1f",
+            "surface-container-lowest": "#0e0e0e",
+            "inverse-primary": "#006e16",
+            "on-surface-variant": "#b9ccb2",
+            "surface-container-high": "#2a2a2a",
+            "primary-container": "#00ff41",
+            "surface": "#131313",
+            "outline-variant": "#3b4b37",
+            "inverse-surface": "#e5e2e1",
+            "surface-tint": "#00e639",
+            "primary": "#ebffe2",
+            "surface-container-low": "#1c1b1b",
+            "on-background": "#e5e2e1",
+            "surface-variant": "#353534",
+            "background": "#131313",
+            "surface-bright": "#3a3939",
+            "surface-dim": "#131313",
+            "tango-accent": "#e60000",
+            "tango-deep": "#8b0000",
+            "tango-glow": "rgba(230, 0, 0, 0.4)"
+          },
+          fontFamily: {
+            "headline": ["Space Grotesk"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+    }
+    .glass-panel {
+      background: rgba(53, 53, 52, 0.4);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .crimson-glow {
+      box-shadow: 0 0 60px rgba(230, 0, 0, 0.2), 0 0 120px rgba(230, 0, 0, 0.08);
+    }
+    .crimson-glow-sm {
+      box-shadow: 0 0 30px rgba(230, 0, 0, 0.15);
+    }
+    .text-gradient-tango {
+      background: linear-gradient(135deg, #ff4444, #e60000, #8b0000);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .bg-gradient-tango {
+      background: linear-gradient(135deg, #e60000, #8b0000);
+    }
+    .bg-gradient-tango-hero {
+      background: linear-gradient(135deg, #131313 0%, #1a0505 50%, #131313 100%);
+    }
+    .data-grid-texture {
+      background-image: radial-gradient(circle, #e60000 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.03;
+    }
+    .tango-border-glow {
+      border: 1px solid rgba(230, 0, 0, 0.2);
+    }
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .hero-vignette {
+      background: radial-gradient(ellipse at center, transparent 40%, #131313 100%);
+    }
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #131313; }
+    ::-webkit-scrollbar-thumb { background: #e60000; border-radius: 3px; }
+  </style>
+<link href="/css/themes.css" rel="stylesheet"/>
+</head>
+<body class="bg-surface text-on-surface font-body overflow-x-hidden selection:bg-tango-accent selection:text-white">
+
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-6 md:px-8 h-20 bg-zinc-950/70 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] font-['Space_Grotesk'] tracking-tight">
+  <a href="/" class="text-2xl font-bold tracking-tighter text-tango-accent uppercase">Apex Music Latino</a>
+  <div class="hidden md:flex items-center gap-8">
+    <a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="/">Inicio</a>
+    <a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="/genre/tango/">Tango</a>
+    <a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="/marketplace/">Marketplace</a>
+    <a class="text-tango-accent border-b-2 border-tango-accent pb-1" href="/genre/tango/arcoiris/">Arcoiris</a>
+  </div>
+  <div class="flex items-center gap-4">
+    <button class="material-symbols-outlined text-zinc-400 hover:text-tango-accent transition-all duration-300">share</button>
+    <a href="#contacto" class="bg-gradient-tango text-white px-6 py-2 rounded-lg font-bold hover:scale-95 duration-200 transition-transform text-sm">Contrataciones</a>
+  </div>
+</nav>
+
+<!-- ============================================ -->
+<!-- 1. HERO SECTION - Full-screen cinematic      -->
+<!-- ============================================ -->
+<section class="relative min-h-screen flex items-end pb-24 md:pb-32 overflow-hidden">
+  <!-- Background Image -->
+  <div class="absolute inset-0 z-0">
+    <img alt="Cinematic tango dancers in dramatic red lighting" class="w-full h-full object-cover scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvyGjUrcUbBZ5FJXLDLpGZdllaZEswCQNhLIQP7RNuipdEk3Di3-GXlZ8jsDevnl9u-_4YIAD4eZoHB1QiVoALucNd3jl8vf005Do0Sb7d1Ee57YgO1hlkK_XNe_5fsMic9mtRlUs27HL7UPuVgjejNGgCoUtrFJX6Gk9-VDJ1mCQGfuv2OcyvHUGzh61Rq5kZExSOatPC7Lv5QvXdL4ChkC3F_3EAKqnZZEaOj0q-rEP965UL-1_FpHLEW86Qh56P8lBPg1JFvoM"/>
+    <!-- Multi-layer gradients for depth -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[#131313] via-[#131313]/60 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-[#131313] via-transparent to-transparent"></div>
+    <div class="absolute inset-0 hero-vignette"></div>
+    <!-- Crimson atmospheric overlay -->
+    <div class="absolute inset-0 bg-gradient-to-br from-tango-accent/10 via-transparent to-tango-deep/5"></div>
+  </div>
+
+  <!-- Floating decorative elements -->
+  <div class="absolute top-1/4 right-16 w-64 h-64 bg-tango-accent/5 rounded-full blur-3xl animate-pulse-slow hidden lg:block"></div>
+  <div class="absolute bottom-1/3 right-1/4 w-32 h-32 bg-tango-deep/10 rounded-full blur-2xl animate-float hidden lg:block"></div>
+
+  <!-- Hero Content -->
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12">
+    <!-- Genre Badge -->
+    <div class="flex items-center gap-4 mb-6">
+      <span class="h-px w-16 bg-tango-accent"></span>
+      <span class="text-tango-accent font-headline tracking-[0.4em] text-xs uppercase font-bold bg-tango-accent/10 px-4 py-1.5 rounded-full border border-tango-accent/20">Neo-Tango</span>
+    </div>
+
+    <!-- Group Name -->
+    <h1 class="font-headline text-7xl md:text-[9rem] font-bold tracking-tighter leading-[0.85] -ml-1 mb-4">
+      <span class="text-gradient-tango">ARCO</span><span class="text-on-surface">IRIS</span>
+    </h1>
+
+    <!-- Tagline -->
+    <p class="font-headline text-2xl md:text-3xl text-zinc-400 font-light tracking-wide mb-2 italic">
+      La Pasi&oacute;n Hecha Dato
+    </p>
+
+    <!-- Location -->
+    <div class="flex items-center gap-2 text-zinc-500 mb-10">
+      <span class="material-symbols-outlined text-tango-accent text-lg">location_on</span>
+      <span class="text-sm tracking-widest uppercase">Buenos Aires, Argentina</span>
+    </div>
+
+    <!-- CTA Buttons -->
+    <div class="flex flex-wrap gap-4">
+      <a href="#musica" class="px-10 py-4 bg-gradient-tango text-white font-headline font-bold rounded-lg hover:scale-105 transition-transform duration-300 flex items-center gap-2 shadow-lg shadow-tango-accent/20">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span> Escuchar Ahora
+      </a>
+      <a href="#contacto" class="px-10 py-4 glass-panel border border-white/10 text-on-surface font-headline font-medium rounded-lg hover:bg-white/10 transition-all duration-300">
+        Contrataciones
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 2. STATS BAR                                 -->
+<!-- ============================================ -->
+<section class="relative py-10 bg-surface-container-lowest border-y border-tango-accent/10">
+  <div class="data-grid-texture absolute inset-0"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+      <div class="text-center md:text-left border-l-2 border-tango-accent/30 pl-6">
+        <div class="text-tango-accent font-headline text-4xl md:text-5xl font-bold">845K</div>
+        <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Fans</div>
+      </div>
+      <div class="text-center md:text-left border-l-2 border-tango-accent/30 pl-6">
+        <div class="text-tango-accent font-headline text-4xl md:text-5xl font-bold">5.2M</div>
+        <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Streams</div>
+      </div>
+      <div class="text-center md:text-left border-l-2 border-tango-accent/30 pl-6">
+        <div class="text-on-surface font-headline text-4xl md:text-5xl font-bold">AR</div>
+        <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Top Territory</div>
+      </div>
+      <div class="text-center md:text-left border-l-2 border-tango-accent/30 pl-6">
+        <div class="text-tango-accent font-headline text-4xl md:text-5xl font-bold">6.1%</div>
+        <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Engagement Rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 3. BIO SECTION                               -->
+<!-- ============================================ -->
+<section class="py-24 md:py-32 bg-surface relative overflow-hidden">
+  <!-- Atmospheric glow -->
+  <div class="absolute -left-32 top-1/2 -translate-y-1/2 w-96 h-96 bg-tango-accent/5 rounded-full blur-3xl"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
+      <!-- Photo -->
+      <div class="md:col-span-5 relative">
+        <div class="absolute -inset-4 bg-tango-accent/10 blur-3xl rounded-full"></div>
+        <div class="relative rounded-2xl overflow-hidden crimson-glow tango-border-glow">
+          <img alt="Arcoiris performing tango fusion on stage" class="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc2myCyUXtlUy3rZUJ9t7yuL4X2K2l8gLii7pe2f-5eMNTnXEwkCN4IQIgZRjRYyfuHTbc65NXWoEf-RLvdICdeMQ1th8c_NtIhuraF0CLpaSFJdGRCanf5-jBeQs65vbxwi8vfZHEVVWGGh1LfT-BJ2H-fDL9gj3WO3GWWmhONZhSr5f_Iz3U00anOiN--UlUsX3TybYyaEP-eWSMVxqK4v1tLSFBOJ0QPJKNFisLV5rEyJoBgnlgU3G4WxAZJ2EjQ9c_QLuU9O8"/>
+          <!-- Overlay gradient -->
+          <div class="absolute inset-0 bg-gradient-to-t from-tango-accent/20 via-transparent to-transparent"></div>
+        </div>
+      </div>
+
+      <!-- Bio Text -->
+      <div class="md:col-span-7">
+        <div class="flex items-center gap-4 mb-8">
+          <span class="h-px w-12 bg-tango-accent"></span>
+          <span class="text-tango-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Biograf&iacute;a</span>
+        </div>
+        <h2 class="font-headline text-4xl md:text-5xl font-bold mb-8 leading-tight">
+          El Futuro del Tango<br/><span class="text-gradient-tango">Es Ahora.</span>
+        </h2>
+        <p class="text-zinc-400 text-lg md:text-xl leading-relaxed font-light mb-8">
+          Arcoiris redefine el tango para la era digital. Un colectivo que fusiona la tradici&oacute;n del bandone&oacute;n con producci&oacute;n electr&oacute;nica de vanguardia. Representados por Apex Music Latino, est&aacute;n llevando el tango argentino a escenarios globales con datos, pasi&oacute;n y tecnolog&iacute;a.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <span class="px-4 py-2 rounded-full bg-tango-accent/10 text-tango-accent text-xs font-bold uppercase tracking-wider border border-tango-accent/20">Neo-Tango</span>
+          <span class="px-4 py-2 rounded-full bg-zinc-800/50 text-zinc-400 text-xs font-bold uppercase tracking-wider border border-white/5">Electr&oacute;nica</span>
+          <span class="px-4 py-2 rounded-full bg-zinc-800/50 text-zinc-400 text-xs font-bold uppercase tracking-wider border border-white/5">Bandone&oacute;n</span>
+          <span class="px-4 py-2 rounded-full bg-zinc-800/50 text-zinc-400 text-xs font-bold uppercase tracking-wider border border-white/5">Buenos Aires</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 4. MUSIC SECTION - Ultimos Lanzamientos      -->
+<!-- ============================================ -->
+<section id="musica" class="py-24 md:py-32 bg-surface-container-low relative overflow-hidden">
+  <div class="data-grid-texture absolute inset-0"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+    <div class="flex items-center gap-4 mb-4">
+      <span class="h-px w-12 bg-tango-accent"></span>
+      <span class="text-tango-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">&Uacute;ltimos Lanzamientos</span>
+    </div>
+    <h2 class="font-headline text-4xl md:text-5xl font-bold mb-16">Discograf&iacute;a</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Release 1 -->
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl crimson-glow-sm tango-border-glow">
+          <img alt="Noches de Fuego single artwork" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcRUX0GIrSKa71DhtkU9zMVkjcxM7p3Y1qC5r20s8qleNSK3p3_9unAE3Ru6s-19Hg659tMfr-c4Fw9KSvBa6vygp9Zb5cM4KcBvFCy8HNHKfXC3aczD_1ruCzru5pax8MotaSdztMLqWiRgJQu7WsMziIOCtkhhKJJSOB1puPUisDU_LHLsvhm1POE1Tf7oreFOiP0CSpdILl-HVYs6plJ2QeBqnrJ7piYbTQLjXhqrlCAHVGa2QW1Vfb2n3JJVkvhImnTi_BY-0"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-6xl drop-shadow-2xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+          </div>
+          <div class="absolute top-3 left-3">
+            <span class="bg-tango-accent text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">Nuevo</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">Noches de Fuego</h4>
+        <p class="text-zinc-500 text-sm mt-1">Single &bull; 2026</p>
+      </div>
+
+      <!-- Release 2 -->
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl tango-border-glow">
+          <img alt="Abrazo Digital EP artwork" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwlYJ4FivNEVqPtzKzq_227nxlUqBvLtM-jx_BB2WKkBkxku7sErge44_vfmE_CTqCqJm-2XadcDZg4s44NGI59YyTxcQCSQnHa_qkD1ZidIcyyNnQp1QdLYlzf859Ezj7ivZkDVFMl59HAAW8mbddA9YyAYFfnWKqpeGYQ8n8CJCjREl6swvJsJEg3X8bQway9xIdYIr_xVjjNaajMFIg0fMb6tBQ7SQ2l-QzG95fe0GwDjxX4xBVx-8TjUhcWvaNdjvQ6X6kKSc"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-6xl drop-shadow-2xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">Abrazo Digital</h4>
+        <p class="text-zinc-500 text-sm mt-1">EP &bull; 2025</p>
+      </div>
+
+      <!-- Release 3 -->
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl tango-border-glow">
+          <img alt="Milonga Electrica single artwork" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8dD8760wPtHcrc6yNKp6S9KdwOMSymy_1ATS4M8DZJINX2Fb3BGif2Gnl7xErgQSbRmbUCg-QMMKnZWR8f7gmcRJhSLw1Q4uxzEywt65dwcCbVOnmrlDK0RR4NwQ4-H09DTJPx3scPtoCDqOdzcJd6QfcPbk7uiCcBAZPpdtGQjPaGYYJkp3DIRjnP-Q7qq1mEKo7WqLIt6q8oNXwGSd_bMrLXAU0OK38_ove9juRq0o-LFgUQZYPiit8jKHDyUF8SDvOI0IEvYg"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-6xl drop-shadow-2xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">Milonga El&eacute;ctrica</h4>
+        <p class="text-zinc-500 text-sm mt-1">Single &bull; 2025</p>
+      </div>
+
+      <!-- Release 4 -->
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl tango-border-glow">
+          <img alt="Pasion Algoritmica album artwork" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJgBR8zt0kk7RB-9OR3QV8hBBZUBCBxW0EocYsI1f15fLVKqYyBIX-Ok9uxEHsibtabR5SqTAO2nEkz8Ohazc3bC0J4U_lPr_0UqqpSTFhW5KRoULDEGMY6aKw4ZzpUAWMcs1CrjE7db6oUrUwmZ6kpcM6sawGUzLCpoVpiz6kNvjfh0XyqPUrhx8fLCCHTg9sTTsbEQrSKPyU2c0WMNDeHNu4nq9BALMNQRb3eLp2hY0jmEuHbfWnRIJVw5bnl6RtpsHkJfMnZds"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-6xl drop-shadow-2xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">Pasi&oacute;n Algor&iacute;tmica</h4>
+        <p class="text-zinc-500 text-sm mt-1">&Aacute;lbum &bull; 2025</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 5. VIDEO SECTION                             -->
+<!-- ============================================ -->
+<section class="py-24 md:py-32 bg-surface">
+  <div class="max-w-7xl mx-auto px-6 md:px-12">
+    <div class="flex items-center gap-4 mb-4">
+      <span class="h-px w-12 bg-tango-accent"></span>
+      <span class="text-tango-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Video Oficial</span>
+    </div>
+    <h2 class="font-headline text-4xl md:text-5xl font-bold mb-12">Cinem&aacute;tico</h2>
+
+    <div class="relative rounded-2xl overflow-hidden group cursor-pointer crimson-glow" style="aspect-ratio: 21/9;">
+      <img alt="Cinematic tango performance under dramatic stage lighting" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBKB3ijkUimKSmJBrSV6FtzNxeT1Y3vwkXBmHsusPuGHerKcoN26MNWRqLzPV6zmZU1Fdqou_VLMufLjvgUmVotKzfdAzYZ3RAoc3u-o5jLpNpspIEHZHr6CK4w5gttZ_WTU6SYoCYqdKReh6BYt3WAWWwbc7K5T959d2l2TOTGuhrsrbt-qiIbwhFSOZKSOF-W1clPi2LySvE07GfKO_IeWfJ1KyGZ3oSpV2DBQxmuAutdOa0ttguGjO3lUfDbb7aKgKz29aojbc"/>
+      <!-- Dark overlay -->
+      <div class="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-colors duration-500"></div>
+      <!-- Play button -->
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="w-24 h-24 rounded-full border-2 border-white/30 flex items-center justify-center backdrop-blur-md group-hover:border-tango-accent group-hover:scale-110 transition-all duration-500 bg-tango-accent/10">
+          <span class="material-symbols-outlined text-5xl text-white group-hover:text-tango-accent transition-colors" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+        </div>
+      </div>
+      <!-- Video info -->
+      <div class="absolute bottom-8 left-8 z-10">
+        <div class="text-[10px] uppercase tracking-[0.3em] font-bold text-tango-accent mb-2">Video Musical Oficial</div>
+        <div class="text-3xl font-headline font-bold text-white">Noches de Fuego</div>
+        <div class="text-zinc-400 text-sm mt-1">Dirigido por Mart&iacute;n Rejtman &bull; Buenos Aires, 2026</div>
+      </div>
+      <!-- Duration badge -->
+      <div class="absolute bottom-8 right-8 glass-panel px-4 py-2 rounded-lg border border-white/10">
+        <span class="text-white text-sm font-headline font-bold">4:32</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 6. DIGITAL HUB / SMART LINKS                 -->
+<!-- ============================================ -->
+<section class="py-24 md:py-32 bg-surface-container-low relative overflow-hidden">
+  <div class="absolute right-0 top-0 w-96 h-96 bg-tango-accent/5 rounded-full blur-3xl"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+      <!-- Smart Links -->
+      <div>
+        <div class="flex items-center gap-4 mb-4">
+          <span class="h-px w-12 bg-tango-accent"></span>
+          <span class="text-tango-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Digital Hub</span>
+        </div>
+        <h2 class="font-headline text-4xl font-bold mb-10">Escuch&aacute; en<br/><span class="text-gradient-tango">Todas las Plataformas</span></h2>
+
+        <div class="space-y-3">
+          <a href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-5 rounded-xl bg-surface-container-highest/60 hover:bg-tango-accent/10 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group/link">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#1DB954]/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-[#1DB954]">brand_awareness</span>
+              </div>
+              <div>
+                <span class="font-bold text-on-surface">Spotify</span>
+                <p class="text-xs text-zinc-500">Perfil Oficial del Artista</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-zinc-600 group-hover/link:text-tango-accent transition-colors">arrow_outward</span>
+          </a>
+
+          <a href="https://music.apple.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-5 rounded-xl bg-surface-container-highest/60 hover:bg-tango-accent/10 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group/link">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#fc3c44]/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-[#fc3c44]">podcasts</span>
+              </div>
+              <div>
+                <span class="font-bold text-on-surface">Apple Music</span>
+                <p class="text-xs text-zinc-500">Discograf&iacute;a Completa</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-zinc-600 group-hover/link:text-tango-accent transition-colors">arrow_outward</span>
+          </a>
+
+          <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-5 rounded-xl bg-surface-container-highest/60 hover:bg-tango-accent/10 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group/link">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#ff0000]/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-[#ff0000]">video_library</span>
+              </div>
+              <div>
+                <span class="font-bold text-on-surface">YouTube</span>
+                <p class="text-xs text-zinc-500">Canal Oficial</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-zinc-600 group-hover/link:text-tango-accent transition-colors">arrow_outward</span>
+          </a>
+
+          <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-5 rounded-xl bg-surface-container-highest/60 hover:bg-tango-accent/10 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group/link">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                <span class="material-symbols-outlined text-white">music_note</span>
+              </div>
+              <div>
+                <span class="font-bold text-on-surface">TikTok</span>
+                <p class="text-xs text-zinc-500">@arcoiris.tango</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-zinc-600 group-hover/link:text-tango-accent transition-colors">arrow_outward</span>
+          </a>
+
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-5 rounded-xl bg-surface-container-highest/60 hover:bg-tango-accent/10 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group/link">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#E1306C]/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-[#E1306C]">photo_camera</span>
+              </div>
+              <div>
+                <span class="font-bold text-on-surface">Instagram</span>
+                <p class="text-xs text-zinc-500">@arcoiris.oficial</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-zinc-600 group-hover/link:text-tango-accent transition-colors">arrow_outward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Fan Signup + QR -->
+      <div id="signup">
+        <div class="flex items-center gap-4 mb-4">
+          <span class="h-px w-12 bg-tango-accent"></span>
+          <span class="text-tango-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Comunidad</span>
+        </div>
+        <h2 class="font-headline text-4xl font-bold mb-4">&Uacute;nete al Universo<br/><span class="text-gradient-tango">de Arcoiris</span></h2>
+        <p class="text-zinc-400 mb-10">Acceso anticipado a lanzamientos, contenido exclusivo y entradas preferenciales.</p>
+
+        <!-- Email Capture Form -->
+        <form class="mb-12" onsubmit="event.preventDefault();">
+          <div class="flex flex-col sm:flex-row gap-3">
+            <input type="email" placeholder="tu@email.com" class="flex-1 px-6 py-4 rounded-xl bg-surface-container-highest/80 border border-white/10 text-on-surface placeholder:text-zinc-600 focus:outline-none focus:border-tango-accent/50 focus:ring-1 focus:ring-tango-accent/30 transition-all font-body" required/>
+            <button type="submit" class="px-8 py-4 bg-gradient-tango text-white font-headline font-bold rounded-xl hover:scale-105 transition-transform duration-300 whitespace-nowrap shadow-lg shadow-tango-accent/20">
+              <span class="flex items-center gap-2">
+                <span class="material-symbols-outlined">mail</span> Suscribirme
+              </span>
+            </button>
+          </div>
+          <p class="text-[10px] text-zinc-600 mt-3 tracking-wider">Sin spam. Solo m&uacute;sica, pasi&oacute;n y datos.</p>
+        </form>
+
+        <!-- QR Code Placeholder -->
+        <div class="glass-panel rounded-2xl p-8 border border-white/10 tango-border-glow flex items-center gap-8">
+          <div class="w-36 h-36 bg-white rounded-xl flex items-center justify-center flex-shrink-0">
+            <div class="w-28 h-28 border-4 border-zinc-900 rounded-lg flex items-center justify-center relative">
+              <div class="absolute inset-2 grid grid-cols-4 grid-rows-4 gap-[2px]">
+                <div class="bg-zinc-900 rounded-sm"></div><div class="bg-zinc-900 rounded-sm"></div><div class="bg-zinc-900 rounded-sm"></div><div class="bg-transparent"></div>
+                <div class="bg-zinc-900 rounded-sm"></div><div class="bg-transparent"></div><div class="bg-zinc-900 rounded-sm"></div><div class="bg-zinc-900 rounded-sm"></div>
+                <div class="bg-transparent"></div><div class="bg-zinc-900 rounded-sm"></div><div class="bg-transparent"></div><div class="bg-zinc-900 rounded-sm"></div>
+                <div class="bg-zinc-900 rounded-sm"></div><div class="bg-zinc-900 rounded-sm"></div><div class="bg-zinc-900 rounded-sm"></div><div class="bg-zinc-900 rounded-sm"></div>
+              </div>
+              <span class="material-symbols-outlined text-tango-accent text-lg z-10 bg-white p-0.5" style="font-variation-settings: 'FILL' 1;">qr_code_2</span>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-headline font-bold text-on-surface text-lg mb-2">Escane&aacute; para contenido exclusivo</h4>
+            <p class="text-zinc-500 text-sm leading-relaxed">Accede a remixes ineditos, behind-the-scenes, y contenido que no encontr&aacute;s en ninguna plataforma.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 8. MERCH SECTION                             -->
+<!-- ============================================ -->
+<section class="py-24 md:py-32 bg-surface relative">
+  <div class="max-w-7xl mx-auto px-6 md:px-12">
+    <div class="flex items-center gap-4 mb-4">
+      <span class="h-px w-12 bg-tango-accent"></span>
+      <span class="text-tango-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Merch Oficial</span>
+    </div>
+    <h2 class="font-headline text-4xl md:text-5xl font-bold mb-16">Tienda</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Product 1 -->
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl tango-border-glow">
+          <div class="w-full h-full bg-gradient-to-br from-surface-container-highest to-surface-container flex items-center justify-center">
+            <div class="text-center">
+              <span class="material-symbols-outlined text-tango-accent text-7xl mb-2 group-hover:scale-110 transition-transform duration-500" style="font-variation-settings: 'FILL' 1;">album</span>
+              <p class="text-zinc-500 text-xs tracking-widest uppercase">Vinyl LP</p>
+            </div>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+            <span class="text-white font-bold">Ver Detalles</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">Vinyl Noches de Fuego</h4>
+        <p class="text-zinc-500 text-sm mt-1">Edici&oacute;n limitada en vinilo rojo 180g</p>
+        <p class="text-tango-accent font-headline font-bold text-xl mt-3">$39.99</p>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl tango-border-glow">
+          <div class="w-full h-full bg-gradient-to-br from-surface-container-highest to-surface-container flex items-center justify-center">
+            <div class="text-center">
+              <span class="material-symbols-outlined text-tango-accent text-7xl mb-2 group-hover:scale-110 transition-transform duration-500">checkroom</span>
+              <p class="text-zinc-500 text-xs tracking-widest uppercase">Apparel</p>
+            </div>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+            <span class="text-white font-bold">Ver Detalles</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">Camiseta Arcoiris Tour</h4>
+        <p class="text-zinc-500 text-sm mt-1">Algod&oacute;n org&aacute;nico, dise&ntilde;o exclusivo 2026</p>
+        <p class="text-tango-accent font-headline font-bold text-xl mt-3">$44.99</p>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl tango-border-glow">
+          <div class="w-full h-full bg-gradient-to-br from-surface-container-highest to-surface-container flex items-center justify-center">
+            <div class="text-center">
+              <span class="material-symbols-outlined text-tango-accent text-7xl mb-2 group-hover:scale-110 transition-transform duration-500">image</span>
+              <p class="text-zinc-500 text-xs tracking-widest uppercase">Art Print</p>
+            </div>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+            <span class="text-white font-bold">Ver Detalles</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">Poster Edici&oacute;n Limitada</h4>
+        <p class="text-zinc-500 text-sm mt-1">60x90cm, papel de alta calidad, numerado</p>
+        <p class="text-tango-accent font-headline font-bold text-xl mt-3">$19.99</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 9. LIVE SHOWS / BOOKING                      -->
+<!-- ============================================ -->
+<section id="contacto" class="py-24 md:py-32 bg-surface-container-low relative overflow-hidden">
+  <div class="data-grid-texture absolute inset-0"></div>
+  <div class="absolute left-1/2 top-0 -translate-x-1/2 w-[600px] h-[600px] bg-tango-accent/5 rounded-full blur-3xl"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <!-- Shows -->
+      <div>
+        <div class="flex items-center gap-4 mb-4">
+          <span class="h-px w-12 bg-tango-accent"></span>
+          <span class="text-tango-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">En Vivo</span>
+        </div>
+        <h2 class="font-headline text-4xl md:text-5xl font-bold mb-12">Pr&oacute;ximos Shows</h2>
+
+        <div class="space-y-4">
+          <!-- Show 1 -->
+          <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group">
+            <div class="text-center flex-shrink-0 w-16">
+              <div class="text-tango-accent font-headline text-3xl font-bold leading-none">18</div>
+              <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">ABR</div>
+              <div class="text-[10px] text-zinc-600">2026</div>
+            </div>
+            <div class="h-12 w-px bg-white/10"></div>
+            <div class="flex-1">
+              <h4 class="font-headline font-bold text-on-surface">Teatro Col&oacute;n</h4>
+              <p class="text-zinc-500 text-sm">Buenos Aires, Argentina</p>
+            </div>
+            <a href="#" class="px-5 py-2 rounded-lg border border-tango-accent/30 text-tango-accent text-sm font-bold hover:bg-tango-accent hover:text-white transition-all duration-300 whitespace-nowrap">
+              Entradas
+            </a>
+          </div>
+
+          <!-- Show 2 -->
+          <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group">
+            <div class="text-center flex-shrink-0 w-16">
+              <div class="text-tango-accent font-headline text-3xl font-bold leading-none">05</div>
+              <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">MAY</div>
+              <div class="text-[10px] text-zinc-600">2026</div>
+            </div>
+            <div class="h-12 w-px bg-white/10"></div>
+            <div class="flex-1">
+              <h4 class="font-headline font-bold text-on-surface">Palau de la M&uacute;sica</h4>
+              <p class="text-zinc-500 text-sm">Barcelona, Espa&ntilde;a</p>
+            </div>
+            <a href="#" class="px-5 py-2 rounded-lg border border-tango-accent/30 text-tango-accent text-sm font-bold hover:bg-tango-accent hover:text-white transition-all duration-300 whitespace-nowrap">
+              Entradas
+            </a>
+          </div>
+
+          <!-- Show 3 -->
+          <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group">
+            <div class="text-center flex-shrink-0 w-16">
+              <div class="text-tango-accent font-headline text-3xl font-bold leading-none">21</div>
+              <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">JUN</div>
+              <div class="text-[10px] text-zinc-600">2026</div>
+            </div>
+            <div class="h-12 w-px bg-white/10"></div>
+            <div class="flex-1">
+              <h4 class="font-headline font-bold text-on-surface">Le Bataclan</h4>
+              <p class="text-zinc-500 text-sm">Par&iacute;s, Francia</p>
+            </div>
+            <a href="#" class="px-5 py-2 rounded-lg border border-tango-accent/30 text-tango-accent text-sm font-bold hover:bg-tango-accent hover:text-white transition-all duration-300 whitespace-nowrap">
+              Entradas
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking CTA -->
+      <div class="flex items-center">
+        <div class="glass-panel rounded-2xl p-10 md:p-12 border border-white/10 tango-border-glow crimson-glow w-full text-center">
+          <span class="material-symbols-outlined text-tango-accent text-6xl mb-6" style="font-variation-settings: 'FILL' 1;">event_available</span>
+          <h3 class="font-headline text-3xl md:text-4xl font-bold mb-4">Contrataciones</h3>
+          <p class="text-zinc-400 leading-relaxed mb-8 max-w-md mx-auto">
+            Para booking, colaboraciones, y oportunidades comerciales. Arcoiris es representado exclusivamente por Apex Music Latino.
+          </p>
+          <a href="mailto:booking@apexmusiclatino.com" class="inline-flex items-center gap-3 px-10 py-5 bg-gradient-tango text-white font-headline font-bold rounded-xl hover:scale-105 transition-transform duration-300 shadow-lg shadow-tango-accent/30 text-lg">
+            <span class="material-symbols-outlined">mail</span> booking@apexmusiclatino.com
+          </a>
+          <div class="mt-8 flex justify-center gap-6">
+            <div class="text-center">
+              <div class="text-zinc-400 text-sm">Manager</div>
+              <div class="text-on-surface font-bold">Apex Music Latino</div>
+            </div>
+            <div class="h-10 w-px bg-white/10"></div>
+            <div class="text-center">
+              <div class="text-zinc-400 text-sm">Prensa</div>
+              <div class="text-on-surface font-bold">press@apexmusiclatino.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 10. FOOTER                                   -->
+<!-- ============================================ -->
+<footer class="py-20 px-6 md:px-12 bg-surface-container-lowest border-t border-white/5">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div class="col-span-1 md:col-span-2">
+        <div class="text-2xl font-bold tracking-tighter text-tango-accent uppercase mb-4 font-headline">Apex Music Latino</div>
+        <p class="text-zinc-500 max-w-sm mb-6 leading-relaxed text-sm">La plataforma integral para la evoluci&oacute;n de la m&uacute;sica latina. Impulsada por datos, inspirada por la pasi&oacute;n, construida para el futuro.</p>
+        <div class="flex gap-3">
+          <a href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-zinc-500 hover:text-tango-accent hover:border-tango-accent/30 transition-all">
+            <span class="material-symbols-outlined text-lg">brand_awareness</span>
+          </a>
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-zinc-500 hover:text-tango-accent hover:border-tango-accent/30 transition-all">
+            <span class="material-symbols-outlined text-lg">photo_camera</span>
+          </a>
+          <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-zinc-500 hover:text-tango-accent hover:border-tango-accent/30 transition-all">
+            <span class="material-symbols-outlined text-lg">video_library</span>
+          </a>
+          <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-zinc-500 hover:text-tango-accent hover:border-tango-accent/30 transition-all">
+            <span class="material-symbols-outlined text-lg">music_note</span>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h5 class="font-headline font-bold text-on-surface mb-6 text-sm">Navegaci&oacute;n</h5>
+        <ul class="space-y-3 text-zinc-500 text-sm">
+          <li><a class="hover:text-tango-accent transition-colors" href="/">Inicio</a></li>
+          <li><a class="hover:text-tango-accent transition-colors" href="/genre/tango/">Tango</a></li>
+          <li><a class="hover:text-tango-accent transition-colors" href="/marketplace/">Marketplace</a></li>
+          <li><a class="hover:text-tango-accent transition-colors" href="/dashboard/">Artist OS</a></li>
+          <li><a class="hover:text-tango-accent transition-colors" href="/academy/">Academy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-headline font-bold text-on-surface mb-6 text-sm">Legal</h5>
+        <ul class="space-y-3 text-zinc-500 text-sm">
+          <li><a class="hover:text-tango-accent transition-colors" href="#">Pol&iacute;tica de Privacidad</a></li>
+          <li><a class="hover:text-tango-accent transition-colors" href="#">T&eacute;rminos de Servicio</a></li>
+          <li><a class="hover:text-tango-accent transition-colors" href="#">Contacto</a></li>
+          <li><a class="hover:text-tango-accent transition-colors" href="/academy/">Documentaci&oacute;n</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-16 pt-8 border-t border-white/5 text-zinc-600 text-[10px] tracking-[0.2em] uppercase flex flex-col md:flex-row justify-between gap-4">
+      <div>&copy; 2026 Apex Music Latino. Todos los derechos reservados.</div>
+      <div>Arcoiris EPK &bull; Representado por Apex Music Latino &bull; Powered by CUBO Data Engine</div>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/nav.js"></script>
+<script src="/js/apex-engine.js"></script>
+</body></html>

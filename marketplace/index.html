@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marketplace | Apex Music Latino</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="/css/themes.css" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary": "#bdf4ff",
+              "error-container": "#93000a",
+              "on-primary": "#003907",
+              "surface-container": "#201f1f",
+              "surface": "#131313",
+              "background": "#131313",
+              "tertiary": "#fcf8f8",
+              "on-primary-container": "#007117",
+              "error": "#ffb4ab",
+              "secondary-fixed-dim": "#00daf3",
+              "on-background": "#e5e2e1",
+              "on-tertiary-fixed-variant": "#474746",
+              "on-secondary-fixed-variant": "#004f58",
+              "tertiary-container": "#dfdcdb",
+              "on-tertiary-fixed": "#1c1b1b",
+              "surface-container-low": "#1c1b1b",
+              "on-secondary-container": "#00616d",
+              "inverse-surface": "#e5e2e1",
+              "on-secondary-fixed": "#001f24",
+              "outline-variant": "#3b4b37",
+              "surface-container-lowest": "#0e0e0e",
+              "primary-fixed": "#72ff70",
+              "outline": "#84967e",
+              "on-primary-fixed": "#002203",
+              "tertiary-fixed": "#e5e2e1",
+              "primary": "#ebffe2",
+              "on-error": "#690005",
+              "inverse-primary": "#006e16",
+              "on-error-container": "#ffdad6",
+              "primary-container": "#00ff41",
+              "on-tertiary-container": "#616060",
+              "surface-variant": "#353534",
+              "surface-container-high": "#2a2a2a",
+              "surface-dim": "#131313",
+              "on-surface-variant": "#b9ccb2",
+              "on-tertiary": "#313030",
+              "tertiary-fixed-dim": "#c8c6c5",
+              "on-surface": "#e5e2e1",
+              "secondary-container": "#00e3fd",
+              "surface-container-highest": "#353534",
+              "surface-bright": "#3a3939",
+              "on-primary-fixed-variant": "#00530e",
+              "inverse-on-surface": "#313030",
+              "on-secondary": "#00363d",
+              "secondary-fixed": "#9cf0ff",
+              "surface-tint": "#00e639",
+              "primary-fixed-dim": "#00e639"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(53, 53, 52, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #ebffe2, #00ff41);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-btn {
+            background: linear-gradient(45deg, #ebffe2, #00ff41);
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #131313; }
+        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-neutral-950/60 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] flex justify-between items-center px-8 h-20 w-full font-['Space_Grotesk'] tracking-tight">
+<div class="flex items-center gap-8">
+<a href="/" class="text-2xl font-bold tracking-tighter text-neutral-100">Apex Music Latino</a>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-neutral-400 hover:text-neutral-100 transition-colors" href="/">Ecosystem</a>
+<a class="text-green-400 border-b-2 border-green-400 pb-1" href="/marketplace/">Marketplace</a>
+<a class="text-neutral-400 hover:text-neutral-100 transition-colors" href="/academy/">Academy</a>
+<a class="text-neutral-400 hover:text-neutral-100 transition-colors" href="/dashboard/">Artist OS</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="bg-neutral-800/40 p-2 rounded-full hover:bg-neutral-800/60 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-on-surface">grid_view</span>
+</div>
+<a href="/onboarding/" class="gradient-btn text-on-primary px-6 py-2 rounded-md font-bold text-sm tracking-wide transition-all active:scale-95 duration-200 inline-block">
+                Join Apex
+            </a>
+</div>
+</nav>
+<main class="pt-28 pb-20 px-8 max-w-[1600px] mx-auto">
+<!-- Header Section -->
+<header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="max-w-2xl">
+<h1 class="font-headline text-5xl font-bold tracking-tighter leading-none mb-4 uppercase">
+                    Artist <span class="gradient-text">Discovery</span>
+</h1>
+<p class="text-on-surface-variant text-lg font-light leading-relaxed">
+                    Access the next generation of Latin talent powered by real-time audience intelligence. Filter through verified data to find your brand's perfect sonic match.
+                </p>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-low p-1 rounded-lg border border-outline-variant/10">
+<button class="bg-surface-container-high text-primary-fixed px-4 py-2 rounded shadow-sm text-sm font-medium">Verified Only</button>
+<button class="text-on-surface-variant hover:text-on-surface px-4 py-2 text-sm font-medium transition-colors">All Talent</button>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Sidebar Filters -->
+<aside class="lg:col-span-3 space-y-8">
+<div class="glass-panel p-6 rounded-xl border border-outline-variant/10">
+<h3 class="font-headline text-xs font-bold uppercase tracking-widest text-primary-fixed mb-6">Filter Engine</h3>
+<div class="space-y-6">
+<!-- Search -->
+<div>
+<label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Search Artist</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="w-full bg-surface-container-highest border-none focus:ring-1 focus:ring-secondary-fixed-dim rounded-md pl-10 py-3 text-sm" placeholder="Artist name or ID..." type="text"/>
+</div>
+</div>
+<!-- Genre -->
+<div>
+<label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Genre Orbit</label>
+<select class="w-full bg-surface-container-highest border-none focus:ring-1 focus:ring-secondary-fixed-dim rounded-md py-3 text-sm appearance-none">
+<option>Reggaeton Fusion</option>
+<option>Latin Trap</option>
+<option>Regional Mexicano</option>
+<option>Alt-Pop Latino</option>
+</select>
+</div>
+<!-- Audience Size -->
+<div>
+<label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Audience Floor</label>
+<div class="grid grid-cols-2 gap-2">
+<button class="bg-surface-container-highest hover:bg-surface-container-high py-2 rounded text-xs transition-colors border border-primary-container/20">100K+</button>
+<button class="bg-surface-container-highest hover:bg-surface-container-high py-2 rounded text-xs transition-colors">500K+</button>
+<button class="bg-surface-container-highest hover:bg-surface-container-high py-2 rounded text-xs transition-colors">1M+</button>
+<button class="bg-surface-container-highest hover:bg-surface-container-high py-2 rounded text-xs transition-colors">5M+</button>
+</div>
+</div>
+<!-- Engagement -->
+<div>
+<label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Min. Engagement (8.2%)</label>
+<input class="w-full h-1 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary-container" type="range"/>
+</div>
+<!-- Location -->
+<div>
+<label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Geographic Focus</label>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-container-high px-2 py-1 rounded text-[10px] border border-outline-variant/20">MEXICO</span>
+<span class="bg-primary-container/10 text-primary-fixed px-2 py-1 rounded text-[10px] border border-primary-container/30">COLOMBIA</span>
+<span class="bg-surface-container-high px-2 py-1 rounded text-[10px] border border-outline-variant/20">SPAIN</span>
+<span class="bg-surface-container-high px-2 py-1 rounded text-[10px] border border-outline-variant/20">USA (HISPANIC)</span>
+</div>
+</div>
+<!-- Genre Quick Links -->
+<div>
+<label class="block text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Browse by Genre</label>
+<div class="flex flex-wrap gap-2">
+<a href="/genre/reggaeton/" class="bg-surface-container-high hover:bg-surface-container-highest px-3 py-1.5 rounded text-[10px] border border-outline-variant/20 transition-colors">Reggaeton</a>
+<a href="/genre/rap/" class="bg-surface-container-high hover:bg-surface-container-highest px-3 py-1.5 rounded text-[10px] border border-outline-variant/20 transition-colors">Latin Trap</a>
+<a href="/genre/reggaeton/" class="bg-surface-container-high hover:bg-surface-container-highest px-3 py-1.5 rounded text-[10px] border border-outline-variant/20 transition-colors">Regional Mexicano</a>
+<a href="/genre/electronic/" class="bg-surface-container-high hover:bg-surface-container-highest px-3 py-1.5 rounded text-[10px] border border-outline-variant/20 transition-colors">Alt-Pop Latino</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Insights Mini-Card -->
+<div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/5">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-secondary-fixed text-sm">analytics</span>
+<h4 class="font-headline text-xs font-bold uppercase tracking-widest">Market Pulse</h4>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-xs text-on-surface-variant">Avg. CPM</span>
+<span class="text-xs font-mono text-secondary-fixed">$12.40</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-xs text-on-surface-variant">Trending Genre</span>
+<span class="text-xs font-mono text-primary-fixed">TRAP-CORRIDO</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Artist Grid -->
+<div class="lg:col-span-9">
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Artist Card 1 -->
+<div class="group relative bg-surface-container-low rounded-xl overflow-hidden hover:ring-1 hover:ring-primary-container/30 transition-all duration-500">
+<div class="relative h-64">
+<img alt="Artist Profile" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Dynamic portrait of a Latin artist performing on stage" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNXIH4zz1I1S46mPagYtzTeIxtRDnZxK-caAosmTL3HSl_NfCyqgHdz8U5EVyYYi15udkfKRG-sPcAcb1tVIukgWNIgdIn5MOVqEOeSZeMYb1Edgypg2BfWzFfrN_uxsmsrrtAWEx9K7WlKURTcLaDQew0aUVfllI9q7yr8TrkQ4VujPs_5Rdw1XZ6IXPQ47U6f8f4r0Baya20clUTvXb3lz3c1d3ifWo4ak1xGUlRJFnUhLubx65dQ5jNK4bgZPrs10mjpThuZaE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+<div class="absolute top-4 right-4 bg-neutral-950/80 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1.5 border border-white/10">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+<span class="text-[10px] font-bold tracking-widest uppercase">Rising</span>
+</div>
+</div>
+<div class="p-6">
+<div class="mb-4">
+<h3 class="font-headline text-2xl font-bold tracking-tight mb-1">VALENTINA LUZ</h3>
+<p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant font-medium">Alt-Reggaeton &bull; Bogota, CO</p>
+</div>
+<!-- Data Preview -->
+<div class="grid grid-cols-2 gap-4 mb-6 p-4 bg-surface-container-lowest rounded-lg">
+<div>
+<p class="text-[9px] uppercase tracking-widest text-on-surface-variant mb-1">Audience</p>
+<p class="font-headline text-lg font-bold">1.2M</p>
+</div>
+<div>
+<p class="text-[9px] uppercase tracking-widest text-on-surface-variant mb-1">Eng. Rate</p>
+<p class="font-headline text-lg font-bold text-primary-fixed">9.4%</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<a href="/artists/" class="flex-1 bg-surface-container-highest hover:bg-surface-bright py-3 rounded text-xs font-bold uppercase tracking-widest transition-all text-center">
+                                    Analytics
+                                </a>
+<a href="/onboarding/" class="flex-1 gradient-btn text-on-primary py-3 rounded text-xs font-bold uppercase tracking-widest transition-all text-center">
+                                    Book Now
+                                </a>
+</div>
+</div>
+</div>
+<!-- Artist Card 2 -->
+<div class="group relative bg-surface-container-low rounded-xl overflow-hidden hover:ring-1 hover:ring-secondary-container/30 transition-all duration-500">
+<div class="relative h-64">
+<img alt="Artist Profile" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Urban artist with neon lights background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2BxL69b3GS6HoukhNJr3g6z7cKNv46f2tONsaPvvm7egKkE2BTtbMirrnVYS9wG3g9N-47wFxzh6BcUo-mS984ZYRCuWRz1xMqpPhAZ5Gdp6YKhRPlKHGOvAW5MTY98BhRj7Z__eTMIahzljbkFV9hNMgJxc1KcKM9RdLYspoVUJOjzhStDzCnf8w7IXq_7KsAlDeupz99rH2LmpVGl1U4X6X5sGbRaWXlzSaRAvHZ4Y11xcCmfQ26HHms92fBUeV9WQ54h9kdj0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+<div class="absolute top-4 right-4 bg-neutral-950/80 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1.5 border border-white/10">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container animate-pulse"></span>
+<span class="text-[10px] font-bold tracking-widest uppercase">Verified</span>
+</div>
+</div>
+<div class="p-6">
+<div class="mb-4">
+<h3 class="font-headline text-2xl font-bold tracking-tight mb-1">EL SANTO</h3>
+<p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant font-medium">Drill Latino &bull; Madrid, ES</p>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-6 p-4 bg-surface-container-lowest rounded-lg">
+<div>
+<p class="text-[9px] uppercase tracking-widest text-on-surface-variant mb-1">Audience</p>
+<p class="font-headline text-lg font-bold">840K</p>
+</div>
+<div>
+<p class="text-[9px] uppercase tracking-widest text-on-surface-variant mb-1">Eng. Rate</p>
+<p class="font-headline text-lg font-bold text-secondary-fixed">12.1%</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<a href="/artists/" class="flex-1 bg-surface-container-highest hover:bg-surface-bright py-3 rounded text-xs font-bold uppercase tracking-widest transition-all text-center">
+                                    Analytics
+                                </a>
+<a href="/onboarding/" class="flex-1 gradient-btn text-on-primary py-3 rounded text-xs font-bold uppercase tracking-widest transition-all text-center">
+                                    Book Now
+                                </a>
+</div>
+</div>
+</div>
+<!-- Artist Card 3 -->
+<div class="group relative bg-surface-container-low rounded-xl overflow-hidden hover:ring-1 hover:ring-primary-container/30 transition-all duration-500">
+<div class="relative h-64">
+<img alt="Artist Profile" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Singer performing with professional studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9-YClqO-8o_9EGIQgTkjvnFTHs5prN6W78sqOML_kUUSluFa5LhIHuv0BGDinsCL6Y8BWkyT9gmGbun9h66jy4PjDG7LH3IKiofZhpz0DMuoveNu0FNur9RjCs2KtruCHXudvpYbFkqvbtLszAUCVaiHNLtmH1-5SgMePYXGbJbe3Yh-hJB9CDDfrEphNThugsKNZySDBQsA01HE2q7KTmqmGJp8_yVgP5XwGGzukzFA_4l5bPXxhidb92nGVVs68jj09qJZRAbQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+<div class="absolute top-4 right-4 bg-neutral-950/80 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1.5 border border-white/10">
+<span class="text-[10px] font-bold tracking-widest uppercase text-on-surface-variant">Top Tier</span>
+</div>
+</div>
+<div class="p-6">
+<div class="mb-4">
+<h3 class="font-headline text-2xl font-bold tracking-tight mb-1">SOFIA RIO</h3>
+<p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant font-medium">Electro-Pop &bull; CDMX, MX</p>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-6 p-4 bg-surface-container-lowest rounded-lg">
+<div>
+<p class="text-[9px] uppercase tracking-widest text-on-surface-variant mb-1">Audience</p>
+<p class="font-headline text-lg font-bold">4.8M</p>
+</div>
+<div>
+<p class="text-[9px] uppercase tracking-widest text-on-surface-variant mb-1">Eng. Rate</p>
+<p class="font-headline text-lg font-bold text-primary-fixed">7.2%</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<a href="/artists/" class="flex-1 bg-surface-container-highest hover:bg-surface-bright py-3 rounded text-xs font-bold uppercase tracking-widest transition-all text-center">
+                                    Analytics
+                                </a>
+<a href="/onboarding/" class="flex-1 gradient-btn text-on-primary py-3 rounded text-xs font-bold uppercase tracking-widest transition-all text-center">
+                                    Book Now
+                                </a>
+</div>
+</div>
+</div>
+</div>
+<!-- Featured Demographic Insight (Selected Artist) -->
+<div class="mt-12 glass-panel p-8 rounded-2xl border border-outline-variant/10 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/5 blur-[100px]"></div>
+<div class="relative z-10">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+<div>
+<h4 class="font-headline text-xs font-bold uppercase tracking-[0.3em] text-primary-fixed mb-2">Selected Artist Insights</h4>
+<h2 class="font-headline text-3xl font-bold">Valentina Luz <span class="text-on-surface-variant/50">| Audience Core</span></h2>
+</div>
+<div class="flex gap-4">
+<div class="text-right">
+<p class="text-[10px] uppercase text-on-surface-variant mb-1">Active Listeners</p>
+<p class="text-xl font-bold">142,500/mo</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] uppercase text-on-surface-variant mb-1">Growth Index</p>
+<p class="text-xl font-bold text-secondary-fixed">+24%</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Demographics -->
+<div class="space-y-4">
+<p class="text-[10px] uppercase tracking-widest font-bold">Age Distribution</p>
+<div class="space-y-3">
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] mb-1"><span>18-24</span><span>64%</span></div>
+<div class="h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[64%]"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] mb-1"><span>25-34</span><span>28%</span></div>
+<div class="h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container/40 w-[28%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Gender -->
+<div class="space-y-4">
+<p class="text-[10px] uppercase tracking-widest font-bold">Gender Ratio</p>
+<div class="flex items-center gap-4 h-full">
+<div class="relative w-20 h-20 rounded-full border-[6px] border-surface-container-highest flex items-center justify-center">
+<div class="absolute inset-0 rounded-full border-[6px] border-secondary-container border-t-transparent -rotate-45"></div>
+<span class="text-sm font-bold">58%</span>
+</div>
+<div class="space-y-1">
+<p class="text-xs flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-secondary-container"></span> Female</p>
+<p class="text-xs flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-surface-container-highest"></span> Others</p>
+</div>
+</div>
+</div>
+<!-- Locations -->
+<div class="space-y-4">
+<p class="text-[10px] uppercase tracking-widest font-bold">Top Territories</p>
+<ul class="space-y-2">
+<li class="flex items-center justify-between text-xs p-2 bg-surface-container-high/40 rounded">
+<span>Bogota, CO</span>
+<span class="font-mono text-primary-fixed">#1</span>
+</li>
+<li class="flex items-center justify-between text-xs p-2 bg-surface-container-high/40 rounded">
+<span>Medellin, CO</span>
+<span class="font-mono text-on-surface-variant">#2</span>
+</li>
+<li class="flex items-center justify-between text-xs p-2 bg-surface-container-high/40 rounded">
+<span>Miami, US</span>
+<span class="font-mono text-on-surface-variant">#3</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-neutral-950 w-full py-12 px-8 border-t border-neutral-800/20 flex flex-col md:flex-row justify-between items-center gap-6 font-['Inter'] text-xs uppercase tracking-widest">
+<div class="flex flex-col gap-2">
+<a href="/" class="font-['Space_Grotesk'] font-bold text-neutral-100 text-lg">Apex Music Latino</a>
+<p class="text-neutral-600 lowercase tracking-normal">&copy; 2026 Apex Music Latino. Powered by CUBO Data Engine.</p>
+</div>
+<div class="flex gap-8">
+<a class="text-neutral-600 hover:text-green-300 transition-colors" href="/marketplace/">Marketplace</a>
+<a class="text-neutral-600 hover:text-green-300 transition-colors" href="/academy/">Academy</a>
+<a class="text-neutral-600 hover:text-green-300 transition-colors" href="/dashboard/">Artist OS</a>
+<a class="text-neutral-600 hover:text-green-300 transition-colors" href="/onboarding/">Join</a>
+<a class="text-neutral-600 hover:text-green-300 transition-colors" href="/academy/">Terms</a>
+</div>
+</footer>
+<script src="/js/nav.js"></script>
+<script src="/js/apex-engine.js"></script>
+</body></html>
