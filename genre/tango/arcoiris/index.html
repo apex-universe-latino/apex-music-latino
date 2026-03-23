@@ -375,15 +375,10 @@
     '</div>';
   }
 
-  // Gate ONLY shows when accessed via QR code or special link
-  // URL must contain ?gate=1 or ?qr=1 or ?offer=tango
-  function shouldShowGate() {
-    var params = new URLSearchParams(window.location.search);
-    return params.has('gate') || params.has('qr') || params.has('offer');
-  }
-
+  // Gate ALWAYS shows — every visitor must register
+  // If returning visitor (same email), progressive profiling kicks in later
   // Show or hide the gate
-  if (shouldShowGate() && !isGatePassed()) {
+  if (!isGatePassed()) {
     gate.style.display = 'flex';
     document.body.classList.add('gate-active');
   }
