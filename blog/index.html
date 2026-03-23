@@ -111,15 +111,15 @@
     <script src="/js/nav.js"></script>
     <script src="/js/apex-engine.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        if (typeof BlogData === 'undefined' || !BlogData.posts) {
-            console.error('BlogData not loaded. Retrying...');
-            setTimeout(function() { window.location.reload(); }, 1000);
+    function initBlog() {
+        var BD = window.BlogData;
+        if (!BD || !BD.posts) {
+            setTimeout(initBlog, 100);
             return;
         }
         var lang = window.location.pathname.startsWith('/blog/es') ? 'es' : 'en';
-        var posts = BlogData.posts;
-        var categories = BlogData.categories;
+        var posts = BD.posts;
+        var categories = BD.categories;
 
         // Detect active category from URL
         var pathParts = window.location.pathname.split('/');
@@ -225,7 +225,12 @@
 
         // Initial render
         filterPosts();
-    });
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBlog);
+    } else {
+        initBlog();
+    }
     </script>
 </body>
 </html>
