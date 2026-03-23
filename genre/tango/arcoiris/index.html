@@ -148,9 +148,10 @@
           <div class="flex items-start gap-3">
             <span class="material-symbols-outlined text-tango-accent text-2xl mt-0.5" style="font-variation-settings: 'FILL' 1;">redeem</span>
             <div>
-              <p class="text-on-surface font-bold text-sm leading-snug">Recibe GRATIS una clase de tango + acceso a nuestro curso de 24 pasos de tango</p>
-              <p class="text-zinc-500 text-xs mt-1">Get a FREE tango class + access to our 24-step tango course</p>
+              <p class="text-on-surface font-bold text-sm leading-snug">Recibe GRATIS una clase de tango + acceso a nuestro curso de 24 pasos de tango (Próximamente)</p>
+              <p class="text-zinc-500 text-xs mt-1">Get a FREE tango class + access to our 24-step tango course (Coming Soon)</p>
               <p class="text-tango-accent font-headline font-bold text-lg mt-2">Valor $300 USD <span class="text-zinc-500 text-xs font-normal line-through ml-1">$300</span> <span class="text-[#00e639] text-xs font-bold ml-1">GRATIS</span></p>
+              <p class="text-yellow-400 text-xs font-bold mt-2 flex items-center gap-1"><span class="material-symbols-outlined text-xs">timer</span> Oferta válida hasta el 31 de Marzo · Act now!</p>
             </div>
           </div>
         </div>
@@ -253,8 +254,15 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ passed: true, expires: expires }));
   }
 
+  // Gate ONLY shows when accessed via QR code or special link
+  // URL must contain ?gate=1 or ?qr=1 or ?offer=tango
+  function shouldShowGate() {
+    var params = new URLSearchParams(window.location.search);
+    return params.has('gate') || params.has('qr') || params.has('offer');
+  }
+
   // Show or hide the gate
-  if (!isGatePassed()) {
+  if (shouldShowGate() && !isGatePassed()) {
     gate.style.display = 'flex';
     document.body.classList.add('gate-active');
   }
@@ -293,44 +301,66 @@
     submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-xl">progress_activity</span> Enviando...';
 
     // Send to Supabase
-    fetch('https://iaycaynevtumrqoknemk.supabase.co/rest/v1/leads_capture', {
+    var SUPABASE_URL = 'https://iaycaynevtumrqoknemk.supabase.co';
+    var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k';
+    var payload = {
+      artist_name: 'Arcoiris',
+      email: emailValue,
+      genre: 'tango',
+      mood_preference: {
+        name: nameValue,
+        phone: phoneValue,
+        title: titleValue,
+        source: 'qr_gate',
+        offer: 'free_tango_class_24_steps',
+        offer_expiry: '2026-03-31',
+        timestamp: new Date().toISOString(),
+        user_agent: navigator.userAgent,
+        referrer: document.referrer || 'direct'
+      },
+      marketing_source: 'QR_CODE'
+    };
+
+    fetch(SUPABASE_URL + '/rest/v1/leads_capture', {
       method: 'POST',
       headers: {
-        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k',
+        'apikey': SUPABASE_ANON,
+        'Authorization': 'Bearer ' + SUPABASE_ANON,
         'Content-Type': 'application/json',
-        'Prefer': 'return=representation'
+        'Prefer': 'return=minimal'
       },
-      body: JSON.stringify({
-        artist_name: 'Arcoiris',
-        email: emailValue,
-        genre: 'tango',
-        mood_preference: {
-          name: nameValue,
-          phone: phoneValue,
-          title: titleValue,
-          source: 'qr_gate',
-          offer: 'free_tango_class_24_steps',
-          timestamp: new Date().toISOString()
-        },
-        marketing_source: 'QR_CODE'
-      })
+      body: JSON.stringify(payload)
     })
     .then(function(response) {
-      if (!response.ok) throw new Error('Network response was not ok');
-      return response.json();
-    })
-    .then(function(data) {
-      // Success - save pass, close gate
-      saveGatePass();
-      closeGate();
+      if (response.ok || response.status === 201) {
+        // Success
+        saveGatePass();
+        closeGate();
+      } else {
+        // RLS might be blocking — still let them through but log
+        console.warn('Supabase insert returned:', response.status);
+        response.text().then(function(t) { console.warn('Body:', t); });
+        // Still save locally and let them through
+        saveGatePass();
+        saveFallbackLocal(payload);
+        closeGate();
+      }
     })
     .catch(function(err) {
       console.error('Gate submission error:', err);
-      showError('Hubo un error al enviar. Por favor intenta de nuevo. / There was an error, please try again.');
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = '<span class="material-symbols-outlined text-xl" style="font-variation-settings: \'FILL\' 1;">lock_open</span> Desbloquear Acceso Exclusivo';
+      // Network error — save locally and still let them through
+      saveGatePass();
+      saveFallbackLocal(payload);
+      closeGate();
     });
+
+    function saveFallbackLocal(data) {
+      try {
+        var existing = JSON.parse(localStorage.getItem('apex_pending_leads') || '[]');
+        existing.push(data);
+        localStorage.setItem('apex_pending_leads', JSON.stringify(existing));
+      } catch(e) {}
+    }
   });
 
   function closeGate() {

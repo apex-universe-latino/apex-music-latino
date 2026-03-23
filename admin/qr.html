@@ -164,11 +164,11 @@
         // Artist URL and accent color mappings
         const artistData = {
             'arcoiris': {
-                url: 'https://apexmusiclatino.com/genre/tango/arcoiris/',
+                url: 'https://apexmusiclatino.com/genre/tango/arcoiris/?qr=1',
                 accent: '#e11d48'  // rose / tango
             },
             'joey-b': {
-                url: 'https://apexmusiclatino.com/genre/rap/joey-b/',
+                url: 'https://apexmusiclatino.com/genre/rap/joey-b/?qr=1',
                 accent: '#f59e0b'  // amber / rap
             },
             'andrade': {
@@ -320,7 +320,7 @@
         // Pre-generate QR codes on page load
         function preGenerateQRCodes() {
             new QRCode(document.getElementById('qr-arcoiris'), {
-                text: 'https://apexmusiclatino.com/genre/tango/arcoiris/',
+                text: 'https://apexmusiclatino.com/genre/tango/arcoiris/?qr=1',
                 width: 200,
                 height: 200,
                 colorDark: '#e11d48',
@@ -329,7 +329,7 @@
             });
 
             new QRCode(document.getElementById('qr-joey-b'), {
-                text: 'https://apexmusiclatino.com/genre/rap/joey-b/',
+                text: 'https://apexmusiclatino.com/genre/rap/joey-b/?qr=1',
                 width: 200,
                 height: 200,
                 colorDark: '#f59e0b',
