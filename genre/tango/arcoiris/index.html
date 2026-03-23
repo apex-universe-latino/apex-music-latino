@@ -375,10 +375,12 @@
     '</div>';
   }
 
-  // Gate ALWAYS shows — every visitor must register
-  // If returning visitor (same email), progressive profiling kicks in later
-  // Show or hide the gate
-  if (!isGatePassed()) {
+  // Gate ONLY shows when ?qr=1 is in the URL (QR code scans)
+  // Direct visitors see the EPK without any gate
+  var urlParams = new URLSearchParams(window.location.search);
+  var isQrVisit = urlParams.get('qr') === '1';
+
+  if (isQrVisit && !isGatePassed()) {
     gate.style.display = 'flex';
     document.body.classList.add('gate-active');
   }
