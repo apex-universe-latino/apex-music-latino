@@ -112,6 +112,247 @@
 </head>
 <body class="bg-surface text-on-surface font-body overflow-x-hidden selection:bg-tango-accent selection:text-white">
 
+<!-- ============================================ -->
+<!-- LEAD CAPTURE GATE OVERLAY                    -->
+<!-- ============================================ -->
+<div id="arcoiris-gate" class="fixed inset-0 z-[999] flex items-center justify-center p-4 md:p-8" style="display:none;">
+  <!-- Blurred background image -->
+  <div class="absolute inset-0 z-0">
+    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvyGjUrcUbBZ5FJXLDLpGZdllaZEswCQNhLIQP7RNuipdEk3Di3-GXlZ8jsDevnl9u-_4YIAD4eZoHB1QiVoALucNd3jl8vf005Do0Sb7d1Ee57YgO1hlkK_XNe_5fsMic9mtRlUs27HL7UPuVgjejNGgCoUtrFJX6Gk9-VDJ1mCQGfuv2OcyvHUGzh61Rq5kZExSOatPC7Lv5QvXdL4ChkC3F_3EAKqnZZEaOj0q-rEP965UL-1_FpHLEW86Qh56P8lBPg1JFvoM" alt="" class="w-full h-full object-cover scale-110" style="filter: blur(20px) brightness(0.3);" aria-hidden="true"/>
+    <div class="absolute inset-0 bg-black/70"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-[#e60000]/15 via-transparent to-[#8b0000]/10"></div>
+  </div>
+
+  <!-- Gate card -->
+  <div class="relative z-10 w-full max-w-lg animate-float" style="animation-duration: 8s;">
+    <div class="relative rounded-3xl overflow-hidden" style="background: rgba(19, 19, 19, 0.65); backdrop-filter: blur(40px) saturate(1.5); -webkit-backdrop-filter: blur(40px) saturate(1.5); border: 1px solid rgba(230, 0, 0, 0.2); box-shadow: 0 0 80px rgba(230, 0, 0, 0.12), 0 32px 64px rgba(0,0,0,0.5);">
+
+      <!-- Top accent bar -->
+      <div class="h-1 w-full bg-gradient-tango"></div>
+
+      <div class="p-8 md:p-10">
+        <!-- Logo / Badge -->
+        <div class="flex items-center gap-3 mb-6">
+          <span class="h-px w-10 bg-tango-accent"></span>
+          <span class="text-tango-accent font-headline tracking-[0.4em] text-[10px] uppercase font-bold bg-tango-accent/10 px-3 py-1 rounded-full border border-tango-accent/20">Acceso Exclusivo</span>
+        </div>
+
+        <!-- Headline -->
+        <h2 class="font-headline text-3xl md:text-4xl font-bold leading-tight mb-2">
+          <span class="text-gradient-tango">Desbloquea</span> el Universo<br/>de Arcoiris
+        </h2>
+        <p class="text-zinc-500 text-xs uppercase tracking-widest mb-5 font-headline">Unlock the Arcoiris Universe</p>
+
+        <!-- Offer -->
+        <div class="rounded-xl p-4 mb-7" style="background: rgba(230, 0, 0, 0.08); border: 1px solid rgba(230, 0, 0, 0.15);">
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-tango-accent text-2xl mt-0.5" style="font-variation-settings: 'FILL' 1;">redeem</span>
+            <div>
+              <p class="text-on-surface font-bold text-sm leading-snug">Recibe GRATIS una clase de tango + acceso a nuestro curso de 24 pasos de tango</p>
+              <p class="text-zinc-500 text-xs mt-1">Get a FREE tango class + access to our 24-step tango course</p>
+              <p class="text-tango-accent font-headline font-bold text-lg mt-2">Valor $300 USD <span class="text-zinc-500 text-xs font-normal line-through ml-1">$300</span> <span class="text-[#00e639] text-xs font-bold ml-1">GRATIS</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <form id="arcoiris-gate-form" class="space-y-3" novalidate>
+          <!-- Name -->
+          <div>
+            <input type="text" id="gate-name" name="name" required placeholder="Nombre / Name" class="w-full px-5 py-3.5 rounded-xl text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-tango-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
+          </div>
+          <!-- Email -->
+          <div>
+            <input type="email" id="gate-email" name="email" required placeholder="Email" class="w-full px-5 py-3.5 rounded-xl text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-tango-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
+          </div>
+          <!-- Phone -->
+          <div>
+            <input type="tel" id="gate-phone" name="phone" required placeholder="Tel&eacute;fono / Phone" class="w-full px-5 py-3.5 rounded-xl text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-tango-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
+          </div>
+          <!-- Title (optional) -->
+          <div>
+            <input type="text" id="gate-title" name="title" placeholder="T&iacute;tulo / Title (ej: Bailar&iacute;n, Manager, Fan) &mdash; Opcional" class="w-full px-5 py-3.5 rounded-xl text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-tango-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
+          </div>
+
+          <!-- Terms checkbox -->
+          <div class="flex items-start gap-3 pt-1">
+            <input type="checkbox" id="gate-terms" required class="mt-1 w-4 h-4 rounded border-white/20 text-tango-accent focus:ring-tango-accent/30 bg-surface-container-highest/50 cursor-pointer" />
+            <label for="gate-terms" class="text-zinc-400 text-xs leading-relaxed cursor-pointer">
+              Acepto los <a href="#" class="text-tango-accent underline underline-offset-2 hover:text-white transition-colors" onclick="event.stopPropagation();">t&eacute;rminos y condiciones</a> y la pol&iacute;tica de privacidad.
+            </label>
+          </div>
+
+          <!-- Error message -->
+          <div id="gate-error" class="hidden text-sm text-center py-2 px-4 rounded-lg bg-red-900/30 border border-red-500/20 text-red-300"></div>
+
+          <!-- Submit button -->
+          <button type="submit" id="gate-submit-btn" class="w-full mt-2 py-4 rounded-xl font-headline font-bold text-white text-base tracking-wide transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-tango-accent/30 active:scale-[0.98] flex items-center justify-center gap-2" style="background: linear-gradient(135deg, #e60000, #8b0000, #e60000); background-size: 200% 200%; animation: shimmer 3s ease-in-out infinite;">
+            <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">lock_open</span>
+            Desbloquear Acceso Exclusivo
+          </button>
+        </form>
+
+        <!-- Privacy note -->
+        <p class="text-center text-[10px] text-zinc-600 mt-5 tracking-wider leading-relaxed">
+          Powered by <span class="text-zinc-500">Apex Music Latino</span> &middot; Tus datos est&aacute;n protegidos
+          <span class="material-symbols-outlined text-[10px] align-middle text-zinc-500" style="font-size: 12px;">shield</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @keyframes gate-fade-in {
+    from { opacity: 0; transform: scale(0.95) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes gate-fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  #arcoiris-gate .animate-float {
+    animation: gate-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  #arcoiris-gate.gate-closing {
+    animation: gate-fade-out 0.5s ease-out forwards;
+  }
+  body.gate-active {
+    overflow: hidden;
+  }
+</style>
+
+<script>
+(function() {
+  var STORAGE_KEY = 'arcoiris_gate_passed';
+  var EXPIRY_DAYS = 30;
+  var gate = document.getElementById('arcoiris-gate');
+
+  // Check localStorage for existing pass
+  function isGatePassed() {
+    try {
+      var data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (data && data.expires) {
+        if (new Date().getTime() < data.expires) {
+          return true;
+        } else {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  // Save gate pass to localStorage
+  function saveGatePass() {
+    var expires = new Date().getTime() + (EXPIRY_DAYS * 24 * 60 * 60 * 1000);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ passed: true, expires: expires }));
+  }
+
+  // Show or hide the gate
+  if (!isGatePassed()) {
+    gate.style.display = 'flex';
+    document.body.classList.add('gate-active');
+  }
+
+  // Form submission
+  var form = document.getElementById('arcoiris-gate-form');
+  var errorEl = document.getElementById('gate-error');
+  var submitBtn = document.getElementById('gate-submit-btn');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    errorEl.classList.add('hidden');
+
+    var nameValue = document.getElementById('gate-name').value.trim();
+    var emailValue = document.getElementById('gate-email').value.trim();
+    var phoneValue = document.getElementById('gate-phone').value.trim();
+    var titleValue = document.getElementById('gate-title').value.trim();
+    var termsChecked = document.getElementById('gate-terms').checked;
+
+    // Validation
+    if (!nameValue || !emailValue || !phoneValue) {
+      showError('Por favor completa todos los campos requeridos.');
+      return;
+    }
+    if (!isValidEmail(emailValue)) {
+      showError('Por favor ingresa un email v\u00e1lido.');
+      return;
+    }
+    if (!termsChecked) {
+      showError('Debes aceptar los t\u00e9rminos y condiciones.');
+      return;
+    }
+
+    // Disable button
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-xl">progress_activity</span> Enviando...';
+
+    // Send to Supabase
+    fetch('https://iaycaynevtumrqoknemk.supabase.co/rest/v1/leads_capture', {
+      method: 'POST',
+      headers: {
+        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k',
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify({
+        artist_name: 'Arcoiris',
+        email: emailValue,
+        genre: 'tango',
+        mood_preference: {
+          name: nameValue,
+          phone: phoneValue,
+          title: titleValue,
+          source: 'qr_gate',
+          offer: 'free_tango_class_24_steps',
+          timestamp: new Date().toISOString()
+        },
+        marketing_source: 'QR_CODE'
+      })
+    })
+    .then(function(response) {
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    })
+    .then(function(data) {
+      // Success - save pass, close gate
+      saveGatePass();
+      closeGate();
+    })
+    .catch(function(err) {
+      console.error('Gate submission error:', err);
+      showError('Hubo un error al enviar. Por favor intenta de nuevo. / There was an error, please try again.');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<span class="material-symbols-outlined text-xl" style="font-variation-settings: \'FILL\' 1;">lock_open</span> Desbloquear Acceso Exclusivo';
+    });
+  });
+
+  function closeGate() {
+    gate.classList.add('gate-closing');
+    document.body.classList.remove('gate-active');
+    setTimeout(function() {
+      gate.style.display = 'none';
+      gate.remove();
+    }, 500);
+  }
+
+  function showError(msg) {
+    errorEl.textContent = msg;
+    errorEl.classList.remove('hidden');
+  }
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+})();
+</script>
+
 <!-- TopNavBar -->
 <nav class="fixed top-0 w-full z-50 flex justify-between items-center px-6 md:px-8 h-20 bg-zinc-950/70 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] font-['Space_Grotesk'] tracking-tight">
   <a href="/" class="text-2xl font-bold tracking-tighter text-tango-accent uppercase">Apex Music Latino</a>

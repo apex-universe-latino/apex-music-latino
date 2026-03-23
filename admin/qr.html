@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator | Apex Music Latino</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="/css/themes.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-[#0c0c0c] text-white min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50"></nav>
+
+    <!-- Header -->
+    <header class="pt-28 pb-12 px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-3">
+            <span class="material-symbols-outlined text-4xl md:text-5xl align-middle mr-2">qr_code_2</span>
+            QR Code Generator
+        </h1>
+        <p class="text-neutral-400 text-lg max-w-xl mx-auto">Generate branded QR codes for artist EPK pages</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-6 pb-24">
+
+        <!-- Generator Form -->
+        <section class="bg-neutral-900/60 border border-neutral-800/40 rounded-2xl p-8 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Select Artist -->
+                <div class="flex flex-col gap-2">
+                    <label for="artist-select" class="text-sm font-medium text-neutral-300">Select Artist</label>
+                    <select id="artist-select" class="bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500 transition">
+                        <option value="arcoiris">Arcoiris</option>
+                        <option value="joey-b">Joey B</option>
+                        <option value="andrade">Andrade</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+
+                <!-- Custom URL -->
+                <div class="flex flex-col gap-2">
+                    <label for="custom-url" class="text-sm font-medium text-neutral-300">Custom URL</label>
+                    <input type="url" id="custom-url" placeholder="https://apexmusiclatino.com/..." class="bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 text-white placeholder-neutral-500 focus:outline-none focus:border-purple-500 transition">
+                </div>
+
+                <!-- QR Size -->
+                <div class="flex flex-col gap-2">
+                    <label for="qr-size" class="text-sm font-medium text-neutral-300">QR Size</label>
+                    <select id="qr-size" class="bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500 transition">
+                        <option value="256">256 x 256</option>
+                        <option value="512" selected>512 x 512</option>
+                        <option value="1024">1024 x 1024</option>
+                    </select>
+                </div>
+
+                <!-- Color Pickers -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-2">
+                        <label for="fg-color" class="text-sm font-medium text-neutral-300">Foreground</label>
+                        <div class="flex items-center gap-3 bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-2">
+                            <input type="color" id="fg-color" value="#a855f7" class="w-8 h-8 rounded cursor-pointer border-0 bg-transparent">
+                            <span id="fg-color-label" class="text-sm text-neutral-400">#a855f7</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="bg-color" class="text-sm font-medium text-neutral-300">Background</label>
+                        <div class="flex items-center gap-3 bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-2">
+                            <input type="color" id="bg-color" value="#0c0c0c" class="w-8 h-8 rounded cursor-pointer border-0 bg-transparent">
+                            <span id="bg-color-label" class="text-sm text-neutral-400">#0c0c0c</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Generate Button -->
+            <button id="generate-btn" class="mt-8 w-full bg-purple-600 hover:bg-purple-500 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined">qr_code_2</span>
+                Generate QR Code
+            </button>
+        </section>
+
+        <!-- QR Code Display -->
+        <section id="qr-display-section" class="hidden mb-16">
+            <div class="bg-neutral-900/60 border border-neutral-800/40 rounded-2xl p-8 flex flex-col items-center">
+                <div id="qr-output" class="mb-6 rounded-xl overflow-hidden"></div>
+
+                <!-- Target URL -->
+                <p id="target-url-display" class="text-neutral-400 text-sm mb-6 break-all text-center max-w-md"></p>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <button id="download-png-btn" class="bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-white font-medium py-2.5 px-5 rounded-xl transition flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">download</span>
+                        Download PNG
+                    </button>
+                    <button id="download-svg-btn" class="bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-white font-medium py-2.5 px-5 rounded-xl transition flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">download</span>
+                        Download SVG
+                    </button>
+                    <button id="copy-url-btn" class="bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-white font-medium py-2.5 px-5 rounded-xl transition flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">content_copy</span>
+                        Copy URL
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pre-generated QR Codes -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold mb-2">Artist QR Codes</h2>
+            <p class="text-neutral-400 mb-8">Pre-generated QR codes for current artists</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Arcoiris -->
+                <div class="bg-neutral-900/60 border border-neutral-800/40 rounded-2xl p-6 flex flex-col items-center">
+                    <h3 class="text-lg font-semibold mb-1">Arcoiris</h3>
+                    <p class="text-neutral-500 text-xs mb-4">Tango</p>
+                    <div id="qr-arcoiris" class="mb-4 rounded-xl overflow-hidden"></div>
+                    <p class="text-neutral-500 text-xs break-all text-center">https://apexmusiclatino.com/genre/tango/arcoiris/</p>
+                    <button onclick="downloadPregenerated('qr-arcoiris', 'arcoiris-qr.png')" class="mt-4 text-sm text-purple-400 hover:text-purple-300 transition flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">download</span>
+                        Download PNG
+                    </button>
+                </div>
+
+                <!-- Joey B -->
+                <div class="bg-neutral-900/60 border border-neutral-800/40 rounded-2xl p-6 flex flex-col items-center">
+                    <h3 class="text-lg font-semibold mb-1">Joey B</h3>
+                    <p class="text-neutral-500 text-xs mb-4">Rap</p>
+                    <div id="qr-joey-b" class="mb-4 rounded-xl overflow-hidden"></div>
+                    <p class="text-neutral-500 text-xs break-all text-center">https://apexmusiclatino.com/genre/rap/joey-b/</p>
+                    <button onclick="downloadPregenerated('qr-joey-b', 'joey-b-qr.png')" class="mt-4 text-sm text-purple-400 hover:text-purple-300 transition flex items-center gap-1">
+                        <span class="material-symbols-outlined text-base">download</span>
+                        Download PNG
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-950 w-full py-16 px-8 border-t border-neutral-800/20"></footer>
+
+    <!-- Scripts -->
+    <script src="/js/i18n.js"></script>
+    <script src="/js/nav.js"></script>
+    <script src="/js/apex-engine.js"></script>
+    <script>
+        // Artist URL and accent color mappings
+        const artistData = {
+            'arcoiris': {
+                url: 'https://apexmusiclatino.com/genre/tango/arcoiris/',
+                accent: '#e11d48'  // rose / tango
+            },
+            'joey-b': {
+                url: 'https://apexmusiclatino.com/genre/rap/joey-b/',
+                accent: '#f59e0b'  // amber / rap
+            },
+            'andrade': {
+                url: 'https://apexmusiclatino.com/genre/reggaeton/andrade/',
+                accent: '#22c55e'  // green / reggaeton
+            },
+            'custom': {
+                url: '',
+                accent: '#a855f7'  // purple / default
+            }
+        };
+
+        // DOM elements
+        const artistSelect = document.getElementById('artist-select');
+        const customUrl = document.getElementById('custom-url');
+        const qrSize = document.getElementById('qr-size');
+        const fgColor = document.getElementById('fg-color');
+        const bgColor = document.getElementById('bg-color');
+        const fgColorLabel = document.getElementById('fg-color-label');
+        const bgColorLabel = document.getElementById('bg-color-label');
+        const generateBtn = document.getElementById('generate-btn');
+        const qrOutput = document.getElementById('qr-output');
+        const qrDisplaySection = document.getElementById('qr-display-section');
+        const targetUrlDisplay = document.getElementById('target-url-display');
+        const downloadPngBtn = document.getElementById('download-png-btn');
+        const downloadSvgBtn = document.getElementById('download-svg-btn');
+        const copyUrlBtn = document.getElementById('copy-url-btn');
+
+        let currentQR = null;
+        let currentUrl = '';
+
+        // Initialize form with first artist
+        function initForm() {
+            const artist = artistSelect.value;
+            const data = artistData[artist];
+            customUrl.value = data.url;
+            fgColor.value = data.accent;
+            fgColorLabel.textContent = data.accent;
+            customUrl.disabled = artist !== 'custom';
+        }
+
+        // Artist selection change
+        artistSelect.addEventListener('change', function () {
+            const artist = this.value;
+            const data = artistData[artist];
+            customUrl.value = data.url;
+            customUrl.disabled = artist !== 'custom';
+            fgColor.value = data.accent;
+            fgColorLabel.textContent = data.accent;
+        });
+
+        // Color picker labels
+        fgColor.addEventListener('input', function () {
+            fgColorLabel.textContent = this.value;
+        });
+        bgColor.addEventListener('input', function () {
+            bgColorLabel.textContent = this.value;
+        });
+
+        // Generate QR Code
+        generateBtn.addEventListener('click', function () {
+            const url = customUrl.value.trim();
+            if (!url) {
+                alert('Please enter a valid URL.');
+                return;
+            }
+
+            const size = parseInt(qrSize.value);
+            const fg = fgColor.value;
+            const bg = bgColor.value;
+
+            // Clear previous QR
+            qrOutput.innerHTML = '';
+            currentQR = null;
+
+            currentQR = new QRCode(qrOutput, {
+                text: url,
+                width: size,
+                height: size,
+                colorDark: fg,
+                colorLight: bg,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            currentUrl = url;
+            targetUrlDisplay.textContent = url;
+            qrDisplaySection.classList.remove('hidden');
+
+            // Scroll to display
+            setTimeout(function () {
+                qrDisplaySection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        });
+
+        // Download PNG
+        downloadPngBtn.addEventListener('click', function () {
+            const canvas = qrOutput.querySelector('canvas');
+            if (!canvas) return;
+            const link = document.createElement('a');
+            link.download = 'apex-qr-code.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+
+        // Download SVG
+        downloadSvgBtn.addEventListener('click', function () {
+            const canvas = qrOutput.querySelector('canvas');
+            if (!canvas) {
+                alert('Generate a QR code first.');
+                return;
+            }
+            // Convert canvas to SVG by embedding the image
+            const size = canvas.width;
+            const dataUrl = canvas.toDataURL('image/png');
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}">
+  <image href="${dataUrl}" width="${size}" height="${size}"/>
+</svg>`;
+            const blob = new Blob([svg], { type: 'image/svg+xml' });
+            const link = document.createElement('a');
+            link.download = 'apex-qr-code.svg';
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            URL.revokeObjectURL(link.href);
+        });
+
+        // Copy URL
+        copyUrlBtn.addEventListener('click', function () {
+            if (!currentUrl) return;
+            navigator.clipboard.writeText(currentUrl).then(function () {
+                const original = copyUrlBtn.innerHTML;
+                copyUrlBtn.innerHTML = '<span class="material-symbols-outlined text-lg">check</span> Copied!';
+                setTimeout(function () {
+                    copyUrlBtn.innerHTML = original;
+                }, 2000);
+            });
+        });
+
+        // Download helper for pre-generated QR codes
+        function downloadPregenerated(containerId, filename) {
+            const container = document.getElementById(containerId);
+            const canvas = container.querySelector('canvas');
+            if (!canvas) return;
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Pre-generate QR codes on page load
+        function preGenerateQRCodes() {
+            new QRCode(document.getElementById('qr-arcoiris'), {
+                text: 'https://apexmusiclatino.com/genre/tango/arcoiris/',
+                width: 200,
+                height: 200,
+                colorDark: '#e11d48',
+                colorLight: '#0c0c0c',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            new QRCode(document.getElementById('qr-joey-b'), {
+                text: 'https://apexmusiclatino.com/genre/rap/joey-b/',
+                width: 200,
+                height: 200,
+                colorDark: '#f59e0b',
+                colorLight: '#0c0c0c',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        // Initialize
+        initForm();
+        preGenerateQRCodes();
+    </script>
+</body>
+</html>
