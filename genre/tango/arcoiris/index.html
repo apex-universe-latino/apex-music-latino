@@ -376,11 +376,12 @@
   }
 
   // Gate ONLY shows when ?qr=1 is in the URL (QR code scans)
-  // Direct visitors see the EPK without any gate
+  // ALWAYS shows for ?qr=1 — even returning visitors (progressive profiling)
+  // Direct visitors (no ?qr=1) see the EPK without any gate
   var urlParams = new URLSearchParams(window.location.search);
   var isQrVisit = urlParams.get('qr') === '1';
 
-  if (isQrVisit && !isGatePassed()) {
+  if (isQrVisit) {
     gate.style.display = 'flex';
     document.body.classList.add('gate-active');
   }
