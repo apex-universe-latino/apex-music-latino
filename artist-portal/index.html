@@ -1,1182 +1,1323 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="es">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Artist Portal | Apex Music Latino</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <link href="/css/themes.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-    <style>
-        * { box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; }
-        .font-headline { font-family: 'Space Grotesk', sans-serif; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artist Portal — Apex Music Latino</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <link rel="stylesheet" href="/css/themes.css" />
+  <script src="/js/i18n.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #0c0c0c; color: #e5e5e5; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
 
-        /* Animated gradient background for login */
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .login-bg {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 25%, #0a0a1a 50%, #1a0505 75%, #0a0a0a 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-        }
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #111; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
 
-        /* Glass card */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
+    /* Login */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(ellipse at 50% 0%, rgba(120,40,200,0.12) 0%, transparent 60%), #0c0c0c;
+    }
+    .glass-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 16px;
+    }
+    .login-input {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #fff;
+      font-size: 14px;
+      width: 100%;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .login-input:focus { border-color: rgba(255,255,255,0.3); }
+    .login-input::placeholder { color: rgba(255,255,255,0.3); }
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .login-btn:hover { opacity: 0.9; }
+    .login-btn:active { transform: scale(0.98); }
 
-        /* Genre color themes */
-        :root {
-            --accent-tango: #DC2626;
-            --accent-tango-light: #F87171;
-            --accent-rap: #06B6D4;
-            --accent-rap-light: #67E8F9;
-            --accent-reggaeton: #EC4899;
-            --accent-reggaeton-light: #F9A8D4;
-            --accent-login: #DC2626;
-            --accent-login-light: #F87171;
-        }
+    /* Portal layout */
+    #portal { display: none; min-height: 100vh; }
+    #portal.active { display: flex; }
 
-        .btn-gradient-login {
-            background: linear-gradient(135deg, #DC2626, #991B1B);
-        }
-        .btn-gradient-login:hover {
-            background: linear-gradient(135deg, #EF4444, #DC2626);
-        }
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      min-width: 250px;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      background: #111111;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      z-index: 40;
+    }
+    .sidebar-brand {
+      padding: 24px 20px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+      position: relative;
+      user-select: none;
+    }
+    .nav-item:hover { color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.02); }
+    .nav-item.active { color: #fff; background: rgba(255,255,255,0.04); }
+    .nav-item.disabled { opacity: 0.35; cursor: not-allowed; }
+    .nav-item.disabled:hover { background: transparent; color: rgba(255,255,255,0.5); }
+    .nav-item .lock-icon { font-size: 14px; margin-left: auto; opacity: 0.5; }
 
-        /* Sidebar */
-        .sidebar-link {
-            transition: all 0.2s ease;
-        }
-        .sidebar-link:hover, .sidebar-link.active {
-            background: rgba(255, 255, 255, 0.06);
-        }
-        .sidebar-link.active {
-            border-left: 3px solid var(--dash-accent, #DC2626);
-        }
+    /* Main content */
+    .main-content {
+      flex: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .content-area { flex: 1; padding: 32px 40px; max-width: 1200px; width: 100%; }
+    .view { display: none; }
+    .view.active { display: block; }
 
-        /* Stat card hover */
-        .stat-card {
-            transition: all 0.3s ease;
-        }
-        .stat-card:hover {
-            transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.12);
-        }
+    /* Stat cards */
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 20px 24px;
+      transition: border-color 0.2s;
+    }
+    .stat-card:hover { border-color: rgba(255,255,255,0.12); }
+    .stat-card .stat-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+    .stat-card .stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; }
 
-        /* Copyable URL */
-        .copy-btn:active { transform: scale(0.95); }
+    /* Quick actions */
+    .quick-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+      transition: all 0.15s;
+    }
+    .quick-action:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
 
-        /* Dot grid overlay */
-        .dot-grid {
-            background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 32px 32px;
-        }
+    /* FRM table */
+    .frm-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .frm-table thead th {
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.35);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-weight: 600;
+    }
+    .frm-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.1s; }
+    .frm-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+    .frm-table td { padding: 10px 12px; color: rgba(255,255,255,0.7); }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+    /* Asset generator */
+    #qr-output canvas, #qr-output img { border-radius: 8px; }
 
-        /* Tooltip */
-        .tooltip-trigger:hover .tooltip-content { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        .tooltip-content { opacity: 0; pointer-events: none; transform: translateY(4px); transition: all 0.2s ease; }
+    /* EPK editor */
+    .epk-section {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .epk-section h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .epk-input {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: #fff;
+      font-size: 13px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .epk-input:focus { border-color: rgba(255,255,255,0.2); }
+    .epk-textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: #fff;
+      font-size: 13px;
+      width: 100%;
+      min-height: 80px;
+      resize: vertical;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+    }
+    .epk-textarea:focus { border-color: rgba(255,255,255,0.2); }
+    .epk-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      transition: all 0.15s;
+    }
+    .epk-btn:hover { background: rgba(255,255,255,0.1); }
 
-        /* Fade transitions */
-        .view-section { display: none; animation: fadeIn 0.3s ease; }
-        .view-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    /* Coming soon */
+    .coming-soon-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+    .coming-soon-card .material-symbols-outlined { font-size: 32px; opacity: 0.3; }
+    .coming-soon-card h4 { margin-top: 12px; font-size: 15px; color: rgba(255,255,255,0.5); }
+    .coming-soon-card p { font-size: 13px; color: rgba(255,255,255,0.25); margin-top: 4px; }
 
-        /* Input focus ring per genre */
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--dash-accent, #DC2626) !important;
-            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.15);
-        }
-    </style>
+    .upgrade-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      margin-top: 20px;
+      transition: opacity 0.2s;
+    }
+    .upgrade-btn:hover { opacity: 0.85; }
+
+    /* Footer */
+    .portal-footer {
+      padding: 20px 40px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* Pricing table */
+    .pricing-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .pricing-table th { text-align: left; padding: 10px 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.35); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .pricing-table td { padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); color: rgba(255,255,255,0.5); }
+    .pricing-table .check { color: #22c55e; }
+    .pricing-table .dash { color: rgba(255,255,255,0.15); }
+
+    /* Search input */
+    .search-input {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 8px 12px 8px 36px;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+      width: 280px;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: rgba(255,255,255,0.2); }
+    .search-input::placeholder { color: rgba(255,255,255,0.25); }
+
+    /* Tooltip */
+    .tooltip-wrap { position: relative; }
+    .tooltip-wrap .tooltip-text {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1a1a1a;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.7);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+      z-index: 10;
+    }
+    .tooltip-wrap:hover .tooltip-text { visibility: visible; opacity: 1; }
+
+    /* Copy button */
+    .copy-btn { cursor: pointer; padding: 6px 10px; border-radius: 6px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); color: #fff; font-size: 12px; transition: all 0.15s; }
+    .copy-btn:hover { background: rgba(255,255,255,0.1); }
+
+    /* Repeatable items */
+    .repeatable-item {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+
+    /* Loading spinner */
+    .spinner { width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.1); border-top-color: rgba(255,255,255,0.6); border-radius: 50%; animation: spin 0.6s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Error shake */
+    @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+    .shake { animation: shake 0.3s; }
+
+    /* Badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+  </style>
 </head>
-<body class="bg-black text-white overflow-x-hidden min-h-screen">
+<body>
 
-    <!-- ============================================================ -->
-    <!-- LOGIN SCREEN -->
-    <!-- ============================================================ -->
-    <div id="loginScreen" class="login-bg fixed inset-0 z-50 flex items-center justify-center">
-        <div class="dot-grid absolute inset-0 z-0"></div>
-
-        <!-- Ambient glow -->
-        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-10" style="background: radial-gradient(circle, #DC2626 0%, transparent 70%);"></div>
-
-        <div class="relative z-10 w-full max-w-md px-6">
-            <div class="glass-card rounded-2xl p-10">
-                <!-- Logo -->
-                <div class="text-center mb-10">
-                    <h1 class="font-headline text-3xl font-bold tracking-tighter mb-1">Apex Music Latino</h1>
-                    <p class="text-sm text-zinc-500 tracking-widest uppercase font-headline">Artist Portal</p>
-                </div>
-
-                <!-- Error -->
-                <div id="loginError" class="hidden mb-6 px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center">
-                    Invalid email or password. Try again.
-                </div>
-
-                <!-- Form -->
-                <form id="loginForm" class="space-y-5" onsubmit="return false;">
-                    <div>
-                        <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Email</label>
-                        <div class="relative">
-                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-600 text-xl">mail</span>
-                            <input id="loginEmail" type="email" placeholder="artist@apexmusiclatino.com"
-                                class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl py-3.5 pl-11 pr-4 text-white placeholder-zinc-600 text-sm"/>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Password</label>
-                        <div class="relative">
-                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-600 text-xl">lock</span>
-                            <input id="loginPassword" type="password" placeholder="Enter your password"
-                                class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl py-3.5 pl-11 pr-4 text-white placeholder-zinc-600 text-sm"/>
-                        </div>
-                    </div>
-                    <button type="submit" id="loginBtn"
-                        class="w-full btn-gradient-login text-white font-bold py-3.5 rounded-xl font-headline tracking-wide text-sm transition-all hover:shadow-lg hover:shadow-red-900/20">
-                        Sign In
-                    </button>
-                </form>
-
-                <!-- Forgot password -->
-                <div class="text-center mt-6 relative tooltip-trigger inline-block w-full">
-                    <button class="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">Forgot password?</button>
-                    <div class="tooltip-content absolute left-1/2 -translate-x-1/2 mt-2 px-4 py-2 rounded-lg bg-zinc-800 text-zinc-300 text-xs whitespace-nowrap border border-zinc-700">
-                        Contact your manager for password reset
-                    </div>
-                </div>
-
-                <!-- Divider -->
-                <div class="mt-8 pt-6 border-t border-white/[0.04] text-center">
-                    <p class="text-[11px] text-zinc-700">Powered by CUBO Intelligence</p>
-                </div>
-            </div>
-        </div>
+<!-- ==================== LOGIN SCREEN ==================== -->
+<div id="login-screen">
+  <div class="glass-card" style="width: 400px; padding: 40px;">
+    <div style="text-align: center; margin-bottom: 32px;">
+      <h1 style="font-size: 22px; font-weight: 700; letter-spacing: -0.02em;">Apex Music Latino</h1>
+      <p style="font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 6px;">Artist Portal</p>
     </div>
+    <form id="login-form" autocomplete="off">
+      <div style="margin-bottom: 16px;">
+        <label style="font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.4); display: block; margin-bottom: 6px;">Email or slug</label>
+        <input type="text" id="login-email" class="login-input" placeholder="arcoiris or arcoiris@gmail.com" required />
+      </div>
+      <div style="margin-bottom: 24px;">
+        <label style="font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.4); display: block; margin-bottom: 6px;">Password</label>
+        <input type="password" id="login-password" class="login-input" placeholder="Enter your password" required />
+      </div>
+      <button type="submit" class="login-btn">Sign In</button>
+      <p id="login-error" style="color: #ef4444; font-size: 12px; margin-top: 12px; text-align: center; display: none;">Invalid credentials. Try again.</p>
+    </form>
+  </div>
+</div>
 
-    <!-- ============================================================ -->
-    <!-- DASHBOARD (hidden until login) -->
-    <!-- ============================================================ -->
-    <div id="dashboardShell" class="hidden min-h-screen bg-[#0a0a0a]">
+<!-- ==================== PORTAL ==================== -->
+<div id="portal">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h2 style="font-size: 15px; font-weight: 700; letter-spacing: -0.02em;">Apex Music Latino</h2>
+      <p id="sidebar-artist-name" style="font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 4px;"></p>
+    </div>
+    <nav style="padding: 12px 0; flex: 1;">
+      <div class="nav-item active" data-view="dashboard" onclick="switchView('dashboard')">
+        <span class="material-symbols-outlined" style="font-size: 20px;">dashboard</span>
+        Dashboard
+      </div>
+      <div class="nav-item" data-view="assets" onclick="switchView('assets')">
+        <span class="material-symbols-outlined" style="font-size: 20px;">qr_code_2</span>
+        Asset Generator
+      </div>
+      <div class="nav-item" data-view="frm" onclick="switchView('frm')">
+        <span class="material-symbols-outlined" style="font-size: 20px;">groups</span>
+        FRM
+      </div>
+      <div class="nav-item" data-view="epk" onclick="switchView('epk')">
+        <span class="material-symbols-outlined" style="font-size: 20px;">person</span>
+        EPK
+      </div>
+      <div class="nav-item disabled" data-view="marketing" onclick="switchView('marketing')">
+        <span class="material-symbols-outlined" style="font-size: 20px;">campaign</span>
+        Marketing Hub
+        <span class="material-symbols-outlined lock-icon" style="font-size: 16px;">lock</span>
+      </div>
+      <div class="nav-item disabled" data-view="subscription" onclick="switchView('subscription')">
+        <span class="material-symbols-outlined" style="font-size: 20px;">credit_card</span>
+        Subscription
+        <span class="material-symbols-outlined lock-icon" style="font-size: 16px;">lock</span>
+      </div>
+      <div class="nav-item disabled" data-view="royalties" onclick="switchView('royalties')">
+        <span class="material-symbols-outlined" style="font-size: 20px;">payments</span>
+        Royalties
+        <span class="material-symbols-outlined lock-icon" style="font-size: 16px;">lock</span>
+      </div>
+      <div class="nav-item disabled" data-view="legal" onclick="switchView('legal')">
+        <span class="material-symbols-outlined" style="font-size: 20px;">gavel</span>
+        Legal
+        <span class="material-symbols-outlined lock-icon" style="font-size: 16px;">lock</span>
+      </div>
+    </nav>
+    <div style="padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.06);">
+      <div class="nav-item" style="padding: 8px 0; border: none;" onclick="logout()">
+        <span class="material-symbols-outlined" style="font-size: 20px;">logout</span>
+        Sign Out
+      </div>
+    </div>
+  </aside>
 
-        <!-- Top Bar -->
-        <header class="fixed top-0 left-0 right-0 z-40 h-16 bg-[#111111]/80 backdrop-blur-xl border-b border-white/[0.04] flex items-center justify-between px-6">
-            <div class="flex items-center gap-3">
-                <a href="/" class="font-headline text-lg font-bold tracking-tighter text-zinc-400 hover:text-white transition-colors">Apex Music Latino</a>
-                <span class="text-zinc-700">/</span>
-                <span class="font-headline text-sm text-zinc-500">Artist Portal</span>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="flex items-center gap-3">
-                    <div id="topbarAvatar" class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-sm font-bold font-headline" style="color: var(--dash-accent, #DC2626);"></div>
-                    <span id="topbarName" class="text-sm font-medium text-zinc-300 hidden sm:inline"></span>
-                </div>
-                <button onclick="logout()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-zinc-500 hover:text-white hover:bg-white/[0.04] transition-all">
-                    <span class="material-symbols-outlined text-base">logout</span>
-                    <span class="hidden sm:inline">Sign Out</span>
+  <!-- Main -->
+  <div class="main-content">
+    <div class="content-area">
+
+      <!-- ========== DASHBOARD VIEW ========== -->
+      <div id="view-dashboard" class="view active">
+        <h2 id="welcome-msg" style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;"></h2>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 32px;">Here's a snapshot of your portal.</p>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px;">
+          <div class="stat-card">
+            <div class="stat-label">Total Fans Captured</div>
+            <div class="stat-value" id="stat-total-fans">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Unique Emails</div>
+            <div class="stat-value" id="stat-unique-emails">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Latest Capture</div>
+            <div class="stat-value" id="stat-latest-capture" style="font-size: 16px;">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">QR Scans Today</div>
+            <div class="stat-value" id="stat-qr-today">—</div>
+          </div>
+        </div>
+
+        <h3 style="font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px;">Quick Actions</h3>
+        <div style="display: flex; gap: 12px;">
+          <button class="quick-action" onclick="switchView('assets')">
+            <span class="material-symbols-outlined" style="font-size: 18px;">qr_code_2</span>
+            Generate QR
+          </button>
+          <button class="quick-action" onclick="switchView('frm')">
+            <span class="material-symbols-outlined" style="font-size: 18px;">groups</span>
+            View FRM
+          </button>
+          <button class="quick-action" onclick="switchView('epk')">
+            <span class="material-symbols-outlined" style="font-size: 18px;">person</span>
+            Edit EPK
+          </button>
+        </div>
+      </div>
+
+      <!-- ========== ASSET GENERATOR VIEW ========== -->
+      <div id="view-assets" class="view">
+        <h2 style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;">Asset Generator</h2>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 32px;">Generate QR codes and shareable links for your landing page.</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+          <!-- QR Code -->
+          <div class="stat-card">
+            <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 16px;">QR Code</h3>
+            <div id="qr-output" style="display: flex; justify-content: center; padding: 24px; background: #fff; border-radius: 12px; margin-bottom: 16px;"></div>
+            <button id="download-qr-btn" class="quick-action" style="width: 100%; justify-content: center;" onclick="downloadQR()">
+              <span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+              Download PNG
+            </button>
+          </div>
+
+          <!-- Links -->
+          <div>
+            <div class="stat-card" style="margin-bottom: 16px;">
+              <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px;">Shareable Link</h3>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="text" id="share-link" class="epk-input" readonly style="flex: 1; font-size: 12px; font-family: monospace;" />
+                <button class="copy-btn" onclick="copyLink()">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">content_copy</span>
                 </button>
+              </div>
+              <p id="copy-feedback" style="font-size: 11px; color: #22c55e; margin-top: 6px; opacity: 0; transition: opacity 0.2s;">Copied!</p>
             </div>
-        </header>
 
-        <div class="flex pt-16">
-            <!-- Sidebar -->
-            <aside class="fixed left-0 top-16 bottom-0 w-[250px] bg-[#0d0d0d] border-r border-white/[0.04] flex flex-col justify-between py-6 overflow-y-auto z-30">
-                <nav class="space-y-1 px-3">
-                    <button onclick="switchView('dashboard')" data-view="dashboard" class="sidebar-link active w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-zinc-400 hover:text-white">
-                        <span class="material-symbols-outlined text-xl">dashboard</span>
-                        Dashboard
-                    </button>
-                    <button onclick="switchView('epk')" data-view="epk" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-zinc-400 hover:text-white">
-                        <span class="material-symbols-outlined text-xl">person</span>
-                        My EPK
-                    </button>
-                    <button onclick="switchView('qr')" data-view="qr" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-zinc-400 hover:text-white">
-                        <span class="material-symbols-outlined text-xl">qr_code_2</span>
-                        QR Codes
-                    </button>
-                    <button onclick="switchView('fans')" data-view="fans" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-zinc-400 hover:text-white">
-                        <span class="material-symbols-outlined text-xl">group</span>
-                        Fan Data
-                    </button>
-                    <button onclick="switchView('shows')" data-view="shows" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-zinc-400 hover:text-white">
-                        <span class="material-symbols-outlined text-xl">event</span>
-                        Shows &amp; Events
-                    </button>
-                    <button onclick="switchView('settings')" data-view="settings" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-zinc-400 hover:text-white">
-                        <span class="material-symbols-outlined text-xl">settings</span>
-                        Settings
-                    </button>
-                </nav>
-                <div class="px-6 pt-4 border-t border-white/[0.04]">
-                    <p class="text-[10px] text-zinc-700 tracking-wider uppercase">Apex Artist OS v1.0</p>
-                </div>
-            </aside>
+            <div class="stat-card" style="opacity: 0.5;">
+              <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 8px;">Short Link</h3>
+              <p style="font-size: 13px; color: rgba(255,255,255,0.35);">Coming soon — Bitly integration</p>
+              <span class="material-symbols-outlined" style="font-size: 18px; color: rgba(255,255,255,0.2); margin-top: 8px;">lock</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <!-- Main Content -->
-            <main class="ml-[250px] flex-1 p-8 min-h-[calc(100vh-4rem)]">
+      <!-- ========== FRM VIEW ========== -->
+      <div id="view-frm" class="view">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <h2 style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em;">Fan Relationship Management</h2>
+        </div>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 24px;">Live data from your fan capture forms.</p>
 
-                <!-- ========== DASHBOARD VIEW ========== -->
-                <section id="view-dashboard" class="view-section active">
-                    <div class="mb-8">
-                        <h2 class="font-headline text-3xl font-bold tracking-tight mb-1">Bienvenido, <span id="dashWelcomeName"></span></h2>
-                        <p class="text-zinc-500 text-sm">Here is your artist overview for today.</p>
-                    </div>
-
-                    <!-- Stats -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                        <div class="stat-card glass-card rounded-xl p-5 border border-white/[0.04]">
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="text-xs text-zinc-500 uppercase tracking-wider font-headline">Fans</span>
-                                <span class="material-symbols-outlined text-xl" style="color: var(--dash-accent);">favorite</span>
-                            </div>
-                            <p class="text-2xl font-bold font-headline" id="statFans">1,247</p>
-                            <p class="text-xs text-emerald-500 mt-1">+12% this month</p>
-                        </div>
-                        <div class="stat-card glass-card rounded-xl p-5 border border-white/[0.04]">
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="text-xs text-zinc-500 uppercase tracking-wider font-headline">Streams</span>
-                                <span class="material-symbols-outlined text-xl" style="color: var(--dash-accent);">play_circle</span>
-                            </div>
-                            <p class="text-2xl font-bold font-headline" id="statStreams">48.3K</p>
-                            <p class="text-xs text-emerald-500 mt-1">+8% this month</p>
-                        </div>
-                        <div class="stat-card glass-card rounded-xl p-5 border border-white/[0.04]">
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="text-xs text-zinc-500 uppercase tracking-wider font-headline">Engagement</span>
-                                <span class="material-symbols-outlined text-xl" style="color: var(--dash-accent);">trending_up</span>
-                            </div>
-                            <p class="text-2xl font-bold font-headline" id="statEngagement">6.2%</p>
-                            <p class="text-xs text-emerald-500 mt-1">Above average</p>
-                        </div>
-                        <div class="stat-card glass-card rounded-xl p-5 border border-white/[0.04]">
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="text-xs text-zinc-500 uppercase tracking-wider font-headline">Leads Captured</span>
-                                <span class="material-symbols-outlined text-xl" style="color: var(--dash-accent);">contact_mail</span>
-                            </div>
-                            <p class="text-2xl font-bold font-headline" id="statLeads">89</p>
-                            <p class="text-xs text-emerald-500 mt-1">+23 this week</p>
-                        </div>
-                    </div>
-
-                    <!-- QR + Links row -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                        <!-- QR Code -->
-                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                            <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">Your QR Code</h3>
-                            <div id="dashQrCode" class="flex items-center justify-center bg-white rounded-xl p-4 mb-4 mx-auto" style="width: 180px; height: 180px;"></div>
-                            <p class="text-[11px] text-zinc-600 text-center">Scan to open your fan gate</p>
-                        </div>
-
-                        <!-- EPK Link -->
-                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                            <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">Your EPK Link</h3>
-                            <div class="flex items-center gap-2 bg-white/[0.03] rounded-lg px-3 py-2.5 border border-white/[0.06] mb-4">
-                                <span id="epkLinkText" class="text-xs text-zinc-300 flex-1 truncate"></span>
-                                <button onclick="copyToClipboard('epkLinkText')" class="copy-btn text-zinc-500 hover:text-white transition-colors">
-                                    <span class="material-symbols-outlined text-lg">content_copy</span>
-                                </button>
-                            </div>
-                            <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4 mt-6">Your Gate Link</h3>
-                            <div class="flex items-center gap-2 bg-white/[0.03] rounded-lg px-3 py-2.5 border border-white/[0.06] mb-4">
-                                <span id="gateLinkText" class="text-xs text-zinc-300 flex-1 truncate"></span>
-                                <button onclick="copyToClipboard('gateLinkText')" class="copy-btn text-zinc-500 hover:text-white transition-colors">
-                                    <span class="material-symbols-outlined text-lg">content_copy</span>
-                                </button>
-                            </div>
-                            <a id="epkPreviewLink" href="#" target="_blank" class="inline-flex items-center gap-1.5 text-xs hover:underline mt-2" style="color: var(--dash-accent);">
-                                <span class="material-symbols-outlined text-sm">open_in_new</span> Preview EPK
-                            </a>
-                        </div>
-
-                        <!-- Recent Activity -->
-                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                            <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">Recent Activity</h3>
-                            <div class="space-y-3">
-                                <div class="flex items-start gap-3">
-                                    <span class="material-symbols-outlined text-base text-emerald-500 mt-0.5">circle</span>
-                                    <div>
-                                        <p class="text-xs text-zinc-300">New fan lead captured</p>
-                                        <p class="text-[10px] text-zinc-600">2 hours ago</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start gap-3">
-                                    <span class="material-symbols-outlined text-base text-blue-500 mt-0.5">circle</span>
-                                    <div>
-                                        <p class="text-xs text-zinc-300">EPK viewed 14 times</p>
-                                        <p class="text-[10px] text-zinc-600">Today</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start gap-3">
-                                    <span class="material-symbols-outlined text-base text-amber-500 mt-0.5">circle</span>
-                                    <div>
-                                        <p class="text-xs text-zinc-300">QR code scanned 8 times</p>
-                                        <p class="text-[10px] text-zinc-600">Yesterday</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start gap-3">
-                                    <span class="material-symbols-outlined text-base text-zinc-700 mt-0.5">circle</span>
-                                    <div>
-                                        <p class="text-xs text-zinc-300">Profile updated</p>
-                                        <p class="text-[10px] text-zinc-600">3 days ago</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ========== MY EPK VIEW ========== -->
-                <section id="view-epk" class="view-section">
-                    <div class="mb-8 flex items-center justify-between">
-                        <div>
-                            <h2 class="font-headline text-3xl font-bold tracking-tight mb-1">My EPK</h2>
-                            <p class="text-zinc-500 text-sm">Edit your electronic press kit. Changes are saved locally.</p>
-                        </div>
-                        <div class="flex gap-3">
-                            <a id="epkPreviewBtn" href="#" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/[0.08] text-sm text-zinc-400 hover:text-white hover:bg-white/[0.04] transition-all">
-                                <span class="material-symbols-outlined text-base">visibility</span> Preview My EPK
-                            </a>
-                            <button onclick="saveEpk()" class="flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-bold text-white transition-all hover:shadow-lg" style="background: var(--dash-accent);">
-                                <span class="material-symbols-outlined text-base">save</span> Save Changes
-                            </button>
-                        </div>
-                    </div>
-                    <div id="epkSaveMsg" class="hidden mb-4 px-4 py-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm">
-                        Changes saved successfully.
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <!-- Bio EN -->
-                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                            <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Bio (English)</label>
-                            <textarea id="epkBioEn" rows="5" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700 resize-none" placeholder="Tell your story in English..."></textarea>
-                        </div>
-                        <!-- Bio ES -->
-                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                            <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Bio (Espanol)</label>
-                            <textarea id="epkBioEs" rows="5" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700 resize-none" placeholder="Cuenta tu historia en espanol..."></textarea>
-                        </div>
-                        <!-- Profile Image -->
-                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                            <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Profile Image URL</label>
-                            <input id="epkProfileImg" type="url" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700 mb-3" placeholder="https://..."/>
-                            <div id="epkProfilePreview" class="w-24 h-24 rounded-full bg-zinc-900 border border-white/[0.06] overflow-hidden">
-                                <img id="epkProfilePreviewImg" src="" alt="" class="w-full h-full object-cover hidden"/>
-                            </div>
-                        </div>
-                        <!-- Banner Image -->
-                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                            <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Banner Image URL</label>
-                            <input id="epkBannerImg" type="url" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700 mb-3" placeholder="https://..."/>
-                            <div class="w-full h-24 rounded-xl bg-zinc-900 border border-white/[0.06] overflow-hidden">
-                                <img id="epkBannerPreviewImg" src="" alt="" class="w-full h-full object-cover hidden"/>
-                            </div>
-                        </div>
-                        <!-- Video URL -->
-                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                            <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Video URL</label>
-                            <input id="epkVideo" type="url" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="https://youtube.com/watch?v=..."/>
-                        </div>
-                        <!-- Social Links -->
-                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                            <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Social Links</label>
-                            <div class="space-y-2">
-                                <input id="epkInstagram" type="url" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Instagram URL"/>
-                                <input id="epkSpotify" type="url" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Spotify URL"/>
-                                <input id="epkYoutube" type="url" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="YouTube URL"/>
-                                <input id="epkTiktok" type="url" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="TikTok URL"/>
-                            </div>
-                        </div>
-                        <!-- Music Releases -->
-                        <div class="glass-card rounded-xl p-6 border border-white/[0.04] lg:col-span-2">
-                            <div class="flex items-center justify-between mb-4">
-                                <label class="text-xs text-zinc-500 uppercase tracking-wider font-headline">Music Releases</label>
-                                <button onclick="addRelease()" class="flex items-center gap-1 text-xs hover:underline" style="color: var(--dash-accent);">
-                                    <span class="material-symbols-outlined text-sm">add</span> Add Release
-                                </button>
-                            </div>
-                            <div id="epkReleases" class="space-y-3"></div>
-                        </div>
-                        <!-- Merch Items -->
-                        <div class="glass-card rounded-xl p-6 border border-white/[0.04] lg:col-span-2">
-                            <div class="flex items-center justify-between mb-4">
-                                <label class="text-xs text-zinc-500 uppercase tracking-wider font-headline">Merch Items</label>
-                                <button onclick="addMerch()" class="flex items-center gap-1 text-xs hover:underline" style="color: var(--dash-accent);">
-                                    <span class="material-symbols-outlined text-sm">add</span> Add Merch
-                                </button>
-                            </div>
-                            <div id="epkMerch" class="space-y-3"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ========== QR CODES VIEW ========== -->
-                <section id="view-qr" class="view-section">
-                    <div class="mb-8">
-                        <h2 class="font-headline text-3xl font-bold tracking-tight mb-1">QR Codes</h2>
-                        <p class="text-zinc-500 text-sm">Your permanent QR code links directly to your fan gate.</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="glass-card rounded-xl p-8 border border-white/[0.04] flex flex-col items-center">
-                            <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-6">Fan Gate QR Code</h3>
-                            <div id="qrViewCode" class="bg-white rounded-2xl p-6 mb-6" style="width: 240px; height: 240px;"></div>
-                            <button onclick="downloadQr()" class="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white transition-all hover:shadow-lg" style="background: var(--dash-accent);">
-                                <span class="material-symbols-outlined text-base">download</span> Download PNG
-                            </button>
-                        </div>
-
-                        <div class="space-y-6">
-                            <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                                <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">Shareable Gate Link</h3>
-                                <div class="flex items-center gap-2 bg-white/[0.03] rounded-lg px-3 py-2.5 border border-white/[0.06]">
-                                    <span id="qrShareLink" class="text-xs text-zinc-300 flex-1 truncate"></span>
-                                    <button onclick="copyToClipboard('qrShareLink')" class="copy-btn text-zinc-500 hover:text-white transition-colors">
-                                        <span class="material-symbols-outlined text-lg">content_copy</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                                <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">Direct EPK Link</h3>
-                                <div class="flex items-center gap-2 bg-white/[0.03] rounded-lg px-3 py-2.5 border border-white/[0.06]">
-                                    <span id="qrEpkLink" class="text-xs text-zinc-300 flex-1 truncate"></span>
-                                    <button onclick="copyToClipboard('qrEpkLink')" class="copy-btn text-zinc-500 hover:text-white transition-colors">
-                                        <span class="material-symbols-outlined text-lg">content_copy</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                                <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">Short Link</h3>
-                                <div class="flex items-center gap-3 py-2">
-                                    <span class="material-symbols-outlined text-xl text-zinc-600">link</span>
-                                    <span class="text-sm text-zinc-500">Coming soon &mdash; Bitly integration</span>
-                                </div>
-                            </div>
-                            <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                                <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">Tips</h3>
-                                <ul class="space-y-2 text-xs text-zinc-500">
-                                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-0.5" style="color: var(--dash-accent);">check_circle</span> Print your QR code on flyers and merch</li>
-                                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-0.5" style="color: var(--dash-accent);">check_circle</span> Share the gate link on social media</li>
-                                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-0.5" style="color: var(--dash-accent);">check_circle</span> Display at live shows for instant fan capture</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ========== FAN DATA VIEW ========== -->
-                <section id="view-fans" class="view-section">
-                    <div class="mb-8">
-                        <h2 class="font-headline text-3xl font-bold tracking-tight mb-1">Fan Data</h2>
-                        <p class="text-zinc-500 text-sm">Track every fan captured through your QR codes and gates.</p>
-                    </div>
-
-                    <div class="glass-card rounded-xl border border-white/[0.04] overflow-hidden">
-                        <!-- Placeholder state -->
-                        <div class="p-8 text-center">
-                            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs mb-6">
-                                <span class="material-symbols-outlined text-sm">cloud_sync</span>
-                                Connecting to Supabase...
-                            </div>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-sm">
-                                <thead>
-                                    <tr class="border-b border-white/[0.06]">
-                                        <th class="text-left px-6 py-3 text-xs text-zinc-500 uppercase tracking-wider font-headline font-medium">Name</th>
-                                        <th class="text-left px-6 py-3 text-xs text-zinc-500 uppercase tracking-wider font-headline font-medium">Email</th>
-                                        <th class="text-left px-6 py-3 text-xs text-zinc-500 uppercase tracking-wider font-headline font-medium">Phone</th>
-                                        <th class="text-left px-6 py-3 text-xs text-zinc-500 uppercase tracking-wider font-headline font-medium">Title</th>
-                                        <th class="text-left px-6 py-3 text-xs text-zinc-500 uppercase tracking-wider font-headline font-medium">Source</th>
-                                        <th class="text-left px-6 py-3 text-xs text-zinc-500 uppercase tracking-wider font-headline font-medium">Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-zinc-600">
-                                    <tr class="border-b border-white/[0.03]">
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                    </tr>
-                                    <tr class="border-b border-white/[0.03]">
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                        <td class="px-6 py-4">&mdash;</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="p-6 border-t border-white/[0.04] text-center">
-                            <p class="text-xs text-zinc-600">Run the Supabase schema to enable live data. See <code class="px-1.5 py-0.5 rounded bg-white/[0.04] text-zinc-400">/admin/</code> for setup instructions.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ========== SHOWS & EVENTS VIEW ========== -->
-                <section id="view-shows" class="view-section">
-                    <div class="mb-8">
-                        <h2 class="font-headline text-3xl font-bold tracking-tight mb-1">Shows &amp; Events</h2>
-                        <p class="text-zinc-500 text-sm">Manage your upcoming performances and appearances.</p>
-                    </div>
-
-                    <!-- Add Show Form -->
-                    <div class="glass-card rounded-xl p-6 border border-white/[0.04] mb-8">
-                        <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">Add a Show</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                            <input id="showVenue" type="text" class="bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Venue name"/>
-                            <input id="showCity" type="text" class="bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="City"/>
-                            <input id="showDate" type="date" class="bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700"/>
-                            <input id="showTicketUrl" type="url" class="bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Ticket URL"/>
-                        </div>
-                        <button onclick="addShow()" class="flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-bold text-white transition-all hover:shadow-lg" style="background: var(--dash-accent);">
-                            <span class="material-symbols-outlined text-base">add</span> Add Show
-                        </button>
-                    </div>
-
-                    <!-- Shows List -->
-                    <div id="showsList" class="space-y-3"></div>
-                    <div id="showsEmpty" class="glass-card rounded-xl p-12 border border-white/[0.04] text-center hidden">
-                        <span class="material-symbols-outlined text-5xl text-zinc-800 mb-3">event_busy</span>
-                        <p class="text-zinc-600 text-sm">No upcoming shows. Add one above.</p>
-                    </div>
-                </section>
-
-                <!-- ========== SETTINGS VIEW ========== -->
-                <section id="view-settings" class="view-section">
-                    <div class="mb-8">
-                        <h2 class="font-headline text-3xl font-bold tracking-tight mb-1">Settings</h2>
-                        <p class="text-zinc-500 text-sm">Account preferences and integrations.</p>
-                    </div>
-
-                    <div class="max-w-2xl space-y-6">
-                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                            <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">Account</h3>
-                            <div class="space-y-3 text-sm">
-                                <div class="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                                    <span class="text-zinc-400">Email</span>
-                                    <span id="settingsEmail" class="text-zinc-300"></span>
-                                </div>
-                                <div class="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                                    <span class="text-zinc-400">Artist Slug</span>
-                                    <span id="settingsSlug" class="text-zinc-300 font-mono"></span>
-                                </div>
-                                <div class="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                                    <span class="text-zinc-400">Genre</span>
-                                    <span id="settingsGenre" class="text-zinc-300 capitalize"></span>
-                                </div>
-                                <div class="flex items-center justify-between py-2">
-                                    <span class="text-zinc-400">Authentication</span>
-                                    <span class="text-amber-500 text-xs">localStorage (Supabase Auth coming soon)</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
-                            <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">Integrations</h3>
-                            <div class="space-y-3 text-sm">
-                                <div class="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                                    <div class="flex items-center gap-2">
-                                        <span class="material-symbols-outlined text-lg text-zinc-600">database</span>
-                                        <span class="text-zinc-400">Supabase</span>
-                                    </div>
-                                    <span class="text-xs px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-500">Not connected</span>
-                                </div>
-                                <div class="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                                    <div class="flex items-center gap-2">
-                                        <span class="material-symbols-outlined text-lg text-zinc-600">link</span>
-                                        <span class="text-zinc-400">Bitly</span>
-                                    </div>
-                                    <span class="text-xs px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-500">Coming soon</span>
-                                </div>
-                                <div class="flex items-center justify-between py-2">
-                                    <div class="flex items-center gap-2">
-                                        <span class="material-symbols-outlined text-lg text-zinc-600">analytics</span>
-                                        <span class="text-zinc-400">Google Analytics</span>
-                                    </div>
-                                    <span class="text-xs px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-500">Coming soon</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="glass-card rounded-xl p-6 border border-red-500/10">
-                            <h3 class="font-headline text-sm font-semibold text-red-400/80 uppercase tracking-wider mb-4">Danger Zone</h3>
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-sm text-zinc-300">Clear local data</p>
-                                    <p class="text-xs text-zinc-600">This will remove all locally stored EPK edits and show data.</p>
-                                </div>
-                                <button onclick="clearLocalData()" class="px-4 py-2 rounded-xl border border-red-500/20 text-red-400 text-xs hover:bg-red-500/10 transition-colors">
-                                    Clear Data
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-            </main>
+        <!-- Controls -->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <span id="frm-count" style="font-size: 13px; color: rgba(255,255,255,0.4);"></span>
+            <div style="position: relative;">
+              <span class="material-symbols-outlined" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 18px; color: rgba(255,255,255,0.25);">search</span>
+              <input type="text" id="frm-search" class="search-input" placeholder="Search fans..." oninput="filterFRM()" />
+            </div>
+          </div>
+          <div class="tooltip-wrap">
+            <button class="quick-action" style="opacity: 0.4; cursor: not-allowed;">
+              <span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+              Export
+            </button>
+            <span class="tooltip-text">Upgrade to Pro to export data</span>
+          </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="ml-[250px] bg-neutral-950 w-auto py-12 px-8 border-t border-neutral-800/20">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 max-w-5xl mx-auto">
-                <span class="font-headline text-sm text-zinc-600 tracking-tight">&copy; 2026 Apex Music Latino</span>
-                <div class="flex items-center gap-6 text-xs text-zinc-700">
-                    <a href="/" class="hover:text-zinc-400 transition-colors">Home</a>
-                    <a href="/artists/" class="hover:text-zinc-400 transition-colors">Artists</a>
-                    <a href="/marketplace/" class="hover:text-zinc-400 transition-colors">Marketplace</a>
-                    <a href="/academy/" class="hover:text-zinc-400 transition-colors">Academy</a>
-                </div>
-                <span class="text-[10px] text-zinc-800">Powered by CUBO Intelligence</span>
+        <!-- Table -->
+        <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; overflow: hidden;">
+          <div style="overflow-x: auto;">
+            <table class="frm-table">
+              <thead>
+                <tr>
+                  <th>Fan ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Title</th>
+                  <th>Device</th>
+                  <th>Source</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="frm-table-body">
+                <tr><td colspan="8" style="text-align: center; padding: 40px; color: rgba(255,255,255,0.25);"><div class="spinner" style="margin: 0 auto;"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== EPK VIEW ========== -->
+      <div id="view-epk" class="view">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <h2 style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em;">Electronic Press Kit</h2>
+          <button class="quick-action" id="preview-epk-btn" onclick="previewEPK()">
+            <span class="material-symbols-outlined" style="font-size: 18px;">open_in_new</span>
+            Preview EPK
+          </button>
+        </div>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 32px;">Edit your public-facing landing page content.</p>
+
+        <div id="epk-sections"></div>
+      </div>
+
+      <!-- ========== MARKETING HUB (Coming Soon) ========== -->
+      <div id="view-marketing" class="view">
+        <h2 style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;">Marketing Hub</h2>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 32px;">Amplify your reach and engage your audience.</p>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px;">
+          <div class="coming-soon-card">
+            <span class="material-symbols-outlined">email</span>
+            <h4>Email Campaigns</h4>
+            <p>Coming Soon</p>
+          </div>
+          <div class="coming-soon-card">
+            <span class="material-symbols-outlined">schedule_send</span>
+            <h4>Social Media Scheduler</h4>
+            <p>Coming Soon</p>
+          </div>
+          <div class="coming-soon-card">
+            <span class="material-symbols-outlined">insights</span>
+            <h4>Audience Insights</h4>
+            <p>Coming Soon</p>
+          </div>
+        </div>
+        <div style="text-align: center;">
+          <button class="upgrade-btn">
+            <span class="material-symbols-outlined" style="font-size: 18px;">lock_open</span>
+            Upgrade to unlock Marketing Hub
+          </button>
+        </div>
+      </div>
+
+      <!-- ========== SUBSCRIPTION (Coming Soon) ========== -->
+      <div id="view-subscription" class="view">
+        <h2 style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;">Subscription</h2>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 24px;">Manage your plan and billing.</p>
+
+        <div class="stat-card" style="margin-bottom: 24px; display: inline-flex; align-items: center; gap: 12px;">
+          <span style="font-size: 13px; color: rgba(255,255,255,0.5);">Current Plan:</span>
+          <span class="badge" style="background: rgba(99,102,241,0.15); color: #818cf8;">Freemium</span>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; overflow: hidden; margin-bottom: 24px;">
+          <table class="pricing-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Freemium</th>
+                <th>Pro</th>
+                <th>Enterprise</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Fan Capture</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>QR Generator</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>EPK Editor</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>FRM (view only)</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Data Export (CSV)</td><td class="dash">—</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Email Campaigns</td><td class="dash">—</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Social Scheduler</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+              <tr><td>Audience Insights</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+              <tr><td>Royalty Tracking</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+              <tr><td>Legal &amp; Contracts</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
+              <tr><td>Priority Support</td><td class="dash">—</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="text-align: center;">
+          <p style="font-size: 13px; color: rgba(255,255,255,0.25); margin-bottom: 12px;">Coming Soon — Stripe Integration</p>
+          <button class="upgrade-btn" style="opacity: 0.5; cursor: not-allowed;">
+            <span class="material-symbols-outlined" style="font-size: 18px;">credit_card</span>
+            Upgrade Plan
+          </button>
+        </div>
+      </div>
+
+      <!-- ========== ROYALTIES (Coming Soon) ========== -->
+      <div id="view-royalties" class="view">
+        <h2 style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;">Royalties</h2>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 32px;">Track your earnings across platforms.</p>
+
+        <div style="text-align: center; padding: 60px 0;">
+          <span class="material-symbols-outlined" style="font-size: 48px; color: rgba(255,255,255,0.1);">payments</span>
+          <h3 style="font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.3); margin-top: 16px;">Track your earnings — Coming Soon</h3>
+          <p style="font-size: 13px; color: rgba(255,255,255,0.2); margin-top: 8px; max-width: 400px; margin-left: auto; margin-right: auto;">We're building a comprehensive royalty dashboard. You'll be able to track streaming revenue, sync licensing, and more.</p>
+
+          <!-- Placeholder mockup -->
+          <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 600px; margin-left: auto; margin-right: auto; opacity: 0.3;">
+            <div class="stat-card"><div class="stat-label">Streams</div><div class="stat-value" style="font-size: 20px;">—</div></div>
+            <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-value" style="font-size: 20px;">$—</div></div>
+            <div class="stat-card"><div class="stat-label">Pending</div><div class="stat-value" style="font-size: 20px;">$—</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== LEGAL (Coming Soon) ========== -->
+      <div id="view-legal" class="view">
+        <h2 style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;">Legal</h2>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 32px;">Contracts, terms, and legal documents.</p>
+
+        <div class="stat-card" style="margin-bottom: 16px;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <h4 style="font-size: 15px; font-weight: 600;">Terms of Service</h4>
+              <p style="font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 2px;">View the current terms and conditions.</p>
             </div>
-        </footer>
+            <a href="/legal/terms.html" target="_blank" class="quick-action" style="text-decoration: none;">
+              <span class="material-symbols-outlined" style="font-size: 18px;">open_in_new</span>
+              View
+            </a>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="coming-soon-card">
+            <span class="material-symbols-outlined">description</span>
+            <h4>Contracts</h4>
+            <p>Coming Soon</p>
+          </div>
+          <div class="coming-soon-card">
+            <span class="material-symbols-outlined">camera_alt</span>
+            <h4>Cesi&oacute;n de Imagen</h4>
+            <p>Coming Soon</p>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <script src="/js/i18n.js"></script>
-    <script src="/js/nav.js"></script>
-    <script>
-    // ================================================================
-    // ARTIST DATA
-    // ================================================================
-    const ARTISTS = {
-        arcoiris: {
-            name: 'Arcoiris',
-            slug: 'arcoiris',
-            genre: 'tango',
-            email: 'arcoiris@apexmusiclatino.com',
-            password: 'arcoiris',
-            accent: '#DC2626',
-            accentLight: '#F87171',
-            initials: 'AR',
-            stats: { fans: '1,247', streams: '48.3K', engagement: '6.2%', leads: '89' },
-            bio_en: 'Arcoiris blends the raw passion of Argentine tango with modern electronic textures, creating a sound that bridges generations.',
-            bio_es: 'Arcoiris fusiona la pasion cruda del tango argentino con texturas electronicas modernas, creando un sonido que conecta generaciones.',
-            socials: { instagram: '', spotify: '', youtube: '', tiktok: '' },
-            releases: [
-                { title: 'Milonga del Futuro', url: '', year: '2025' },
-                { title: 'Arrabal Digital', url: '', year: '2024' }
-            ],
-            shows: [
-                { venue: 'La Catedral', city: 'Buenos Aires', date: '2026-04-15', ticketUrl: '' },
-                { venue: 'Salon Canning', city: 'Buenos Aires', date: '2026-05-20', ticketUrl: '' }
-            ]
-        },
-        'joey-b': {
-            name: 'Joey B',
-            slug: 'joey-b',
-            genre: 'rap',
-            email: 'joeyb@apexmusiclatino.com',
-            password: 'joey-b',
-            accent: '#06B6D4',
-            accentLight: '#67E8F9',
-            initials: 'JB',
-            stats: { fans: '3,891', streams: '127K', engagement: '8.4%', leads: '214' },
-            bio_en: 'Joey B brings bilingual fire to Latin hip-hop, mixing street stories with conscious lyrics over hard-hitting beats.',
-            bio_es: 'Joey B trae fuego bilingue al hip-hop latino, mezclando historias de la calle con letras conscientes sobre beats contundentes.',
-            socials: { instagram: '', spotify: '', youtube: '', tiktok: '' },
-            releases: [
-                { title: 'Barrio Nuevo', url: '', year: '2025' },
-                { title: 'Sin Filtro', url: '', year: '2024' },
-                { title: 'Callejero', url: '', year: '2023' }
-            ],
-            shows: [
-                { venue: 'Club Notorious', city: 'Miami', date: '2026-04-08', ticketUrl: '' },
-                { venue: 'El Molino', city: 'Mexico City', date: '2026-05-01', ticketUrl: '' }
-            ]
-        },
-        andrade: {
-            name: 'Andrade',
-            slug: 'andrade',
-            genre: 'reggaeton',
-            email: 'andrade@apexmusiclatino.com',
-            password: 'andrade',
-            accent: '#EC4899',
-            accentLight: '#F9A8D4',
-            initials: 'AN',
-            stats: { fans: '5,620', streams: '312K', engagement: '9.1%', leads: '347' },
-            bio_en: 'Andrade is redefining reggaeton with genre-bending production and lyrics that move both body and mind.',
-            bio_es: 'Andrade esta redefiniendo el reggaeton con produccion innovadora y letras que mueven tanto el cuerpo como la mente.',
-            socials: { instagram: '', spotify: '', youtube: '', tiktok: '' },
-            releases: [
-                { title: 'Perreo Cosmico', url: '', year: '2025' },
-                { title: 'Dembow Supremo', url: '', year: '2024' }
-            ],
-            shows: [
-                { venue: 'Coliseo', city: 'San Juan', date: '2026-04-22', ticketUrl: '' },
-                { venue: 'Wynwood Factory', city: 'Miami', date: '2026-06-10', ticketUrl: '' }
-            ]
-        }
-    };
+    <!-- Footer -->
+    <footer class="portal-footer">
+      &copy; 2026 Apex Music Latino. All rights reserved.
+    </footer>
+  </div>
+</div>
 
-    let currentArtist = null;
+<script>
+/* ================================================================
+   ARTIST DATA
+   ================================================================ */
+const ARTISTS = {
+  'arcoiris': { name: 'Arcoiris', slug: 'arcoiris', genre: 'tango', accent: '#e60000' },
+  'joey-b':  { name: 'Joey B',   slug: 'joey-b',  genre: 'rap',   accent: '#00d4ff' },
+  'andrade': { name: 'Andrade',  slug: 'andrade',  genre: 'reggaeton', accent: '#ff007b' }
+};
 
-    // ================================================================
-    // AUTH
-    // ================================================================
-    function checkSession() {
-        const session = localStorage.getItem('apex_portal_session');
-        if (session) {
-            const data = JSON.parse(session);
-            if (ARTISTS[data.slug]) {
-                loginAs(data.slug);
-            }
-        }
+const SUPABASE_URL = 'https://iaycaynevtumrqoknemk.supabase.co';
+const SERVICE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk3ODE0MCwiZXhwIjoyMDg5NTU0MTQwfQ.-V6swXvqL2X6kAH9UCeRXq59q-R4KcojANvVXRyxKuM';
+
+let currentArtist = null;
+let frmData = [];
+
+/* ================================================================
+   LOGIN
+   ================================================================ */
+document.getElementById('login-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const emailVal = document.getElementById('login-email').value.trim().toLowerCase();
+  const passVal  = document.getElementById('login-password').value.trim().toLowerCase();
+
+  // Extract slug from email or raw slug
+  const slug = emailVal.includes('@') ? emailVal.split('@')[0] : emailVal;
+
+  if (ARTISTS[slug] && passVal === slug) {
+    currentArtist = ARTISTS[slug];
+    localStorage.setItem('apex_portal_session', JSON.stringify(currentArtist));
+    enterPortal();
+  } else {
+    const errEl = document.getElementById('login-error');
+    errEl.style.display = 'block';
+    document.getElementById('login-form').classList.add('shake');
+    setTimeout(() => document.getElementById('login-form').classList.remove('shake'), 300);
+  }
+});
+
+/* ================================================================
+   SESSION
+   ================================================================ */
+function checkSession() {
+  const stored = localStorage.getItem('apex_portal_session');
+  if (stored) {
+    try {
+      currentArtist = JSON.parse(stored);
+      if (ARTISTS[currentArtist.slug]) {
+        enterPortal();
+        return;
+      }
+    } catch(e) {}
+  }
+}
+
+function enterPortal() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('portal').classList.add('active');
+  applyArtistTheme();
+  loadDashboardStats();
+  renderEPKEditor();
+}
+
+function logout() {
+  localStorage.removeItem('apex_portal_session');
+  currentArtist = null;
+  location.reload();
+}
+
+/* ================================================================
+   THEME
+   ================================================================ */
+function applyArtistTheme() {
+  const a = currentArtist;
+  document.getElementById('sidebar-artist-name').textContent = a.name;
+  document.getElementById('welcome-msg').textContent = 'Bienvenido, ' + a.name;
+
+  // Accent on active nav
+  updateNavAccent();
+
+  // QR + share link
+  generateQR();
+}
+
+function updateNavAccent() {
+  document.querySelectorAll('.nav-item').forEach(item => {
+    if (item.classList.contains('active') && !item.classList.contains('disabled')) {
+      item.style.borderLeftColor = currentArtist.accent;
+      item.style.color = '#fff';
+    } else {
+      item.style.borderLeftColor = 'transparent';
     }
+  });
+}
 
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-        const password = document.getElementById('loginPassword').value.trim();
-        const errorEl = document.getElementById('loginError');
+/* ================================================================
+   VIEW SWITCHING
+   ================================================================ */
+function switchView(viewName) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
-        // Find artist by email, slug, or any email containing the slug
-        let found = null;
-        for (const slug in ARTISTS) {
-            const a = ARTISTS[slug];
-            if (email.includes(slug) && password === a.password) {
-                found = slug;
-                break;
-            }
-        }
+  const target = document.getElementById('view-' + viewName);
+  if (target) target.classList.add('active');
 
-        if (found) {
-            errorEl.classList.add('hidden');
-            localStorage.setItem('apex_portal_session', JSON.stringify({ slug: found }));
-            loginAs(found);
-        } else {
-            errorEl.classList.remove('hidden');
-            errorEl.textContent = 'Invalid email or password. Try again.';
-        }
+  const navItem = document.querySelector(`.nav-item[data-view="${viewName}"]`);
+  if (navItem) navItem.classList.add('active');
+  updateNavAccent();
+
+  // Load data for specific views
+  if (viewName === 'frm') loadFRM();
+  if (viewName === 'assets') generateQR();
+}
+
+/* ================================================================
+   DASHBOARD STATS
+   ================================================================ */
+async function loadDashboardStats() {
+  try {
+    const url = `${SUPABASE_URL}/rest/v1/leads_capture?artist_name=eq.${encodeURIComponent(currentArtist.name)}&order=created_at.desc`;
+    const res = await fetch(url, {
+      headers: {
+        'apikey': SERVICE_KEY,
+        'Authorization': 'Bearer ' + SERVICE_KEY
+      }
     });
+    const data = await res.json();
 
-    function loginAs(slug) {
-        currentArtist = ARTISTS[slug];
+    // Total fans
+    document.getElementById('stat-total-fans').textContent = data.length;
 
-        // Load any saved EPK data
-        const saved = localStorage.getItem('apex_artist_' + slug);
-        if (saved) {
-            const data = JSON.parse(saved);
-            if (data.bio_en) currentArtist.bio_en = data.bio_en;
-            if (data.bio_es) currentArtist.bio_es = data.bio_es;
-            if (data.profileImg) currentArtist.profileImg = data.profileImg;
-            if (data.bannerImg) currentArtist.bannerImg = data.bannerImg;
-            if (data.video) currentArtist.video = data.video;
-            if (data.socials) currentArtist.socials = data.socials;
-            if (data.releases) currentArtist.releases = data.releases;
-            if (data.merch) currentArtist.merch = data.merch;
-            if (data.shows) currentArtist.shows = data.shows;
-        }
+    // Unique emails
+    const uniqueEmails = new Set(data.map(d => d.email).filter(Boolean));
+    document.getElementById('stat-unique-emails').textContent = uniqueEmails.size;
 
-        // Apply genre accent color
-        document.documentElement.style.setProperty('--dash-accent', currentArtist.accent);
-        document.documentElement.style.setProperty('--dash-accent-light', currentArtist.accentLight);
-
-        // Update input focus color dynamically
-        const style = document.createElement('style');
-        style.textContent = `
-            input:focus, textarea:focus, select:focus {
-                border-color: ${currentArtist.accent} !important;
-                box-shadow: 0 0 0 2px ${currentArtist.accent}26 !important;
-            }
-            .sidebar-link.active { border-left-color: ${currentArtist.accent} !important; }
-        `;
-        document.head.appendChild(style);
-
-        // Hide login, show dashboard
-        document.getElementById('loginScreen').classList.add('hidden');
-        document.getElementById('dashboardShell').classList.remove('hidden');
-
-        populateDashboard();
+    // Latest capture
+    if (data.length > 0 && data[0].created_at) {
+      const d = new Date(data[0].created_at);
+      document.getElementById('stat-latest-capture').textContent = d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+    } else {
+      document.getElementById('stat-latest-capture').textContent = 'N/A';
     }
 
-    function logout() {
-        localStorage.removeItem('apex_portal_session');
-        currentArtist = null;
-        document.getElementById('loginScreen').classList.remove('hidden');
-        document.getElementById('dashboardShell').classList.add('hidden');
-        document.getElementById('loginEmail').value = '';
-        document.getElementById('loginPassword').value = '';
-        switchView('dashboard');
+    // QR scans today
+    const today = new Date().toISOString().split('T')[0];
+    const todayScans = data.filter(d => {
+      if (!d.created_at) return false;
+      const mp = typeof d.mood_preference === 'string' ? JSON.parse(d.mood_preference || '{}') : (d.mood_preference || {});
+      return d.created_at.startsWith(today) && (d.source === 'qr' || mp.source === 'qr' || (d.source && d.source.includes('qr')));
+    });
+    document.getElementById('stat-qr-today').textContent = todayScans.length;
+  } catch(err) {
+    console.error('Dashboard stats error:', err);
+  }
+}
+
+/* ================================================================
+   FRM
+   ================================================================ */
+async function loadFRM() {
+  const tbody = document.getElementById('frm-table-body');
+  tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;"><div class="spinner" style="margin:0 auto;"></div></td></tr>';
+
+  try {
+    const url = `${SUPABASE_URL}/rest/v1/leads_capture?artist_name=eq.${encodeURIComponent(currentArtist.name)}&order=created_at.desc`;
+    const res = await fetch(url, {
+      headers: {
+        'apikey': SERVICE_KEY,
+        'Authorization': 'Bearer ' + SERVICE_KEY
+      }
+    });
+    frmData = await res.json();
+    document.getElementById('frm-count').textContent = frmData.length + ' records';
+    renderFRMTable(frmData);
+  } catch(err) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:rgba(255,255,255,0.3);">Error loading data.</td></tr>';
+    console.error('FRM error:', err);
+  }
+}
+
+function renderFRMTable(data) {
+  const tbody = document.getElementById('frm-table-body');
+  if (!data.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:rgba(255,255,255,0.3);">No fan data yet.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = data.map(row => {
+    const mp = typeof row.mood_preference === 'string' ? JSON.parse(row.mood_preference || '{}') : (row.mood_preference || {});
+    const name = mp.name || mp.fan_name || '—';
+    const phone = mp.phone || mp.telefono || '—';
+    const title = mp.title || mp.song_title || mp.mood || '—';
+    const fanId = mp.fan_id || row.id || '—';
+
+    // Device detection
+    const ua = mp.user_agent || mp.userAgent || '';
+    let device = 'Desktop';
+    if (/iPhone|iPad/i.test(ua)) device = 'iPhone';
+    else if (/Android/i.test(ua)) device = 'Android';
+
+    const source = row.source || mp.source || '—';
+
+    let dateStr = '—';
+    if (row.created_at) {
+      const d = new Date(row.created_at);
+      dateStr = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' }) + ' ' + d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
     }
 
-    // ================================================================
-    // DASHBOARD POPULATION
-    // ================================================================
-    function populateDashboard() {
-        const a = currentArtist;
-        const baseUrl = 'apexmusiclatino.com';
-        const epkPath = `/genre/${a.genre}/${a.slug}/`;
-        const gatePath = `/genre/${a.genre}/${a.slug}/?qr=1`;
-        const epkUrl = baseUrl + epkPath;
-        const gateUrl = baseUrl + gatePath;
+    return `<tr>
+      <td style="font-family:monospace;font-size:11px;color:rgba(255,255,255,0.35);">${String(fanId).substring(0,8)}</td>
+      <td style="font-weight:500;color:#fff;">${escHtml(name)}</td>
+      <td>${escHtml(row.email || '—')}</td>
+      <td>${escHtml(phone)}</td>
+      <td>${escHtml(title)}</td>
+      <td><span class="badge" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);">${device}</span></td>
+      <td>${escHtml(source)}</td>
+      <td style="white-space:nowrap;">${dateStr}</td>
+    </tr>`;
+  }).join('');
+}
 
-        // Top bar
-        document.getElementById('topbarAvatar').textContent = a.initials;
-        document.getElementById('topbarName').textContent = a.name;
+function filterFRM() {
+  const q = document.getElementById('frm-search').value.toLowerCase();
+  if (!q) { renderFRMTable(frmData); return; }
+  const filtered = frmData.filter(row => {
+    const mp = typeof row.mood_preference === 'string' ? JSON.parse(row.mood_preference || '{}') : (row.mood_preference || {});
+    const searchable = [row.email, mp.name, mp.fan_name, mp.phone, mp.telefono, mp.title, mp.song_title, row.source].join(' ').toLowerCase();
+    return searchable.includes(q);
+  });
+  renderFRMTable(filtered);
+}
 
-        // Dashboard welcome
-        document.getElementById('dashWelcomeName').textContent = a.name;
+function escHtml(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
 
-        // Stats
-        document.getElementById('statFans').textContent = a.stats.fans;
-        document.getElementById('statStreams').textContent = a.stats.streams;
-        document.getElementById('statEngagement').textContent = a.stats.engagement;
-        document.getElementById('statLeads').textContent = a.stats.leads;
+/* ================================================================
+   QR CODE / ASSETS
+   ================================================================ */
+function generateQR() {
+  const container = document.getElementById('qr-output');
+  if (!container) return;
+  container.innerHTML = '';
+  const link = `https://apexmusiclatino.com/genre/${currentArtist.genre}/${currentArtist.slug}/?qr=1`;
+  const shareInput = document.getElementById('share-link');
+  if (shareInput) shareInput.value = link;
 
-        // Links
-        document.getElementById('epkLinkText').textContent = epkUrl;
-        document.getElementById('gateLinkText').textContent = gateUrl;
-        document.getElementById('epkPreviewLink').href = epkPath;
-        document.getElementById('epkPreviewBtn').href = epkPath;
+  try {
+    new QRCode(container, {
+      text: link,
+      width: 220,
+      height: 220,
+      colorDark: '#000000',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  } catch(e) {
+    container.innerHTML = '<p style="color:#666;font-size:13px;">QR library loading...</p>';
+  }
+}
 
-        // QR view links
-        document.getElementById('qrShareLink').textContent = gateUrl;
-        document.getElementById('qrEpkLink').textContent = epkUrl;
-
-        // Generate QR codes
-        generateQr('dashQrCode', 'https://' + gateUrl, 148);
-        generateQr('qrViewCode', 'https://' + gateUrl, 200);
-
-        // EPK form
-        populateEpkForm();
-
-        // Shows
-        renderShows();
-
-        // Settings
-        document.getElementById('settingsEmail').textContent = a.email;
-        document.getElementById('settingsSlug').textContent = a.slug;
-        document.getElementById('settingsGenre').textContent = a.genre;
+function downloadQR() {
+  const canvas = document.querySelector('#qr-output canvas');
+  if (!canvas) {
+    const img = document.querySelector('#qr-output img');
+    if (img) {
+      const a = document.createElement('a');
+      a.href = img.src;
+      a.download = `qr-${currentArtist.slug}.png`;
+      a.click();
     }
+    return;
+  }
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL('image/png');
+  a.download = `qr-${currentArtist.slug}.png`;
+  a.click();
+}
 
-    // ================================================================
-    // QR CODE
-    // ================================================================
-    function generateQr(containerId, url, size) {
-        const container = document.getElementById(containerId);
-        container.innerHTML = '';
-        try {
-            new QRCode(container, {
-                text: url,
-                width: size,
-                height: size,
-                colorDark: '#000000',
-                colorLight: '#ffffff',
-                correctLevel: QRCode.CorrectLevel.M
-            });
-        } catch(e) {
-            container.innerHTML = '<p class="text-xs text-zinc-400 p-4">QR generation requires qrcode.js</p>';
-        }
-    }
+function copyLink() {
+  const input = document.getElementById('share-link');
+  navigator.clipboard.writeText(input.value).then(() => {
+    const fb = document.getElementById('copy-feedback');
+    fb.style.opacity = '1';
+    setTimeout(() => fb.style.opacity = '0', 1500);
+  });
+}
 
-    function downloadQr() {
-        const canvas = document.querySelector('#qrViewCode canvas');
-        if (!canvas) {
-            // Try img fallback
-            const img = document.querySelector('#qrViewCode img');
-            if (img) {
-                const link = document.createElement('a');
-                link.download = `apex-qr-${currentArtist.slug}.png`;
-                link.href = img.src;
-                link.click();
-            }
-            return;
-        }
-        const link = document.createElement('a');
-        link.download = `apex-qr-${currentArtist.slug}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-    }
+/* ================================================================
+   EPK EDITOR
+   ================================================================ */
+function getEPKData() {
+  const stored = localStorage.getItem('apex_artist_' + currentArtist.slug);
+  if (stored) {
+    try { return JSON.parse(stored); } catch(e) {}
+  }
+  return {
+    hero: { image_url: '', video_url: '', headline: '' },
+    stats: { fan_count: '', stream_count: '', engagement_rate: '', top_territory: '' },
+    bio: { es: '', en: '' },
+    music: [],
+    video: { url: '' },
+    links: { spotify: '', apple_music: '', youtube: '', tiktok: '', instagram: '' },
+    merch: [],
+    shows: []
+  };
+}
 
-    // ================================================================
-    // COPY TO CLIPBOARD
-    // ================================================================
-    function copyToClipboard(elementId) {
-        const text = document.getElementById(elementId).textContent;
-        navigator.clipboard.writeText(text).then(() => {
-            const btn = document.getElementById(elementId).nextElementSibling;
-            const icon = btn.querySelector('.material-symbols-outlined');
-            icon.textContent = 'check';
-            setTimeout(() => { icon.textContent = 'content_copy'; }, 1500);
-        });
-    }
+function saveEPKData(data) {
+  localStorage.setItem('apex_artist_' + currentArtist.slug, JSON.stringify(data));
+}
 
-    // ================================================================
-    // VIEW SWITCHING
-    // ================================================================
-    function switchView(view) {
-        document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-        document.getElementById('view-' + view).classList.add('active');
-        document.querySelector(`[data-view="${view}"]`).classList.add('active');
-    }
+function renderEPKEditor() {
+  const data = getEPKData();
+  const container = document.getElementById('epk-sections');
 
-    // ================================================================
-    // EPK FORM
-    // ================================================================
-    function populateEpkForm() {
-        const a = currentArtist;
-        document.getElementById('epkBioEn').value = a.bio_en || '';
-        document.getElementById('epkBioEs').value = a.bio_es || '';
-        document.getElementById('epkProfileImg').value = a.profileImg || '';
-        document.getElementById('epkBannerImg').value = a.bannerImg || '';
-        document.getElementById('epkVideo').value = a.video || '';
-        document.getElementById('epkInstagram').value = (a.socials && a.socials.instagram) || '';
-        document.getElementById('epkSpotify').value = (a.socials && a.socials.spotify) || '';
-        document.getElementById('epkYoutube').value = (a.socials && a.socials.youtube) || '';
-        document.getElementById('epkTiktok').value = (a.socials && a.socials.tiktok) || '';
+  container.innerHTML = `
+    <!-- Hero Banner -->
+    <div class="epk-section" id="epk-hero">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div><h4>Hero Banner</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Main visual for the EPK page</p></div>
+        <button class="epk-btn" onclick="toggleEPKSection('hero')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
+      </div>
+      <div id="epk-hero-editor" style="display:none;">
+        <div style="display:grid;gap:10px;">
+          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Image URL</label><input class="epk-input" id="epk-hero-image" value="${escAttr(data.hero.image_url)}" onchange="onEPKChange()" /></div>
+          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Video URL</label><input class="epk-input" id="epk-hero-video" value="${escAttr(data.hero.video_url)}" onchange="onEPKChange()" /></div>
+          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Headline</label><input class="epk-input" id="epk-hero-headline" value="${escAttr(data.hero.headline)}" onchange="onEPKChange()" /></div>
+        </div>
+      </div>
+    </div>
 
-        // Image previews
-        updateImagePreview('epkProfileImg', 'epkProfilePreviewImg');
-        updateImagePreview('epkBannerImg', 'epkBannerPreviewImg');
+    <!-- Stats -->
+    <div class="epk-section" id="epk-stats">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div><h4>Stats</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Public metrics displayed on EPK</p></div>
+        <button class="epk-btn" onclick="toggleEPKSection('stats')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
+      </div>
+      <div id="epk-stats-editor" style="display:none;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Fan Count</label><input class="epk-input" id="epk-stats-fans" value="${escAttr(data.stats.fan_count)}" onchange="onEPKChange()" /></div>
+          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Stream Count</label><input class="epk-input" id="epk-stats-streams" value="${escAttr(data.stats.stream_count)}" onchange="onEPKChange()" /></div>
+          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Engagement Rate</label><input class="epk-input" id="epk-stats-engagement" value="${escAttr(data.stats.engagement_rate)}" onchange="onEPKChange()" /></div>
+          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Top Territory</label><input class="epk-input" id="epk-stats-territory" value="${escAttr(data.stats.top_territory)}" onchange="onEPKChange()" /></div>
+        </div>
+      </div>
+    </div>
 
-        // Listen for preview updates
-        document.getElementById('epkProfileImg').addEventListener('input', () => updateImagePreview('epkProfileImg', 'epkProfilePreviewImg'));
-        document.getElementById('epkBannerImg').addEventListener('input', () => updateImagePreview('epkBannerImg', 'epkBannerPreviewImg'));
+    <!-- Bio -->
+    <div class="epk-section" id="epk-bio">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div><h4>Bio</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Biography in Spanish and English</p></div>
+        <button class="epk-btn" onclick="toggleEPKSection('bio')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
+      </div>
+      <div id="epk-bio-editor" style="display:none;">
+        <div style="display:grid;gap:10px;">
+          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Bio (Espa&ntilde;ol)</label><textarea class="epk-textarea" id="epk-bio-es" onchange="onEPKChange()">${escHtml(data.bio.es)}</textarea></div>
+          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Bio (English)</label><textarea class="epk-textarea" id="epk-bio-en" onchange="onEPKChange()">${escHtml(data.bio.en)}</textarea></div>
+        </div>
+      </div>
+    </div>
 
-        // Releases
-        renderReleases();
-        // Merch
-        renderMerch();
-    }
+    <!-- Music / Discografia -->
+    <div class="epk-section" id="epk-music">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div><h4>M&uacute;sica / Discograf&iacute;a</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Albums, singles, and EPs</p></div>
+        <div style="display:flex;gap:8px;">
+          <button class="epk-btn" onclick="addMusicItem()"><span class="material-symbols-outlined" style="font-size:16px;">add</span> Add</button>
+          <button class="epk-btn" onclick="toggleEPKSection('music')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
+        </div>
+      </div>
+      <div id="epk-music-editor" style="display:none;">
+        <div id="epk-music-list"></div>
+      </div>
+    </div>
 
-    function updateImagePreview(inputId, imgId) {
-        const url = document.getElementById(inputId).value;
-        const img = document.getElementById(imgId);
-        if (url) {
-            img.src = url;
-            img.classList.remove('hidden');
-        } else {
-            img.classList.add('hidden');
-        }
-    }
+    <!-- Video Oficial -->
+    <div class="epk-section" id="epk-video">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div><h4>Video Oficial</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Featured music video</p></div>
+        <button class="epk-btn" onclick="toggleEPKSection('video')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
+      </div>
+      <div id="epk-video-editor" style="display:none;">
+        <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Video URL</label><input class="epk-input" id="epk-video-url" value="${escAttr(data.video.url)}" onchange="onEPKChange()" /></div>
+      </div>
+    </div>
 
-    function renderReleases() {
-        const container = document.getElementById('epkReleases');
-        const releases = currentArtist.releases || [];
-        container.innerHTML = releases.map((r, i) => `
-            <div class="flex items-center gap-3">
-                <input type="text" value="${escHtml(r.title)}" data-release-title="${i}" class="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Title"/>
-                <input type="text" value="${escHtml(r.url || '')}" data-release-url="${i}" class="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Streaming URL"/>
-                <input type="text" value="${escHtml(r.year || '')}" data-release-year="${i}" class="w-20 bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Year"/>
-                <button onclick="removeRelease(${i})" class="text-zinc-600 hover:text-red-400 transition-colors">
-                    <span class="material-symbols-outlined text-lg">close</span>
-                </button>
-            </div>
-        `).join('');
-    }
+    <!-- Smart Links -->
+    <div class="epk-section" id="epk-links">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div><h4>Smart Links</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Your social and streaming profiles</p></div>
+        <button class="epk-btn" onclick="toggleEPKSection('links')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
+      </div>
+      <div id="epk-links-editor" style="display:none;">
+        <div style="display:grid;gap:10px;">
+          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Spotify</label><input class="epk-input" id="epk-link-spotify" value="${escAttr(data.links.spotify)}" onchange="onEPKChange()" /></div>
+          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Apple Music</label><input class="epk-input" id="epk-link-apple" value="${escAttr(data.links.apple_music)}" onchange="onEPKChange()" /></div>
+          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">YouTube</label><input class="epk-input" id="epk-link-youtube" value="${escAttr(data.links.youtube)}" onchange="onEPKChange()" /></div>
+          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">TikTok</label><input class="epk-input" id="epk-link-tiktok" value="${escAttr(data.links.tiktok)}" onchange="onEPKChange()" /></div>
+          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Instagram</label><input class="epk-input" id="epk-link-instagram" value="${escAttr(data.links.instagram)}" onchange="onEPKChange()" /></div>
+        </div>
+      </div>
+    </div>
 
-    function addRelease() {
-        if (!currentArtist.releases) currentArtist.releases = [];
-        currentArtist.releases.push({ title: '', url: '', year: '' });
-        renderReleases();
-    }
+    <!-- Merch -->
+    <div class="epk-section" id="epk-merch">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div><h4>Merch</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Products and merchandise</p></div>
+        <div style="display:flex;gap:8px;">
+          <button class="epk-btn" onclick="addMerchItem()"><span class="material-symbols-outlined" style="font-size:16px;">add</span> Add</button>
+          <button class="epk-btn" onclick="toggleEPKSection('merch')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
+        </div>
+      </div>
+      <div id="epk-merch-editor" style="display:none;">
+        <div id="epk-merch-list"></div>
+      </div>
+    </div>
 
-    function removeRelease(i) {
-        currentArtist.releases.splice(i, 1);
-        renderReleases();
-    }
+    <!-- Upcoming Shows -->
+    <div class="epk-section" id="epk-shows">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div><h4>Upcoming Shows</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Concerts and events</p></div>
+        <div style="display:flex;gap:8px;">
+          <button class="epk-btn" onclick="addShowItem()"><span class="material-symbols-outlined" style="font-size:16px;">add</span> Add</button>
+          <button class="epk-btn" onclick="toggleEPKSection('shows')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
+        </div>
+      </div>
+      <div id="epk-shows-editor" style="display:none;">
+        <div id="epk-shows-list"></div>
+      </div>
+    </div>
+  `;
 
-    function renderMerch() {
-        const container = document.getElementById('epkMerch');
-        const merch = currentArtist.merch || [];
-        container.innerHTML = merch.length === 0
-            ? '<p class="text-xs text-zinc-600">No merch items yet.</p>'
-            : merch.map((m, i) => `
-                <div class="flex items-center gap-3">
-                    <input type="text" value="${escHtml(m.name || '')}" data-merch-name="${i}" class="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Item name"/>
-                    <input type="text" value="${escHtml(m.price || '')}" data-merch-price="${i}" class="w-24 bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Price"/>
-                    <input type="url" value="${escHtml(m.url || '')}" data-merch-url="${i}" class="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Image URL"/>
-                    <button onclick="removeMerch(${i})" class="text-zinc-600 hover:text-red-400 transition-colors">
-                        <span class="material-symbols-outlined text-lg">close</span>
-                    </button>
-                </div>
-            `).join('');
-    }
+  renderMusicItems(data);
+  renderMerchItems(data);
+  renderShowItems(data);
+}
 
-    function addMerch() {
-        if (!currentArtist.merch) currentArtist.merch = [];
-        currentArtist.merch.push({ name: '', price: '', url: '' });
-        renderMerch();
-    }
+function toggleEPKSection(section) {
+  const editor = document.getElementById('epk-' + section + '-editor');
+  editor.style.display = editor.style.display === 'none' ? 'block' : 'none';
+}
 
-    function removeMerch(i) {
-        currentArtist.merch.splice(i, 1);
-        renderMerch();
-    }
+function onEPKChange() {
+  const data = {
+    hero: {
+      image_url: gv('epk-hero-image'),
+      video_url: gv('epk-hero-video'),
+      headline: gv('epk-hero-headline')
+    },
+    stats: {
+      fan_count: gv('epk-stats-fans'),
+      stream_count: gv('epk-stats-streams'),
+      engagement_rate: gv('epk-stats-engagement'),
+      top_territory: gv('epk-stats-territory')
+    },
+    bio: {
+      es: gv('epk-bio-es'),
+      en: gv('epk-bio-en')
+    },
+    music: collectMusicItems(),
+    video: { url: gv('epk-video-url') },
+    links: {
+      spotify: gv('epk-link-spotify'),
+      apple_music: gv('epk-link-apple'),
+      youtube: gv('epk-link-youtube'),
+      tiktok: gv('epk-link-tiktok'),
+      instagram: gv('epk-link-instagram')
+    },
+    merch: collectMerchItems(),
+    shows: collectShowItems()
+  };
+  saveEPKData(data);
+}
 
-    function saveEpk() {
-        // Gather form data
-        const data = {
-            bio_en: document.getElementById('epkBioEn').value,
-            bio_es: document.getElementById('epkBioEs').value,
-            profileImg: document.getElementById('epkProfileImg').value,
-            bannerImg: document.getElementById('epkBannerImg').value,
-            video: document.getElementById('epkVideo').value,
-            socials: {
-                instagram: document.getElementById('epkInstagram').value,
-                spotify: document.getElementById('epkSpotify').value,
-                youtube: document.getElementById('epkYoutube').value,
-                tiktok: document.getElementById('epkTiktok').value
-            },
-            releases: [],
-            merch: [],
-            shows: currentArtist.shows || []
-        };
+function gv(id) {
+  const el = document.getElementById(id);
+  return el ? el.value : '';
+}
 
-        // Releases
-        document.querySelectorAll('[data-release-title]').forEach((el, i) => {
-            data.releases.push({
-                title: el.value,
-                url: document.querySelector(`[data-release-url="${i}"]`).value,
-                year: document.querySelector(`[data-release-year="${i}"]`).value
-            });
-        });
+function escAttr(s) { return (s || '').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
 
-        // Merch
-        document.querySelectorAll('[data-merch-name]').forEach((el, i) => {
-            data.merch.push({
-                name: el.value,
-                price: document.querySelector(`[data-merch-price="${i}"]`).value,
-                url: document.querySelector(`[data-merch-url="${i}"]`).value
-            });
-        });
+/* Music repeatable */
+function renderMusicItems(data) {
+  const list = document.getElementById('epk-music-list');
+  if (!list) return;
+  list.innerHTML = (data.music || []).map((m, i) => `
+    <div class="repeatable-item">
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px 1fr auto;gap:8px;align-items:end;">
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Title</label><input class="epk-input music-title" value="${escAttr(m.title)}" onchange="onEPKChange()" /></div>
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Type</label><input class="epk-input music-type" value="${escAttr(m.type)}" onchange="onEPKChange()" /></div>
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Year</label><input class="epk-input music-year" value="${escAttr(m.year)}" onchange="onEPKChange()" /></div>
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Spotify URL</label><input class="epk-input music-spotify" value="${escAttr(m.spotify_url)}" onchange="onEPKChange()" /></div>
+        <button class="epk-btn" style="height:34px;" onclick="removeMusicItem(${i})"><span class="material-symbols-outlined" style="font-size:16px;">delete</span></button>
+      </div>
+    </div>
+  `).join('');
+}
 
-        localStorage.setItem('apex_artist_' + currentArtist.slug, JSON.stringify(data));
+function collectMusicItems() {
+  const items = [];
+  const titles = document.querySelectorAll('.music-title');
+  titles.forEach((el, i) => {
+    items.push({
+      title: el.value,
+      type: document.querySelectorAll('.music-type')[i]?.value || '',
+      year: document.querySelectorAll('.music-year')[i]?.value || '',
+      spotify_url: document.querySelectorAll('.music-spotify')[i]?.value || ''
+    });
+  });
+  return items;
+}
 
-        // Update in-memory
-        Object.assign(currentArtist, data);
+function addMusicItem() {
+  const data = getEPKData();
+  data.music.push({ title: '', type: '', year: '', spotify_url: '' });
+  saveEPKData(data);
+  renderMusicItems(data);
+  document.getElementById('epk-music-editor').style.display = 'block';
+}
 
-        // Show save message
-        const msg = document.getElementById('epkSaveMsg');
-        msg.classList.remove('hidden');
-        setTimeout(() => msg.classList.add('hidden'), 3000);
-    }
+function removeMusicItem(i) {
+  const data = getEPKData();
+  data.music.splice(i, 1);
+  saveEPKData(data);
+  renderMusicItems(data);
+}
 
-    // ================================================================
-    // SHOWS
-    // ================================================================
-    function renderShows() {
-        const shows = currentArtist.shows || [];
-        const container = document.getElementById('showsList');
-        const empty = document.getElementById('showsEmpty');
+/* Merch repeatable */
+function renderMerchItems(data) {
+  const list = document.getElementById('epk-merch-list');
+  if (!list) return;
+  list.innerHTML = (data.merch || []).map((m, i) => `
+    <div class="repeatable-item">
+      <div style="display:grid;grid-template-columns:1fr 100px 1fr auto;gap:8px;align-items:end;">
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Name</label><input class="epk-input merch-name" value="${escAttr(m.name)}" onchange="onEPKChange()" /></div>
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Price</label><input class="epk-input merch-price" value="${escAttr(m.price)}" onchange="onEPKChange()" /></div>
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Image URL</label><input class="epk-input merch-image" value="${escAttr(m.image_url)}" onchange="onEPKChange()" /></div>
+        <button class="epk-btn" style="height:34px;" onclick="removeMerchItem(${i})"><span class="material-symbols-outlined" style="font-size:16px;">delete</span></button>
+      </div>
+    </div>
+  `).join('');
+}
 
-        if (shows.length === 0) {
-            container.innerHTML = '';
-            empty.classList.remove('hidden');
-            return;
-        }
+function collectMerchItems() {
+  const items = [];
+  const names = document.querySelectorAll('.merch-name');
+  names.forEach((el, i) => {
+    items.push({
+      name: el.value,
+      price: document.querySelectorAll('.merch-price')[i]?.value || '',
+      image_url: document.querySelectorAll('.merch-image')[i]?.value || ''
+    });
+  });
+  return items;
+}
 
-        empty.classList.add('hidden');
-        container.innerHTML = shows.sort((a, b) => a.date > b.date ? 1 : -1).map((s, i) => {
-            const dateStr = s.date ? new Date(s.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'TBD';
-            return `
-                <div class="glass-card rounded-xl p-5 border border-white/[0.04] flex items-center justify-between gap-4">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-xl flex items-center justify-center text-xs font-bold font-headline" style="background: ${currentArtist.accent}15; color: ${currentArtist.accent};">
-                            ${dateStr.split(' ')[0]}<br>${dateStr.split(' ')[1]?.replace(',','')}
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium text-zinc-200">${escHtml(s.venue)}</p>
-                            <p class="text-xs text-zinc-500">${escHtml(s.city)} &middot; ${dateStr}</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        ${s.ticketUrl ? `<a href="${escHtml(s.ticketUrl)}" target="_blank" class="text-xs px-3 py-1.5 rounded-lg border border-white/[0.08] text-zinc-400 hover:text-white transition-colors">Tickets</a>` : ''}
-                        <button onclick="removeShow(${i})" class="text-zinc-700 hover:text-red-400 transition-colors">
-                            <span class="material-symbols-outlined text-lg">delete</span>
-                        </button>
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
+function addMerchItem() {
+  const data = getEPKData();
+  data.merch.push({ name: '', price: '', image_url: '' });
+  saveEPKData(data);
+  renderMerchItems(data);
+  document.getElementById('epk-merch-editor').style.display = 'block';
+}
 
-    function addShow() {
-        const venue = document.getElementById('showVenue').value.trim();
-        const city = document.getElementById('showCity').value.trim();
-        const date = document.getElementById('showDate').value;
-        const ticketUrl = document.getElementById('showTicketUrl').value.trim();
+function removeMerchItem(i) {
+  const data = getEPKData();
+  data.merch.splice(i, 1);
+  saveEPKData(data);
+  renderMerchItems(data);
+}
 
-        if (!venue || !city) return;
+/* Shows repeatable */
+function renderShowItems(data) {
+  const list = document.getElementById('epk-shows-list');
+  if (!list) return;
+  list.innerHTML = (data.shows || []).map((s, i) => `
+    <div class="repeatable-item">
+      <div style="display:grid;grid-template-columns:1fr 1fr 120px 1fr auto;gap:8px;align-items:end;">
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Venue</label><input class="epk-input show-venue" value="${escAttr(s.venue)}" onchange="onEPKChange()" /></div>
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">City</label><input class="epk-input show-city" value="${escAttr(s.city)}" onchange="onEPKChange()" /></div>
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Date</label><input class="epk-input show-date" type="date" value="${escAttr(s.date)}" onchange="onEPKChange()" /></div>
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Ticket URL</label><input class="epk-input show-ticket" value="${escAttr(s.ticket_url)}" onchange="onEPKChange()" /></div>
+        <button class="epk-btn" style="height:34px;" onclick="removeShowItem(${i})"><span class="material-symbols-outlined" style="font-size:16px;">delete</span></button>
+      </div>
+    </div>
+  `).join('');
+}
 
-        if (!currentArtist.shows) currentArtist.shows = [];
-        currentArtist.shows.push({ venue, city, date, ticketUrl });
+function collectShowItems() {
+  const items = [];
+  const venues = document.querySelectorAll('.show-venue');
+  venues.forEach((el, i) => {
+    items.push({
+      venue: el.value,
+      city: document.querySelectorAll('.show-city')[i]?.value || '',
+      date: document.querySelectorAll('.show-date')[i]?.value || '',
+      ticket_url: document.querySelectorAll('.show-ticket')[i]?.value || ''
+    });
+  });
+  return items;
+}
 
-        // Save to localStorage
-        saveShowsToStorage();
-        renderShows();
+function addShowItem() {
+  const data = getEPKData();
+  data.shows.push({ venue: '', city: '', date: '', ticket_url: '' });
+  saveEPKData(data);
+  renderShowItems(data);
+  document.getElementById('epk-shows-editor').style.display = 'block';
+}
 
-        // Clear form
-        document.getElementById('showVenue').value = '';
-        document.getElementById('showCity').value = '';
-        document.getElementById('showDate').value = '';
-        document.getElementById('showTicketUrl').value = '';
-    }
+function removeShowItem(i) {
+  const data = getEPKData();
+  data.shows.splice(i, 1);
+  saveEPKData(data);
+  renderShowItems(data);
+}
 
-    function removeShow(i) {
-        currentArtist.shows.splice(i, 1);
-        saveShowsToStorage();
-        renderShows();
-    }
+function previewEPK() {
+  const url = `/genre/${currentArtist.genre}/${currentArtist.slug}/`;
+  window.open(url, '_blank');
+}
 
-    function saveShowsToStorage() {
-        const key = 'apex_artist_' + currentArtist.slug;
-        let data = {};
-        try { data = JSON.parse(localStorage.getItem(key) || '{}'); } catch(e) {}
-        data.shows = currentArtist.shows;
-        localStorage.setItem(key, JSON.stringify(data));
-    }
-
-    // ================================================================
-    // SETTINGS
-    // ================================================================
-    function clearLocalData() {
-        if (confirm('Are you sure? This will clear all your locally saved data.')) {
-            localStorage.removeItem('apex_artist_' + currentArtist.slug);
-            alert('Local data cleared. Reloading...');
-            location.reload();
-        }
-    }
-
-    // ================================================================
-    // UTILS
-    // ================================================================
-    function escHtml(str) {
-        const div = document.createElement('div');
-        div.textContent = str || '';
-        return div.innerHTML;
-    }
-
-    // ================================================================
-    // INIT
-    // ================================================================
-    checkSession();
-    </script>
+/* ================================================================
+   INIT
+   ================================================================ */
+checkSession();
+</script>
 </body>
 </html>
