@@ -116,11 +116,21 @@
 <!-- LEAD CAPTURE GATE OVERLAY                    -->
 <!-- ============================================ -->
 <div id="arcoiris-gate" class="fixed inset-0 z-[999] flex items-center justify-center p-4 md:p-8" style="display:none;">
-  <!-- Blurred background image -->
-  <div class="absolute inset-0 z-0">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvyGjUrcUbBZ5FJXLDLpGZdllaZEswCQNhLIQP7RNuipdEk3Di3-GXlZ8jsDevnl9u-_4YIAD4eZoHB1QiVoALucNd3jl8vf005Do0Sb7d1Ee57YgO1hlkK_XNe_5fsMic9mtRlUs27HL7UPuVgjejNGgCoUtrFJX6Gk9-VDJ1mCQGfuv2OcyvHUGzh61Rq5kZExSOatPC7Lv5QvXdL4ChkC3F_3EAKqnZZEaOj0q-rEP965UL-1_FpHLEW86Qh56P8lBPg1JFvoM" alt="" class="w-full h-full object-cover scale-110" style="filter: blur(20px) brightness(0.3);" aria-hidden="true"/>
-    <div class="absolute inset-0 bg-black/70"></div>
-    <div class="absolute inset-0 bg-gradient-to-br from-[#e60000]/15 via-transparent to-[#8b0000]/10"></div>
+  <!-- Video background with parallax -->
+  <div class="absolute inset-0 z-0 overflow-hidden">
+    <video autoplay muted loop playsinline class="absolute w-full h-full object-cover scale-125" style="filter: brightness(0.25) saturate(1.3); transform: translateZ(0);" poster="https://lh3.googleusercontent.com/aida-public/AB6AXuDvyGjUrcUbBZ5FJXLDLpGZdllaZEswCQNhLIQP7RNuipdEk3Di3-GXlZ8jsDevnl9u-_4YIAD4eZoHB1QiVoALucNd3jl8vf005Do0Sb7d1Ee57YgO1hlkK_XNe_5fsMic9mtRlUs27HL7UPuVgjejNGgCoUtrFJX6Gk9-VDJ1mCQGfuv2OcyvHUGzh61Rq5kZExSOatPC7Lv5QvXdL4ChkC3F_3EAKqnZZEaOj0q-rEP965UL-1_FpHLEW86Qh56P8lBPg1JFvoM">
+        <source src="https://cdn.coverr.co/videos/coverr-couple-dancing-tango-1584/1080p.mp4" type="video/mp4">
+    </video>
+    <!-- Fallback image (shows if video fails) -->
+    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvyGjUrcUbBZ5FJXLDLpGZdllaZEswCQNhLIQP7RNuipdEk3Di3-GXlZ8jsDevnl9u-_4YIAD4eZoHB1QiVoALucNd3jl8vf005Do0Sb7d1Ee57YgO1hlkK_XNe_5fsMic9mtRlUs27HL7UPuVgjejNGgCoUtrFJX6Gk9-VDJ1mCQGfuv2OcyvHUGzh61Rq5kZExSOatPC7Lv5QvXdL4ChkC3F_3EAKqnZZEaOj0q-rEP965UL-1_FpHLEW86Qh56P8lBPg1JFvoM" alt="" class="absolute w-full h-full object-cover" style="filter: brightness(0.2) blur(3px);" aria-hidden="true"/>
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-[#e60000]/20 via-transparent to-[#8b0000]/15"></div>
+    <!-- Animated crimson light streaks -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute w-96 h-96 rounded-full opacity-10" style="background: radial-gradient(circle, #e60000, transparent 70%); top: -10%; right: -10%; animation: float-slow 8s ease-in-out infinite;"></div>
+        <div class="absolute w-64 h-64 rounded-full opacity-10" style="background: radial-gradient(circle, #8b0000, transparent 70%); bottom: -5%; left: -5%; animation: float-slow 12s ease-in-out infinite reverse;"></div>
+    </div>
   </div>
 
   <!-- Gate card -->
@@ -218,6 +228,10 @@
   }
   #arcoiris-gate .animate-float {
     animation: gate-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes float-slow {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, -20px) scale(1.1); }
   }
   #arcoiris-gate.gate-closing {
     animation: gate-fade-out 0.5s ease-out forwards;
@@ -381,6 +395,17 @@
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 })();
+
+// Parallax mouse effect on gate video
+document.addEventListener('mousemove', function(e) {
+    var gate = document.getElementById('arcoiris-gate');
+    if (!gate || gate.style.display === 'none') return;
+    var video = gate.querySelector('video');
+    if (!video) return;
+    var x = (e.clientX / window.innerWidth - 0.5) * 20;
+    var y = (e.clientY / window.innerHeight - 0.5) * 20;
+    video.style.transform = 'scale(1.25) translate(' + x + 'px, ' + y + 'px)';
+});
 </script>
 
 <!-- TopNavBar -->
