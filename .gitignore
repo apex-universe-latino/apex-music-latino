@@ -2,3 +2,4 @@
 .env
 Artistas/*.mp4
 *.mp4
+.tmp/
