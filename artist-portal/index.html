@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Artist Portal | Apex Music Latino</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="/css/themes.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; }
+        .font-headline { font-family: 'Space Grotesk', sans-serif; }
+
+        /* Animated gradient background for login */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .login-bg {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 25%, #0a0a1a 50%, #1a0505 75%, #0a0a0a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        /* Glass card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* Genre color themes */
+        :root {
+            --accent-tango: #DC2626;
+            --accent-tango-light: #F87171;
+            --accent-rap: #06B6D4;
+            --accent-rap-light: #67E8F9;
+            --accent-reggaeton: #EC4899;
+            --accent-reggaeton-light: #F9A8D4;
+            --accent-login: #DC2626;
+            --accent-login-light: #F87171;
+        }
+
+        .btn-gradient-login {
+            background: linear-gradient(135deg, #DC2626, #991B1B);
+        }
+        .btn-gradient-login:hover {
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+        }
+
+        /* Sidebar */
+        .sidebar-link {
+            transition: all 0.2s ease;
+        }
+        .sidebar-link:hover, .sidebar-link.active {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .sidebar-link.active {
+            border-left: 3px solid var(--dash-accent, #DC2626);
+        }
+
+        /* Stat card hover */
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Copyable URL */
+        .copy-btn:active { transform: scale(0.95); }
+
+        /* Dot grid overlay */
+        .dot-grid {
+            background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+        /* Tooltip */
+        .tooltip-trigger:hover .tooltip-content { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .tooltip-content { opacity: 0; pointer-events: none; transform: translateY(4px); transition: all 0.2s ease; }
+
+        /* Fade transitions */
+        .view-section { display: none; animation: fadeIn 0.3s ease; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Input focus ring per genre */
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--dash-accent, #DC2626) !important;
+            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-black text-white overflow-x-hidden min-h-screen">
+
+    <!-- ============================================================ -->
+    <!-- LOGIN SCREEN -->
+    <!-- ============================================================ -->
+    <div id="loginScreen" class="login-bg fixed inset-0 z-50 flex items-center justify-center">
+        <div class="dot-grid absolute inset-0 z-0"></div>
+
+        <!-- Ambient glow -->
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-10" style="background: radial-gradient(circle, #DC2626 0%, transparent 70%);"></div>
+
+        <div class="relative z-10 w-full max-w-md px-6">
+            <div class="glass-card rounded-2xl p-10">
+                <!-- Logo -->
+                <div class="text-center mb-10">
+                    <h1 class="font-headline text-3xl font-bold tracking-tighter mb-1">Apex Music Latino</h1>
+                    <p class="text-sm text-zinc-500 tracking-widest uppercase font-headline">Artist Portal</p>
+                </div>
+
+                <!-- Error -->
+                <div id="loginError" class="hidden mb-6 px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center">
+                    Invalid email or password. Try again.
+                </div>
+
+                <!-- Form -->
+                <form id="loginForm" class="space-y-5" onsubmit="return false;">
+                    <div>
+                        <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Email</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-600 text-xl">mail</span>
+                            <input id="loginEmail" type="email" placeholder="artist@apexmusiclatino.com"
+                                class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl py-3.5 pl-11 pr-4 text-white placeholder-zinc-600 text-sm"/>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Password</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-600 text-xl">lock</span>
+                            <input id="loginPassword" type="password" placeholder="Enter your password"
+                                class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl py-3.5 pl-11 pr-4 text-white placeholder-zinc-600 text-sm"/>
+                        </div>
+                    </div>
+                    <button type="submit" id="loginBtn"
+                        class="w-full btn-gradient-login text-white font-bold py-3.5 rounded-xl font-headline tracking-wide text-sm transition-all hover:shadow-lg hover:shadow-red-900/20">
+                        Sign In
+                    </button>
+                </form>
+
+                <!-- Forgot password -->
+                <div class="text-center mt-6 relative tooltip-trigger inline-block w-full">
+                    <button class="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">Forgot password?</button>
+                    <div class="tooltip-content absolute left-1/2 -translate-x-1/2 mt-2 px-4 py-2 rounded-lg bg-zinc-800 text-zinc-300 text-xs whitespace-nowrap border border-zinc-700">
+                        Contact your manager for password reset
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="mt-8 pt-6 border-t border-white/[0.04] text-center">
+                    <p class="text-[11px] text-zinc-700">Powered by CUBO Intelligence</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- DASHBOARD (hidden until login) -->
+    <!-- ============================================================ -->
+    <div id="dashboardShell" class="hidden min-h-screen bg-[#0a0a0a]">
+
+        <!-- Top Bar -->
+        <header class="fixed top-0 left-0 right-0 z-40 h-16 bg-[#111111]/80 backdrop-blur-xl border-b border-white/[0.04] flex items-center justify-between px-6">
+            <div class="flex items-center gap-3">
+                <a href="/" class="font-headline text-lg font-bold tracking-tighter text-zinc-400 hover:text-white transition-colors">Apex Music Latino</a>
+                <span class="text-zinc-700">/</span>
+                <span class="font-headline text-sm text-zinc-500">Artist Portal</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <div id="topbarAvatar" class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-sm font-bold font-headline" style="color: var(--dash-accent, #DC2626);"></div>
+                    <span id="topbarName" class="text-sm font-medium text-zinc-300 hidden sm:inline"></span>
+                </div>
+                <button onclick="logout()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-zinc-500 hover:text-white hover:bg-white/[0.04] transition-all">
+                    <span class="material-symbols-outlined text-base">logout</span>
+                    <span class="hidden sm:inline">Sign Out</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="flex pt-16">
+            <!-- Sidebar -->
+            <aside class="fixed left-0 top-16 bottom-0 w-[250px] bg-[#0d0d0d] border-r border-white/[0.04] flex flex-col justify-between py-6 overflow-y-auto z-30">
+                <nav class="space-y-1 px-3">
+                    <button onclick="switchView('dashboard')" data-view="dashboard" class="sidebar-link active w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-zinc-400 hover:text-white">
+                        <span class="material-symbols-outlined text-xl">dashboard</span>
+                        Dashboard
+                    </button>
+                    <button onclick="switchView('epk')" data-view="epk" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-zinc-400 hover:text-white">
+                        <span class="material-symbols-outlined text-xl">person</span>
+                        My EPK
+                    </button>
+                    <button onclick="switchView('qr')" data-view="qr" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-zinc-400 hover:text-white">
+                        <span class="material-symbols-outlined text-xl">qr_code_2</span>
+                        QR Codes
+                    </button>
+                    <button onclick="switchView('fans')" data-view="fans" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-zinc-400 hover:text-white">
+                        <span class="material-symbols-outlined text-xl">group</span>
+                        Fan Data
+                    </button>
+                    <button onclick="switchView('shows')" data-view="shows" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-zinc-400 hover:text-white">
+                        <span class="material-symbols-outlined text-xl">event</span>
+                        Shows &amp; Events
+                    </button>
+                    <button onclick="switchView('settings')" data-view="settings" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-zinc-400 hover:text-white">
+                        <span class="material-symbols-outlined text-xl">settings</span>
+                        Settings
+                    </button>
+                </nav>
+                <div class="px-6 pt-4 border-t border-white/[0.04]">
+                    <p class="text-[10px] text-zinc-700 tracking-wider uppercase">Apex Artist OS v1.0</p>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="ml-[250px] flex-1 p-8 min-h-[calc(100vh-4rem)]">
+
+                <!-- ========== DASHBOARD VIEW ========== -->
+                <section id="view-dashboard" class="view-section active">
+                    <div class="mb-8">
+                        <h2 class="font-headline text-3xl font-bold tracking-tight mb-1">Bienvenido, <span id="dashWelcomeName"></span></h2>
+                        <p class="text-zinc-500 text-sm">Here is your artist overview for today.</p>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                        <div class="stat-card glass-card rounded-xl p-5 border border-white/[0.04]">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-zinc-500 uppercase tracking-wider font-headline">Fans</span>
+                                <span class="material-symbols-outlined text-xl" style="color: var(--dash-accent);">favorite</span>
+                            </div>
+                            <p class="text-2xl font-bold font-headline" id="statFans">1,247</p>
+                            <p class="text-xs text-emerald-500 mt-1">+12% this month</p>
+                        </div>
+                        <div class="stat-card glass-card rounded-xl p-5 border border-white/[0.04]">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-zinc-500 uppercase tracking-wider font-headline">Streams</span>
+                                <span class="material-symbols-outlined text-xl" style="color: var(--dash-accent);">play_circle</span>
+                            </div>
+                            <p class="text-2xl font-bold font-headline" id="statStreams">48.3K</p>
+                            <p class="text-xs text-emerald-500 mt-1">+8% this month</p>
+                        </div>
+                        <div class="stat-card glass-card rounded-xl p-5 border border-white/[0.04]">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-zinc-500 uppercase tracking-wider font-headline">Engagement</span>
+                                <span class="material-symbols-outlined text-xl" style="color: var(--dash-accent);">trending_up</span>
+                            </div>
+                            <p class="text-2xl font-bold font-headline" id="statEngagement">6.2%</p>
+                            <p class="text-xs text-emerald-500 mt-1">Above average</p>
+                        </div>
+                        <div class="stat-card glass-card rounded-xl p-5 border border-white/[0.04]">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-zinc-500 uppercase tracking-wider font-headline">Leads Captured</span>
+                                <span class="material-symbols-outlined text-xl" style="color: var(--dash-accent);">contact_mail</span>
+                            </div>
+                            <p class="text-2xl font-bold font-headline" id="statLeads">89</p>
+                            <p class="text-xs text-emerald-500 mt-1">+23 this week</p>
+                        </div>
+                    </div>
+
+                    <!-- QR + Links row -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        <!-- QR Code -->
+                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                            <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">Your QR Code</h3>
+                            <div id="dashQrCode" class="flex items-center justify-center bg-white rounded-xl p-4 mb-4 mx-auto" style="width: 180px; height: 180px;"></div>
+                            <p class="text-[11px] text-zinc-600 text-center">Scan to open your fan gate</p>
+                        </div>
+
+                        <!-- EPK Link -->
+                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                            <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">Your EPK Link</h3>
+                            <div class="flex items-center gap-2 bg-white/[0.03] rounded-lg px-3 py-2.5 border border-white/[0.06] mb-4">
+                                <span id="epkLinkText" class="text-xs text-zinc-300 flex-1 truncate"></span>
+                                <button onclick="copyToClipboard('epkLinkText')" class="copy-btn text-zinc-500 hover:text-white transition-colors">
+                                    <span class="material-symbols-outlined text-lg">content_copy</span>
+                                </button>
+                            </div>
+                            <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4 mt-6">Your Gate Link</h3>
+                            <div class="flex items-center gap-2 bg-white/[0.03] rounded-lg px-3 py-2.5 border border-white/[0.06] mb-4">
+                                <span id="gateLinkText" class="text-xs text-zinc-300 flex-1 truncate"></span>
+                                <button onclick="copyToClipboard('gateLinkText')" class="copy-btn text-zinc-500 hover:text-white transition-colors">
+                                    <span class="material-symbols-outlined text-lg">content_copy</span>
+                                </button>
+                            </div>
+                            <a id="epkPreviewLink" href="#" target="_blank" class="inline-flex items-center gap-1.5 text-xs hover:underline mt-2" style="color: var(--dash-accent);">
+                                <span class="material-symbols-outlined text-sm">open_in_new</span> Preview EPK
+                            </a>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                            <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">Recent Activity</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-base text-emerald-500 mt-0.5">circle</span>
+                                    <div>
+                                        <p class="text-xs text-zinc-300">New fan lead captured</p>
+                                        <p class="text-[10px] text-zinc-600">2 hours ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-base text-blue-500 mt-0.5">circle</span>
+                                    <div>
+                                        <p class="text-xs text-zinc-300">EPK viewed 14 times</p>
+                                        <p class="text-[10px] text-zinc-600">Today</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-base text-amber-500 mt-0.5">circle</span>
+                                    <div>
+                                        <p class="text-xs text-zinc-300">QR code scanned 8 times</p>
+                                        <p class="text-[10px] text-zinc-600">Yesterday</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-base text-zinc-700 mt-0.5">circle</span>
+                                    <div>
+                                        <p class="text-xs text-zinc-300">Profile updated</p>
+                                        <p class="text-[10px] text-zinc-600">3 days ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== MY EPK VIEW ========== -->
+                <section id="view-epk" class="view-section">
+                    <div class="mb-8 flex items-center justify-between">
+                        <div>
+                            <h2 class="font-headline text-3xl font-bold tracking-tight mb-1">My EPK</h2>
+                            <p class="text-zinc-500 text-sm">Edit your electronic press kit. Changes are saved locally.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <a id="epkPreviewBtn" href="#" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/[0.08] text-sm text-zinc-400 hover:text-white hover:bg-white/[0.04] transition-all">
+                                <span class="material-symbols-outlined text-base">visibility</span> Preview My EPK
+                            </a>
+                            <button onclick="saveEpk()" class="flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-bold text-white transition-all hover:shadow-lg" style="background: var(--dash-accent);">
+                                <span class="material-symbols-outlined text-base">save</span> Save Changes
+                            </button>
+                        </div>
+                    </div>
+                    <div id="epkSaveMsg" class="hidden mb-4 px-4 py-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm">
+                        Changes saved successfully.
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Bio EN -->
+                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                            <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Bio (English)</label>
+                            <textarea id="epkBioEn" rows="5" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700 resize-none" placeholder="Tell your story in English..."></textarea>
+                        </div>
+                        <!-- Bio ES -->
+                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                            <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Bio (Espanol)</label>
+                            <textarea id="epkBioEs" rows="5" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700 resize-none" placeholder="Cuenta tu historia en espanol..."></textarea>
+                        </div>
+                        <!-- Profile Image -->
+                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                            <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Profile Image URL</label>
+                            <input id="epkProfileImg" type="url" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700 mb-3" placeholder="https://..."/>
+                            <div id="epkProfilePreview" class="w-24 h-24 rounded-full bg-zinc-900 border border-white/[0.06] overflow-hidden">
+                                <img id="epkProfilePreviewImg" src="" alt="" class="w-full h-full object-cover hidden"/>
+                            </div>
+                        </div>
+                        <!-- Banner Image -->
+                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                            <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Banner Image URL</label>
+                            <input id="epkBannerImg" type="url" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700 mb-3" placeholder="https://..."/>
+                            <div class="w-full h-24 rounded-xl bg-zinc-900 border border-white/[0.06] overflow-hidden">
+                                <img id="epkBannerPreviewImg" src="" alt="" class="w-full h-full object-cover hidden"/>
+                            </div>
+                        </div>
+                        <!-- Video URL -->
+                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                            <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Video URL</label>
+                            <input id="epkVideo" type="url" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="https://youtube.com/watch?v=..."/>
+                        </div>
+                        <!-- Social Links -->
+                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                            <label class="block text-xs text-zinc-500 uppercase tracking-wider mb-2 font-headline">Social Links</label>
+                            <div class="space-y-2">
+                                <input id="epkInstagram" type="url" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Instagram URL"/>
+                                <input id="epkSpotify" type="url" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Spotify URL"/>
+                                <input id="epkYoutube" type="url" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="YouTube URL"/>
+                                <input id="epkTiktok" type="url" class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="TikTok URL"/>
+                            </div>
+                        </div>
+                        <!-- Music Releases -->
+                        <div class="glass-card rounded-xl p-6 border border-white/[0.04] lg:col-span-2">
+                            <div class="flex items-center justify-between mb-4">
+                                <label class="text-xs text-zinc-500 uppercase tracking-wider font-headline">Music Releases</label>
+                                <button onclick="addRelease()" class="flex items-center gap-1 text-xs hover:underline" style="color: var(--dash-accent);">
+                                    <span class="material-symbols-outlined text-sm">add</span> Add Release
+                                </button>
+                            </div>
+                            <div id="epkReleases" class="space-y-3"></div>
+                        </div>
+                        <!-- Merch Items -->
+                        <div class="glass-card rounded-xl p-6 border border-white/[0.04] lg:col-span-2">
+                            <div class="flex items-center justify-between mb-4">
+                                <label class="text-xs text-zinc-500 uppercase tracking-wider font-headline">Merch Items</label>
+                                <button onclick="addMerch()" class="flex items-center gap-1 text-xs hover:underline" style="color: var(--dash-accent);">
+                                    <span class="material-symbols-outlined text-sm">add</span> Add Merch
+                                </button>
+                            </div>
+                            <div id="epkMerch" class="space-y-3"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== QR CODES VIEW ========== -->
+                <section id="view-qr" class="view-section">
+                    <div class="mb-8">
+                        <h2 class="font-headline text-3xl font-bold tracking-tight mb-1">QR Codes</h2>
+                        <p class="text-zinc-500 text-sm">Your permanent QR code links directly to your fan gate.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="glass-card rounded-xl p-8 border border-white/[0.04] flex flex-col items-center">
+                            <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-6">Fan Gate QR Code</h3>
+                            <div id="qrViewCode" class="bg-white rounded-2xl p-6 mb-6" style="width: 240px; height: 240px;"></div>
+                            <button onclick="downloadQr()" class="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white transition-all hover:shadow-lg" style="background: var(--dash-accent);">
+                                <span class="material-symbols-outlined text-base">download</span> Download PNG
+                            </button>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                                <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">Shareable Gate Link</h3>
+                                <div class="flex items-center gap-2 bg-white/[0.03] rounded-lg px-3 py-2.5 border border-white/[0.06]">
+                                    <span id="qrShareLink" class="text-xs text-zinc-300 flex-1 truncate"></span>
+                                    <button onclick="copyToClipboard('qrShareLink')" class="copy-btn text-zinc-500 hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined text-lg">content_copy</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                                <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">Direct EPK Link</h3>
+                                <div class="flex items-center gap-2 bg-white/[0.03] rounded-lg px-3 py-2.5 border border-white/[0.06]">
+                                    <span id="qrEpkLink" class="text-xs text-zinc-300 flex-1 truncate"></span>
+                                    <button onclick="copyToClipboard('qrEpkLink')" class="copy-btn text-zinc-500 hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined text-lg">content_copy</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                                <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">Short Link</h3>
+                                <div class="flex items-center gap-3 py-2">
+                                    <span class="material-symbols-outlined text-xl text-zinc-600">link</span>
+                                    <span class="text-sm text-zinc-500">Coming soon &mdash; Bitly integration</span>
+                                </div>
+                            </div>
+                            <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                                <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">Tips</h3>
+                                <ul class="space-y-2 text-xs text-zinc-500">
+                                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-0.5" style="color: var(--dash-accent);">check_circle</span> Print your QR code on flyers and merch</li>
+                                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-0.5" style="color: var(--dash-accent);">check_circle</span> Share the gate link on social media</li>
+                                    <li class="flex items-start gap-2"><span class="material-symbols-outlined text-sm mt-0.5" style="color: var(--dash-accent);">check_circle</span> Display at live shows for instant fan capture</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== FAN DATA VIEW ========== -->
+                <section id="view-fans" class="view-section">
+                    <div class="mb-8">
+                        <h2 class="font-headline text-3xl font-bold tracking-tight mb-1">Fan Data</h2>
+                        <p class="text-zinc-500 text-sm">Track every fan captured through your QR codes and gates.</p>
+                    </div>
+
+                    <div class="glass-card rounded-xl border border-white/[0.04] overflow-hidden">
+                        <!-- Placeholder state -->
+                        <div class="p-8 text-center">
+                            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs mb-6">
+                                <span class="material-symbols-outlined text-sm">cloud_sync</span>
+                                Connecting to Supabase...
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-white/[0.06]">
+                                        <th class="text-left px-6 py-3 text-xs text-zinc-500 uppercase tracking-wider font-headline font-medium">Name</th>
+                                        <th class="text-left px-6 py-3 text-xs text-zinc-500 uppercase tracking-wider font-headline font-medium">Email</th>
+                                        <th class="text-left px-6 py-3 text-xs text-zinc-500 uppercase tracking-wider font-headline font-medium">Phone</th>
+                                        <th class="text-left px-6 py-3 text-xs text-zinc-500 uppercase tracking-wider font-headline font-medium">Title</th>
+                                        <th class="text-left px-6 py-3 text-xs text-zinc-500 uppercase tracking-wider font-headline font-medium">Source</th>
+                                        <th class="text-left px-6 py-3 text-xs text-zinc-500 uppercase tracking-wider font-headline font-medium">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-zinc-600">
+                                    <tr class="border-b border-white/[0.03]">
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                    </tr>
+                                    <tr class="border-b border-white/[0.03]">
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                        <td class="px-6 py-4">&mdash;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="p-6 border-t border-white/[0.04] text-center">
+                            <p class="text-xs text-zinc-600">Run the Supabase schema to enable live data. See <code class="px-1.5 py-0.5 rounded bg-white/[0.04] text-zinc-400">/admin/</code> for setup instructions.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== SHOWS & EVENTS VIEW ========== -->
+                <section id="view-shows" class="view-section">
+                    <div class="mb-8">
+                        <h2 class="font-headline text-3xl font-bold tracking-tight mb-1">Shows &amp; Events</h2>
+                        <p class="text-zinc-500 text-sm">Manage your upcoming performances and appearances.</p>
+                    </div>
+
+                    <!-- Add Show Form -->
+                    <div class="glass-card rounded-xl p-6 border border-white/[0.04] mb-8">
+                        <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">Add a Show</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                            <input id="showVenue" type="text" class="bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Venue name"/>
+                            <input id="showCity" type="text" class="bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="City"/>
+                            <input id="showDate" type="date" class="bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700"/>
+                            <input id="showTicketUrl" type="url" class="bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Ticket URL"/>
+                        </div>
+                        <button onclick="addShow()" class="flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-bold text-white transition-all hover:shadow-lg" style="background: var(--dash-accent);">
+                            <span class="material-symbols-outlined text-base">add</span> Add Show
+                        </button>
+                    </div>
+
+                    <!-- Shows List -->
+                    <div id="showsList" class="space-y-3"></div>
+                    <div id="showsEmpty" class="glass-card rounded-xl p-12 border border-white/[0.04] text-center hidden">
+                        <span class="material-symbols-outlined text-5xl text-zinc-800 mb-3">event_busy</span>
+                        <p class="text-zinc-600 text-sm">No upcoming shows. Add one above.</p>
+                    </div>
+                </section>
+
+                <!-- ========== SETTINGS VIEW ========== -->
+                <section id="view-settings" class="view-section">
+                    <div class="mb-8">
+                        <h2 class="font-headline text-3xl font-bold tracking-tight mb-1">Settings</h2>
+                        <p class="text-zinc-500 text-sm">Account preferences and integrations.</p>
+                    </div>
+
+                    <div class="max-w-2xl space-y-6">
+                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                            <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">Account</h3>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex items-center justify-between py-2 border-b border-white/[0.04]">
+                                    <span class="text-zinc-400">Email</span>
+                                    <span id="settingsEmail" class="text-zinc-300"></span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-white/[0.04]">
+                                    <span class="text-zinc-400">Artist Slug</span>
+                                    <span id="settingsSlug" class="text-zinc-300 font-mono"></span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-white/[0.04]">
+                                    <span class="text-zinc-400">Genre</span>
+                                    <span id="settingsGenre" class="text-zinc-300 capitalize"></span>
+                                </div>
+                                <div class="flex items-center justify-between py-2">
+                                    <span class="text-zinc-400">Authentication</span>
+                                    <span class="text-amber-500 text-xs">localStorage (Supabase Auth coming soon)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-xl p-6 border border-white/[0.04]">
+                            <h3 class="font-headline text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">Integrations</h3>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex items-center justify-between py-2 border-b border-white/[0.04]">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg text-zinc-600">database</span>
+                                        <span class="text-zinc-400">Supabase</span>
+                                    </div>
+                                    <span class="text-xs px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-500">Not connected</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-white/[0.04]">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg text-zinc-600">link</span>
+                                        <span class="text-zinc-400">Bitly</span>
+                                    </div>
+                                    <span class="text-xs px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-500">Coming soon</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-lg text-zinc-600">analytics</span>
+                                        <span class="text-zinc-400">Google Analytics</span>
+                                    </div>
+                                    <span class="text-xs px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-500">Coming soon</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-xl p-6 border border-red-500/10">
+                            <h3 class="font-headline text-sm font-semibold text-red-400/80 uppercase tracking-wider mb-4">Danger Zone</h3>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-zinc-300">Clear local data</p>
+                                    <p class="text-xs text-zinc-600">This will remove all locally stored EPK edits and show data.</p>
+                                </div>
+                                <button onclick="clearLocalData()" class="px-4 py-2 rounded-xl border border-red-500/20 text-red-400 text-xs hover:bg-red-500/10 transition-colors">
+                                    Clear Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="ml-[250px] bg-neutral-950 w-auto py-12 px-8 border-t border-neutral-800/20">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 max-w-5xl mx-auto">
+                <span class="font-headline text-sm text-zinc-600 tracking-tight">&copy; 2026 Apex Music Latino</span>
+                <div class="flex items-center gap-6 text-xs text-zinc-700">
+                    <a href="/" class="hover:text-zinc-400 transition-colors">Home</a>
+                    <a href="/artists/" class="hover:text-zinc-400 transition-colors">Artists</a>
+                    <a href="/marketplace/" class="hover:text-zinc-400 transition-colors">Marketplace</a>
+                    <a href="/academy/" class="hover:text-zinc-400 transition-colors">Academy</a>
+                </div>
+                <span class="text-[10px] text-zinc-800">Powered by CUBO Intelligence</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/js/i18n.js"></script>
+    <script src="/js/nav.js"></script>
+    <script>
+    // ================================================================
+    // ARTIST DATA
+    // ================================================================
+    const ARTISTS = {
+        arcoiris: {
+            name: 'Arcoiris',
+            slug: 'arcoiris',
+            genre: 'tango',
+            email: 'arcoiris@apexmusiclatino.com',
+            password: 'arcoiris',
+            accent: '#DC2626',
+            accentLight: '#F87171',
+            initials: 'AR',
+            stats: { fans: '1,247', streams: '48.3K', engagement: '6.2%', leads: '89' },
+            bio_en: 'Arcoiris blends the raw passion of Argentine tango with modern electronic textures, creating a sound that bridges generations.',
+            bio_es: 'Arcoiris fusiona la pasion cruda del tango argentino con texturas electronicas modernas, creando un sonido que conecta generaciones.',
+            socials: { instagram: '', spotify: '', youtube: '', tiktok: '' },
+            releases: [
+                { title: 'Milonga del Futuro', url: '', year: '2025' },
+                { title: 'Arrabal Digital', url: '', year: '2024' }
+            ],
+            shows: [
+                { venue: 'La Catedral', city: 'Buenos Aires', date: '2026-04-15', ticketUrl: '' },
+                { venue: 'Salon Canning', city: 'Buenos Aires', date: '2026-05-20', ticketUrl: '' }
+            ]
+        },
+        'joey-b': {
+            name: 'Joey B',
+            slug: 'joey-b',
+            genre: 'rap',
+            email: 'joeyb@apexmusiclatino.com',
+            password: 'joey-b',
+            accent: '#06B6D4',
+            accentLight: '#67E8F9',
+            initials: 'JB',
+            stats: { fans: '3,891', streams: '127K', engagement: '8.4%', leads: '214' },
+            bio_en: 'Joey B brings bilingual fire to Latin hip-hop, mixing street stories with conscious lyrics over hard-hitting beats.',
+            bio_es: 'Joey B trae fuego bilingue al hip-hop latino, mezclando historias de la calle con letras conscientes sobre beats contundentes.',
+            socials: { instagram: '', spotify: '', youtube: '', tiktok: '' },
+            releases: [
+                { title: 'Barrio Nuevo', url: '', year: '2025' },
+                { title: 'Sin Filtro', url: '', year: '2024' },
+                { title: 'Callejero', url: '', year: '2023' }
+            ],
+            shows: [
+                { venue: 'Club Notorious', city: 'Miami', date: '2026-04-08', ticketUrl: '' },
+                { venue: 'El Molino', city: 'Mexico City', date: '2026-05-01', ticketUrl: '' }
+            ]
+        },
+        andrade: {
+            name: 'Andrade',
+            slug: 'andrade',
+            genre: 'reggaeton',
+            email: 'andrade@apexmusiclatino.com',
+            password: 'andrade',
+            accent: '#EC4899',
+            accentLight: '#F9A8D4',
+            initials: 'AN',
+            stats: { fans: '5,620', streams: '312K', engagement: '9.1%', leads: '347' },
+            bio_en: 'Andrade is redefining reggaeton with genre-bending production and lyrics that move both body and mind.',
+            bio_es: 'Andrade esta redefiniendo el reggaeton con produccion innovadora y letras que mueven tanto el cuerpo como la mente.',
+            socials: { instagram: '', spotify: '', youtube: '', tiktok: '' },
+            releases: [
+                { title: 'Perreo Cosmico', url: '', year: '2025' },
+                { title: 'Dembow Supremo', url: '', year: '2024' }
+            ],
+            shows: [
+                { venue: 'Coliseo', city: 'San Juan', date: '2026-04-22', ticketUrl: '' },
+                { venue: 'Wynwood Factory', city: 'Miami', date: '2026-06-10', ticketUrl: '' }
+            ]
+        }
+    };
+
+    let currentArtist = null;
+
+    // ================================================================
+    // AUTH
+    // ================================================================
+    function checkSession() {
+        const session = localStorage.getItem('apex_portal_session');
+        if (session) {
+            const data = JSON.parse(session);
+            if (ARTISTS[data.slug]) {
+                loginAs(data.slug);
+            }
+        }
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+        const password = document.getElementById('loginPassword').value.trim();
+        const errorEl = document.getElementById('loginError');
+
+        // Find artist by email or slug
+        let found = null;
+        for (const slug in ARTISTS) {
+            const a = ARTISTS[slug];
+            if ((a.email === email || slug === email || a.name.toLowerCase() === email) && a.password === password) {
+                found = slug;
+                break;
+            }
+        }
+
+        if (found) {
+            errorEl.classList.add('hidden');
+            localStorage.setItem('apex_portal_session', JSON.stringify({ slug: found }));
+            loginAs(found);
+        } else {
+            errorEl.classList.remove('hidden');
+            errorEl.textContent = 'Invalid email or password. Try again.';
+        }
+    });
+
+    function loginAs(slug) {
+        currentArtist = ARTISTS[slug];
+
+        // Load any saved EPK data
+        const saved = localStorage.getItem('apex_artist_' + slug);
+        if (saved) {
+            const data = JSON.parse(saved);
+            if (data.bio_en) currentArtist.bio_en = data.bio_en;
+            if (data.bio_es) currentArtist.bio_es = data.bio_es;
+            if (data.profileImg) currentArtist.profileImg = data.profileImg;
+            if (data.bannerImg) currentArtist.bannerImg = data.bannerImg;
+            if (data.video) currentArtist.video = data.video;
+            if (data.socials) currentArtist.socials = data.socials;
+            if (data.releases) currentArtist.releases = data.releases;
+            if (data.merch) currentArtist.merch = data.merch;
+            if (data.shows) currentArtist.shows = data.shows;
+        }
+
+        // Apply genre accent color
+        document.documentElement.style.setProperty('--dash-accent', currentArtist.accent);
+        document.documentElement.style.setProperty('--dash-accent-light', currentArtist.accentLight);
+
+        // Update input focus color dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            input:focus, textarea:focus, select:focus {
+                border-color: ${currentArtist.accent} !important;
+                box-shadow: 0 0 0 2px ${currentArtist.accent}26 !important;
+            }
+            .sidebar-link.active { border-left-color: ${currentArtist.accent} !important; }
+        `;
+        document.head.appendChild(style);
+
+        // Hide login, show dashboard
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('dashboardShell').classList.remove('hidden');
+
+        populateDashboard();
+    }
+
+    function logout() {
+        localStorage.removeItem('apex_portal_session');
+        currentArtist = null;
+        document.getElementById('loginScreen').classList.remove('hidden');
+        document.getElementById('dashboardShell').classList.add('hidden');
+        document.getElementById('loginEmail').value = '';
+        document.getElementById('loginPassword').value = '';
+        switchView('dashboard');
+    }
+
+    // ================================================================
+    // DASHBOARD POPULATION
+    // ================================================================
+    function populateDashboard() {
+        const a = currentArtist;
+        const baseUrl = 'apexmusiclatino.com';
+        const epkPath = `/genre/${a.genre}/${a.slug}/`;
+        const gatePath = `/genre/${a.genre}/${a.slug}/?qr=1`;
+        const epkUrl = baseUrl + epkPath;
+        const gateUrl = baseUrl + gatePath;
+
+        // Top bar
+        document.getElementById('topbarAvatar').textContent = a.initials;
+        document.getElementById('topbarName').textContent = a.name;
+
+        // Dashboard welcome
+        document.getElementById('dashWelcomeName').textContent = a.name;
+
+        // Stats
+        document.getElementById('statFans').textContent = a.stats.fans;
+        document.getElementById('statStreams').textContent = a.stats.streams;
+        document.getElementById('statEngagement').textContent = a.stats.engagement;
+        document.getElementById('statLeads').textContent = a.stats.leads;
+
+        // Links
+        document.getElementById('epkLinkText').textContent = epkUrl;
+        document.getElementById('gateLinkText').textContent = gateUrl;
+        document.getElementById('epkPreviewLink').href = epkPath;
+        document.getElementById('epkPreviewBtn').href = epkPath;
+
+        // QR view links
+        document.getElementById('qrShareLink').textContent = gateUrl;
+        document.getElementById('qrEpkLink').textContent = epkUrl;
+
+        // Generate QR codes
+        generateQr('dashQrCode', 'https://' + gateUrl, 148);
+        generateQr('qrViewCode', 'https://' + gateUrl, 200);
+
+        // EPK form
+        populateEpkForm();
+
+        // Shows
+        renderShows();
+
+        // Settings
+        document.getElementById('settingsEmail').textContent = a.email;
+        document.getElementById('settingsSlug').textContent = a.slug;
+        document.getElementById('settingsGenre').textContent = a.genre;
+    }
+
+    // ================================================================
+    // QR CODE
+    // ================================================================
+    function generateQr(containerId, url, size) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+        try {
+            new QRCode(container, {
+                text: url,
+                width: size,
+                height: size,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.M
+            });
+        } catch(e) {
+            container.innerHTML = '<p class="text-xs text-zinc-400 p-4">QR generation requires qrcode.js</p>';
+        }
+    }
+
+    function downloadQr() {
+        const canvas = document.querySelector('#qrViewCode canvas');
+        if (!canvas) {
+            // Try img fallback
+            const img = document.querySelector('#qrViewCode img');
+            if (img) {
+                const link = document.createElement('a');
+                link.download = `apex-qr-${currentArtist.slug}.png`;
+                link.href = img.src;
+                link.click();
+            }
+            return;
+        }
+        const link = document.createElement('a');
+        link.download = `apex-qr-${currentArtist.slug}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
+
+    // ================================================================
+    // COPY TO CLIPBOARD
+    // ================================================================
+    function copyToClipboard(elementId) {
+        const text = document.getElementById(elementId).textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = document.getElementById(elementId).nextElementSibling;
+            const icon = btn.querySelector('.material-symbols-outlined');
+            icon.textContent = 'check';
+            setTimeout(() => { icon.textContent = 'content_copy'; }, 1500);
+        });
+    }
+
+    // ================================================================
+    // VIEW SWITCHING
+    // ================================================================
+    function switchView(view) {
+        document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        document.getElementById('view-' + view).classList.add('active');
+        document.querySelector(`[data-view="${view}"]`).classList.add('active');
+    }
+
+    // ================================================================
+    // EPK FORM
+    // ================================================================
+    function populateEpkForm() {
+        const a = currentArtist;
+        document.getElementById('epkBioEn').value = a.bio_en || '';
+        document.getElementById('epkBioEs').value = a.bio_es || '';
+        document.getElementById('epkProfileImg').value = a.profileImg || '';
+        document.getElementById('epkBannerImg').value = a.bannerImg || '';
+        document.getElementById('epkVideo').value = a.video || '';
+        document.getElementById('epkInstagram').value = (a.socials && a.socials.instagram) || '';
+        document.getElementById('epkSpotify').value = (a.socials && a.socials.spotify) || '';
+        document.getElementById('epkYoutube').value = (a.socials && a.socials.youtube) || '';
+        document.getElementById('epkTiktok').value = (a.socials && a.socials.tiktok) || '';
+
+        // Image previews
+        updateImagePreview('epkProfileImg', 'epkProfilePreviewImg');
+        updateImagePreview('epkBannerImg', 'epkBannerPreviewImg');
+
+        // Listen for preview updates
+        document.getElementById('epkProfileImg').addEventListener('input', () => updateImagePreview('epkProfileImg', 'epkProfilePreviewImg'));
+        document.getElementById('epkBannerImg').addEventListener('input', () => updateImagePreview('epkBannerImg', 'epkBannerPreviewImg'));
+
+        // Releases
+        renderReleases();
+        // Merch
+        renderMerch();
+    }
+
+    function updateImagePreview(inputId, imgId) {
+        const url = document.getElementById(inputId).value;
+        const img = document.getElementById(imgId);
+        if (url) {
+            img.src = url;
+            img.classList.remove('hidden');
+        } else {
+            img.classList.add('hidden');
+        }
+    }
+
+    function renderReleases() {
+        const container = document.getElementById('epkReleases');
+        const releases = currentArtist.releases || [];
+        container.innerHTML = releases.map((r, i) => `
+            <div class="flex items-center gap-3">
+                <input type="text" value="${escHtml(r.title)}" data-release-title="${i}" class="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Title"/>
+                <input type="text" value="${escHtml(r.url || '')}" data-release-url="${i}" class="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Streaming URL"/>
+                <input type="text" value="${escHtml(r.year || '')}" data-release-year="${i}" class="w-20 bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Year"/>
+                <button onclick="removeRelease(${i})" class="text-zinc-600 hover:text-red-400 transition-colors">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+        `).join('');
+    }
+
+    function addRelease() {
+        if (!currentArtist.releases) currentArtist.releases = [];
+        currentArtist.releases.push({ title: '', url: '', year: '' });
+        renderReleases();
+    }
+
+    function removeRelease(i) {
+        currentArtist.releases.splice(i, 1);
+        renderReleases();
+    }
+
+    function renderMerch() {
+        const container = document.getElementById('epkMerch');
+        const merch = currentArtist.merch || [];
+        container.innerHTML = merch.length === 0
+            ? '<p class="text-xs text-zinc-600">No merch items yet.</p>'
+            : merch.map((m, i) => `
+                <div class="flex items-center gap-3">
+                    <input type="text" value="${escHtml(m.name || '')}" data-merch-name="${i}" class="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Item name"/>
+                    <input type="text" value="${escHtml(m.price || '')}" data-merch-price="${i}" class="w-24 bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Price"/>
+                    <input type="url" value="${escHtml(m.url || '')}" data-merch-url="${i}" class="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl p-3 text-sm text-zinc-200 placeholder-zinc-700" placeholder="Image URL"/>
+                    <button onclick="removeMerch(${i})" class="text-zinc-600 hover:text-red-400 transition-colors">
+                        <span class="material-symbols-outlined text-lg">close</span>
+                    </button>
+                </div>
+            `).join('');
+    }
+
+    function addMerch() {
+        if (!currentArtist.merch) currentArtist.merch = [];
+        currentArtist.merch.push({ name: '', price: '', url: '' });
+        renderMerch();
+    }
+
+    function removeMerch(i) {
+        currentArtist.merch.splice(i, 1);
+        renderMerch();
+    }
+
+    function saveEpk() {
+        // Gather form data
+        const data = {
+            bio_en: document.getElementById('epkBioEn').value,
+            bio_es: document.getElementById('epkBioEs').value,
+            profileImg: document.getElementById('epkProfileImg').value,
+            bannerImg: document.getElementById('epkBannerImg').value,
+            video: document.getElementById('epkVideo').value,
+            socials: {
+                instagram: document.getElementById('epkInstagram').value,
+                spotify: document.getElementById('epkSpotify').value,
+                youtube: document.getElementById('epkYoutube').value,
+                tiktok: document.getElementById('epkTiktok').value
+            },
+            releases: [],
+            merch: [],
+            shows: currentArtist.shows || []
+        };
+
+        // Releases
+        document.querySelectorAll('[data-release-title]').forEach((el, i) => {
+            data.releases.push({
+                title: el.value,
+                url: document.querySelector(`[data-release-url="${i}"]`).value,
+                year: document.querySelector(`[data-release-year="${i}"]`).value
+            });
+        });
+
+        // Merch
+        document.querySelectorAll('[data-merch-name]').forEach((el, i) => {
+            data.merch.push({
+                name: el.value,
+                price: document.querySelector(`[data-merch-price="${i}"]`).value,
+                url: document.querySelector(`[data-merch-url="${i}"]`).value
+            });
+        });
+
+        localStorage.setItem('apex_artist_' + currentArtist.slug, JSON.stringify(data));
+
+        // Update in-memory
+        Object.assign(currentArtist, data);
+
+        // Show save message
+        const msg = document.getElementById('epkSaveMsg');
+        msg.classList.remove('hidden');
+        setTimeout(() => msg.classList.add('hidden'), 3000);
+    }
+
+    // ================================================================
+    // SHOWS
+    // ================================================================
+    function renderShows() {
+        const shows = currentArtist.shows || [];
+        const container = document.getElementById('showsList');
+        const empty = document.getElementById('showsEmpty');
+
+        if (shows.length === 0) {
+            container.innerHTML = '';
+            empty.classList.remove('hidden');
+            return;
+        }
+
+        empty.classList.add('hidden');
+        container.innerHTML = shows.sort((a, b) => a.date > b.date ? 1 : -1).map((s, i) => {
+            const dateStr = s.date ? new Date(s.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'TBD';
+            return `
+                <div class="glass-card rounded-xl p-5 border border-white/[0.04] flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center text-xs font-bold font-headline" style="background: ${currentArtist.accent}15; color: ${currentArtist.accent};">
+                            ${dateStr.split(' ')[0]}<br>${dateStr.split(' ')[1]?.replace(',','')}
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-zinc-200">${escHtml(s.venue)}</p>
+                            <p class="text-xs text-zinc-500">${escHtml(s.city)} &middot; ${dateStr}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        ${s.ticketUrl ? `<a href="${escHtml(s.ticketUrl)}" target="_blank" class="text-xs px-3 py-1.5 rounded-lg border border-white/[0.08] text-zinc-400 hover:text-white transition-colors">Tickets</a>` : ''}
+                        <button onclick="removeShow(${i})" class="text-zinc-700 hover:text-red-400 transition-colors">
+                            <span class="material-symbols-outlined text-lg">delete</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function addShow() {
+        const venue = document.getElementById('showVenue').value.trim();
+        const city = document.getElementById('showCity').value.trim();
+        const date = document.getElementById('showDate').value;
+        const ticketUrl = document.getElementById('showTicketUrl').value.trim();
+
+        if (!venue || !city) return;
+
+        if (!currentArtist.shows) currentArtist.shows = [];
+        currentArtist.shows.push({ venue, city, date, ticketUrl });
+
+        // Save to localStorage
+        saveShowsToStorage();
+        renderShows();
+
+        // Clear form
+        document.getElementById('showVenue').value = '';
+        document.getElementById('showCity').value = '';
+        document.getElementById('showDate').value = '';
+        document.getElementById('showTicketUrl').value = '';
+    }
+
+    function removeShow(i) {
+        currentArtist.shows.splice(i, 1);
+        saveShowsToStorage();
+        renderShows();
+    }
+
+    function saveShowsToStorage() {
+        const key = 'apex_artist_' + currentArtist.slug;
+        let data = {};
+        try { data = JSON.parse(localStorage.getItem(key) || '{}'); } catch(e) {}
+        data.shows = currentArtist.shows;
+        localStorage.setItem(key, JSON.stringify(data));
+    }
+
+    // ================================================================
+    // SETTINGS
+    // ================================================================
+    function clearLocalData() {
+        if (confirm('Are you sure? This will clear all your locally saved data.')) {
+            localStorage.removeItem('apex_artist_' + currentArtist.slug);
+            alert('Local data cleared. Reloading...');
+            location.reload();
+        }
+    }
+
+    // ================================================================
+    // UTILS
+    // ================================================================
+    function escHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str || '';
+        return div.innerHTML;
+    }
+
+    // ================================================================
+    // INIT
+    // ================================================================
+    checkSession();
+    </script>
+</body>
+</html>
