@@ -2,6 +2,8 @@ Artistas/
 .env
 .vercel/
 node_modules/
-*.mp4
+# Block large videos but allow compressed web versions
+assetts/main promo*.mp4
+assetts/Video_Ready*.mp4
 *.mov
 *.avi
