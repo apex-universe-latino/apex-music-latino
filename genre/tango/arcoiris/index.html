@@ -189,7 +189,7 @@
           <div class="flex items-start gap-3 pt-1">
             <input type="checkbox" id="gate-terms" required class="mt-1 w-4 h-4 rounded border-white/20 text-tango-accent focus:ring-tango-accent/30 bg-surface-container-highest/50 cursor-pointer" />
             <label for="gate-terms" class="text-zinc-400 text-xs leading-relaxed cursor-pointer">
-              Acepto los <a href="#" class="text-tango-accent underline underline-offset-2 hover:text-white transition-colors" onclick="event.stopPropagation();">t&eacute;rminos y condiciones</a> y la pol&iacute;tica de privacidad.
+              Acepto los <a href="/legal/terms.html" target="_blank" class="text-tango-accent underline underline-offset-2 hover:text-white transition-colors" onclick="event.stopPropagation();">t&eacute;rminos y condiciones</a> y la pol&iacute;tica de privacidad.
             </label>
           </div>
 
@@ -268,39 +268,107 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ passed: true, expires: expires }));
   }
 
-  // Generate sequential Fan Universal ID
+  // Generate structured Fan Universal ID: AML-{GENRE}-{ARTIST}-{SEQ}
+  // Format: AML-TN-ARC-001 (Apex Music Latino - Tango - Arcoiris - sequential)
+  var GENRE_CODE = 'TN'; // TN=Tango, RP=Rap, RG=Reggaeton, RK=Rock, EL=Electronic, AF=Afro-Latin
+  var ARTIST_CODE = 'ARC'; // ARC=Arcoiris
   function generateFanId() {
     var counter = parseInt(localStorage.getItem('apex_fan_counter') || '0') + 1;
     localStorage.setItem('apex_fan_counter', counter.toString());
-    return 'AML-' + counter.toString().padStart(4, '0');
+    var publicId = 'AML-' + GENRE_CODE + '-' + ARTIST_CODE + '-' + counter.toString().padStart(3, '0');
+    // Master internal ID (for Apex internal use)
+    var masterId = 'APEX-' + Date.now().toString(36).toUpperCase() + '-' + counter.toString().padStart(5, '0');
+    return { publicId: publicId, masterId: masterId, seq: counter };
   }
 
-  // Show success screen with Fan ID inside the gate card
-  function showSuccessScreen(fanId) {
+  // Collect device, geo, and browser data
+  function collectDeviceData() {
+    var data = {
+      user_agent: navigator.userAgent,
+      platform: navigator.platform || 'unknown',
+      language: navigator.language || 'unknown',
+      screen_width: screen.width,
+      screen_height: screen.height,
+      pixel_ratio: window.devicePixelRatio || 1,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown',
+      online: navigator.onLine,
+      referrer: document.referrer || 'direct',
+      url_params: window.location.search,
+      touch_support: 'ontouchstart' in window,
+      connection_type: (navigator.connection && navigator.connection.effectiveType) || 'unknown'
+    };
+    // Detect device type
+    var ua = navigator.userAgent.toLowerCase();
+    if (/iphone/.test(ua)) data.device = 'iPhone';
+    else if (/ipad/.test(ua)) data.device = 'iPad';
+    else if (/android/.test(ua)) data.device = 'Android';
+    else if (/mac/.test(ua)) data.device = 'Mac';
+    else if (/windows/.test(ua)) data.device = 'Windows';
+    else data.device = 'Other';
+    // Detect browser
+    if (/chrome/.test(ua) && !/edg/.test(ua)) data.browser = 'Chrome';
+    else if (/safari/.test(ua) && !/chrome/.test(ua)) data.browser = 'Safari';
+    else if (/firefox/.test(ua)) data.browser = 'Firefox';
+    else if (/edg/.test(ua)) data.browser = 'Edge';
+    else data.browser = 'Other';
+    return data;
+  }
+
+  // Attempt geolocation (requires user permission via terms acceptance)
+  function getGeoLocation(callback) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(pos) { callback({ lat: pos.coords.latitude, lng: pos.coords.longitude, accuracy: pos.coords.accuracy }); },
+        function() { callback(null); },
+        { timeout: 5000, enableHighAccuracy: false }
+      );
+    } else { callback(null); }
+  }
+
+  // Show success screen with Fan ID + social follow links
+  function showSuccessScreen(fanIdObj) {
+    var fanId = typeof fanIdObj === 'string' ? fanIdObj : fanIdObj.publicId;
     var cardContent = document.getElementById('gate-card-content');
-    cardContent.innerHTML = '<div class="text-center py-8">' +
-      '<div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-[#e60000] to-[#8b0000] flex items-center justify-center">' +
-        '<span class="material-symbols-outlined text-white text-4xl" style="font-variation-settings: \'FILL\' 1;">celebration</span>' +
+    cardContent.innerHTML = '<div class="text-center py-6">' +
+      '<div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#e60000] to-[#8b0000] flex items-center justify-center">' +
+        '<span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: \'FILL\' 1;">celebration</span>' +
       '</div>' +
-      '<h3 class="font-headline text-2xl font-bold mb-2">\u00a1Bienvenido al Universo!</h3>' +
-      '<p class="text-zinc-400 text-sm mb-6">Welcome to the Arcoiris Universe</p>' +
-      '<div class="bg-black/30 rounded-xl p-6 mb-6 border border-[#e60000]/20">' +
-        '<p class="text-zinc-500 text-xs uppercase tracking-widest mb-2">Tu Fan ID</p>' +
-        '<p class="text-3xl font-headline font-bold text-[#e60000]">' + fanId + '</p>' +
-        '<p class="text-zinc-500 text-xs mt-2">Guarda este n\u00famero \u00b7 Save this number</p>' +
+      '<h3 class="font-headline text-2xl font-bold mb-1">\u00a1Bienvenido al Universo!</h3>' +
+      '<p class="text-zinc-500 text-xs mb-5">Welcome to the Arcoiris Universe</p>' +
+      // Fan ID card
+      '<div class="bg-black/30 rounded-xl p-5 mb-5 border border-[#e60000]/20">' +
+        '<p class="text-zinc-500 text-[10px] uppercase tracking-widest mb-1">Tu Fan ID</p>' +
+        '<p class="text-2xl font-headline font-bold text-[#e60000] tracking-wider">' + fanId + '</p>' +
+        '<p class="text-zinc-600 text-[10px] mt-1">Guarda este n\u00famero para sorteos y beneficios</p>' +
       '</div>' +
-      '<div class="space-y-3 text-left text-sm text-zinc-400 mb-6">' +
-        '<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#e60000] text-base">check_circle</span> Clase de tango GRATIS reservada</p>' +
-        '<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#e60000] text-base">check_circle</span> Acceso al curso de 24 pasos (pr\u00f3ximamente)</p>' +
-        '<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#e60000] text-base">check_circle</span> Participaci\u00f3n en sorteos y giveaways</p>' +
-        '<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#e60000] text-base">check_circle</span> Notificaciones de eventos exclusivos</p>' +
+      // Benefits
+      '<div class="space-y-2 text-left text-xs text-zinc-400 mb-5">' +
+        '<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#e60000]" style="font-size:14px;">check_circle</span> Clase de tango GRATIS (hasta 31 de Marzo)</p>' +
+        '<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#e60000]" style="font-size:14px;">check_circle</span> Curso 24 pasos de tango (pr\u00f3ximamente)</p>' +
+        '<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#e60000]" style="font-size:14px;">check_circle</span> Sorteos exclusivos con tu Fan ID</p>' +
       '</div>' +
-      '<div class="flex items-center gap-2 text-xs text-zinc-500 justify-center mb-6">' +
-        '<input type="checkbox" id="gate-optin-giveaways" checked class="w-4 h-4 rounded">' +
+      // Social follow links — LINKTREE STYLE
+      '<div class="mb-5">' +
+        '<p class="text-zinc-500 text-[10px] uppercase tracking-widest mb-3">S\u00edguenos / Follow Us</p>' +
+        '<div class="grid grid-cols-2 gap-2">' +
+          '<a href="https://instagram.com/arcoiris.tango" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium text-white hover:scale-[1.02] transition-transform" style="background: linear-gradient(135deg, #833AB4, #E1306C, #F77737);">' +
+            '<span class="material-symbols-outlined" style="font-size:16px;">camera</span> Instagram</a>' +
+          '<a href="https://youtube.com/@arcoiristango" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium text-white hover:scale-[1.02] transition-transform" style="background: #FF0000;">' +
+            '<span class="material-symbols-outlined" style="font-size:16px;">play_circle</span> YouTube</a>' +
+          '<a href="https://tiktok.com/@arcoiristango" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium text-white hover:scale-[1.02] transition-transform" style="background: #000;">' +
+            '<span class="material-symbols-outlined" style="font-size:16px;">music_note</span> TikTok</a>' +
+          '<a href="https://open.spotify.com" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium text-white hover:scale-[1.02] transition-transform" style="background: #1DB954;">' +
+            '<span class="material-symbols-outlined" style="font-size:16px;">podcasts</span> Spotify</a>' +
+        '</div>' +
+      '</div>' +
+      // Opt-in
+      '<div class="flex items-center gap-2 text-[10px] text-zinc-500 justify-center mb-4">' +
+        '<input type="checkbox" id="gate-optin-giveaways" checked class="w-3 h-3 rounded">' +
         '<label for="gate-optin-giveaways">Acepto participar en sorteos y recibir notificaciones</label>' +
       '</div>' +
+      // CTA
       '<button onclick="document.getElementById(\'arcoiris-gate\').classList.add(\'gate-closing\'); document.body.classList.remove(\'gate-active\'); setTimeout(function(){document.getElementById(\'arcoiris-gate\').style.display=\'none\';},500);" ' +
-        'class="w-full py-4 rounded-xl font-headline font-bold text-white" style="background: linear-gradient(135deg, #e60000, #8b0000);">' +
+        'class="w-full py-3.5 rounded-xl font-headline font-bold text-white text-sm" style="background: linear-gradient(135deg, #e60000, #8b0000);">' +
         'Explorar el EPK de Arcoiris \u2192' +
       '</button>' +
     '</div>';
@@ -352,30 +420,42 @@
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-xl">progress_activity</span> Enviando...';
 
-    // Generate Fan Universal ID
-    var fanId = generateFanId();
+    // Generate Fan Universal ID (structured: AML-TN-ARC-001)
+    var fanIdObj = generateFanId();
+    var deviceData = collectDeviceData();
 
-    // Send to Supabase
+    // Send to Supabase (with geo attempt)
     var SUPABASE_URL = 'https://iaycaynevtumrqoknemk.supabase.co';
     var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k';
-    var payload = {
-      artist_name: 'Arcoiris',
-      email: emailValue,
-      genre: 'tango',
-      mood_preference: {
-        name: nameValue,
-        phone: phoneValue,
-        title: titleValue,
-        source: 'qr_gate',
-        offer: 'free_tango_class_24_steps',
-        offer_expiry: '2026-03-31',
-        timestamp: new Date().toISOString(),
-        user_agent: navigator.userAgent,
-        referrer: document.referrer || 'direct',
-        fan_id: fanId
-      },
-      marketing_source: 'QR_CODE'
-    };
+
+    function sendPayload(geoData) {
+      var payload = {
+        artist_name: 'Arcoiris',
+        email: emailValue,
+        genre: 'tango',
+        mood_preference: {
+          name: nameValue,
+          phone: phoneValue,
+          title: titleValue,
+          source: 'qr_gate',
+          offer: 'free_tango_class_24_steps',
+          offer_expiry: '2026-03-31',
+          timestamp: new Date().toISOString(),
+          fan_id: fanIdObj.publicId,
+          master_id: fanIdObj.masterId,
+          fan_seq: fanIdObj.seq,
+          device: deviceData,
+          geo: geoData || null
+        },
+        marketing_source: 'QR_CODE'
+      };
+      submitToSupabase(payload);
+    }
+
+    // Try to get geo, but don't block on it
+    getGeoLocation(function(geo) { sendPayload(geo); });
+
+    function submitToSupabase(payload) {
 
     fetch(SUPABASE_URL + '/rest/v1/leads_capture', {
       method: 'POST',
@@ -389,17 +469,14 @@
     })
     .then(function(response) {
       if (response.ok || response.status === 201) {
-        // Success
         saveGatePass();
-        showSuccessScreen(fanId);
+        showSuccessScreen(fanIdObj);
       } else {
-        // RLS might be blocking — still let them through but log
         console.warn('Supabase insert returned:', response.status);
         response.text().then(function(t) { console.warn('Body:', t); });
-        // Still save locally and let them through
         saveGatePass();
         saveFallbackLocal(payload);
-        showSuccessScreen(fanId);
+        showSuccessScreen(fanIdObj);
       }
     })
     .catch(function(err) {
@@ -407,7 +484,7 @@
       // Network error — save locally and still let them through
       saveGatePass();
       saveFallbackLocal(payload);
-      showSuccessScreen(fanId);
+      showSuccessScreen(fanIdObj);
     });
 
     function saveFallbackLocal(data) {
@@ -417,6 +494,7 @@
         localStorage.setItem('apex_pending_leads', JSON.stringify(existing));
       } catch(e) {}
     }
+    } // close submitToSupabase
   });
 
   function closeGate() {
