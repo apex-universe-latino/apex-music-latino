@@ -371,6 +371,28 @@
     document.body.classList.add('gate-active');
   }
 
+  // Send welcome email via Vercel serverless function
+  function sendWelcomeEmail(name, email, fanId) {
+    fetch('/api/send-welcome-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        fan_id: fanId,
+        artist_name: 'Arcoiris',
+        artist_slug: 'arcoiris',
+        genre: 'tango'
+      })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.success) { console.log('Welcome email sent:', data.id); }
+      else { console.warn('Email send issue:', data.error); }
+    })
+    .catch(function(err) { console.warn('Email send failed (non-blocking):', err); });
+  }
+
   // Form submission
   var form = document.getElementById('arcoiris-gate-form');
   var errorEl = document.getElementById('gate-error');
@@ -454,20 +476,22 @@
     .then(function(response) {
       if (response.ok || response.status === 201) {
         saveGatePass();
+        sendWelcomeEmail(nameValue, emailValue, fanIdObj.publicId);
         showSuccessScreen(fanIdObj);
       } else {
         console.warn('Supabase insert returned:', response.status);
         response.text().then(function(t) { console.warn('Body:', t); });
         saveGatePass();
         saveFallbackLocal(payload);
+        sendWelcomeEmail(nameValue, emailValue, fanIdObj.publicId);
         showSuccessScreen(fanIdObj);
       }
     })
     .catch(function(err) {
       console.error('Gate submission error:', err);
-      // Network error — save locally and still let them through
       saveGatePass();
       saveFallbackLocal(payload);
+      sendWelcomeEmail(nameValue, emailValue, fanIdObj.publicId);
       showSuccessScreen(fanIdObj);
     });
 
