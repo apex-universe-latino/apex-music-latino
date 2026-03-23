@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="/css/themes.css" />
   <script src="/js/i18n.js"></script>
   <style>
@@ -849,22 +850,55 @@ async function loadDashboardStats() {
    ================================================================ */
 async function loadFRM() {
   const tbody = document.getElementById('frm-table-body');
-  tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;"><div class="spinner" style="margin:0 auto;"></div></td></tr>';
+  const statusEl = document.getElementById('frm-count');
+  tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;"><div class="spinner" style="margin:0 auto;"></div><p style="margin-top:12px;color:#666;font-size:12px;">Loading from Supabase...</p></td></tr>';
 
   try {
-    const url = `${SUPABASE_URL}/rest/v1/leads_capture?artist_name=eq.${encodeURIComponent(currentArtist.name)}&order=created_at.desc`;
+    const artistName = currentArtist.name;
+    const url = SUPABASE_URL + '/rest/v1/leads_capture?artist_name=eq.' + encodeURIComponent(artistName) + '&order=created_at.desc';
+    console.log('[FRM] Fetching:', url);
+    statusEl.textContent = 'Loading...';
+
     const res = await fetch(url, {
       headers: {
         'apikey': SERVICE_KEY,
         'Authorization': 'Bearer ' + SERVICE_KEY
       }
     });
+
+    console.log('[FRM] Response status:', res.status);
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error('[FRM] Error response:', errorText);
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:#e60000;">Error ' + res.status + ': ' + errorText.substring(0, 100) + '</td></tr>';
+      statusEl.textContent = 'Error ' + res.status;
+      return;
+    }
+
     frmData = await res.json();
-    document.getElementById('frm-count').textContent = frmData.length + ' records';
+    console.log('[FRM] Records received:', frmData.length, frmData);
+    statusEl.textContent = frmData.length + ' records';
+
+    if (frmData.length === 0) {
+      // Try without filter to see if any data exists at all
+      const allUrl = SUPABASE_URL + '/rest/v1/leads_capture?order=created_at.desc&limit=5';
+      const allRes = await fetch(allUrl, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
+      const allData = await allRes.json();
+      console.log('[FRM] All records (unfiltered):', allData.length);
+      if (allData.length > 0) {
+        // Show all data with a note
+        statusEl.textContent = allData.length + ' records (all artists)';
+        renderFRMTable(allData);
+        return;
+      }
+    }
+
     renderFRMTable(frmData);
   } catch(err) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:rgba(255,255,255,0.3);">Error loading data.</td></tr>';
-    console.error('FRM error:', err);
+    console.error('[FRM] Fetch error:', err);
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:#e60000;">Connection error: ' + err.message + '</td></tr>';
+    statusEl.textContent = 'Error';
   }
 }
 
