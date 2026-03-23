@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Loading... | Apex Music Latino Blog</title>
+    <meta name="description" content="Apex Music Latino Blog — Insights for Latin artists."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="/css/themes.css" rel="stylesheet"/>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1,h2,h3,h4,h5,h6,.font-headline { font-family: 'Space Grotesk', sans-serif; }
+
+        /* Reading progress bar */
+        #reading-progress {
+            position: fixed; top: 0; left: 0; height: 3px; z-index: 9999;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            width: 0%; transition: width 0.1s linear;
+        }
+
+        /* Glassmorphism surfaces */
+        .glass { background: rgba(28,27,27,0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); }
+        .glass-strong { background: rgba(28,27,27,0.85); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); }
+
+        /* Accent utilities */
+        .accent-text { color: var(--accent); }
+        .accent-border { border-color: var(--accent); }
+        .accent-bg { background-color: var(--accent); }
+        .accent-glow { box-shadow: 0 0 20px var(--accent-glow); }
+        .text-gradient { background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+        /* ToC active state */
+        .toc-link { color: #888; transition: all 0.2s ease; border-left: 2px solid transparent; padding-left: 12px; }
+        .toc-link:hover { color: #ccc; }
+        .toc-link.active { color: var(--accent); border-left-color: var(--accent); }
+
+        /* Share buttons */
+        .share-btn { transition: all 0.2s ease; }
+        .share-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px var(--accent-glow); }
+
+        /* Article content styles */
+        .article-content h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; color: #e5e2e1; scroll-margin-top: 6rem; }
+        .article-content h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #e5e2e1; }
+        .article-content p { color: #a0a0a0; line-height: 1.8; margin-bottom: 1.25rem; }
+        .article-content strong { color: #e5e2e1; font-weight: 600; }
+        .article-content a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+        .article-content a:hover { opacity: 0.8; }
+        .article-content ul, .article-content ol { color: #a0a0a0; margin-bottom: 1.25rem; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; line-height: 1.7; }
+        .article-content ul li { list-style-type: disc; }
+        .article-content ol li { list-style-type: decimal; }
+        .article-content pre { background: #1c1b1b; border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; overflow-x: auto; }
+        .article-content code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: var(--accent); }
+        .article-content pre code { color: #a0a0a0; }
+        .article-content blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1.5rem 0; color: #a0a0a0; font-style: italic; }
+        .article-content hr { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 2rem 0; }
+
+        /* Hero image */
+        .hero-img { aspect-ratio: 21/9; object-fit: cover; border-radius: 12px; }
+
+        /* Related post cards */
+        .related-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .related-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+
+        /* Mobile ToC */
+        .mobile-toc { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .mobile-toc.open { max-height: 500px; }
+
+        /* Loading skeleton */
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+        .skeleton { background: linear-gradient(90deg, #1c1b1b 25%, #2a2a2a 50%, #1c1b1b 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
+    </style>
+</head>
+<body class="bg-[#131313] text-[#e5e2e1] overflow-x-hidden">
+
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress"></div>
+
+    <!-- Nav (replaced by nav.js) -->
+    <nav class="fixed top-0 w-full z-50"></nav>
+
+    <!-- Main Container -->
+    <main id="post-container" class="pt-24">
+        <!-- Loading State -->
+        <div id="loading-state" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="skeleton h-6 w-64 mb-6"></div>
+            <div class="skeleton h-12 w-full max-w-2xl mb-4"></div>
+            <div class="skeleton h-6 w-48 mb-8"></div>
+            <div class="skeleton h-72 w-full mb-12 rounded-xl"></div>
+            <div class="grid lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-3"><div class="skeleton h-48 w-full"></div></div>
+                <div class="lg:col-span-6"><div class="skeleton h-96 w-full"></div></div>
+                <div class="lg:col-span-3"><div class="skeleton h-48 w-full"></div></div>
+            </div>
+        </div>
+
+        <!-- Not Found State (hidden by default) -->
+        <div id="not-found-state" class="hidden min-h-[60vh] flex items-center justify-center px-4">
+            <div class="text-center">
+                <span class="material-symbols-outlined text-6xl mb-4 block" style="color: var(--accent);">article</span>
+                <h1 class="font-headline text-3xl font-bold mb-4">Post Not Found</h1>
+                <p class="text-zinc-400 mb-8">The article you're looking for doesn't exist or has been moved.</p>
+                <a href="/blog/" class="inline-flex items-center gap-2 px-6 py-3 rounded-full glass accent-text hover:accent-glow transition-all">
+                    <span class="material-symbols-outlined text-sm">arrow_back</span>
+                    Back to Blog
+                </a>
+            </div>
+        </div>
+
+        <!-- Post Content (hidden until loaded) -->
+        <div id="post-content" class="hidden">
+
+            <!-- Hero Section -->
+            <header id="post-hero" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
+                <!-- Breadcrumb -->
+                <div id="breadcrumb" class="flex items-center gap-2 text-sm text-zinc-500 mb-6 flex-wrap"></div>
+
+                <!-- Back + Language Toggle Row -->
+                <div class="flex items-center justify-between mb-6">
+                    <a href="/blog/" class="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-sm">
+                        <span class="material-symbols-outlined text-base">arrow_back</span>
+                        All Articles
+                    </a>
+                    <a id="lang-toggle" href="#" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-xs font-medium accent-text hover:accent-glow transition-all">
+                        <span class="material-symbols-outlined text-sm">translate</span>
+                        <span id="lang-toggle-label">Read in English</span>
+                    </a>
+                </div>
+
+                <!-- Meta Info -->
+                <div id="post-meta" class="flex items-center gap-4 text-sm text-zinc-400 mb-4 flex-wrap"></div>
+
+                <!-- Title -->
+                <h1 id="post-title" class="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight mb-8"></h1>
+
+                <!-- Hero Image -->
+                <div class="relative rounded-xl overflow-hidden mb-4">
+                    <img id="post-hero-img" class="hero-img w-full" src="" alt=""/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#131313] via-transparent to-transparent opacity-40"></div>
+                </div>
+            </header>
+
+            <!-- 3-Column Layout -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+                <!-- Mobile ToC Toggle -->
+                <div class="lg:hidden mb-6">
+                    <button id="mobile-toc-toggle" class="w-full flex items-center justify-between px-4 py-3 rounded-xl glass">
+                        <span class="flex items-center gap-2 text-sm font-medium">
+                            <span class="material-symbols-outlined text-base accent-text">list</span>
+                            Table of Contents
+                        </span>
+                        <span class="material-symbols-outlined text-base transition-transform" id="mobile-toc-icon">expand_more</span>
+                    </button>
+                    <div id="mobile-toc" class="mobile-toc mt-2 rounded-xl glass">
+                        <div id="mobile-toc-list" class="p-4 space-y-2"></div>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-12 gap-8 lg:gap-12">
+
+                    <!-- Left Column: Table of Contents (Desktop) -->
+                    <aside class="hidden lg:block lg:col-span-3">
+                        <div class="sticky top-28">
+                            <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Contents</h4>
+                            <nav id="toc-list" class="space-y-2 text-sm"></nav>
+                        </div>
+                    </aside>
+
+                    <!-- Center Column: Article Body -->
+                    <article class="lg:col-span-6 min-w-0">
+                        <div id="article-body" class="article-content"></div>
+                    </article>
+
+                    <!-- Right Column: Share + Categories (Desktop) -->
+                    <aside class="hidden lg:block lg:col-span-3">
+                        <div class="sticky top-28 space-y-8">
+                            <!-- Share Buttons -->
+                            <div>
+                                <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Share</h4>
+                                <div id="share-buttons" class="space-y-2"></div>
+                            </div>
+                            <!-- Categories -->
+                            <div>
+                                <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Categories</h4>
+                                <div id="sidebar-categories" class="space-y-1"></div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+
+            <!-- Mobile Share + Categories -->
+            <div class="lg:hidden max-w-6xl mx-auto px-4 sm:px-6 pb-8">
+                <div class="glass rounded-xl p-6 space-y-6">
+                    <div>
+                        <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Share this article</h4>
+                        <div id="share-buttons-mobile" class="flex gap-3 flex-wrap"></div>
+                    </div>
+                    <div>
+                        <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Categories</h4>
+                        <div id="sidebar-categories-mobile" class="flex gap-2 flex-wrap"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Posts -->
+            <section id="related-section" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-white/5">
+                <h2 class="font-headline text-2xl font-bold mb-8">Related Articles</h2>
+                <div id="related-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </section>
+
+            <!-- CTA Banner -->
+            <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="glass-strong rounded-2xl p-8 sm:p-12 text-center relative overflow-hidden">
+                    <div class="absolute inset-0 opacity-5" style="background: radial-gradient(circle at 50% 50%, var(--accent), transparent 70%);"></div>
+                    <div class="relative z-10">
+                        <h2 class="font-headline text-2xl sm:text-3xl font-bold mb-4">Ready to Build Your Empire?</h2>
+                        <p class="text-zinc-400 max-w-xl mx-auto mb-8">Join Apex Music Latino and get access to CUBO analytics, professional EPKs, and the tools that turn talent into industry power.</p>
+                        <a href="/onboarding/" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-semibold text-black transition-all hover:scale-105" style="background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));">
+                            Join Apex
+                            <span class="material-symbols-outlined text-base">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-12 px-4 sm:px-8">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-500">
+            <span class="font-headline font-bold text-white tracking-tighter">Apex Music Latino</span>
+            <span>&copy; 2026 Apex Music Latino. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/js/blog-data.js"></script>
+    <script src="/js/nav.js"></script>
+    <script src="/js/apex-engine.js"></script>
+
+    <script>
+    (function() {
+        'use strict';
+
+        var LANG = 'es';
+        var post = null;
+
+        // ── Slug Extraction ───────────────────────────────────
+        function extractSlug() {
+            var path = window.location.pathname.replace(/\/+$/, '');
+            // /blog/posts/my-slug → my-slug
+            var parts = path.split('/').filter(Boolean);
+            // ["blog","posts","my-slug"]
+            if (parts.length >= 3 && parts[0] === 'blog' && parts[1] === 'posts') {
+                return parts[parts.length - 1];
+            }
+            return null;
+        }
+
+        // ── Markdown-like Renderer ────────────────────────────
+        function renderMarkdown(text) {
+            if (!text) return '';
+            var lines = text.split('\n');
+            var html = [];
+            var inList = false;
+            var listType = '';
+            var inCode = false;
+            var codeBlock = [];
+
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i];
+
+                // Code block toggle
+                if (line.trim().startsWith('```')) {
+                    if (inCode) {
+                        html.push('<pre><code>' + codeBlock.join('\n') + '</code></pre>');
+                        codeBlock = [];
+                        inCode = false;
+                    } else {
+                        if (inList) { html.push(listType === 'ul' ? '</ul>' : '</ol>'); inList = false; }
+                        inCode = true;
+                    }
+                    continue;
+                }
+                if (inCode) { codeBlock.push(escapeHtml(line)); continue; }
+
+                // Empty line
+                if (line.trim() === '') {
+                    if (inList) { html.push(listType === 'ul' ? '</ul>' : '</ol>'); inList = false; }
+                    continue;
+                }
+
+                // Headings
+                if (line.startsWith('### ')) {
+                    if (inList) { html.push(listType === 'ul' ? '</ul>' : '</ol>'); inList = false; }
+                    html.push('<h3>' + inlineFormat(line.substring(4)) + '</h3>');
+                    continue;
+                }
+
+                // Unordered list
+                if (line.match(/^\s*[-*]\s+/)) {
+                    if (!inList || listType !== 'ul') {
+                        if (inList) html.push(listType === 'ul' ? '</ul>' : '</ol>');
+                        html.push('<ul>');
+                        inList = true;
+                        listType = 'ul';
+                    }
+                    html.push('<li>' + inlineFormat(line.replace(/^\s*[-*]\s+/, '')) + '</li>');
+                    continue;
+                }
+
+                // Ordered list
+                if (line.match(/^\s*\d+\.\s+/)) {
+                    if (!inList || listType !== 'ol') {
+                        if (inList) html.push(listType === 'ul' ? '</ul>' : '</ol>');
+                        html.push('<ol>');
+                        inList = true;
+                        listType = 'ol';
+                    }
+                    html.push('<li>' + inlineFormat(line.replace(/^\s*\d+\.\s+/, '')) + '</li>');
+                    continue;
+                }
+
+                // Paragraph
+                if (inList) { html.push(listType === 'ul' ? '</ul>' : '</ol>'); inList = false; }
+                html.push('<p>' + inlineFormat(line) + '</p>');
+            }
+
+            if (inList) html.push(listType === 'ul' ? '</ul>' : '</ol>');
+            if (inCode) html.push('<pre><code>' + codeBlock.join('\n') + '</code></pre>');
+
+            return html.join('\n');
+        }
+
+        function inlineFormat(text) {
+            // Bold: **text**
+            text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            // Inline code: `text`
+            text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+            // Links: [text](url)
+            text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+            return text;
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        }
+
+        // ── Render Post ───────────────────────────────────────
+        function renderPost() {
+            var slug = extractSlug();
+            if (!slug) { showNotFound(); return; }
+
+            post = BlogData.getBySlug(slug, LANG);
+            if (!post) { showNotFound(); return; }
+
+            // Update page title & meta
+            document.title = post.title + ' | Apex Music Latino Blog';
+            var metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc) metaDesc.content = post.excerpt;
+
+            // Breadcrumb
+            document.getElementById('breadcrumb').innerHTML =
+                '<a href="/blog/" class="hover:text-white transition-colors">Blog</a>' +
+                '<span class="material-symbols-outlined text-xs">chevron_right</span>' +
+                '<a href="/blog/category/' + encodeURIComponent(post.category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')) + '/" class="hover:text-white transition-colors">' + post.category + '</a>' +
+                '<span class="material-symbols-outlined text-xs">chevron_right</span>' +
+                '<span class="text-zinc-400 truncate max-w-[200px] inline-block align-bottom">' + post.title + '</span>';
+
+            // Language toggle
+            var langToggle = document.getElementById('lang-toggle');
+            langToggle.href = '/blog/posts/' + post.slug + '/';
+            document.getElementById('lang-toggle-label').textContent = 'Read in English';
+
+            // Meta
+            document.getElementById('post-meta').innerHTML =
+                '<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm accent-text">calendar_today</span>' + formatDate(post.date) + '</span>' +
+                '<span class="text-zinc-600">|</span>' +
+                '<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm accent-text">person</span>' + post.author + '</span>' +
+                '<span class="text-zinc-600">|</span>' +
+                '<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm accent-text">schedule</span>' + post.readTime + '</span>';
+
+            // Title
+            document.getElementById('post-title').textContent = post.title;
+
+            // Hero image
+            var img = document.getElementById('post-hero-img');
+            img.src = post.image;
+            img.alt = post.title;
+
+            // Build article body
+            var bodyHtml = renderMarkdown(post.content);
+
+            var sections = post.sections || [];
+            for (var i = 0; i < sections.length; i++) {
+                var s = sections[i];
+                var sectionId = 'section-' + i;
+                bodyHtml += '<h2 id="' + sectionId + '">' + inlineFormat(s.title) + '</h2>';
+                bodyHtml += renderMarkdown(s.content);
+                if (s.subsections) {
+                    for (var j = 0; j < s.subsections.length; j++) {
+                        bodyHtml += '<h3>' + inlineFormat(s.subsections[j].title) + '</h3>';
+                        bodyHtml += renderMarkdown(s.subsections[j].content);
+                    }
+                }
+            }
+
+            document.getElementById('article-body').innerHTML = bodyHtml;
+
+            // Table of Contents
+            buildToc(sections);
+
+            // Share buttons
+            buildShareButtons();
+
+            // Categories sidebar
+            buildCategories();
+
+            // Related posts
+            buildRelated();
+
+            // Show content
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('post-content').classList.remove('hidden');
+
+            // Init scroll spy + progress
+            initScrollSpy();
+            initProgressBar();
+        }
+
+        // ── Table of Contents ─────────────────────────────────
+        function buildToc(sections) {
+            var tocHtml = '';
+            var mobileTocHtml = '';
+            for (var i = 0; i < sections.length; i++) {
+                var anchor = 'section-' + i;
+                var linkHtml = '<a href="#' + anchor + '" class="toc-link block py-1 text-sm" data-section="' + anchor + '">' + sections[i].title + '</a>';
+                tocHtml += linkHtml;
+                mobileTocHtml += linkHtml;
+            }
+            document.getElementById('toc-list').innerHTML = tocHtml;
+            document.getElementById('mobile-toc-list').innerHTML = mobileTocHtml;
+
+            // Mobile toggle
+            var toggle = document.getElementById('mobile-toc-toggle');
+            var mToc = document.getElementById('mobile-toc');
+            var mIcon = document.getElementById('mobile-toc-icon');
+            toggle.addEventListener('click', function() {
+                mToc.classList.toggle('open');
+                mIcon.style.transform = mToc.classList.contains('open') ? 'rotate(180deg)' : '';
+            });
+        }
+
+        // ── Share Buttons ─────────────────────────────────────
+        function buildShareButtons() {
+            var url = encodeURIComponent(window.location.href);
+            var title = encodeURIComponent(post.title);
+            var buttons = [
+                { icon: 'share', label: 'LinkedIn', action: 'https://www.linkedin.com/sharing/share-offsite/?url=' + url },
+                { icon: 'flutter_dash', label: 'X / Twitter', action: 'https://twitter.com/intent/tweet?url=' + url + '&text=' + title },
+                { icon: 'facebook', label: 'Facebook', action: 'https://www.facebook.com/sharer/sharer.php?u=' + url },
+                { icon: 'content_copy', label: 'Copy URL', action: 'copy' }
+            ];
+
+            var desktopHtml = '';
+            var mobileHtml = '';
+
+            for (var i = 0; i < buttons.length; i++) {
+                var b = buttons[i];
+                var btnClass = 'share-btn flex items-center gap-3 w-full px-4 py-2.5 rounded-xl glass text-sm text-zinc-300 hover:text-white transition-all cursor-pointer';
+                var mobileClass = 'share-btn flex items-center gap-2 px-4 py-2.5 rounded-xl glass text-sm text-zinc-300 hover:text-white transition-all cursor-pointer';
+
+                if (b.action === 'copy') {
+                    desktopHtml += '<button class="' + btnClass + '" onclick="copyUrl(this)"><span class="material-symbols-outlined text-base accent-text">' + b.icon + '</span>' + b.label + '</button>';
+                    mobileHtml += '<button class="' + mobileClass + '" onclick="copyUrl(this)"><span class="material-symbols-outlined text-base accent-text">' + b.icon + '</span>' + b.label + '</button>';
+                } else {
+                    desktopHtml += '<button class="' + btnClass + '" onclick="window.open(\'' + b.action + '\',\'share\',\'width=600,height=400\')"><span class="material-symbols-outlined text-base accent-text">' + b.icon + '</span>' + b.label + '</button>';
+                    mobileHtml += '<button class="' + mobileClass + '" onclick="window.open(\'' + b.action + '\',\'share\',\'width=600,height=400\')"><span class="material-symbols-outlined text-base accent-text">' + b.icon + '</span>' + b.label + '</button>';
+                }
+            }
+
+            document.getElementById('share-buttons').innerHTML = desktopHtml;
+            document.getElementById('share-buttons-mobile').innerHTML = mobileHtml;
+        }
+
+        // ── Categories Sidebar ────────────────────────────────
+        function buildCategories() {
+            var cats = BlogData.categories;
+            var html = '';
+            var mobileHtml = '';
+            for (var i = 0; i < cats.length; i++) {
+                var c = cats[i];
+                var isActive = post.category === c.name;
+                var activeClass = isActive ? 'accent-text accent-border' : 'text-zinc-400 border-transparent hover:text-white';
+                var link = '<a href="/blog/es/category/' + c.slug + '/" class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm border transition-all ' + activeClass + '">' +
+                    '<span class="material-symbols-outlined text-base">' + c.icon + '</span>' + c.name + '</a>';
+                html += link;
+                mobileHtml += link;
+            }
+            document.getElementById('sidebar-categories').innerHTML = html;
+            document.getElementById('sidebar-categories-mobile').innerHTML = mobileHtml;
+        }
+
+        // ── Related Posts ─────────────────────────────────────
+        function buildRelated() {
+            var related = BlogData.getRelated(post.id, post.category, 3);
+            // If not enough in same category, fill from all
+            if (related.length < 3) {
+                var others = BlogData.posts.filter(function(p) { return p.id !== post.id && related.indexOf(p) === -1; });
+                related = related.concat(others.slice(0, 3 - related.length));
+            }
+
+            if (related.length === 0) {
+                document.getElementById('related-section').classList.add('hidden');
+                return;
+            }
+
+            var html = '';
+            for (var i = 0; i < related.length; i++) {
+                var r = related[i];
+                html += '<a href="/blog/posts/es/' + r.slugEs + '/" class="related-card glass rounded-xl overflow-hidden block">' +
+                    '<img src="' + r.image + '" alt="' + escapeHtml(r.title) + '" class="w-full h-44 object-cover"/>' +
+                    '<div class="p-5">' +
+                    '<span class="text-xs accent-text font-medium">' + r.category + '</span>' +
+                    '<h3 class="font-headline font-semibold mt-2 mb-2 leading-snug">' + r.title + '</h3>' +
+                    '<span class="text-xs text-zinc-500">' + r.readTime + '</span>' +
+                    '</div></a>';
+            }
+            document.getElementById('related-grid').innerHTML = html;
+        }
+
+        // ── Scroll Spy ────────────────────────────────────────
+        function initScrollSpy() {
+            var tocLinks = document.querySelectorAll('.toc-link');
+            if (tocLinks.length === 0) return;
+
+            var sectionEls = [];
+            for (var i = 0; i < tocLinks.length; i++) {
+                var el = document.getElementById(tocLinks[i].getAttribute('data-section'));
+                if (el) sectionEls.push({ el: el, links: document.querySelectorAll('[data-section="' + tocLinks[i].getAttribute('data-section') + '"]') });
+            }
+
+            function onScroll() {
+                var scrollPos = window.scrollY + 120;
+                var activeIdx = 0;
+                for (var i = 0; i < sectionEls.length; i++) {
+                    if (sectionEls[i].el.offsetTop <= scrollPos) activeIdx = i;
+                }
+                for (var i = 0; i < tocLinks.length; i++) tocLinks[i].classList.remove('active');
+                if (sectionEls[activeIdx]) {
+                    var links = sectionEls[activeIdx].links;
+                    for (var j = 0; j < links.length; j++) links[j].classList.add('active');
+                }
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        }
+
+        // ── Reading Progress Bar ──────────────────────────────
+        function initProgressBar() {
+            var bar = document.getElementById('reading-progress');
+            function updateProgress() {
+                var scrollTop = window.scrollY;
+                var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                bar.style.width = Math.min(pct, 100) + '%';
+            }
+            window.addEventListener('scroll', updateProgress, { passive: true });
+            updateProgress();
+        }
+
+        // ── Not Found ─────────────────────────────────────────
+        function showNotFound() {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('not-found-state').classList.remove('hidden');
+            document.title = 'Post Not Found | Apex Music Latino Blog';
+        }
+
+        // ── Utility ───────────────────────────────────────────
+        function formatDate(dateStr) {
+            var d = new Date(dateStr + 'T00:00:00');
+            return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        // ── Copy URL (global) ─────────────────────────────────
+        window.copyUrl = function(btn) {
+            navigator.clipboard.writeText(window.location.href).then(function() {
+                var original = btn.innerHTML;
+                btn.innerHTML = '<span class="material-symbols-outlined text-base accent-text">check</span>Copied!';
+                setTimeout(function() { btn.innerHTML = original; }, 2000);
+            });
+        };
+
+        // ── Init ──────────────────────────────────────────────
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', renderPost);
+        } else {
+            renderPost();
+        }
+    })();
+    </script>
+</body>
+</html>

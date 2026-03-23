@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Apex Blog | Apex Music Latino</title>
+    <meta name="description" content="Insights, strategies, and stories from the frontlines of Latin music."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="/css/themes.css" rel="stylesheet"/>
+    <style>
+        .blog-hero-gradient { background: radial-gradient(ellipse at 50% 0%, rgba(0,255,65,0.06) 0%, transparent 60%); }
+        .text-gradient { background: linear-gradient(135deg, var(--gradient-start, #00ff41), var(--gradient-end, #00c832)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); }
+        .glass-hover:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+        .card-img { filter: grayscale(40%); transition: filter 0.5s ease, transform 0.5s ease; }
+        .group:hover .card-img { filter: grayscale(0%); transform: scale(1.05); }
+        .pill-active { background: var(--accent, #00ff41); color: #0c0c0c; }
+        .pill-inactive { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); }
+        .pill-inactive:hover { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9); }
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .dot-grid { background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 32px 32px; }
+        .search-glow:focus-within { box-shadow: 0 0 0 1px var(--accent, #00ff41), 0 0 20px rgba(0,255,65,0.08); }
+        .category-strip { scrollbar-width: none; -ms-overflow-style: none; }
+        .category-strip::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-[#0c0c0c] text-white overflow-x-hidden" style="font-family: 'Inter', sans-serif;">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 w-full z-50"></nav>
+
+    <!-- Hero -->
+    <section class="relative pt-32 pb-16 px-6 md:px-8 text-center overflow-hidden">
+        <div class="blog-hero-gradient absolute inset-0 z-0"></div>
+        <div class="absolute inset-0 z-0 opacity-10 dot-grid"></div>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <p class="text-sm tracking-[0.4em] uppercase mb-4 text-zinc-500" style="font-family: 'Space Grotesk';">Insights &middot; Strategy &middot; Culture</p>
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tighter leading-[0.95] mb-6" style="font-family: 'Space Grotesk';">
+                Apex <span class="text-gradient">Blog</span>
+            </h1>
+            <p class="text-lg md:text-xl text-zinc-400 font-light max-w-2xl mx-auto mb-8">
+                Insights, strategies, and stories from the frontlines of Latin music.
+            </p>
+            <a href="/blog/es/" class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass glass-hover text-sm text-zinc-400 hover:text-white transition-all duration-300">
+                <span class="material-symbols-outlined text-base" style="font-size:18px;">translate</span>
+                <span>Leer en Espa&ntilde;ol</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Search -->
+    <section class="relative z-10 max-w-4xl mx-auto px-6 md:px-8 mb-8">
+        <div class="glass rounded-2xl search-glow transition-all duration-300">
+            <div class="flex items-center gap-3 px-5 py-3.5">
+                <span class="material-symbols-outlined text-zinc-500" style="font-size:22px;">search</span>
+                <input id="blog-search" type="text" placeholder="Search articles..." class="w-full bg-transparent text-white placeholder-zinc-500 outline-none text-base"/>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Filter -->
+    <section class="relative z-10 max-w-6xl mx-auto px-6 md:px-8 mb-12">
+        <div class="category-strip flex gap-2 overflow-x-auto pb-2" id="category-strip">
+            <a href="/blog/" class="pill-active shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300" data-category="all" style="font-family: 'Space Grotesk';">All</a>
+            <a href="/blog/category/artist-development/" class="pill-inactive shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300" data-category="artist-development" style="font-family: 'Space Grotesk';">Artist Development</a>
+            <a href="/blog/category/music-business/" class="pill-inactive shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300" data-category="music-business" style="font-family: 'Space Grotesk';">Music Business</a>
+            <a href="/blog/category/data-analytics/" class="pill-inactive shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300" data-category="data-analytics" style="font-family: 'Space Grotesk';">Data &amp; Analytics</a>
+            <a href="/blog/category/marketing/" class="pill-inactive shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300" data-category="marketing" style="font-family: 'Space Grotesk';">Marketing</a>
+            <a href="/blog/category/rights-royalties/" class="pill-inactive shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300" data-category="rights-royalties" style="font-family: 'Space Grotesk';">Rights &amp; Royalties</a>
+            <a href="/blog/category/industry-news/" class="pill-inactive shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300" data-category="industry-news" style="font-family: 'Space Grotesk';">Industry News</a>
+            <a href="/blog/category/academy/" class="pill-inactive shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300" data-category="academy" style="font-family: 'Space Grotesk';">Academy</a>
+            <a href="/blog/category/technology/" class="pill-inactive shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300" data-category="technology" style="font-family: 'Space Grotesk';">Technology</a>
+        </div>
+    </section>
+
+    <!-- Post Grid -->
+    <section class="relative z-10 max-w-6xl mx-auto px-6 md:px-8 mb-24">
+        <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Rendered by JS -->
+        </div>
+        <div id="blog-empty" class="hidden text-center py-20">
+            <span class="material-symbols-outlined text-zinc-600 mb-4" style="font-size:48px;">search_off</span>
+            <p class="text-zinc-500 text-lg">No articles found. Try a different search.</p>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="relative z-10 max-w-4xl mx-auto px-6 md:px-8 mb-24">
+        <div class="glass rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
+            <div class="absolute inset-0 blog-hero-gradient opacity-50"></div>
+            <div class="relative z-10">
+                <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-4" style="font-family: 'Space Grotesk';">
+                    Ready to build your <span class="text-gradient">empire</span>?
+                </h2>
+                <p class="text-zinc-400 text-lg mb-8 max-w-lg mx-auto">Join the artists and labels using Apex to dominate the Latin music market.</p>
+                <a href="/onboarding/" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(0,255,65,0.2)]" style="background: var(--accent, #00ff41); font-family: 'Space Grotesk';">
+                    Get Started
+                    <span class="material-symbols-outlined" style="font-size:20px;">arrow_forward</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-950 w-full py-16 px-8 border-t border-neutral-800/20"></footer>
+
+    <!-- Scripts -->
+    <script src="/js/blog-data.js"></script>
+    <script src="/js/nav.js"></script>
+    <script src="/js/apex-engine.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var lang = window.location.pathname.startsWith('/blog/es') ? 'es' : 'en';
+        var posts = BlogData.posts;
+        var categories = BlogData.categories;
+
+        // Detect active category from URL
+        var pathParts = window.location.pathname.split('/');
+        var catIdx = pathParts.indexOf('category');
+        var activeCategory = catIdx !== -1 ? pathParts[catIdx + 1] : null;
+
+        // Highlight active category pill
+        if (activeCategory) {
+            var pills = document.querySelectorAll('#category-strip a');
+            pills.forEach(function(pill) {
+                var cat = pill.getAttribute('data-category');
+                if (cat === activeCategory) {
+                    pill.classList.remove('pill-inactive');
+                    pill.classList.add('pill-active');
+                } else {
+                    pill.classList.remove('pill-active');
+                    pill.classList.add('pill-inactive');
+                }
+            });
+        }
+
+        function formatDate(dateStr) {
+            var d = new Date(dateStr + 'T00:00:00');
+            var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+        }
+
+        function getCategorySlug(categoryName) {
+            var found = categories.find(function(c) {
+                return c.name === categoryName || c.nameEs === categoryName;
+            });
+            return found ? found.slug : categoryName.toLowerCase().replace(/\s+/g, '-');
+        }
+
+        function renderPosts(filtered) {
+            var grid = document.getElementById('blog-grid');
+            var empty = document.getElementById('blog-empty');
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+
+            grid.innerHTML = filtered.map(function(p) {
+                var title = lang === 'es' ? p.titleEs : p.title;
+                var excerpt = lang === 'es' ? p.excerptEs : p.excerpt;
+                var category = lang === 'es' ? p.categoryEs : p.category;
+                var readTime = lang === 'es' ? p.readTimeEs : p.readTime;
+                var slug = lang === 'es' ? p.slugEs : p.slug;
+                var catSlug = getCategorySlug(p.category);
+                var postUrl = lang === 'es' ? '/blog/posts/es/' + slug + '/' : '/blog/posts/' + slug + '/';
+                var catUrl = lang === 'es' ? '/blog/es/category/' + catSlug + '/' : '/blog/category/' + catSlug + '/';
+
+                return '<a href="' + postUrl + '" class="group block glass rounded-2xl overflow-hidden glass-hover transition-all duration-500 hover:translate-y-[-4px] hover:shadow-[0_8px_40px_rgba(0,0,0,0.3)]">' +
+                    '<div class="relative h-48 overflow-hidden">' +
+                        '<img src="' + p.image + '" alt="' + title.replace(/"/g, '&quot;') + '" class="card-img w-full h-full object-cover"/>' +
+                        '<div class="absolute inset-0 bg-gradient-to-t from-[#0c0c0c] via-transparent to-transparent opacity-60"></div>' +
+                        '<span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium" style="background: var(--accent, #00ff41); color: #0c0c0c; font-family: \'Space Grotesk\';">' + category + '</span>' +
+                    '</div>' +
+                    '<div class="p-5">' +
+                        '<h3 class="text-lg font-semibold mb-2 leading-snug group-hover:text-white text-zinc-100 transition-colors" style="font-family: \'Space Grotesk\';">' + title + '</h3>' +
+                        '<p class="text-sm text-zinc-400 line-clamp-2 mb-4 leading-relaxed">' + excerpt + '</p>' +
+                        '<div class="flex items-center justify-between text-xs text-zinc-500">' +
+                            '<span>' + formatDate(p.date) + '</span>' +
+                            '<span class="flex items-center gap-1"><span class="material-symbols-outlined" style="font-size:14px;">schedule</span>' + readTime + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                '</a>';
+            }).join('');
+        }
+
+        // Filter by category
+        function filterPosts() {
+            var searchVal = document.getElementById('blog-search').value.toLowerCase().trim();
+            var filtered = posts;
+
+            if (activeCategory) {
+                filtered = filtered.filter(function(p) {
+                    var catSlug = getCategorySlug(p.category);
+                    return catSlug === activeCategory;
+                });
+            }
+
+            if (searchVal) {
+                filtered = filtered.filter(function(p) {
+                    var title = (lang === 'es' ? p.titleEs : p.title).toLowerCase();
+                    var excerpt = (lang === 'es' ? p.excerptEs : p.excerpt).toLowerCase();
+                    var cat = (lang === 'es' ? p.categoryEs : p.category).toLowerCase();
+                    return title.includes(searchVal) || excerpt.includes(searchVal) || cat.includes(searchVal) ||
+                        (p.keywords && p.keywords.some(function(k) { return k.toLowerCase().includes(searchVal); }));
+                });
+            }
+
+            renderPosts(filtered);
+        }
+
+        // Search handler
+        document.getElementById('blog-search').addEventListener('input', function() {
+            filterPosts();
+        });
+
+        // Initial render
+        filterPosts();
+    });
+    </script>
+</body>
+</html>

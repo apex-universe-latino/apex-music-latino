@@ -19,7 +19,8 @@
         { label: 'Marketplace', path: '/marketplace/' },
         { label: 'Academy', path: '/academy/' },
         { label: 'Artist OS', path: '/dashboard/' },
-        { label: 'Studio', path: '/studio/' }
+        { label: 'Studio', path: '/studio/' },
+        { label: 'Blog', path: '/blog/' }
     ];
 
     // Detect current genre from URL
@@ -62,6 +63,66 @@
         }).join('');
     }
 
+    // Detect current language from URL
+    function detectLang() {
+        const path = window.location.pathname;
+        if (path.includes('/blog/es') || path.includes('/es/')) return 'es';
+        return 'en';
+    }
+
+    // Build the toggled URL for switching languages
+    function langToggleURL(targetLang) {
+        const path = window.location.pathname;
+        const isBlogPage = path.startsWith('/blog');
+
+        if (!isBlogPage) {
+            // Non-blog pages don't have ES versions yet — stay on same page
+            return path;
+        }
+
+        if (targetLang === 'es') {
+            // EN → ES
+            // /blog/posts/slug/ → /blog/posts/es/slug/
+            if (path.match(/^\/blog\/posts\/[^/]+\//)) {
+                return path.replace(/^\/blog\/posts\//, '/blog/posts/es/');
+            }
+            // /blog/category/cat/ → /blog/es/category/cat/
+            if (path.match(/^\/blog\/category\//)) {
+                return path.replace(/^\/blog\//, '/blog/es/');
+            }
+            // /blog/ → /blog/es/
+            return path.replace(/^\/blog\//, '/blog/es/');
+        } else {
+            // ES → EN
+            // /blog/posts/es/slug/ → /blog/posts/slug/
+            if (path.match(/^\/blog\/posts\/es\//)) {
+                return path.replace(/^\/blog\/posts\/es\//, '/blog/posts/');
+            }
+            // /blog/es/category/cat/ → /blog/category/cat/
+            if (path.match(/^\/blog\/es\/category\//)) {
+                return path.replace(/^\/blog\/es\//, '/blog/');
+            }
+            // /blog/es/ → /blog/
+            return path.replace(/^\/blog\/es\//, '/blog/');
+        }
+    }
+
+    // Language toggle HTML
+    function langToggleHTML() {
+        const lang = detectLang();
+        const isEN = lang === 'en';
+        const isES = lang === 'es';
+        const isBlogPage = window.location.pathname.startsWith('/blog');
+        const enURL = isEN ? '#' : langToggleURL('en');
+        const esURL = isES ? '#' : langToggleURL('es');
+        const tooltip = !isBlogPage ? ' title="Language toggle available on blog pages"' : '';
+
+        return `<div class="flex items-center gap-1 px-3 py-1 rounded-full border border-white/10 text-xs font-bold"${tooltip}>` +
+            `<a href="${enURL}" class="px-2 py-1 rounded-full transition-colors ${isEN ? 'bg-white/10 text-white' : 'text-zinc-500 hover:text-zinc-300'}">EN</a>` +
+            `<a href="${esURL}" class="px-2 py-1 rounded-full transition-colors ${isES ? 'bg-white/10 text-white' : 'text-zinc-500 hover:text-zinc-300'}">ES</a>` +
+        `</div>`;
+    }
+
     // Build and inject navbar
     function injectNav() {
         const existingNav = document.querySelector('nav');
@@ -83,6 +144,7 @@
                 </div>
                 <div class="flex items-center gap-4">
                     <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden material-symbols-outlined text-neutral-400 hover:text-white">menu</button>
+                    ${langToggleHTML()}
                     <a href="/onboarding/" class="px-6 py-2 font-bold rounded-lg text-sm hover:scale-95 transition-transform duration-200 text-black gradient-accent">Join Apex</a>
                 </div>
             </div>
