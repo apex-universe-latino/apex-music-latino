@@ -1,12 +1,12 @@
 {
     "rewrites": [
-        { "source": "/blog/posts/:slug*/", "destination": "/blog/posts/index.html" },
-        { "source": "/blog/posts/:slug*", "destination": "/blog/posts/index.html" },
         { "source": "/blog/posts/es/:slug*/", "destination": "/blog/posts/es/index.html" },
         { "source": "/blog/posts/es/:slug*", "destination": "/blog/posts/es/index.html" },
-        { "source": "/blog/category/:cat*/", "destination": "/blog/index.html" },
-        { "source": "/blog/category/:cat*", "destination": "/blog/index.html" },
+        { "source": "/blog/posts/:slug*/", "destination": "/blog/posts/index.html" },
+        { "source": "/blog/posts/:slug*", "destination": "/blog/posts/index.html" },
         { "source": "/blog/es/category/:cat*/", "destination": "/blog/es/index.html" },
-        { "source": "/blog/es/category/:cat*", "destination": "/blog/es/index.html" }
+        { "source": "/blog/es/category/:cat*", "destination": "/blog/es/index.html" },
+        { "source": "/blog/category/:cat*/", "destination": "/blog/index.html" },
+        { "source": "/blog/category/:cat*", "destination": "/blog/index.html" }
     ]
 }

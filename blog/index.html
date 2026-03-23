@@ -112,6 +112,11 @@
     <script src="/js/apex-engine.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        if (typeof BlogData === 'undefined' || !BlogData.posts) {
+            console.error('BlogData not loaded. Retrying...');
+            setTimeout(function() { window.location.reload(); }, 1000);
+            return;
+        }
         var lang = window.location.pathname.startsWith('/blog/es') ? 'es' : 'en';
         var posts = BlogData.posts;
         var categories = BlogData.categories;

@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Loading... | Apex Music Latino Blog</title>
-    <meta name="description" content="Apex Music Latino Blog — Insights for Latin artists."/>
+    <title>Cargando... | Apex Music Latino Blog</title>
+    <meta name="description" content="Apex Music Latino Blog — Insights para artistas latinos."/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -100,11 +100,11 @@
         <div id="not-found-state" class="hidden min-h-[60vh] flex items-center justify-center px-4">
             <div class="text-center">
                 <span class="material-symbols-outlined text-6xl mb-4 block" style="color: var(--accent);">article</span>
-                <h1 class="font-headline text-3xl font-bold mb-4">Post Not Found</h1>
-                <p class="text-zinc-400 mb-8">The article you're looking for doesn't exist or has been moved.</p>
-                <a href="/blog/" class="inline-flex items-center gap-2 px-6 py-3 rounded-full glass accent-text hover:accent-glow transition-all">
+                <h1 class="font-headline text-3xl font-bold mb-4">Articulo No Encontrado</h1>
+                <p class="text-zinc-400 mb-8">El articulo que buscas no existe o fue movido.</p>
+                <a href="/blog/es/" class="inline-flex items-center gap-2 px-6 py-3 rounded-full glass accent-text hover:accent-glow transition-all">
                     <span class="material-symbols-outlined text-sm">arrow_back</span>
-                    Back to Blog
+                    Volver al Blog
                 </a>
             </div>
         </div>
@@ -119,9 +119,9 @@
 
                 <!-- Back + Language Toggle Row -->
                 <div class="flex items-center justify-between mb-6">
-                    <a href="/blog/" class="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-sm">
+                    <a href="/blog/es/" class="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-sm">
                         <span class="material-symbols-outlined text-base">arrow_back</span>
-                        All Articles
+                        Todos los Articulos
                     </a>
                     <a id="lang-toggle" href="#" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-xs font-medium accent-text hover:accent-glow transition-all">
                         <span class="material-symbols-outlined text-sm">translate</span>
@@ -150,7 +150,7 @@
                     <button id="mobile-toc-toggle" class="w-full flex items-center justify-between px-4 py-3 rounded-xl glass">
                         <span class="flex items-center gap-2 text-sm font-medium">
                             <span class="material-symbols-outlined text-base accent-text">list</span>
-                            Table of Contents
+                            Tabla de Contenidos
                         </span>
                         <span class="material-symbols-outlined text-base transition-transform" id="mobile-toc-icon">expand_more</span>
                     </button>
@@ -164,7 +164,7 @@
                     <!-- Left Column: Table of Contents (Desktop) -->
                     <aside class="hidden lg:block lg:col-span-3">
                         <div class="sticky top-28">
-                            <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Contents</h4>
+                            <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Contenido</h4>
                             <nav id="toc-list" class="space-y-2 text-sm"></nav>
                         </div>
                     </aside>
@@ -179,12 +179,12 @@
                         <div class="sticky top-28 space-y-8">
                             <!-- Share Buttons -->
                             <div>
-                                <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Share</h4>
+                                <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Compartir</h4>
                                 <div id="share-buttons" class="space-y-2"></div>
                             </div>
                             <!-- Categories -->
                             <div>
-                                <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Categories</h4>
+                                <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Categorias</h4>
                                 <div id="sidebar-categories" class="space-y-1"></div>
                             </div>
                         </div>
@@ -196,11 +196,11 @@
             <div class="lg:hidden max-w-6xl mx-auto px-4 sm:px-6 pb-8">
                 <div class="glass rounded-xl p-6 space-y-6">
                     <div>
-                        <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Share this article</h4>
+                        <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Compartir este articulo</h4>
                         <div id="share-buttons-mobile" class="flex gap-3 flex-wrap"></div>
                     </div>
                     <div>
-                        <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Categories</h4>
+                        <h4 class="font-headline text-xs uppercase tracking-widest text-zinc-500 mb-4">Categorias</h4>
                         <div id="sidebar-categories-mobile" class="flex gap-2 flex-wrap"></div>
                     </div>
                 </div>
@@ -208,7 +208,7 @@
 
             <!-- Related Posts -->
             <section id="related-section" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-white/5">
-                <h2 class="font-headline text-2xl font-bold mb-8">Related Articles</h2>
+                <h2 class="font-headline text-2xl font-bold mb-8">Articulos Relacionados</h2>
                 <div id="related-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </section>
 
@@ -217,10 +217,10 @@
                 <div class="glass-strong rounded-2xl p-8 sm:p-12 text-center relative overflow-hidden">
                     <div class="absolute inset-0 opacity-5" style="background: radial-gradient(circle at 50% 50%, var(--accent), transparent 70%);"></div>
                     <div class="relative z-10">
-                        <h2 class="font-headline text-2xl sm:text-3xl font-bold mb-4">Ready to Build Your Empire?</h2>
-                        <p class="text-zinc-400 max-w-xl mx-auto mb-8">Join Apex Music Latino and get access to CUBO analytics, professional EPKs, and the tools that turn talent into industry power.</p>
+                        <h2 class="font-headline text-2xl sm:text-3xl font-bold mb-4">Listo Para Construir Tu Imperio?</h2>
+                        <p class="text-zinc-400 max-w-xl mx-auto mb-8">Unete a Apex Music Latino y obtiene acceso a analitica CUBO, EPKs profesionales y las herramientas que convierten talento en poder industrial.</p>
                         <a href="/onboarding/" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-semibold text-black transition-all hover:scale-105" style="background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));">
-                            Join Apex
+                            Unete a Apex
                             <span class="material-symbols-outlined text-base">arrow_forward</span>
                         </a>
                     </div>
@@ -233,7 +233,7 @@
     <footer class="border-t border-white/5 py-12 px-4 sm:px-8">
         <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-500">
             <span class="font-headline font-bold text-white tracking-tighter">Apex Music Latino</span>
-            <span>&copy; 2026 Apex Music Latino. All rights reserved.</span>
+            <span>&copy; 2026 Apex Music Latino. Todos los derechos reservados.</span>
         </div>
     </footer>
 
@@ -252,10 +252,10 @@
         // ── Slug Extraction ───────────────────────────────────
         function extractSlug() {
             var path = window.location.pathname.replace(/\/+$/, '');
-            // /blog/posts/my-slug → my-slug
+            // /blog/posts/es/mi-slug → mi-slug
             var parts = path.split('/').filter(Boolean);
-            // ["blog","posts","my-slug"]
-            if (parts.length >= 3 && parts[0] === 'blog' && parts[1] === 'posts') {
+            // ["blog","posts","es","mi-slug"]
+            if (parts.length >= 4 && parts[0] === 'blog' && parts[1] === 'posts' && parts[2] === 'es') {
                 return parts[parts.length - 1];
             }
             return null;
@@ -337,11 +337,8 @@
         }
 
         function inlineFormat(text) {
-            // Bold: **text**
             text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-            // Inline code: `text`
             text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
-            // Links: [text](url)
             text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
             return text;
         }
@@ -359,19 +356,19 @@
             if (!post) { showNotFound(); return; }
 
             // Update page title & meta
-            document.title = post.title + ' | Apex Music Latino Blog';
+            document.title = post.titleEs + ' | Apex Music Latino Blog';
             var metaDesc = document.querySelector('meta[name="description"]');
-            if (metaDesc) metaDesc.content = post.excerpt;
+            if (metaDesc) metaDesc.content = post.excerptEs;
 
             // Breadcrumb
             document.getElementById('breadcrumb').innerHTML =
-                '<a href="/blog/" class="hover:text-white transition-colors">Blog</a>' +
+                '<a href="/blog/es/" class="hover:text-white transition-colors">Blog</a>' +
                 '<span class="material-symbols-outlined text-xs">chevron_right</span>' +
-                '<a href="/blog/category/' + encodeURIComponent(post.category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')) + '/" class="hover:text-white transition-colors">' + post.category + '</a>' +
+                '<a href="/blog/es/category/' + encodeURIComponent(post.categoryEs.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')) + '/" class="hover:text-white transition-colors">' + post.categoryEs + '</a>' +
                 '<span class="material-symbols-outlined text-xs">chevron_right</span>' +
-                '<span class="text-zinc-400 truncate max-w-[200px] inline-block align-bottom">' + post.title + '</span>';
+                '<span class="text-zinc-400 truncate max-w-[200px] inline-block align-bottom">' + post.titleEs + '</span>';
 
-            // Language toggle
+            // Language toggle — link to English version
             var langToggle = document.getElementById('lang-toggle');
             langToggle.href = '/blog/posts/' + post.slug + '/';
             document.getElementById('lang-toggle-label').textContent = 'Read in English';
@@ -382,20 +379,20 @@
                 '<span class="text-zinc-600">|</span>' +
                 '<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm accent-text">person</span>' + post.author + '</span>' +
                 '<span class="text-zinc-600">|</span>' +
-                '<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm accent-text">schedule</span>' + post.readTime + '</span>';
+                '<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm accent-text">schedule</span>' + post.readTimeEs + '</span>';
 
             // Title
-            document.getElementById('post-title').textContent = post.title;
+            document.getElementById('post-title').textContent = post.titleEs;
 
             // Hero image
             var img = document.getElementById('post-hero-img');
             img.src = post.image;
-            img.alt = post.title;
+            img.alt = post.titleEs;
 
             // Build article body
-            var bodyHtml = renderMarkdown(post.content);
+            var bodyHtml = renderMarkdown(post.contentEs);
 
-            var sections = post.sections || [];
+            var sections = post.sectionsEs || [];
             for (var i = 0; i < sections.length; i++) {
                 var s = sections[i];
                 var sectionId = 'section-' + i;
@@ -458,12 +455,12 @@
         // ── Share Buttons ─────────────────────────────────────
         function buildShareButtons() {
             var url = encodeURIComponent(window.location.href);
-            var title = encodeURIComponent(post.title);
+            var title = encodeURIComponent(post.titleEs);
             var buttons = [
                 { icon: 'share', label: 'LinkedIn', action: 'https://www.linkedin.com/sharing/share-offsite/?url=' + url },
                 { icon: 'flutter_dash', label: 'X / Twitter', action: 'https://twitter.com/intent/tweet?url=' + url + '&text=' + title },
                 { icon: 'facebook', label: 'Facebook', action: 'https://www.facebook.com/sharer/sharer.php?u=' + url },
-                { icon: 'content_copy', label: 'Copy URL', action: 'copy' }
+                { icon: 'content_copy', label: 'Copiar URL', action: 'copy' }
             ];
 
             var desktopHtml = '';
@@ -494,10 +491,10 @@
             var mobileHtml = '';
             for (var i = 0; i < cats.length; i++) {
                 var c = cats[i];
-                var isActive = post.category === c.name;
+                var isActive = post.categoryEs === c.nameEs;
                 var activeClass = isActive ? 'accent-text accent-border' : 'text-zinc-400 border-transparent hover:text-white';
                 var link = '<a href="/blog/es/category/' + c.slug + '/" class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm border transition-all ' + activeClass + '">' +
-                    '<span class="material-symbols-outlined text-base">' + c.icon + '</span>' + c.name + '</a>';
+                    '<span class="material-symbols-outlined text-base">' + c.icon + '</span>' + c.nameEs + '</a>';
                 html += link;
                 mobileHtml += link;
             }
@@ -508,7 +505,6 @@
         // ── Related Posts ─────────────────────────────────────
         function buildRelated() {
             var related = BlogData.getRelated(post.id, post.category, 3);
-            // If not enough in same category, fill from all
             if (related.length < 3) {
                 var others = BlogData.posts.filter(function(p) { return p.id !== post.id && related.indexOf(p) === -1; });
                 related = related.concat(others.slice(0, 3 - related.length));
@@ -523,11 +519,11 @@
             for (var i = 0; i < related.length; i++) {
                 var r = related[i];
                 html += '<a href="/blog/posts/es/' + r.slugEs + '/" class="related-card glass rounded-xl overflow-hidden block">' +
-                    '<img src="' + r.image + '" alt="' + escapeHtml(r.title) + '" class="w-full h-44 object-cover"/>' +
+                    '<img src="' + r.image + '" alt="' + escapeHtml(r.titleEs) + '" class="w-full h-44 object-cover"/>' +
                     '<div class="p-5">' +
-                    '<span class="text-xs accent-text font-medium">' + r.category + '</span>' +
-                    '<h3 class="font-headline font-semibold mt-2 mb-2 leading-snug">' + r.title + '</h3>' +
-                    '<span class="text-xs text-zinc-500">' + r.readTime + '</span>' +
+                    '<span class="text-xs accent-text font-medium">' + r.categoryEs + '</span>' +
+                    '<h3 class="font-headline font-semibold mt-2 mb-2 leading-snug">' + r.titleEs + '</h3>' +
+                    '<span class="text-xs text-zinc-500">' + r.readTimeEs + '</span>' +
                     '</div></a>';
             }
             document.getElementById('related-grid').innerHTML = html;
@@ -578,20 +574,20 @@
         function showNotFound() {
             document.getElementById('loading-state').classList.add('hidden');
             document.getElementById('not-found-state').classList.remove('hidden');
-            document.title = 'Post Not Found | Apex Music Latino Blog';
+            document.title = 'Articulo No Encontrado | Apex Music Latino Blog';
         }
 
         // ── Utility ───────────────────────────────────────────
         function formatDate(dateStr) {
             var d = new Date(dateStr + 'T00:00:00');
-            return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            return d.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
         }
 
         // ── Copy URL (global) ─────────────────────────────────
         window.copyUrl = function(btn) {
             navigator.clipboard.writeText(window.location.href).then(function() {
                 var original = btn.innerHTML;
-                btn.innerHTML = '<span class="material-symbols-outlined text-base accent-text">check</span>Copied!';
+                btn.innerHTML = '<span class="material-symbols-outlined text-base accent-text">check</span>Copiado!';
                 setTimeout(function() { btn.innerHTML = original; }, 2000);
             });
         };
