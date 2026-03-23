@@ -1,5 +1,6 @@
 .vercel
 .env
 Artistas/*.mp4
-*.mp4
+assetts/main promo*.mp4
+assetts/Video_Ready*.mp4
 .tmp/

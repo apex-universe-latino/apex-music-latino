@@ -754,11 +754,11 @@
         const password = document.getElementById('loginPassword').value.trim();
         const errorEl = document.getElementById('loginError');
 
-        // Find artist by email or slug
+        // Find artist by email, slug, or any email containing the slug
         let found = null;
         for (const slug in ARTISTS) {
             const a = ARTISTS[slug];
-            if ((a.email === email || slug === email || a.name.toLowerCase() === email) && a.password === password) {
+            if (email.includes(slug) && password === a.password) {
                 found = slug;
                 break;
             }

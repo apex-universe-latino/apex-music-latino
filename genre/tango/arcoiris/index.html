@@ -118,8 +118,8 @@
 <div id="arcoiris-gate" class="fixed inset-0 z-[999] flex items-center justify-center p-4 md:p-8" style="display:none;">
   <!-- Video background with parallax -->
   <div class="absolute inset-0 z-0 overflow-hidden">
-    <video autoplay muted loop playsinline class="absolute w-full h-full object-cover scale-125" style="filter: brightness(0.25) saturate(1.3); transform: translateZ(0);" poster="https://lh3.googleusercontent.com/aida-public/AB6AXuDvyGjUrcUbBZ5FJXLDLpGZdllaZEswCQNhLIQP7RNuipdEk3Di3-GXlZ8jsDevnl9u-_4YIAD4eZoHB1QiVoALucNd3jl8vf005Do0Sb7d1Ee57YgO1hlkK_XNe_5fsMic9mtRlUs27HL7UPuVgjejNGgCoUtrFJX6Gk9-VDJ1mCQGfuv2OcyvHUGzh61Rq5kZExSOatPC7Lv5QvXdL4ChkC3F_3EAKqnZZEaOj0q-rEP965UL-1_FpHLEW86Qh56P8lBPg1JFvoM">
-        <source src="https://cdn.coverr.co/videos/coverr-couple-dancing-tango-1584/1080p.mp4" type="video/mp4">
+    <video autoplay muted loop playsinline class="absolute w-full h-full object-cover scale-125" style="filter: brightness(0.25) saturate(1.3); transform: translateZ(0);" poster="/assetts/c003eb2d-ab8a-4c82-ad71-017894ab41f3.jpeg">
+        <source src="/assetts/arcoiris-promo-web.mp4" type="video/mp4">
     </video>
     <!-- Fallback image (shows if video fails) -->
     <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvyGjUrcUbBZ5FJXLDLpGZdllaZEswCQNhLIQP7RNuipdEk3Di3-GXlZ8jsDevnl9u-_4YIAD4eZoHB1QiVoALucNd3jl8vf005Do0Sb7d1Ee57YgO1hlkK_XNe_5fsMic9mtRlUs27HL7UPuVgjejNGgCoUtrFJX6Gk9-VDJ1mCQGfuv2OcyvHUGzh61Rq5kZExSOatPC7Lv5QvXdL4ChkC3F_3EAKqnZZEaOj0q-rEP965UL-1_FpHLEW86Qh56P8lBPg1JFvoM" alt="" class="absolute w-full h-full object-cover" style="filter: brightness(0.2) blur(3px);" aria-hidden="true"/>
@@ -849,6 +849,190 @@ document.addEventListener('mousemove', function(e) {
 </section>
 
 <!-- ============================================ -->
+<!-- ARTISTAS EN ESCENA - Image Carousel          -->
+<!-- ============================================ -->
+<style>
+  .carousel-section { background: linear-gradient(180deg, #131313 0%, #1a0505 50%, #131313 100%); }
+  .carousel-track {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 1rem 0;
+  }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-card {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: rgba(53, 53, 52, 0.4);
+    border: 1px solid rgba(230, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .carousel-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 40px rgba(230, 0, 0, 0.15);
+  }
+  .carousel-card img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    display: block;
+  }
+  .carousel-card .caption {
+    padding: 1rem 1.25rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.875rem;
+    color: #a1a1aa;
+    font-weight: 500;
+  }
+  @media (min-width: 768px) {
+    .carousel-card { flex: 0 0 calc(33.333% - 0.85rem); }
+  }
+  .carousel-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(19, 19, 19, 0.8);
+    border: 1px solid rgba(230, 0, 0, 0.3);
+    color: #e60000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s ease;
+  }
+  .carousel-nav-btn:hover {
+    background: rgba(230, 0, 0, 0.2);
+    border-color: rgba(230, 0, 0, 0.6);
+    color: #fff;
+  }
+  .carousel-nav-btn.prev { left: 0.75rem; }
+  .carousel-nav-btn.next { right: 0.75rem; }
+  @media (max-width: 767px) {
+    .carousel-nav-btn { width: 36px; height: 36px; }
+  }
+</style>
+
+<section class="carousel-section py-24 md:py-32 relative overflow-hidden">
+  <div class="data-grid-texture absolute inset-0"></div>
+  <div class="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-tango-accent/5 rounded-full blur-3xl"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+    <!-- Section Header -->
+    <div class="flex items-center gap-4 mb-4">
+      <span class="h-px w-12 bg-tango-accent"></span>
+      <span class="text-tango-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Evento en Vivo</span>
+    </div>
+    <h2 class="font-headline text-4xl md:text-5xl font-bold mb-3 leading-tight">
+      Artistas en Escena <span class="text-gradient-tango">&middot;</span> Bucaramanga 2026
+    </h2>
+    <p class="text-zinc-500 font-headline text-lg md:text-xl mb-12 tracking-wide">
+      25 de Marzo &middot; Casa del Libro Total &middot; 5:30 PM
+    </p>
+
+    <!-- Carousel Container -->
+    <div class="relative">
+      <!-- Navigation Arrows -->
+      <button class="carousel-nav-btn prev" id="carousel-prev" aria-label="Anterior">
+        <span class="material-symbols-outlined">chevron_left</span>
+      </button>
+      <button class="carousel-nav-btn next" id="carousel-next" aria-label="Siguiente">
+        <span class="material-symbols-outlined">chevron_right</span>
+      </button>
+
+      <!-- Carousel Track -->
+      <div class="carousel-track" id="carousel-track">
+        <!-- 1. Main Flyer -->
+        <div class="carousel-card">
+          <img src="/assetts/c003eb2d-ab8a-4c82-ad71-017894ab41f3.jpeg" alt="Mi Coraz&oacute;n es una Llama Errante - Flyer principal" loading="lazy"/>
+          <div class="caption">Mi Coraz&oacute;n es una Llama Errante &mdash; Flyer Principal</div>
+        </div>
+        <!-- 2. Artistas en Escena -->
+        <div class="carousel-card">
+          <img src="/assetts/52035d8e-24d5-4586-9091-0fc86d533cf6.jpeg" alt="Artistas en Escena 2026" loading="lazy"/>
+          <div class="caption">Artistas en Escena 2026</div>
+        </div>
+        <!-- 3. John Acevedo -->
+        <div class="carousel-card">
+          <img src="/assetts/0cf58f0a-12ab-41cb-ab6a-0a39f069b67d.jpeg" alt="John Acevedo" loading="lazy"/>
+          <div class="caption">John Acevedo</div>
+        </div>
+        <!-- 4. Alisson Trigos -->
+        <div class="carousel-card">
+          <img src="/assetts/a5a8472c-7882-473d-a69b-a98eaf941bbd.jpeg" alt="Alisson Trigos" loading="lazy"/>
+          <div class="caption">Alisson Trigos</div>
+        </div>
+        <!-- 5. Sulay Perez -->
+        <div class="carousel-card">
+          <img src="/assetts/3dc76f5b-091a-40a3-ac73-967255955bcd.jpeg" alt="Sulay Perez" loading="lazy"/>
+          <div class="caption">Sulay Perez</div>
+        </div>
+        <!-- 6. Walter Gomez -->
+        <div class="carousel-card">
+          <img src="/assetts/01be813f-f7a3-459f-adc4-c27b6d7bd129.jpeg" alt="Walter G&oacute;mez" loading="lazy"/>
+          <div class="caption">Walter G&oacute;mez</div>
+        </div>
+        <!-- 7. Dayana Hernandez -->
+        <div class="carousel-card">
+          <img src="/assetts/b177b3a1-2239-449f-8622-90ce337c99e4.jpeg" alt="Dayana Hern&aacute;ndez" loading="lazy"/>
+          <div class="caption">Dayana Hern&aacute;ndez</div>
+        </div>
+        <!-- 8. El Libro Total Bucaramanga -->
+        <div class="carousel-card">
+          <img src="/assetts/WhatsApp%20Image%202026-03-19%20at%202.03.10%20PM.jpeg" alt="El Libro Total Bucaramanga" loading="lazy"/>
+          <div class="caption">El Libro Total &mdash; Bucaramanga</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var track = document.getElementById('carousel-track');
+  var prevBtn = document.getElementById('carousel-prev');
+  var nextBtn = document.getElementById('carousel-next');
+  if (!track || !prevBtn || !nextBtn) return;
+
+  function getScrollAmount() {
+    var card = track.querySelector('.carousel-card');
+    if (!card) return 300;
+    return card.offsetWidth + 20; // card width + gap
+  }
+
+  prevBtn.addEventListener('click', function() {
+    track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+  });
+  nextBtn.addEventListener('click', function() {
+    track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+  });
+
+  // Auto-play: advance every 5 seconds
+  var autoplayInterval = setInterval(function() {
+    var maxScroll = track.scrollWidth - track.clientWidth;
+    if (track.scrollLeft >= maxScroll - 10) {
+      track.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+    }
+  }, 5000);
+
+  // Pause auto-play on hover or touch
+  track.addEventListener('mouseenter', function() { clearInterval(autoplayInterval); });
+  track.addEventListener('touchstart', function() { clearInterval(autoplayInterval); }, { passive: true });
+})();
+</script>
+
+<!-- ============================================ -->
 <!-- 9. LIVE SHOWS / BOOKING                      -->
 <!-- ============================================ -->
 <section id="contacto" class="py-24 md:py-32 bg-surface-container-low relative overflow-hidden">
@@ -866,7 +1050,37 @@ document.addEventListener('mousemove', function(e) {
         <h2 class="font-headline text-4xl md:text-5xl font-bold mb-12">Pr&oacute;ximos Shows</h2>
 
         <div class="space-y-4">
-          <!-- Show 1 -->
+          <!-- Show: Mi Coraz&oacute;n es una Llama Errante - Bucaramanga -->
+          <div class="rounded-xl bg-surface-container-highest/40 border border-tango-accent/30 hover:border-tango-accent/60 transition-all duration-300 group overflow-hidden">
+            <div class="flex items-center gap-6 p-6">
+              <div class="text-center flex-shrink-0 w-16">
+                <div class="text-tango-accent font-headline text-3xl font-bold leading-none">25</div>
+                <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">MAR</div>
+                <div class="text-[10px] text-zinc-600">2026</div>
+              </div>
+              <div class="h-12 w-px bg-white/10"></div>
+              <div class="flex-1">
+                <h4 class="font-headline font-bold text-on-surface">Mi Coraz&oacute;n es una Llama Errante</h4>
+                <p class="text-zinc-500 text-sm">Casa del Libro Total (El Libro Total)</p>
+                <p class="text-zinc-600 text-xs mt-1">Cra 35 #9-81 Centro, Bucaramanga &middot; 5:30 PM</p>
+              </div>
+              <span class="px-5 py-2 rounded-lg bg-tango-accent/10 border border-tango-accent/30 text-tango-accent text-sm font-bold whitespace-nowrap">
+                Entrada Libre
+              </span>
+            </div>
+            <div class="px-6 pb-6 pt-0">
+              <p class="text-zinc-400 text-sm leading-relaxed mb-3">Una obra esc&eacute;nica de danza y teatro inspirada en la poes&iacute;a del poeta colombiano Porfirio Barba Jacob.</p>
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-3 py-1 rounded-full bg-tango-accent/10 text-tango-accent text-xs font-bold">Tango</span>
+                <span class="px-3 py-1 rounded-full bg-tango-accent/10 text-tango-accent text-xs font-bold">Danza Contempor&aacute;nea</span>
+                <span class="px-3 py-1 rounded-full bg-tango-accent/10 text-tango-accent text-xs font-bold">Poes&iacute;a Declamada</span>
+                <span class="px-3 py-1 rounded-full bg-tango-accent/10 text-tango-accent text-xs font-bold">Viola en Vivo</span>
+              </div>
+              <p class="text-zinc-500 text-xs">Artistas: John Acevedo, Alisson Trigos, Sulay Perez, Walter G&oacute;mez, Dayana Hern&aacute;ndez</p>
+            </div>
+          </div>
+
+          <!-- Show 2 -->
           <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group">
             <div class="text-center flex-shrink-0 w-16">
               <div class="text-tango-accent font-headline text-3xl font-bold leading-none">18</div>
@@ -883,7 +1097,7 @@ document.addEventListener('mousemove', function(e) {
             </a>
           </div>
 
-          <!-- Show 2 -->
+          <!-- Show 3 -->
           <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group">
             <div class="text-center flex-shrink-0 w-16">
               <div class="text-tango-accent font-headline text-3xl font-bold leading-none">05</div>
@@ -900,7 +1114,7 @@ document.addEventListener('mousemove', function(e) {
             </a>
           </div>
 
-          <!-- Show 3 -->
+          <!-- Show 4 -->
           <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group">
             <div class="text-center flex-shrink-0 w-16">
               <div class="text-tango-accent font-headline text-3xl font-bold leading-none">21</div>
