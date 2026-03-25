@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="/css/themes.css" />
   <script src="/js/i18n.js"></script>
@@ -362,6 +363,137 @@
       font-size: 11px;
       font-weight: 600;
     }
+
+    /* FRM filter controls */
+    .frm-filters {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .frm-filter-select {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 7px 12px;
+      color: #fff;
+      font-size: 12px;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(255,255,255,0.3)'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+    }
+    .frm-filter-select:focus { border-color: rgba(255,255,255,0.2); }
+    .frm-filter-select option { background: #1a1a1a; color: #fff; }
+
+    /* Sortable column headers */
+    .frm-table thead th.sortable {
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.15s;
+    }
+    .frm-table thead th.sortable:hover { color: rgba(255,255,255,0.7); }
+    .frm-table thead th .sort-icon {
+      font-size: 14px;
+      vertical-align: middle;
+      margin-left: 4px;
+      opacity: 0.3;
+    }
+    .frm-table thead th.sort-active .sort-icon { opacity: 0.8; color: #00ff41; }
+
+    /* Pagination */
+    .frm-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 0 8px;
+    }
+    .frm-pagination button {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      color: rgba(255,255,255,0.6);
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .frm-pagination button:hover:not(:disabled) { background: rgba(255,255,255,0.1); color: #fff; }
+    .frm-pagination button:disabled { opacity: 0.3; cursor: not-allowed; }
+    .frm-pagination button.pg-active { background: rgba(99,102,241,0.3); border-color: rgba(99,102,241,0.5); color: #fff; font-weight: 600; }
+    .frm-pagination .pg-info { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+    /* Plan cards */
+    .plan-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 32px; }
+    .plan-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+    }
+    .plan-card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-2px); }
+    .plan-card.current { border-color: rgba(99,102,241,0.4); }
+    .plan-card.recommended { border-color: rgba(139,92,246,0.5); }
+    .plan-card .plan-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .plan-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .plan-card .plan-price { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; margin-bottom: 4px; }
+    .plan-card .plan-price small { font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.4); }
+    .plan-card .plan-features { list-style: none; padding: 0; margin: 16px 0 24px; text-align: left; }
+    .plan-card .plan-features li { font-size: 13px; color: rgba(255,255,255,0.55); padding: 5px 0; display: flex; align-items: center; gap: 8px; }
+    .plan-card .plan-features li .material-symbols-outlined { font-size: 16px; color: #22c55e; }
+    .plan-subscribe-btn {
+      width: 100%;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      color: #fff;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .plan-subscribe-btn:hover { opacity: 0.85; }
+    .plan-subscribe-btn:active { transform: scale(0.98); }
+    .plan-subscribe-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* EPK save status indicator */
+    .save-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .save-status-badge.local { background: rgba(234,179,8,0.12); color: #eab308; }
+    .save-status-badge.published { background: rgba(34,197,94,0.12); color: #22c55e; }
+    .save-status-badge .status-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .save-status-badge.local .status-dot { background: #eab308; }
+    .save-status-badge.published .status-dot { background: #22c55e; }
   </style>
 </head>
 <body>
@@ -418,10 +550,10 @@
         Marketing Hub
         <span class="material-symbols-outlined lock-icon" style="font-size: 16px;">lock</span>
       </div>
-      <div class="nav-item disabled" data-view="subscription" onclick="switchView('subscription')">
+      <div class="nav-item" data-view="subscription" onclick="switchView('subscription')">
         <span class="material-symbols-outlined" style="font-size: 20px;">credit_card</span>
         Subscription
-        <span class="material-symbols-outlined lock-icon" style="font-size: 16px;">lock</span>
+        <span id="sidebar-plan-badge" class="badge" style="background: rgba(99,102,241,0.15); color: #818cf8; font-size: 9px; margin-left: auto;">FREE</span>
       </div>
       <div class="nav-item disabled" data-view="royalties" onclick="switchView('royalties')">
         <span class="material-symbols-outlined" style="font-size: 20px;">payments</span>
@@ -533,21 +665,43 @@
         <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 24px;">Live data from your fan capture forms.</p>
 
         <!-- Controls -->
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
           <div style="display: flex; align-items: center; gap: 16px;">
             <span id="frm-count" style="font-size: 13px; color: rgba(255,255,255,0.4);"></span>
             <div style="position: relative;">
               <span class="material-symbols-outlined" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 18px; color: rgba(255,255,255,0.25);">search</span>
-              <input type="text" id="frm-search" class="search-input" placeholder="Search fans..." oninput="filterFRM()" />
+              <input type="text" id="frm-search" class="search-input" placeholder="Search fans..." oninput="applyFRMFilters()" />
             </div>
           </div>
-          <div class="tooltip-wrap">
-            <button class="quick-action" style="opacity: 0.4; cursor: not-allowed;">
-              <span class="material-symbols-outlined" style="font-size: 18px;">download</span>
-              Export
-            </button>
-            <span class="tooltip-text">Upgrade to Pro to export data</span>
-          </div>
+          <button class="quick-action" onclick="exportFRMtoCSV()">
+            <span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+            Export CSV
+          </button>
+        </div>
+
+        <!-- Advanced Filters -->
+        <div class="frm-filters" style="margin-bottom: 20px;">
+          <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.3); font-weight: 600;">Filters:</span>
+          <select id="frm-filter-source" class="frm-filter-select" onchange="applyFRMFilters()">
+            <option value="">All Sources</option>
+            <option value="qr">QR</option>
+            <option value="direct">Direct</option>
+            <option value="link">Link</option>
+            <option value="social">Social</option>
+          </select>
+          <select id="frm-filter-device" class="frm-filter-select" onchange="applyFRMFilters()">
+            <option value="">All Devices</option>
+            <option value="mobile">Mobile</option>
+            <option value="desktop">Desktop</option>
+            <option value="tablet">Tablet</option>
+          </select>
+          <select id="frm-filter-date" class="frm-filter-select" onchange="applyFRMFilters()">
+            <option value="">All Time</option>
+            <option value="today">Today</option>
+            <option value="7d">Last 7 Days</option>
+            <option value="30d">Last 30 Days</option>
+          </select>
+          <button style="background:none;border:none;color:rgba(255,255,255,0.3);font-size:11px;cursor:pointer;text-decoration:underline;" onclick="resetFRMFilters()">Clear All</button>
         </div>
 
         <!-- Table -->
@@ -555,33 +709,47 @@
             <table class="frm-table">
               <thead>
                 <tr>
-                  <th style="width: 140px;">Fan ID</th>
-                  <th style="width: 180px;">Name</th>
-                  <th style="width: 200px;">Email</th>
-                  <th style="width: 130px;">City</th>
-                  <th style="width: 130px;">Phone</th>
-                  <th style="width: 120px;">Device</th>
-                  <th style="width: 100px;">Source</th>
-                  <th style="width: 140px;">Date</th>
+                  <th class="sortable" data-sort="fanId" style="width: 140px;" onclick="sortFRMColumn('fanId')">Fan ID <span class="sort-icon material-symbols-outlined">unfold_more</span></th>
+                  <th class="sortable" data-sort="name" style="width: 180px;" onclick="sortFRMColumn('name')">Name <span class="sort-icon material-symbols-outlined">unfold_more</span></th>
+                  <th class="sortable" data-sort="email" style="width: 200px;" onclick="sortFRMColumn('email')">Email <span class="sort-icon material-symbols-outlined">unfold_more</span></th>
+                  <th class="sortable" data-sort="city" style="width: 130px;" onclick="sortFRMColumn('city')">City <span class="sort-icon material-symbols-outlined">unfold_more</span></th>
+                  <th class="sortable" data-sort="phone" style="width: 130px;" onclick="sortFRMColumn('phone')">Phone <span class="sort-icon material-symbols-outlined">unfold_more</span></th>
+                  <th class="sortable" data-sort="device" style="width: 120px;" onclick="sortFRMColumn('device')">Device <span class="sort-icon material-symbols-outlined">unfold_more</span></th>
+                  <th class="sortable" data-sort="source" style="width: 100px;" onclick="sortFRMColumn('source')">Source <span class="sort-icon material-symbols-outlined">unfold_more</span></th>
+                  <th class="sortable" data-sort="date" style="width: 140px;" onclick="sortFRMColumn('date')">Date <span class="sort-icon material-symbols-outlined">unfold_more</span></th>
                 </tr>
               </thead>
               <tbody id="frm-table-body">
-                <tr><td colspan="7" style="text-align: center; padding: 40px; color: rgba(255,255,255,0.25);"><div class="spinner" style="margin: 0 auto;"></div></td></tr>
+                <tr><td colspan="8" style="text-align: center; padding: 40px; color: rgba(255,255,255,0.25);"><div class="spinner" style="margin: 0 auto;"></div></td></tr>
               </tbody>
             </table>
         </div>
+
+        <!-- Pagination -->
+        <div id="frm-pagination" class="frm-pagination" style="display: none;"></div>
       </div>
 
       <!-- ========== EPK VIEW ========== -->
       <div id="view-epk" class="view">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
           <h2 style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em;">Electronic Press Kit</h2>
-          <button class="quick-action" id="preview-epk-btn" onclick="previewEPK()">
-            <span class="material-symbols-outlined" style="font-size: 18px;">open_in_new</span>
-            Preview EPK
-          </button>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span id="epk-save-status" class="save-status-badge local">
+              <span class="status-dot"></span>
+              Saved locally
+            </span>
+            <button class="quick-action" id="pull-server-btn" onclick="pullFromServer()" title="Pull latest from Supabase">
+              <span class="material-symbols-outlined" style="font-size: 18px;">cloud_download</span>
+              Pull from Server
+            </button>
+            <button class="quick-action" id="preview-epk-btn" onclick="previewEPK()">
+              <span class="material-symbols-outlined" style="font-size: 18px;">open_in_new</span>
+              Preview EPK
+            </button>
+          </div>
         </div>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 32px;">Edit your public-facing landing page content.</p>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 8px;">Edit your public-facing landing page content.</p>
+        <p id="epk-last-published" style="font-size: 12px; color: rgba(255,255,255,0.2); margin-bottom: 32px; display: none;">Last published: <span id="epk-last-published-time"></span></p>
 
         <div id="epk-sections"></div>
       </div>
@@ -615,16 +783,71 @@
         </div>
       </div>
 
-      <!-- ========== SUBSCRIPTION (Coming Soon) ========== -->
+      <!-- ========== SUBSCRIPTION ========== -->
       <div id="view-subscription" class="view">
         <h2 style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;">Subscription</h2>
         <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 24px;">Manage your plan and billing.</p>
 
-        <div class="stat-card" style="margin-bottom: 24px; display: inline-flex; align-items: center; gap: 12px;">
+        <div class="stat-card" style="margin-bottom: 32px; display: inline-flex; align-items: center; gap: 12px;">
           <span style="font-size: 13px; color: rgba(255,255,255,0.5);">Current Plan:</span>
-          <span class="badge" style="background: rgba(99,102,241,0.15); color: #818cf8;">Freemium</span>
+          <span id="current-plan-badge" class="badge" style="background: rgba(99,102,241,0.15); color: #818cf8;">Freemium</span>
         </div>
 
+        <!-- Plan Cards -->
+        <div class="plan-cards">
+          <!-- Freemium -->
+          <div class="plan-card current" id="plan-card-freemium">
+            <span class="plan-badge" id="plan-badge-freemium">Current Plan</span>
+            <h3>Freemium</h3>
+            <div class="plan-price">$0<small>/mo</small></div>
+            <ul class="plan-features">
+              <li><span class="material-symbols-outlined">check_circle</span> Fan Capture</li>
+              <li><span class="material-symbols-outlined">check_circle</span> QR Generator</li>
+              <li><span class="material-symbols-outlined">check_circle</span> EPK Editor</li>
+              <li><span class="material-symbols-outlined">check_circle</span> FRM (view only)</li>
+            </ul>
+            <button class="plan-subscribe-btn" style="background: rgba(255,255,255,0.08); cursor: default;" disabled>
+              Free Forever
+            </button>
+          </div>
+
+          <!-- Pro -->
+          <div class="plan-card recommended" id="plan-card-pro">
+            <span class="plan-badge" style="display: none;" id="plan-badge-pro">Current Plan</span>
+            <h3>Pro</h3>
+            <div class="plan-price">$29<small>/mo</small></div>
+            <ul class="plan-features">
+              <li><span class="material-symbols-outlined">check_circle</span> Everything in Free</li>
+              <li><span class="material-symbols-outlined">check_circle</span> Data Export (CSV)</li>
+              <li><span class="material-symbols-outlined">check_circle</span> Email Campaigns</li>
+              <li><span class="material-symbols-outlined">check_circle</span> Priority Support</li>
+            </ul>
+            <button class="plan-subscribe-btn" id="subscribe-pro-btn" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);" onclick="startCheckout('pro')">
+              <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle;">credit_card</span>
+              Subscribe to Pro
+            </button>
+          </div>
+
+          <!-- Enterprise -->
+          <div class="plan-card" id="plan-card-enterprise">
+            <span class="plan-badge" style="display: none;" id="plan-badge-enterprise">Current Plan</span>
+            <h3>Enterprise</h3>
+            <div class="plan-price">$99<small>/mo</small></div>
+            <ul class="plan-features">
+              <li><span class="material-symbols-outlined">check_circle</span> Everything in Pro</li>
+              <li><span class="material-symbols-outlined">check_circle</span> Social Scheduler</li>
+              <li><span class="material-symbols-outlined">check_circle</span> Audience Insights</li>
+              <li><span class="material-symbols-outlined">check_circle</span> Royalty Tracking</li>
+              <li><span class="material-symbols-outlined">check_circle</span> Legal &amp; Contracts</li>
+            </ul>
+            <button class="plan-subscribe-btn" id="subscribe-enterprise-btn" style="background: linear-gradient(135deg, #f59e0b, #d97706);" onclick="startCheckout('enterprise')">
+              <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle;">credit_card</span>
+              Subscribe to Enterprise
+            </button>
+          </div>
+        </div>
+
+        <!-- Pricing comparison table (kept) -->
         <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; overflow: hidden; margin-bottom: 24px;">
           <table class="pricing-table">
             <thead>
@@ -640,24 +863,18 @@
               <tr><td>QR Generator</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
               <tr><td>EPK Editor</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
               <tr><td>FRM (view only)</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
-              <tr><td>Data Export (CSV)</td><td class="dash">—</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
-              <tr><td>Email Campaigns</td><td class="dash">—</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
-              <tr><td>Social Scheduler</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
-              <tr><td>Audience Insights</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
-              <tr><td>Royalty Tracking</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
-              <tr><td>Legal &amp; Contracts</td><td class="dash">—</td><td class="dash">—</td><td class="check">&#10003;</td></tr>
-              <tr><td>Priority Support</td><td class="dash">—</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Data Export (CSV)</td><td class="dash">&mdash;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Email Campaigns</td><td class="dash">&mdash;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Social Scheduler</td><td class="dash">&mdash;</td><td class="dash">&mdash;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Audience Insights</td><td class="dash">&mdash;</td><td class="dash">&mdash;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Royalty Tracking</td><td class="dash">&mdash;</td><td class="dash">&mdash;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Legal &amp; Contracts</td><td class="dash">&mdash;</td><td class="dash">&mdash;</td><td class="check">&#10003;</td></tr>
+              <tr><td>Priority Support</td><td class="dash">&mdash;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
             </tbody>
           </table>
         </div>
 
-        <div style="text-align: center;">
-          <p style="font-size: 13px; color: rgba(255,255,255,0.25); margin-bottom: 12px;">Coming Soon — Stripe Integration</p>
-          <button class="upgrade-btn" style="opacity: 0.5; cursor: not-allowed;">
-            <span class="material-symbols-outlined" style="font-size: 18px;">credit_card</span>
-            Upgrade Plan
-          </button>
-        </div>
+        <p id="checkout-error" style="font-size: 13px; color: #ef4444; text-align: center; display: none; margin-top: 12px;"></p>
       </div>
 
       <!-- ========== ROYALTIES (Coming Soon) ========== -->
@@ -735,6 +952,8 @@ const SERVICE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 let currentArtist = null;
 let frmData = [];
+let epkLastPublished = null;
+let currentPlan = 'freemium';
 
 /* ================================================================
    LOGIN
@@ -775,12 +994,46 @@ function checkSession() {
   }
 }
 
-function enterPortal() {
+async function enterPortal() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('portal').classList.add('active');
   applyArtistTheme();
   loadDashboardStats();
+
+  // Fetch config from Supabase and merge with localStorage (Supabase wins)
+  try {
+    const configUrl = `${SUPABASE_URL}/rest/v1/artists_config?slug=eq.${encodeURIComponent(currentArtist.slug)}&select=config,updated_at&limit=1`;
+    const configRes = await fetch(configUrl, {
+      headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY }
+    });
+    if (configRes.ok) {
+      const rows = await configRes.json();
+      if (rows.length > 0 && rows[0].config) {
+        const serverData = rows[0].config;
+        const localData = (() => {
+          const s = localStorage.getItem('apex_artist_' + currentArtist.slug);
+          if (s) { try { return JSON.parse(s); } catch(e) {} }
+          return null;
+        })();
+
+        // Merge: Supabase takes priority if it has data, otherwise keep local
+        const merged = localData ? { ...localData, ...serverData } : serverData;
+        localStorage.setItem('apex_artist_' + currentArtist.slug, JSON.stringify(merged));
+
+        // Track last published timestamp
+        if (rows[0].updated_at) {
+          epkLastPublished = new Date(rows[0].updated_at);
+        }
+        console.log('[EPK] Loaded config from Supabase, merged with local');
+      }
+    }
+  } catch(e) {
+    console.warn('[EPK] Could not fetch config from Supabase:', e.message);
+  }
+
   renderEPKEditor();
+  updateEPKSaveStatus();
+  checkSubscriptionFromUrl();
 }
 
 function logout() {
@@ -877,7 +1130,100 @@ async function loadDashboardStats() {
 }
 
 /* ================================================================
-   FRM
+   FRM — State
+   ================================================================ */
+let frmFiltered = [];
+let frmCurrentPage = 1;
+const FRM_PAGE_SIZE = 50;
+let frmSortCol = null;
+let frmSortDir = 'asc';
+
+/* ================================================================
+   FRM — Parse a single row into display fields
+   ================================================================ */
+function parseFRMRow(row) {
+  const mp = typeof row.mood_preference === 'string' ? JSON.parse(row.mood_preference || '{}') : (row.mood_preference || {});
+  const name = mp.name || mp.fan_name || '\u2014';
+  const email = row.email || '\u2014';
+  const phone = mp.phone || mp.telefono || '\u2014';
+  const title = mp.title || mp.song_title || mp.mood || '\u2014';
+  const city = mp.city || (mp.geo ? 'Lat: ' + mp.geo.lat.toFixed(2) : '\u2014');
+  const fanId = mp.fan_id || row.id || '\u2014';
+
+  const deviceObj = mp.device || {};
+  const ua = row.user_agent || mp.user_agent || mp.userAgent || deviceObj.user_agent || '';
+  const platform = deviceObj.platform || '';
+  const screenWidth = deviceObj.screen_width || 0;
+
+  let deviceLabel = deviceObj.model || '';
+  if (!deviceLabel) {
+    if (/iphone/i.test(ua)) {
+      deviceLabel = 'iPhone';
+      if (screenWidth >= 430) deviceLabel = 'iPhone Pro Max';
+      else if (screenWidth >= 393) deviceLabel = 'iPhone 15/16';
+      else if (screenWidth >= 390) deviceLabel = 'iPhone 12/13/14';
+      else if (screenWidth >= 375) deviceLabel = 'iPhone X/11';
+      else if (screenWidth >= 320) deviceLabel = 'iPhone SE/8';
+    } else if (/ipad/i.test(ua) || (deviceObj.max_touch_points > 1 && /macintosh/i.test(ua))) {
+      deviceLabel = 'iPad';
+      if (screenWidth >= 1024) deviceLabel = 'iPad Pro';
+      else if (screenWidth >= 834) deviceLabel = 'iPad Air';
+    } else if (/android/i.test(ua)) {
+      if (/samsung|sm-|gt-/i.test(ua)) deviceLabel = 'Samsung Galaxy';
+      else if (/pixel/i.test(ua)) deviceLabel = 'Google Pixel';
+      else if (/huawei|honor/i.test(ua)) deviceLabel = 'Huawei/Honor';
+      else if (/xiaomi|redmi|poco/i.test(ua)) deviceLabel = 'Xiaomi/Redmi';
+      else if (/oneplus/i.test(ua)) deviceLabel = 'OnePlus';
+      else if (/oppo/i.test(ua)) deviceLabel = 'OPPO';
+      else if (/vivo/i.test(ua)) deviceLabel = 'Vivo';
+      else if (/motorola|moto/i.test(ua)) deviceLabel = 'Motorola';
+      else deviceLabel = 'Android';
+      if (screenWidth >= 600) deviceLabel += ' (Tablet)';
+    } else if (/macintosh/i.test(ua)) {
+      deviceLabel = 'Mac';
+    } else if (/windows/i.test(ua)) {
+      deviceLabel = 'Windows';
+    } else if (/linux/i.test(ua) && !/android/i.test(ua)) {
+      deviceLabel = /cros/i.test(ua) ? 'Chromebook' : 'Linux';
+    } else if (/smart-tv|smarttv|googletv|appletv|roku|webos/i.test(ua)) {
+      deviceLabel = 'Smart TV';
+    } else {
+      deviceLabel = platform || 'Desktop';
+    }
+  }
+
+  let deviceType = 'desktop';
+  if (/iphone|android|samsung|pixel|huawei|xiaomi|oneplus|oppo|vivo|motorola/i.test(deviceLabel) && !/tablet/i.test(deviceLabel)) deviceType = 'mobile';
+  else if (/ipad|tablet/i.test(deviceLabel)) deviceType = 'tablet';
+
+  const browserLabel = deviceObj.browser || '';
+  const geo = mp.geo || {};
+  let locationStr = '\u2014';
+  if (geo.lat && geo.lng) locationStr = geo.lat.toFixed(2) + ', ' + geo.lng.toFixed(2);
+
+  const connType = deviceObj.connection_type || '';
+  const tz = deviceObj.timezone || '';
+  const battLevel = deviceObj.battery_level != null ? deviceObj.battery_level + '%' : '';
+  const screenInfo = deviceObj.screen_width ? deviceObj.screen_width + 'x' + deviceObj.screen_height : '';
+  const source = row.source || mp.source || '\u2014';
+
+  let deviceIcon = 'devices';
+  if (/iphone|android|samsung|pixel|huawei|xiaomi|oneplus|oppo|vivo|motorola/i.test(deviceLabel)) deviceIcon = 'smartphone';
+  else if (/ipad|tablet/i.test(deviceLabel)) deviceIcon = 'tablet';
+  else if (/mac|windows|linux|chromebook|desktop/i.test(deviceLabel)) deviceIcon = 'computer';
+  else if (/smart tv/i.test(deviceLabel)) deviceIcon = 'tv';
+
+  let dateStr = '\u2014';
+  if (row.created_at) {
+    const d = new Date(row.created_at);
+    dateStr = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' }) + ' ' + d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  return { mp, name, email, phone, title, city, fanId, deviceLabel, deviceType, deviceIcon, browserLabel, geo, locationStr, connType, tz, battLevel, screenInfo, source, dateStr, ua, platform };
+}
+
+/* ================================================================
+   FRM — Load from Supabase
    ================================================================ */
 async function loadFRM() {
   const tbody = document.getElementById('frm-table-body');
@@ -912,20 +1258,20 @@ async function loadFRM() {
     statusEl.textContent = frmData.length + ' records';
 
     if (frmData.length === 0) {
-      // Try without filter to see if any data exists at all
       const allUrl = SUPABASE_URL + '/rest/v1/leads_capture?order=created_at.desc&limit=5';
       const allRes = await fetch(allUrl, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
       const allData = await allRes.json();
       console.log('[FRM] All records (unfiltered):', allData.length);
       if (allData.length > 0) {
-        // Show all data with a note
         statusEl.textContent = allData.length + ' records (all artists)';
-        renderFRMTable(allData);
-        return;
+        frmData = allData;
       }
     }
 
-    renderFRMTable(frmData);
+    frmSortCol = null;
+    frmSortDir = 'asc';
+    frmCurrentPage = 1;
+    applyFRMFilters();
   } catch(err) {
     console.error('[FRM] Fetch error:', err);
     tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:#e60000;">Connection error: ' + err.message + '</td></tr>';
@@ -933,187 +1279,236 @@ async function loadFRM() {
   }
 }
 
-function renderFRMTable(data) {
-  const tbody = document.getElementById('frm-table-body');
-  if (!data.length) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:rgba(255,255,255,0.3);">No fan data yet.</td></tr>';
-    return;
+/* ================================================================
+   FRM — Advanced Filters + Search
+   ================================================================ */
+function applyFRMFilters() {
+  const q = (document.getElementById('frm-search').value || '').toLowerCase();
+  const sourceFilter = document.getElementById('frm-filter-source').value.toLowerCase();
+  const deviceFilter = document.getElementById('frm-filter-device').value.toLowerCase();
+  const dateFilter = document.getElementById('frm-filter-date').value;
+
+  const now = new Date();
+  let dateFrom = null;
+  if (dateFilter === 'today') {
+    dateFrom = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  } else if (dateFilter === '7d') {
+    dateFrom = new Date(now.getTime() - 7 * 86400000);
+  } else if (dateFilter === '30d') {
+    dateFrom = new Date(now.getTime() - 30 * 86400000);
   }
 
-  const totalRecords = data.length;
-  tbody.innerHTML = data.map((row, i) => {
-    const mp = typeof row.mood_preference === 'string' ? JSON.parse(row.mood_preference || '{}') : (row.mood_preference || {});
-    const name = mp.name || mp.fan_name || '—';
-    const email = row.email || '—';
-    const phone = mp.phone || mp.telefono || '—';
-    const title = mp.title || mp.song_title || mp.mood || '—';
-    const city = mp.city || (mp.geo ? `Lat: ${mp.geo.lat.toFixed(2)}` : '—');
-    const fanId = mp.fan_id || row.id || '—';
-
-    // Virtual Sequence for clarity
-    const seq = totalRecords - i;
-
-    // Comprehensive Device/Model detection
-    const deviceObj = mp.device || {};
-    const ua = row.user_agent || mp.user_agent || mp.userAgent || deviceObj.user_agent || '';
-    const uaLower = ua.toLowerCase();
-    const platform = deviceObj.platform || '';
-    const screenWidth = deviceObj.screen_width || 0;
-
-    let deviceLabel = deviceObj.model || '';
-    if (!deviceLabel) {
-      if (/iphone/i.test(ua)) {
-        deviceLabel = 'iPhone';
-        if (screenWidth >= 430) deviceLabel = 'iPhone Pro Max';
-        else if (screenWidth >= 393) deviceLabel = 'iPhone 15/16';
-        else if (screenWidth >= 390) deviceLabel = 'iPhone 12/13/14';
-        else if (screenWidth >= 375) deviceLabel = 'iPhone X/11';
-        else if (screenWidth >= 320) deviceLabel = 'iPhone SE/8';
-      } else if (/ipad/i.test(ua) || (deviceObj.max_touch_points > 1 && /macintosh/i.test(ua))) {
-        deviceLabel = 'iPad';
-        if (screenWidth >= 1024) deviceLabel = 'iPad Pro';
-        else if (screenWidth >= 834) deviceLabel = 'iPad Air';
-      } else if (/android/i.test(ua)) {
-        if (/samsung|sm-|gt-/i.test(ua)) deviceLabel = 'Samsung Galaxy';
-        else if (/pixel/i.test(ua)) deviceLabel = 'Google Pixel';
-        else if (/huawei|honor/i.test(ua)) deviceLabel = 'Huawei/Honor';
-        else if (/xiaomi|redmi|poco/i.test(ua)) deviceLabel = 'Xiaomi/Redmi';
-        else if (/oneplus/i.test(ua)) deviceLabel = 'OnePlus';
-        else if (/oppo/i.test(ua)) deviceLabel = 'OPPO';
-        else if (/vivo/i.test(ua)) deviceLabel = 'Vivo';
-        else if (/motorola|moto/i.test(ua)) deviceLabel = 'Motorola';
-        else deviceLabel = 'Android';
-        if (screenWidth >= 600) deviceLabel += ' (Tablet)';
-      } else if (/macintosh/i.test(ua)) {
-        deviceLabel = 'Mac';
-      } else if (/windows/i.test(ua)) {
-        deviceLabel = 'Windows';
-      } else if (/linux/i.test(ua) && !/android/i.test(ua)) {
-        deviceLabel = /cros/i.test(ua) ? 'Chromebook' : 'Linux';
-      } else if (/smart-tv|smarttv|googletv|appletv|roku|webos/i.test(ua)) {
-        deviceLabel = 'Smart TV';
-      } else {
-        deviceLabel = platform || 'Desktop';
-      }
+  frmFiltered = frmData.filter(function(row) {
+    const p = parseFRMRow(row);
+    if (q) {
+      const searchable = [p.email, p.name, p.fanId, p.phone, p.title, p.city, p.source, row.email].join(' ').toLowerCase();
+      if (!searchable.includes(q)) return false;
     }
-
-    // Browser badge
-    const browserLabel = deviceObj.browser || '';
-
-    // Location (Geo)
-    const geo = mp.geo || {};
-    let locationStr = '—';
-    if (geo.lat && geo.lng) {
-      locationStr = `${geo.lat.toFixed(2)}, ${geo.lng.toFixed(2)}`;
+    if (sourceFilter && !p.source.toLowerCase().includes(sourceFilter)) return false;
+    if (deviceFilter && p.deviceType !== deviceFilter) return false;
+    if (dateFrom && row.created_at) {
+      if (new Date(row.created_at) < dateFrom) return false;
+    } else if (dateFrom && !row.created_at) {
+      return false;
     }
+    return true;
+  });
 
-    // Connection & extra context for tooltip
-    const connType = deviceObj.connection_type || '';
-    const tz = deviceObj.timezone || '';
-    const battLevel = deviceObj.battery_level != null ? deviceObj.battery_level + '%' : '';
-    const screenInfo = deviceObj.screen_width ? `${deviceObj.screen_width}x${deviceObj.screen_height}` : '';
-    const tooltipParts = [
-      screenInfo ? `Screen: ${screenInfo}` : '',
-      deviceObj.pixel_ratio ? `DPR: ${deviceObj.pixel_ratio}` : '',
-      browserLabel ? `Browser: ${browserLabel}` : '',
-      connType && connType !== 'unknown' ? `Net: ${connType}` : '',
-      tz && tz !== 'unknown' ? `TZ: ${tz}` : '',
-      battLevel ? `Batt: ${battLevel}` : '',
-      deviceObj.orientation && deviceObj.orientation !== 'unknown' ? `Orient: ${deviceObj.orientation}` : ''
-    ].filter(Boolean).join(' · ');
+  if (frmSortCol) sortFRMData(frmFiltered, frmSortCol, frmSortDir);
 
-    const source = row.source || mp.source || '—';
+  const statusEl = document.getElementById('frm-count');
+  if (frmFiltered.length === frmData.length) {
+    statusEl.textContent = frmData.length + ' records';
+  } else {
+    statusEl.textContent = frmFiltered.length + ' of ' + frmData.length + ' records';
+  }
 
-    // Device icon mapping
-    const deviceModel = deviceLabel;
-    let deviceIcon = 'devices';
-    if (/iphone|android|samsung|pixel|huawei|xiaomi|oneplus|oppo|vivo|motorola/i.test(deviceLabel)) deviceIcon = 'smartphone';
-    else if (/ipad|tablet/i.test(deviceLabel)) deviceIcon = 'tablet';
-    else if (/mac|windows|linux|chromebook|desktop/i.test(deviceLabel)) deviceIcon = 'computer';
-    else if (/smart tv/i.test(deviceLabel)) deviceIcon = 'tv';
+  frmCurrentPage = 1;
+  renderFRMPage();
+}
 
-    let dateStr = '—';
-    if (row.created_at) {
-      const d = new Date(row.created_at);
-      dateStr = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' }) + ' ' + d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+function resetFRMFilters() {
+  document.getElementById('frm-search').value = '';
+  document.getElementById('frm-filter-source').value = '';
+  document.getElementById('frm-filter-device').value = '';
+  document.getElementById('frm-filter-date').value = '';
+  frmSortCol = null;
+  frmSortDir = 'asc';
+  updateSortHeaderUI();
+  applyFRMFilters();
+}
+
+/* ================================================================
+   FRM — Sort by Column
+   ================================================================ */
+function sortFRMColumn(col) {
+  if (frmSortCol === col) {
+    frmSortDir = frmSortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    frmSortCol = col;
+    frmSortDir = 'asc';
+  }
+  updateSortHeaderUI();
+  sortFRMData(frmFiltered, frmSortCol, frmSortDir);
+  frmCurrentPage = 1;
+  renderFRMPage();
+}
+
+function sortFRMData(arr, col, dir) {
+  const mult = dir === 'asc' ? 1 : -1;
+  arr.sort(function(a, b) {
+    const pa = parseFRMRow(a);
+    const pb = parseFRMRow(b);
+    var va, vb;
+    switch(col) {
+      case 'fanId': va = pa.fanId; vb = pb.fanId; break;
+      case 'name': va = pa.name; vb = pb.name; break;
+      case 'email': va = pa.email; vb = pb.email; break;
+      case 'city': va = pa.city; vb = pb.city; break;
+      case 'phone': va = pa.phone; vb = pb.phone; break;
+      case 'device': va = pa.deviceLabel; vb = pb.deviceLabel; break;
+      case 'source': va = pa.source; vb = pb.source; break;
+      case 'date': va = a.created_at || ''; vb = b.created_at || ''; break;
+      default: return 0;
     }
+    if (typeof va === 'string') va = va.toLowerCase();
+    if (typeof vb === 'string') vb = vb.toLowerCase();
+    if (va < vb) return -1 * mult;
+    if (va > vb) return 1 * mult;
+    return 0;
+  });
+}
 
-    return `
-    <tr class="main-row" onclick="toggleRowDetails('${row.id}')">
-      <td style="color:#00ff41;font-weight:700;font-size:11px;letter-spacing:1px;font-family:monospace;">${fanId}</td>
-      <td style="font-weight:600;color:#fff;">${escHtml(name)}</td>
-      <td style="color:rgba(255,255,255,0.5);font-size:12px;">${escHtml(email)}</td>
-      <td><span style="background:rgba(0,186,211,0.1);color:#00bad3;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;">${escHtml(city)}</span></td>
-      <td style="font-family:monospace;font-size:12px;">${escHtml(phone)}</td>
-      <td>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <span class="material-symbols-outlined" style="font-size:14px;color:rgba(255,255,255,0.4);">${deviceIcon}</span>
-          <span style="font-size:11px;color:rgba(255,255,255,0.4);">${deviceModel}</span>
-        </div>
-      </td>
-      <td><span style="font-size:10px;text-transform:uppercase;letter-spacing:0.05em;color:rgba(255,255,255,0.3);">${escHtml(source)}</span></td>
-      <td style="font-size:11px;color:rgba(255,255,255,0.4);white-space:nowrap;">${dateStr}</td>
-    </tr>
-    <tr id="details-${row.id}" class="details-row">
-      <td colspan="8">
-        <div class="details-content" style="background: rgba(255,255,255,0.015); border-left: 2px solid ${currentArtist.accent || '#6366f1'}; border-radius: 0 0 8px 8px; margin: 0 16px 16px 16px;">
-          <div class="details-grid">
-            <div class="detail-item">
-              <label>Sequence ID / Entry</label>
-              <span style="color:#00ff41;font-weight:700;">#${seq}</span>
-            </div>
-            <div class="detail-item">
-              <label>Identidad y Cargo</label>
-              <span>${escHtml(name)} ${title && title !== '—' ? `<br><small style="color:rgba(255,255,255,0.4)">${escHtml(title)}</small>` : ''}</span>
-            </div>
-            <div class="detail-item">
-              <label>Contacto Directo</label>
-              <span>${escHtml(row.email || 'N/A')}<br>${escHtml(phone)}</span>
-            </div>
-            <div class="detail-item">
-              <label>Origen de Captura</label>
-              <span>${escHtml(source)}<br><small style="opacity:0.5">${dateStr}</small></span>
-            </div>
-            <div class="detail-item">
-              <label>Perfil Tecnológico</label>
-              <span style="font-size:11px;opacity:0.8;">OS: ${platform}<br>Res: ${screenInfo || 'N/A'} | Browser: ${browserLabel || 'Other'}</span>
-            </div>
-            <div class="detail-item">
-              <label>Ubicación y Red</label>
-              <span>${locationStr !== '—' ? `📍 ${locationStr}` : 'Sin GPS'}<br>Net: ${connType || 'unknown'} | TZ: ${tz || 'unknown'}</span>
-            </div>
-            <div class="detail-item">
-              <label>User Agent Signature</label>
-              <span style="font-size:9px;line-height:1.2;opacity:0.3;display:block;margin-top:4px;">${escHtml(ua)}</span>
-            </div>
-          </div>
-        </div>
-      </td>
-    </tr>`;
+function updateSortHeaderUI() {
+  document.querySelectorAll('.frm-table thead th.sortable').forEach(function(th) {
+    var icon = th.querySelector('.sort-icon');
+    if (th.dataset.sort === frmSortCol) {
+      th.classList.add('sort-active');
+      icon.textContent = frmSortDir === 'asc' ? 'expand_less' : 'expand_more';
+    } else {
+      th.classList.remove('sort-active');
+      icon.textContent = 'unfold_more';
+    }
+  });
+}
+
+/* ================================================================
+   FRM — Pagination
+   ================================================================ */
+function renderFRMPage() {
+  var totalPages = Math.max(1, Math.ceil(frmFiltered.length / FRM_PAGE_SIZE));
+  if (frmCurrentPage > totalPages) frmCurrentPage = totalPages;
+  var start = (frmCurrentPage - 1) * FRM_PAGE_SIZE;
+  var pageData = frmFiltered.slice(start, start + FRM_PAGE_SIZE);
+  renderFRMTable(pageData, frmFiltered.length);
+  renderFRMPagination(totalPages);
+}
+
+function renderFRMPagination(totalPages) {
+  var container = document.getElementById('frm-pagination');
+  if (totalPages <= 1) { container.style.display = 'none'; return; }
+  container.style.display = 'flex';
+  var html = '';
+  html += '<button ' + (frmCurrentPage <= 1 ? 'disabled' : '') + ' onclick="frmGoToPage(' + (frmCurrentPage - 1) + ')">&laquo; Prev</button>';
+  var maxBtn = 7, sp = Math.max(1, frmCurrentPage - Math.floor(maxBtn / 2));
+  var ep = Math.min(totalPages, sp + maxBtn - 1);
+  if (ep - sp < maxBtn - 1) sp = Math.max(1, ep - maxBtn + 1);
+  if (sp > 1) { html += '<button onclick="frmGoToPage(1)">1</button>'; if (sp > 2) html += '<span class="pg-info">...</span>'; }
+  for (var p = sp; p <= ep; p++) { html += '<button class="' + (p === frmCurrentPage ? 'pg-active' : '') + '" onclick="frmGoToPage(' + p + ')">' + p + '</button>'; }
+  if (ep < totalPages) { if (ep < totalPages - 1) html += '<span class="pg-info">...</span>'; html += '<button onclick="frmGoToPage(' + totalPages + ')">' + totalPages + '</button>'; }
+  html += '<button ' + (frmCurrentPage >= totalPages ? 'disabled' : '') + ' onclick="frmGoToPage(' + (frmCurrentPage + 1) + ')">Next &raquo;</button>';
+  html += '<span class="pg-info" style="margin-left:8px;">Page ' + frmCurrentPage + ' of ' + totalPages + '</span>';
+  container.innerHTML = html;
+}
+
+function frmGoToPage(page) {
+  frmCurrentPage = page;
+  renderFRMPage();
+  var c = document.querySelector('.frm-container');
+  if (c) c.scrollTop = 0;
+}
+
+/* ================================================================
+   FRM — Render Table Rows
+   ================================================================ */
+function renderFRMTable(data, totalCount) {
+  var tbody = document.getElementById('frm-table-body');
+  if (!data.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:40px;color:rgba(255,255,255,0.3);">No fan data matches your filters.</td></tr>';
+    return;
+  }
+  var total = totalCount || data.length;
+  tbody.innerHTML = data.map(function(row, i) {
+    var p = parseFRMRow(row);
+    var seq = total - ((frmCurrentPage - 1) * FRM_PAGE_SIZE) - i;
+    return '<tr class="main-row" onclick="toggleRowDetails(\'' + row.id + '\')">' +
+      '<td style="color:#00ff41;font-weight:700;font-size:11px;letter-spacing:1px;font-family:monospace;">' + p.fanId + '</td>' +
+      '<td style="font-weight:600;color:#fff;">' + escHtml(p.name) + '</td>' +
+      '<td style="color:rgba(255,255,255,0.5);font-size:12px;">' + escHtml(p.email) + '</td>' +
+      '<td><span style="background:rgba(0,186,211,0.1);color:#00bad3;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;">' + escHtml(p.city) + '</span></td>' +
+      '<td style="font-family:monospace;font-size:12px;">' + escHtml(p.phone) + '</td>' +
+      '<td><div style="display:flex;align-items:center;gap:6px;"><span class="material-symbols-outlined" style="font-size:14px;color:rgba(255,255,255,0.4);">' + p.deviceIcon + '</span><span style="font-size:11px;color:rgba(255,255,255,0.4);">' + p.deviceLabel + '</span></div></td>' +
+      '<td><span style="font-size:10px;text-transform:uppercase;letter-spacing:0.05em;color:rgba(255,255,255,0.3);">' + escHtml(p.source) + '</span></td>' +
+      '<td style="font-size:11px;color:rgba(255,255,255,0.4);white-space:nowrap;">' + p.dateStr + '</td>' +
+    '</tr>' +
+    '<tr id="details-' + row.id + '" class="details-row"><td colspan="8">' +
+      '<div class="details-content" style="background:rgba(255,255,255,0.015);border-left:2px solid ' + (currentArtist.accent || '#6366f1') + ';border-radius:0 0 8px 8px;margin:0 16px 16px 16px;">' +
+        '<div class="details-grid">' +
+          '<div class="detail-item"><label>Sequence ID / Entry</label><span style="color:#00ff41;font-weight:700;">#' + seq + '</span></div>' +
+          '<div class="detail-item"><label>Identidad y Cargo</label><span>' + escHtml(p.name) + (p.title && p.title !== '\u2014' ? '<br><small style="color:rgba(255,255,255,0.4)">' + escHtml(p.title) + '</small>' : '') + '</span></div>' +
+          '<div class="detail-item"><label>Contacto Directo</label><span>' + escHtml(row.email || 'N/A') + '<br>' + escHtml(p.phone) + '</span></div>' +
+          '<div class="detail-item"><label>Origen de Captura</label><span>' + escHtml(p.source) + '<br><small style="opacity:0.5">' + p.dateStr + '</small></span></div>' +
+          '<div class="detail-item"><label>Perfil Tecnologico</label><span style="font-size:11px;opacity:0.8;">OS: ' + p.platform + '<br>Res: ' + (p.screenInfo || 'N/A') + ' | Browser: ' + (p.browserLabel || 'Other') + '</span></div>' +
+          '<div class="detail-item"><label>Ubicacion y Red</label><span>' + (p.locationStr !== '\u2014' ? '\ud83d\udccd ' + p.locationStr : 'Sin GPS') + '<br>Net: ' + (p.connType || 'unknown') + ' | TZ: ' + (p.tz || 'unknown') + '</span></div>' +
+          '<div class="detail-item"><label>User Agent Signature</label><span style="font-size:9px;line-height:1.2;opacity:0.3;display:block;margin-top:4px;">' + escHtml(p.ua) + '</span></div>' +
+        '</div>' +
+      '</div>' +
+    '</td></tr>';
   }).join('');
 }
 
 function toggleRowDetails(id) {
-  const allDetails = document.querySelectorAll('.details-row');
-  const target = document.getElementById('details-' + id);
-  const isActive = target.classList.contains('active');
-  
-  // Close others for a clean accordion effect if preferred
-  // allDetails.forEach(d => d.classList.remove('active'));
-  
-  if (isActive) target.classList.remove('active');
+  var target = document.getElementById('details-' + id);
+  if (!target) return;
+  if (target.classList.contains('active')) target.classList.remove('active');
   else target.classList.add('active');
 }
 
-function filterFRM() {
-  const q = document.getElementById('frm-search').value.toLowerCase();
-  if (!q) { renderFRMTable(frmData); return; }
-  const filtered = frmData.filter(row => {
-    const mp = typeof row.mood_preference === 'string' ? JSON.parse(row.mood_preference || '{}') : (row.mood_preference || {});
-    const searchable = [row.email, mp.name, mp.fan_name, mp.phone, mp.telefono, mp.title, mp.song_title, row.source].join(' ').toLowerCase();
-    return searchable.includes(q);
+/* ================================================================
+   FRM — CSV Export
+   ================================================================ */
+function exportFRMtoCSV() {
+  var dataToExport = frmFiltered && frmFiltered.length ? frmFiltered : frmData;
+  if (!dataToExport || !dataToExport.length) { alert('No data to export.'); return; }
+  var headers = ['Fan ID','Name','Email','City','Phone','Device','Device Type','Source','Date','Geo Lat','Geo Lng','Browser','Connection Type','Timezone','Screen Resolution','Battery Level','User Agent'];
+  var csvRows = [headers.join(',')];
+  dataToExport.forEach(function(row) {
+    var p = parseFRMRow(row);
+    var geo = p.geo || {};
+    csvRows.push([
+      csvEsc(p.fanId), csvEsc(p.name), csvEsc(p.email), csvEsc(p.city), csvEsc(p.phone),
+      csvEsc(p.deviceLabel), csvEsc(p.deviceType), csvEsc(p.source), csvEsc(row.created_at || ''),
+      geo.lat != null ? geo.lat : '', geo.lng != null ? geo.lng : '',
+      csvEsc(p.browserLabel), csvEsc(p.connType), csvEsc(p.tz), csvEsc(p.screenInfo),
+      csvEsc(p.battLevel), csvEsc(p.ua)
+    ].join(','));
   });
-  renderFRMTable(filtered);
+  var blob = new Blob(['\uFEFF' + csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'FRM_' + (currentArtist ? currentArtist.slug : 'export') + '_' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function csvEsc(val) {
+  if (val == null) return '';
+  var str = String(val);
+  if (str.indexOf(',') !== -1 || str.indexOf('"') !== -1 || str.indexOf('\n') !== -1) return '"' + str.replace(/"/g, '""') + '"';
+  return str;
 }
 
 function escHtml(str) {
@@ -1189,18 +1584,26 @@ function getEPKData() {
     stats: { fan_count: '845K', stream_count: '5.2M', engagement_rate: '6.1%', top_territory: 'AR' },
     bio: { es: 'Arcoiris es una propuesta innovadora que fusiona el tango contemporáneo con elementos digitales y visuales.', en: 'Arcoiris is an innovative proposal merging contemporary tango with digital and visual elements.' },
     music: [
-      { title: 'Noches de Fuego', type: 'Single', year: '2026', spotify_url: '#' },
-      { title: 'Abrazo Digital', type: 'EP', year: '2025', spotify_url: '#' },
-      { title: 'Milonga Eléctrica', type: 'Single', year: '2025', spotify_url: '#' },
-      { title: 'Pasión Algorítmica', type: 'Álbum', year: '2025', spotify_url: '#' }
+      { title: 'Noches de Fuego', type: 'Single', year: '2026', spotify_url: '#', artwork_url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBcRUX0GIrSKa71DhtkU9zMVkjcxM7p3Y1qC5r20s8qleNSK3p3_9unAE3Ru6s-19Hg659tMfr-c4Fw9KSvBa6vygp9Zb5cM4KcBvFCy8HNHKfXC3aczD_1ruCzru5pax8MotaSdztMLqWiRgJQu7WsMziIOCtkhhKJJSOB1puPUisDU_LHLsvhm1POE1Tf7oreFOiP0CSpdILl-HVYs6plJ2QeBqnrJ7piYbTQLjXhqrlCAHVGa2QW1Vfb2n3JJVkvhImnTi_BY-0' },
+      { title: 'Abrazo Digital', type: 'EP', year: '2025', spotify_url: '#', artwork_url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDwlYJ4FivNEVqPtzKzq_227nxlUqBvLtM-jx_BB2WKkBkxku7sErge44_vfmE_CTqCqJm-2XadcDZg4s44NGI59YyTxcQCSQnHa_qkD1ZidIcyyNnQp1QdLYlzf859Ezj7ivZkDVFMl59HAAW8mbddA9YyAYFfnWKqpeGYQ8n8CJCjREl6swvJsJEg3X8bQway9xIdYIr_xVjjNaajMFIg0fMb6tBQ7SQ2l-QzG95fe0GwDjxX4xBVx-8TjUhcWvaNdjvQ6X6kKSc' },
+      { title: 'Milonga Eléctrica', type: 'Single', year: '2025', spotify_url: '#', artwork_url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA8dD8760wPtHcrc6yNKp6S9KdwOMSymy_1ATS4M8DZJINX2Fb3BGif2Gnl7xErgQSbRmbUCg-QMMKnZWR8f7gmcRJhSLw1Q4uxzEywt65dwcCbVOnmrlDK0RR4NwQ4-H09DTJPx3scPtoCDqOdzcJd6QfcPbk7uiCcBAZPpdtGQjPaGYYJkp3DIRjnP-Q7qq1mEKo7WqLIt6q8oNXwGSd_bMrLXAU0OK38_ove9juRq0o-LFgUQZYPiit8jKHDyUF8SDvOI0IEvYg' },
+      { title: 'Pasión Algorítmica', type: 'Álbum', year: '2025', spotify_url: '#', artwork_url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDJgBR8zt0kk7RB-9OR3QV8hBBZUBCBxW0EocYsI1f15fLVKqYyBIX-Ok9uxEHsibtabR5SqTAO2nEkz8Ohazc3bC0J4U_lPr_0UqqpSTFhW5KRoULDEGMY6aKw4ZzpUAWMcs1CrjE7db6oUrUwmZ6kpcM6sawGUzLCpoVpiz6kNvjfh0XyqPUrhx8fLCCHTg9sTTsbEQrSKPyU2c0WMNDeHNu4nq9BALMNQRb3eLp2hY0jmEuHbfWnRIJVw5bnl6RtpsHkJfMnZds' }
     ],
     video: { url: 'https://www.youtube.com/watch?v=aN5xoSQ5S3c' },
     videography: [],
     links: { spotify: '', apple_music: '', youtube: '', tiktok: '', instagram: '' },
     merch: [],
-    shows: [
-      { title: 'Mi Corazón es una Llama Errante', subtitle: 'Homenaje a Barba Jacob', venue: 'Casa del Libro Total', city: 'Bucaramanga', date: '2026-03-25', address: 'Cra 35 #9-81 Centro', time: '5:30 PM', tags: 'Tango, Danza, Poesía', artists: 'John Acevedo, Alisson Trigos' }
-    ]
+    shows: [],
+    // Visibility Toggles
+    visibility: {
+      stats: true,
+      bio: true,
+      music: true,
+      videography: true,
+      links: true,
+      merch: true,
+      shows: true
+    }
   };
 
   if (currentArtist.slug === 'arcoiris') {
@@ -1245,6 +1648,7 @@ async function saveEPKData(data) {
   localStorage.setItem('apex_artist_' + currentArtist.slug, JSON.stringify(data));
   const fb = document.getElementById('save-feedback');
   if (fb) { fb.style.opacity = '1'; setTimeout(() => fb.style.opacity='0', 2000); }
+  updateEPKSaveStatus('local');
 }
 
 async function publishEPK() {
@@ -1269,7 +1673,9 @@ async function publishEPK() {
       })
     });
     if (res.ok) {
-        alert('Publicación Exitosa! Los cambios están en vivo.');
+        epkLastPublished = new Date();
+        updateEPKSaveStatus('published');
+        alert('Publicacion Exitosa! Los cambios estan en vivo.');
     } else {
         throw new Error('Sync failed');
     }
@@ -1284,6 +1690,7 @@ async function publishEPK() {
 
 function renderEPKEditor() {
   const data = getEPKData();
+  const v = data.visibility || { stats:true, bio:true, music:true, videography:true, links:true, merch:true, shows:true };
   const container = document.getElementById('epk-sections');
 
   container.innerHTML = `
@@ -1303,9 +1710,12 @@ function renderEPKEditor() {
     </div>
 
     <!-- Stats -->
-    <div class="epk-section" id="epk-stats">
+    <div class="epk-section" id="epk-stats" style="${!v.stats ? 'opacity:0.6' : ''}">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div><h4>Stats</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Public metrics displayed on EPK</p></div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <input type="checkbox" id="vis-stats" ${v.stats ? 'checked' : ''} onchange="onEPKChange()" style="width:16px;height:16px;accent-color:#00ff41;">
+          <div><h4>Estad&iacute;sticas</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Public data shown on hero</p></div>
+        </div>
         <button class="epk-btn" onclick="toggleEPKSection('stats')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
       </div>
       <div id="epk-stats-editor" style="display:none;">
@@ -1319,9 +1729,12 @@ function renderEPKEditor() {
     </div>
 
     <!-- Bio -->
-    <div class="epk-section" id="epk-bio">
+    <div class="epk-section" id="epk-bio" style="${!v.bio ? 'opacity:0.6' : ''}">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div><h4>Bio</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Biography in Spanish and English</p></div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <input type="checkbox" id="vis-bio" ${v.bio ? 'checked' : ''} onchange="onEPKChange()" style="width:16px;height:16px;accent-color:#00ff41;">
+          <div><h4>Bio</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Biography in Spanish and English</p></div>
+        </div>
         <button class="epk-btn" onclick="toggleEPKSection('bio')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
       </div>
       <div id="epk-bio-editor" style="display:none;">
@@ -1333,9 +1746,12 @@ function renderEPKEditor() {
     </div>
 
     <!-- Music / Discografia -->
-    <div class="epk-section" id="epk-music">
+    <div class="epk-section" id="epk-music" style="${!v.music ? 'opacity:0.6' : ''}">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div><h4>M&uacute;sica / Discograf&iacute;a</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Albums, singles, and EPs</p></div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <input type="checkbox" id="vis-music" ${v.music ? 'checked' : ''} onchange="onEPKChange()" style="width:16px;height:16px;accent-color:#00ff41;">
+          <div><h4>M&uacute;sica / Discograf&iacute;a</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Albums, singles, and EPs</p></div>
+        </div>
         <div style="display:flex;gap:8px;">
           <button class="epk-btn" onclick="addMusicItem()"><span class="material-symbols-outlined" style="font-size:16px;">add</span> Add</button>
           <button class="epk-btn" onclick="toggleEPKSection('music')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
@@ -1346,38 +1762,13 @@ function renderEPKEditor() {
       </div>
     </div>
 
-    <!-- Video Oficial -->
-    <div class="epk-section" id="epk-video">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div><h4>Video Oficial</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Featured music video</p></div>
-        <button class="epk-btn" onclick="toggleEPKSection('video')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
-      </div>
-      <div id="epk-video-editor" style="display:none;">
-        <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Video URL</label><input class="epk-input" id="epk-video-url" value="${escAttr(data.video.url)}" onchange="onEPKChange()" /></div>
-      </div>
-    </div>
-
-    <!-- Smart Links -->
-    <div class="epk-section" id="epk-links">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div><h4>Smart Links</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Your social and streaming profiles</p></div>
-        <button class="epk-btn" onclick="toggleEPKSection('links')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
-      </div>
-      <div id="epk-links-editor" style="display:none;">
-        <div style="display:grid;gap:10px;">
-          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Spotify</label><input class="epk-input" id="epk-link-spotify" value="${escAttr(data.links.spotify)}" onchange="onEPKChange()" /></div>
-          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Apple Music</label><input class="epk-input" id="epk-link-apple" value="${escAttr(data.links.apple_music)}" onchange="onEPKChange()" /></div>
-          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">YouTube</label><input class="epk-input" id="epk-link-youtube" value="${escAttr(data.links.youtube)}" onchange="onEPKChange()" /></div>
-          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">TikTok</label><input class="epk-input" id="epk-link-tiktok" value="${escAttr(data.links.tiktok)}" onchange="onEPKChange()" /></div>
-          <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Instagram</label><input class="epk-input" id="epk-link-instagram" value="${escAttr(data.links.instagram)}" onchange="onEPKChange()" /></div>
-        </div>
-      </div>
-    </div>
-
     <!-- Videography (Gallery) -->
-    <div class="epk-section" id="epk-videography">
+    <div class="epk-section" id="epk-videography" style="${!v.videography ? 'opacity:0.6' : ''}">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div><h4>Galer&iacute;a de Videos</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Featured performances and works</p></div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <input type="checkbox" id="vis-videography" ${v.videography ? 'checked' : ''} onchange="onEPKChange()" style="width:16px;height:16px;accent-color:#00ff41;">
+          <div><h4>Galer&iacute;a de Videos</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Featured performances and works</p></div>
+        </div>
         <div style="display:flex;gap:8px;">
           <button class="epk-btn" onclick="addVideoGalleryItem()"><span class="material-symbols-outlined" style="font-size:16px;">add</span> Add</button>
           <button class="epk-btn" onclick="toggleEPKSection('videography')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
@@ -1389,9 +1780,12 @@ function renderEPKEditor() {
     </div>
 
     <!-- Merch -->
-    <div class="epk-section" id="epk-merch">
+    <div class="epk-section" id="epk-merch" style="${!v.merch ? 'opacity:0.6' : ''}">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div><h4>Merch</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Products and merchandise</p></div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <input type="checkbox" id="vis-merch" ${v.merch ? 'checked' : ''} onchange="onEPKChange()" style="width:16px;height:16px;accent-color:#00ff41;">
+          <div><h4>Merch</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Products and merchandise</p></div>
+        </div>
         <div style="display:flex;gap:8px;">
           <button class="epk-btn" onclick="addMerchItem()"><span class="material-symbols-outlined" style="font-size:16px;">add</span> Add</button>
           <button class="epk-btn" onclick="toggleEPKSection('merch')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
@@ -1403,11 +1797,17 @@ function renderEPKEditor() {
     </div>
 
     <!-- Upcoming Shows -->
-    <div class="epk-section" id="epk-shows">
+    <div class="epk-section" id="epk-shows" style="${!v.shows ? 'opacity:0.6' : ''}">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div><h4>Upcoming Shows</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Concerts and events</p></div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <input type="checkbox" id="vis-shows" ${v.shows ? 'checked' : ''} onchange="onEPKChange()" style="width:16px;height:16px;accent-color:#00ff41;">
+          <div><h4>Eventos / Pr&oacute;ximos Shows</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Concerts and live events</p></div>
+        </div>
         <div style="display:flex;gap:8px;">
           <button class="epk-btn" onclick="addShowItem()"><span class="material-symbols-outlined" style="font-size:16px;">add</span> Add</button>
+          <button class="epk-btn" onclick="publishEPK()" style="background:rgba(0,255,65,0.1);color:#00ff41;border-color:rgba(0,255,65,0.2);">
+            <span class="material-symbols-outlined" style="font-size:16px;">save</span> Guardar
+          </button>
           <button class="epk-btn" onclick="toggleEPKSection('shows')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
         </div>
       </div>
@@ -1437,6 +1837,7 @@ function toggleEPKSection(section) {
 }
 
 function onEPKChange() {
+  const gc = (id) => document.getElementById(id)?.checked ?? true;
   const data = {
     hero: {
       image_url: gv('epk-hero-image'),
@@ -1464,9 +1865,19 @@ function onEPKChange() {
     },
     videography: collectVideoGalleryItems(),
     merch: collectMerchItems(),
-    shows: collectShowItems()
+    shows: collectShowItems(),
+    visibility: {
+      stats: gc('vis-stats'),
+      bio: gc('vis-bio'),
+      music: gc('vis-music'),
+      videography: gc('vis-videography'),
+      merch: gc('vis-merch'),
+      shows: gc('vis-shows')
+    }
   };
   saveEPKData(data);
+  // Re-render editor to update opacities if needed (optional, could be heavy)
+  // renderEPKEditor(); 
 }
 
 function gv(id) {
@@ -1482,11 +1893,12 @@ function renderMusicItems(data) {
   if (!list) return;
   list.innerHTML = (data.music || []).map((m, i) => `
     <div class="repeatable-item">
-      <div style="display:grid;grid-template-columns:1fr 1fr 80px 1fr auto;gap:8px;align-items:end;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px 1fr 1fr auto;gap:8px;align-items:end;">
         <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Title</label><input class="epk-input music-title" value="${escAttr(m.title)}" onchange="onEPKChange()" /></div>
         <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Type</label><input class="epk-input music-type" value="${escAttr(m.type)}" onchange="onEPKChange()" /></div>
         <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Year</label><input class="epk-input music-year" value="${escAttr(m.year)}" onchange="onEPKChange()" /></div>
         <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Spotify URL</label><input class="epk-input music-spotify" value="${escAttr(m.spotify_url)}" onchange="onEPKChange()" /></div>
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Artwork URL</label><input class="epk-input music-artwork" value="${escAttr(m.artwork_url)}" onchange="onEPKChange()" /></div>
         <button class="epk-btn" style="height:34px;" onclick="removeMusicItem(${i})"><span class="material-symbols-outlined" style="font-size:16px;">delete</span></button>
       </div>
     </div>
@@ -1501,7 +1913,8 @@ function collectMusicItems() {
       title: el.value,
       type: document.querySelectorAll('.music-type')[i]?.value || '',
       year: document.querySelectorAll('.music-year')[i]?.value || '',
-      spotify_url: document.querySelectorAll('.music-spotify')[i]?.value || ''
+      spotify_url: document.querySelectorAll('.music-spotify')[i]?.value || '',
+      artwork_url: document.querySelectorAll('.music-artwork')[i]?.value || ''
     });
   });
   return items;
@@ -1700,6 +2113,196 @@ function removeShowItem(i) {
 function previewEPK() {
   const url = `/genre/${currentArtist.genre}/${currentArtist.slug}/`;
   window.open(url, '_blank');
+}
+
+/* ================================================================
+   EPK SAVE STATUS & SERVER SYNC
+   ================================================================ */
+function updateEPKSaveStatus(status) {
+  const badge = document.getElementById('epk-save-status');
+  const pubEl = document.getElementById('epk-last-published');
+  const pubTime = document.getElementById('epk-last-published-time');
+  if (!badge) return;
+
+  if (status === 'published' || (!status && epkLastPublished)) {
+    badge.className = 'save-status-badge published';
+    badge.innerHTML = '<span class="status-dot"></span> Published live';
+  } else {
+    badge.className = 'save-status-badge local';
+    badge.innerHTML = '<span class="status-dot"></span> Saved locally';
+  }
+
+  if (epkLastPublished && pubEl && pubTime) {
+    pubEl.style.display = 'block';
+    pubTime.textContent = epkLastPublished.toLocaleString('es-ES', {
+      day: 'numeric', month: 'short', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+  }
+}
+
+async function pullFromServer() {
+  const btn = document.getElementById('pull-server-btn');
+  if (!btn) return;
+  const origHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px;animation:spin 0.6s linear infinite;">progress_activity</span> Pulling...';
+
+  try {
+    const url = `${SUPABASE_URL}/rest/v1/artists_config?slug=eq.${encodeURIComponent(currentArtist.slug)}&select=config,updated_at&limit=1`;
+    const res = await fetch(url, {
+      headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY }
+    });
+    if (!res.ok) throw new Error('Fetch failed: ' + res.status);
+    const rows = await res.json();
+
+    if (rows.length > 0 && rows[0].config) {
+      localStorage.setItem('apex_artist_' + currentArtist.slug, JSON.stringify(rows[0].config));
+      if (rows[0].updated_at) {
+        epkLastPublished = new Date(rows[0].updated_at);
+      }
+      renderEPKEditor();
+      updateEPKSaveStatus('published');
+      alert('Datos actualizados desde el servidor.');
+    } else {
+      alert('No se encontraron datos en el servidor para este artista.');
+    }
+  } catch(e) {
+    console.error('[EPK Pull] Error:', e);
+    alert('Error al obtener datos del servidor: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = origHtml;
+  }
+}
+
+/* ================================================================
+   STRIPE CHECKOUT
+   ================================================================ */
+// TODO: Replace these with real Stripe Price IDs from your Stripe Dashboard
+const STRIPE_PRICE_IDS = {
+  pro: 'price_TODO_PRO_MONTHLY_29',         // TODO: Replace with real Stripe Price ID for Pro $29/mo
+  enterprise: 'price_TODO_ENTERPRISE_MONTHLY_99' // TODO: Replace with real Stripe Price ID for Enterprise $99/mo
+};
+
+async function startCheckout(plan) {
+  if (plan === 'freemium') return;
+
+  const btn = document.getElementById('subscribe-' + plan + '-btn');
+  const errorEl = document.getElementById('checkout-error');
+  if (errorEl) errorEl.style.display = 'none';
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px;animation:spin 0.6s linear infinite;vertical-align:middle;">progress_activity</span> Redirecting...';
+  }
+
+  try {
+    const res = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        plan: plan,
+        artist_slug: currentArtist.slug
+      })
+    });
+
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({ error: 'Server error' }));
+      throw new Error(errData.error || 'Failed to create checkout session');
+    }
+
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      throw new Error('No checkout URL returned');
+    }
+  } catch(e) {
+    console.error('[Checkout] Error:', e);
+    if (errorEl) {
+      errorEl.textContent = 'Error: ' + e.message;
+      errorEl.style.display = 'block';
+    }
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      if (plan === 'pro') {
+        btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;">credit_card</span> Subscribe to Pro';
+      } else {
+        btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px;vertical-align:middle;">credit_card</span> Subscribe to Enterprise';
+      }
+    }
+  }
+}
+
+function checkSubscriptionFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const checkoutResult = params.get('checkout');
+  const plan = params.get('plan');
+
+  if (checkoutResult === 'success' && plan) {
+    currentPlan = plan;
+    updatePlanUI(plan);
+    // Clean up URL
+    window.history.replaceState({}, '', window.location.pathname);
+    alert('Suscripcion exitosa! Tu plan ha sido actualizado a ' + plan.charAt(0).toUpperCase() + plan.slice(1) + '.');
+  } else if (checkoutResult === 'cancelled') {
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+}
+
+function updatePlanUI(plan) {
+  // Update sidebar badge
+  const sidebarBadge = document.getElementById('sidebar-plan-badge');
+  const currentBadge = document.getElementById('current-plan-badge');
+
+  const planLabels = { freemium: 'FREE', pro: 'PRO', enterprise: 'ENTERPRISE' };
+  const planColors = {
+    freemium: { bg: 'rgba(99,102,241,0.15)', color: '#818cf8' },
+    pro: { bg: 'rgba(139,92,246,0.15)', color: '#a78bfa' },
+    enterprise: { bg: 'rgba(245,158,11,0.15)', color: '#f59e0b' }
+  };
+
+  const colors = planColors[plan] || planColors.freemium;
+  const label = planLabels[plan] || 'FREE';
+
+  if (sidebarBadge) {
+    sidebarBadge.textContent = label;
+    sidebarBadge.style.background = colors.bg;
+    sidebarBadge.style.color = colors.color;
+  }
+  if (currentBadge) {
+    currentBadge.textContent = label;
+    currentBadge.style.background = colors.bg;
+    currentBadge.style.color = colors.color;
+  }
+
+  // Update plan card badges
+  ['freemium', 'pro', 'enterprise'].forEach(p => {
+    const card = document.getElementById('plan-card-' + p);
+    const badge = document.getElementById('plan-badge-' + p);
+    if (card) card.classList.toggle('current', p === plan);
+    if (badge) badge.style.display = p === plan ? 'block' : 'none';
+  });
+
+  // Disable subscribe button for current plan
+  const proBtn = document.getElementById('subscribe-pro-btn');
+  const entBtn = document.getElementById('subscribe-enterprise-btn');
+  if (proBtn) {
+    if (plan === 'pro' || plan === 'enterprise') {
+      proBtn.disabled = true;
+      proBtn.textContent = plan === 'pro' ? 'Current Plan' : 'Included';
+      proBtn.style.background = 'rgba(255,255,255,0.08)';
+    }
+  }
+  if (entBtn) {
+    if (plan === 'enterprise') {
+      entBtn.disabled = true;
+      entBtn.textContent = 'Current Plan';
+      entBtn.style.background = 'rgba(255,255,255,0.08)';
+    }
+  }
 }
 
 /* ================================================================

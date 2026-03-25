@@ -718,26 +718,9 @@ document.addEventListener('mousemove', function(e) {
 <!-- ============================================ -->
 <!-- 2. STATS BAR                                 -->
 <!-- ============================================ -->
-<section class="relative py-10 bg-surface-container-lowest border-y border-tango-accent/10">
+<section id="metrics-bar" class="relative py-10 bg-surface-container-lowest border-y border-tango-accent/10">
   <div class="data-grid-texture absolute inset-0"></div>
   <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-      <div class="text-center md:text-left border-l-2 border-tango-accent/30 pl-6">
-        <div class="text-tango-accent font-headline text-4xl md:text-5xl font-bold">845K</div>
-        <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Fans</div>
-      </div>
-      <div class="text-center md:text-left border-l-2 border-tango-accent/30 pl-6">
-        <div class="text-tango-accent font-headline text-4xl md:text-5xl font-bold">5.2M</div>
-        <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Streams</div>
-      </div>
-      <div class="text-center md:text-left border-l-2 border-tango-accent/30 pl-6">
-        <div class="text-on-surface font-headline text-4xl md:text-5xl font-bold">AR</div>
-        <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Top Territory</div>
-      </div>
-      <div class="text-center md:text-left border-l-2 border-tango-accent/30 pl-6">
-        <div class="text-tango-accent font-headline text-4xl md:text-5xl font-bold">6.1%</div>
-        <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Engagement Rate</div>
-      </div>
     </div>
   </div>
 </section>
@@ -745,7 +728,7 @@ document.addEventListener('mousemove', function(e) {
 <!-- ============================================ -->
 <!-- 3. BIO SECTION                               -->
 <!-- ============================================ -->
-<section class="py-24 md:py-32 bg-surface relative overflow-hidden">
+<section id="biografia" class="py-24 md:py-32 bg-surface relative overflow-hidden">
   <!-- Atmospheric glow -->
   <div class="absolute -left-32 top-1/2 -translate-y-1/2 w-96 h-96 bg-tango-accent/5 rounded-full blur-3xl"></div>
 
@@ -798,61 +781,14 @@ document.addEventListener('mousemove', function(e) {
     </div>
     <h2 class="font-headline text-4xl md:text-5xl font-bold mb-16">Discograf&iacute;a</h2>
 
-    <div id="discografia-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <!-- Release 1 -->
-      <div class="group cursor-pointer">
-        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl crimson-glow-sm tango-border-glow">
-          <img alt="Noches de Fuego single artwork" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcRUX0GIrSKa71DhtkU9zMVkjcxM7p3Y1qC5r20s8qleNSK3p3_9unAE3Ru6s-19Hg659tMfr-c4Fw9KSvBa6vygp9Zb5cM4KcBvFCy8HNHKfXC3aczD_1ruCzru5pax8MotaSdztMLqWiRgJQu7WsMziIOCtkhhKJJSOB1puPUisDU_LHLsvhm1POE1Tf7oreFOiP0CSpdILl-HVYs6plJ2QeBqnrJ7piYbTQLjXhqrlCAHVGa2QW1Vfb2n3JJVkvhImnTi_BY-0"/>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-            <span class="material-symbols-outlined text-white text-6xl drop-shadow-2xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
-          </div>
-          <div class="absolute top-3 left-3">
-            <span class="bg-tango-accent text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">Nuevo</span>
-          </div>
-        </div>
-        <h4 class="font-headline font-bold text-on-surface text-lg">Noches de Fuego</h4>
-        <p class="text-zinc-500 text-sm mt-1">Single &bull; 2026</p>
+      <div id="discografia-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Hydrated from config -->
       </div>
 
-      <!-- Release 2 -->
-      <div class="group cursor-pointer">
-        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl tango-border-glow">
-          <img alt="Abrazo Digital EP artwork" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwlYJ4FivNEVqPtzKzq_227nxlUqBvLtM-jx_BB2WKkBkxku7sErge44_vfmE_CTqCqJm-2XadcDZg4s44NGI59YyTxcQCSQnHa_qkD1ZidIcyyNnQp1QdLYlzf859Ezj7ivZkDVFMl59HAAW8mbddA9YyAYFfnWKqpeGYQ8n8CJCjREl6swvJsJEg3X8bQway9xIdYIr_xVjjNaajMFIg0fMb6tBQ7SQ2l-QzG95fe0GwDjxX4xBVx-8TjUhcWvaNdjvQ6X6kKSc"/>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-            <span class="material-symbols-outlined text-white text-6xl drop-shadow-2xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
-          </div>
-        </div>
-        <h4 class="font-headline font-bold text-on-surface text-lg">Abrazo Digital</h4>
-        <p class="text-zinc-500 text-sm mt-1">EP &bull; 2025</p>
-      </div>
-
-      <!-- Release 3 -->
-      <div class="group cursor-pointer">
-        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl tango-border-glow">
-          <img alt="Milonga Electrica single artwork" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8dD8760wPtHcrc6yNKp6S9KdwOMSymy_1ATS4M8DZJINX2Fb3BGif2Gnl7xErgQSbRmbUCg-QMMKnZWR8f7gmcRJhSLw1Q4uxzEywt65dwcCbVOnmrlDK0RR4NwQ4-H09DTJPx3scPtoCDqOdzcJd6QfcPbk7uiCcBAZPpdtGQjPaGYYJkp3DIRjnP-Q7qq1mEKo7WqLIt6q8oNXwGSd_bMrLXAU0OK38_ove9juRq0o-LFgUQZYPiit8jKHDyUF8SDvOI0IEvYg"/>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-            <span class="material-symbols-outlined text-white text-6xl drop-shadow-2xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
-          </div>
-        </div>
-        <h4 class="font-headline font-bold text-on-surface text-lg">Milonga El&eacute;ctrica</h4>
-        <p class="text-zinc-500 text-sm mt-1">Single &bull; 2025</p>
-      </div>
-
-      <!-- Release 4 -->
-      <div class="group cursor-pointer">
-        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl tango-border-glow">
-          <img alt="Pasion Algoritmica album artwork" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJgBR8zt0kk7RB-9OR3QV8hBBZUBCBxW0EocYsI1f15fLVKqYyBIX-Ok9uxEHsibtabR5SqTAO2nEkz8Ohazc3bC0J4U_lPr_0UqqpSTFhW5KRoULDEGMY6aKw4ZzpUAWMcs1CrjE7db6oUrUwmZ6kpcM6sawGUzLCpoVpiz6kNvjfh0XyqPUrhx8fLCCHTg9sTTsbEQrSKPyU2c0WMNDeHNu4nq9BALMNQRb3eLp2hY0jmEuHbfWnRIJVw5bnl6RtpsHkJfMnZds"/>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-            <span class="material-symbols-outlined text-white text-6xl drop-shadow-2xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
-          </div>
-        </div>
-        <h4 class="font-headline font-bold text-on-surface text-lg">Pasi&oacute;n Algor&iacute;tmica</h4>
-        <p class="text-zinc-500 text-sm mt-1">&Aacute;lbum &bull; 2025</p>
-      </div>
     </div>
 
     <!-- 4.2 VIDEOGRAPHY SECTION -->
-    <div class="mt-24 pt-16 border-t border-white/5">
+    <div id="videografia" class="mt-24 pt-16 border-t border-white/5">
       <div class="flex items-center gap-4 mb-10">
         <span class="h-px w-10 bg-tango-accent/40"></span>
         <span class="text-zinc-500 font-headline tracking-[0.3em] text-[10px] uppercase font-bold">Obras & Videograf&iacute;a</span>
@@ -1648,16 +1584,57 @@ document.addEventListener('mousemove', function(e) {
       const data = await res.json();
       if (!data || data.length === 0) return;
       const config = data[0].config;
+      const vis = config.visibility || { stats:true, bio:true, music:true, videography:true, merch:true, shows:true };
+      
       console.log('[Apex Engine] Live Config Loaded:', config);
 
-      if (config.shows && config.shows.length > 0) renderLiveShows(config.shows);
-      if (config.music && config.music.length > 0) renderLiveMusic(config.music);
-      if (config.videography && config.videography.length > 0) renderLiveVideos(config.videography);
-      if (config.bio) {
+      // Section Visibility Handling
+      const toggleSection = (id, show) => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = show ? 'block' : 'none';
+      };
+
+      toggleSection('musica', vis.music);
+      toggleSection('biografia', vis.bio);
+      toggleSection('shows', vis.shows);
+      toggleSection('metrics-bar', vis.stats); 
+      toggleSection('videografia', vis.videography);
+
+      if (vis.stats && config.stats) renderLiveStats(config.stats);
+      if (vis.shows && config.shows && config.shows.length > 0) renderLiveShows(config.shows);
+      if (vis.music && config.music && config.music.length > 0) renderLiveMusic(config.music);
+      if (vis.videography && config.videography && config.videography.length > 0) renderLiveVideos(config.videography);
+
+      if (vis.bio && config.bio) {
         const bioEl = document.querySelector('#biografia p');
         if (bioEl) bioEl.textContent = config.bio.es || bioEl.textContent;
       }
     } catch(e) { console.error('[Apex Engine] Failed to sync live content:', e); }
+  }
+
+  function renderLiveStats(stats) {
+    const container = document.querySelector('#metrics-bar .max-w-7xl');
+    if (!container) return;
+    container.innerHTML = `
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+        <div class="text-center md:text-left border-l-2 border-tango-accent/30 pl-6">
+          <div class="text-tango-accent font-headline text-4xl md:text-5xl font-bold">${stats.fan_count || '0'}</div>
+          <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Fans</div>
+        </div>
+        <div class="text-center md:text-left border-l-2 border-tango-accent/30 pl-6">
+          <div class="text-tango-accent font-headline text-4xl md:text-5xl font-bold">${stats.stream_count || '0'}</div>
+          <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Streams</div>
+        </div>
+        <div class="text-center md:text-left border-l-2 border-tango-accent/30 pl-6">
+          <div class="text-on-surface font-headline text-4xl md:text-5xl font-bold">${stats.top_territory || '--'}</div>
+          <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Top Territory</div>
+        </div>
+        <div class="text-center md:text-left border-l-2 border-tango-accent/30 pl-6">
+          <div class="text-tango-accent font-headline text-4xl md:text-5xl font-bold">${stats.engagement_rate || '0%'}</div>
+          <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Engagement Rate</div>
+        </div>
+      </div>
+    `;
   }
 
   function renderLiveShows(shows) {
@@ -1687,7 +1664,7 @@ document.addEventListener('mousemove', function(e) {
     container.innerHTML = music.map(m => `
       <div class="group cursor-pointer">
         <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl tango-border-glow">
-          <img src="https://img.youtube.com/vi/aN5xoSQ5S3c/maxresdefault.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="${m.title}"/>
+          <img src="${m.artwork_url || 'https://img.youtube.com/vi/aN5xoSQ5S3c/maxresdefault.jpg'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="${m.title}"/>
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
             <span class="material-symbols-outlined text-white text-6xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
           </div>
@@ -1702,7 +1679,12 @@ document.addEventListener('mousemove', function(e) {
     const container = document.getElementById('obras-gallery');
     if (!container) return;
     container.innerHTML = videos.map(v => {
-      const vidId = v.url.includes('v=') ? v.url.split('v=')[1].split('&')[0] : (v.url.includes('youtu.be/') ? v.url.split('youtu.be/')[1] : '');
+      let vidId = '';
+      const url = v.url || '';
+      if (url.includes('v=')) vidId = url.split('v=')[1].split('&')[0];
+      else if (url.includes('youtu.be/')) vidId = url.split('youtu.be/')[1].split('?')[0];
+      else vidId = url; // assume it's the ID directly
+
       return `
         <div class="group">
           <div class="relative aspect-video bg-black rounded-xl overflow-hidden crimson-glow-sm tango-border-glow mb-6 cursor-pointer" 
