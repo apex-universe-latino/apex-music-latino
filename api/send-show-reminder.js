@@ -61,9 +61,12 @@ export default async function handler(req, res) {
 <p style="color:#666;font-size:12px;margin:0;">Recuerda: tu clase gratis de tango te espera 🎶</p>
 <a href="https://apexmusiclatino.com/genre/tango/arcoiris/" style="color:#e60000;font-size:13px;text-decoration:none;">Ver EPK de Arcoiris →</a>
 </td></tr>
-<tr><td style="padding:24px 40px;background:#0c0c0c;border-top:1px solid #222;text-align:center;">
-<p style="color:#555;font-size:11px;margin:0 0 4px;"><strong style="color:#888;">Apex Music Latino</strong> — Powered by CUBO</p>
+<tr><td style="padding:32px 40px;background:#0c0c0c;border-top:1px solid #222;text-align:center;">
+<img src="https://apexmusiclatino.com/assetts/apex_music_latino_logo.jpg" alt="Apex Music Latino" width="80" height="80" style="border-radius:50%;margin-bottom:12px;border:2px solid #222;filter:invert(1);" />
+<p style="color:#666;font-size:11px;margin:0 0 4px;"><strong style="color:#999;">Apex Music Latino</strong></p>
+<p style="color:#555;font-size:10px;margin:0 0 4px;">Powered by CUBO Data Engine</p>
 <p style="color:#444;font-size:9px;margin:0;">Recibiste este email porque te registraste en apexmusiclatino.com</p>
+<p style="margin:12px 0 0;"><a href="https://apexmusiclatino.com" style="color:#e60000;font-size:10px;text-decoration:none;font-weight:600;">apexmusiclatino.com</a></p>
 </td></tr>
 </table></td></tr></table></body></html>`
     },
@@ -102,9 +105,12 @@ export default async function handler(req, res) {
 <a href="https://instagram.com/arcoiris.tango" style="color:#e1306c;font-size:13px;text-decoration:none;font-weight:600;">Instagram</a>
 </p>
 </td></tr>
-<tr><td style="padding:24px 40px;background:#0c0c0c;border-top:1px solid #222;text-align:center;">
-<p style="color:#555;font-size:11px;margin:0 0 4px;"><strong style="color:#888;">Apex Music Latino</strong> — Powered by CUBO</p>
+<tr><td style="padding:32px 40px;background:#0c0c0c;border-top:1px solid #222;text-align:center;">
+<img src="https://apexmusiclatino.com/assetts/apex_music_latino_logo.jpg" alt="Apex Music Latino" width="80" height="80" style="border-radius:50%;margin-bottom:12px;border:2px solid #222;filter:invert(1);" />
+<p style="color:#666;font-size:11px;margin:0 0 4px;"><strong style="color:#999;">Apex Music Latino</strong></p>
+<p style="color:#555;font-size:10px;margin:0 0 4px;">Powered by CUBO Data Engine</p>
 <p style="color:#444;font-size:9px;margin:0;">Recibiste este email porque te registraste en apexmusiclatino.com</p>
+<p style="margin:12px 0 0;"><a href="https://apexmusiclatino.com" style="color:#e60000;font-size:10px;text-decoration:none;font-weight:600;">apexmusiclatino.com</a></p>
 </td></tr>
 </table></td></tr></table></body></html>`
     },
@@ -137,9 +143,12 @@ export default async function handler(req, res) {
 <tr><td style="padding:8px 40px 32px;text-align:center;">
 <p style="color:#666;font-size:11px;margin:0;">Presenta tu Fan ID en la entrada para beneficios exclusivos 🎶</p>
 </td></tr>
-<tr><td style="padding:24px 40px;background:#0c0c0c;border-top:1px solid #222;text-align:center;">
-<p style="color:#555;font-size:11px;margin:0 0 4px;"><strong style="color:#888;">Apex Music Latino</strong> — Powered by CUBO</p>
+<tr><td style="padding:32px 40px;background:#0c0c0c;border-top:1px solid #222;text-align:center;">
+<img src="https://apexmusiclatino.com/assetts/apex_music_latino_logo.jpg" alt="Apex Music Latino" width="80" height="80" style="border-radius:50%;margin-bottom:12px;border:2px solid #222;filter:invert(1);" />
+<p style="color:#666;font-size:11px;margin:0 0 4px;"><strong style="color:#999;">Apex Music Latino</strong></p>
+<p style="color:#555;font-size:10px;margin:0 0 4px;">Powered by CUBO Data Engine</p>
 <p style="color:#444;font-size:9px;margin:0;">Recibiste este email porque te registraste en apexmusiclatino.com</p>
+<p style="margin:12px 0 0;"><a href="https://apexmusiclatino.com" style="color:#e60000;font-size:10px;text-decoration:none;font-weight:600;">apexmusiclatino.com</a></p>
 </td></tr>
 </table></td></tr></table></body></html>`
     }
