@@ -946,9 +946,10 @@ function renderFRMTable(data) {
     const name = mp.name || mp.fan_name || '—';
     const email = row.email || '—';
     const phone = mp.phone || mp.telefono || '—';
+    const title = mp.title || mp.song_title || mp.mood || '—';
     const city = mp.city || (mp.geo ? `Lat: ${mp.geo.lat.toFixed(2)}` : '—');
     const fanId = mp.fan_id || row.id || '—';
-    
+
     // Virtual Sequence for clarity
     const seq = totalRecords - i;
 
@@ -1022,6 +1023,14 @@ function renderFRMTable(data) {
     ].filter(Boolean).join(' · ');
 
     const source = row.source || mp.source || '—';
+
+    // Device icon mapping
+    const deviceModel = deviceLabel;
+    let deviceIcon = 'devices';
+    if (/iphone|android|samsung|pixel|huawei|xiaomi|oneplus|oppo|vivo|motorola/i.test(deviceLabel)) deviceIcon = 'smartphone';
+    else if (/ipad|tablet/i.test(deviceLabel)) deviceIcon = 'tablet';
+    else if (/mac|windows|linux|chromebook|desktop/i.test(deviceLabel)) deviceIcon = 'computer';
+    else if (/smart tv/i.test(deviceLabel)) deviceIcon = 'tv';
 
     let dateStr = '—';
     if (row.created_at) {
@@ -1174,16 +1183,62 @@ function getEPKData() {
   if (stored) {
     try { return JSON.parse(stored); } catch(e) {}
   }
-  return {
+  
+  const defaults = {
     hero: { image_url: '', video_url: '', headline: '' },
-    stats: { fan_count: '', stream_count: '', engagement_rate: '', top_territory: '' },
-    bio: { es: '', en: '' },
-    music: [],
-    video: { url: '' },
+    stats: { fan_count: '845K', stream_count: '5.2M', engagement_rate: '6.1%', top_territory: 'AR' },
+    bio: { es: 'Arcoiris es una propuesta innovadora que fusiona el tango contemporáneo con elementos digitales y visuales.', en: 'Arcoiris is an innovative proposal merging contemporary tango with digital and visual elements.' },
+    music: [
+      { title: 'Noches de Fuego', type: 'Single', year: '2026', spotify_url: '#' },
+      { title: 'Abrazo Digital', type: 'EP', year: '2025', spotify_url: '#' },
+      { title: 'Milonga Eléctrica', type: 'Single', year: '2025', spotify_url: '#' },
+      { title: 'Pasión Algorítmica', type: 'Álbum', year: '2025', spotify_url: '#' }
+    ],
+    video: { url: 'https://www.youtube.com/watch?v=aN5xoSQ5S3c' },
+    videography: [],
     links: { spotify: '', apple_music: '', youtube: '', tiktok: '', instagram: '' },
     merch: [],
-    shows: []
+    shows: [
+      { title: 'Mi Corazón es una Llama Errante', subtitle: 'Homenaje a Barba Jacob', venue: 'Casa del Libro Total', city: 'Bucaramanga', date: '2026-03-25', address: 'Cra 35 #9-81 Centro', time: '5:30 PM', tags: 'Tango, Danza, Poesía', artists: 'John Acevedo, Alisson Trigos' }
+    ]
   };
+
+  if (currentArtist.slug === 'arcoiris') {
+    defaults.videography = [
+      { 
+        title: 'Red Ochre Woman', 
+        url: 'https://www.youtube.com/watch?v=smyZ11kvowg', 
+        credits: 'A tribute to Isadora Duncan', 
+        description: 'Obra coreográfica y musical en homenaje a la pionera de la danza moderna.' 
+      },
+      { 
+        title: 'Gaslight District', 
+        url: 'https://www.youtube.com/watch?v=BgAGAJpMPZM', 
+        credits: 'Christina Linhardt, Astor Piazzolla, John Acevedo, John Di Bona, Laszlo Mezo', 
+        description: 'Poetry & Tango Fusion. Music: Astor Piazzolla (Tango Etude No. 3).' 
+      },
+      { 
+        title: 'Traumerei', 
+        url: 'https://www.youtube.com/watch?v=UacP7EdG2bs', 
+        credits: 'R. Schumann / John Acevedo, Aimee Delphyne Lissantheia', 
+        description: 'Viola solo with sacred dance and poem.' 
+      },
+      { 
+        title: 'Henri Vieuxtemps', 
+        url: 'https://www.youtube.com/watch?v=3DWwqq0EpHU', 
+        credits: 'John Acevedo, Ron Parker, Laszlo Mezo', 
+        description: 'Capriccio for solo viola. Virtuoso solo music.' 
+      },
+      { 
+        title: 'The Spirit Solitude', 
+        url: 'https://www.youtube.com/watch?v=PreY4iVXNVg', 
+        credits: 'Christina Linhardt, Astor Piazzolla, John Acevedo', 
+        description: 'Poetry by Christina Linhardt. Music: Tango Etude No. 4.' 
+      }
+    ];
+  }
+
+  return defaults;
 }
 
 async function saveEPKData(data) {
@@ -1319,6 +1374,20 @@ function renderEPKEditor() {
       </div>
     </div>
 
+    <!-- Videography (Gallery) -->
+    <div class="epk-section" id="epk-videography">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div><h4>Galer&iacute;a de Videos</h4><p style="font-size:12px;color:rgba(255,255,255,0.3);">Featured performances and works</p></div>
+        <div style="display:flex;gap:8px;">
+          <button class="epk-btn" onclick="addVideoGalleryItem()"><span class="material-symbols-outlined" style="font-size:16px;">add</span> Add</button>
+          <button class="epk-btn" onclick="toggleEPKSection('videography')"><span class="material-symbols-outlined" style="font-size:16px;">edit</span> Edit</button>
+        </div>
+      </div>
+      <div id="epk-videography-editor" style="display:none;">
+        <div id="epk-videography-list"></div>
+      </div>
+    </div>
+
     <!-- Merch -->
     <div class="epk-section" id="epk-merch">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
@@ -1357,6 +1426,7 @@ function renderEPKEditor() {
   `;
 
   renderMusicItems(data);
+  renderVideoGalleryItems(data);
   renderMerchItems(data);
   renderShowItems(data);
 }
@@ -1392,6 +1462,7 @@ function onEPKChange() {
       tiktok: gv('epk-link-tiktok'),
       instagram: gv('epk-link-instagram')
     },
+    videography: collectVideoGalleryItems(),
     merch: collectMerchItems(),
     shows: collectShowItems()
   };
@@ -1434,6 +1505,56 @@ function collectMusicItems() {
     });
   });
   return items;
+}
+
+/* Videography Gallery repeatable */
+function renderVideoGalleryItems(data) {
+  const list = document.getElementById('epk-videography-list');
+  if (!list) return;
+  list.innerHTML = (data.videography || []).map((v, i) => `
+    <div class="repeatable-item" style="background:rgba(255,255,255,0.02);padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);margin-bottom:16px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Video Title</label><input class="epk-input vid-title" value="${escAttr(v.title)}" onchange="onEPKChange()" /></div>
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">YouTube URL</label><input class="epk-input vid-url" value="${escAttr(v.url)}" onchange="onEPKChange()" /></div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="font-size:10px;color:rgba(255,255,255,0.3);">Credits / Artistic Team</label><input class="epk-input vid-credits" value="${escAttr(v.credits)}" placeholder="Violist - John Acevedo, Video - Laszlo Mezo" onchange="onEPKChange()" />
+      </div>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end;">
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Description</label><textarea class="epk-textarea vid-desc" style="min-height:60px;" onchange="onEPKChange()">${escHtml(v.description)}</textarea></div>
+        <button class="epk-btn" style="height:44px;background:rgba(239,68,68,0.1);color:#ef4444;border-color:rgba(239,68,68,0.2);" onclick="removeVideoGalleryItem(${i})"><span class="material-symbols-outlined" style="font-size:20px;">delete</span></button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function collectVideoGalleryItems() {
+  const items = [];
+  const titles = document.querySelectorAll('.vid-title');
+  titles.forEach((el, i) => {
+    items.push({
+      title: el.value,
+      url: document.querySelectorAll('.vid-url')[i]?.value || '',
+      credits: document.querySelectorAll('.vid-credits')[i]?.value || '',
+      description: document.querySelectorAll('.vid-desc')[i]?.value || ''
+    });
+  });
+  return items;
+}
+
+function addVideoGalleryItem() {
+  const data = getEPKData();
+  data.videography.push({ title: '', url: '', credits: '', description: '' });
+  saveEPKData(data);
+  renderVideoGalleryItems(data);
+  document.getElementById('epk-videography-editor').style.display = 'block';
+}
+
+function removeVideoGalleryItem(i) {
+  const data = getEPKData();
+  data.videography.splice(i, 1);
+  saveEPKData(data);
+  renderVideoGalleryItems(data);
 }
 
 function addMusicItem() {
