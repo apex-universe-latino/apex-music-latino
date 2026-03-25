@@ -771,7 +771,7 @@ document.addEventListener('mousemove', function(e) {
 <!-- ============================================ -->
 <!-- 4. MUSIC SECTION - Ultimos Lanzamientos      -->
 <!-- ============================================ -->
-<section id="musica" class="py-24 md:py-32 bg-surface-container-low relative overflow-hidden">
+<section id="musica" class="py-24 md:py-32 bg-surface-container-low relative overflow-hidden" style="display: block !important;">
   <div class="data-grid-texture absolute inset-0"></div>
 
   <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
@@ -781,123 +781,23 @@ document.addEventListener('mousemove', function(e) {
     </div>
     <h2 class="font-headline text-4xl md:text-5xl font-bold mb-16">Discograf&iacute;a</h2>
 
-      <div id="discografia-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Hydrated from config -->
-      </div>
-
+    <div id="discografia-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Hydrated from config -->
     </div>
 
-    <!-- 4.2 VIDEOGRAPHY SECTION -->
-    <div id="videografia" class="mt-24 pt-16 border-t border-white/5">
+    <div id="videografia" class="mt-24 pt-16 border-t border-white/5" style="display: block !important;">
       <div class="flex items-center gap-4 mb-10">
         <span class="h-px w-10 bg-tango-accent/40"></span>
         <span class="text-zinc-500 font-headline tracking-[0.3em] text-[10px] uppercase font-bold">Obras & Videograf&iacute;a</span>
       </div>
-      
       <div id="obras-gallery" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8">
-        
-        <!-- Video 1: Red Ochre Woman -->
-        <div class="group">
-          <div class="relative aspect-video bg-black rounded-xl overflow-hidden crimson-glow-sm tango-border-glow mb-6 cursor-pointer" 
-               onclick="this.innerHTML = '<iframe class=\'w-full h-full\' src=\'https://www.youtube.com/embed/smyZ11kvowg?autoplay=1\' frameborder=\'0\' allow=\'autoplay; encrypted-media\' allowfullscreen></iframe>'">
-            <img src="https://img.youtube.com/vi/smyZ11kvowg/maxresdefault.jpg" class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" alt="Red Ochre Woman"/>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-16 h-16 rounded-full bg-tango-accent/90 flex items-center justify-center scale-90 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 shadow-2xl shadow-tango-accent/50">
-                <span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-              </div>
-            </div>
-          </div>
-          <h4 class="font-headline font-bold text-white text-xl mb-2">Red Ochre Woman</h4>
-          <p class="text-tango-accent text-xs uppercase tracking-widest font-bold mb-3">Tribute to Isadora Duncan</p>
-          <p class="text-zinc-500 text-xs leading-relaxed opacity-80">Obra coreogr&aacute;fica y musical en homenaje a la pionera de la danza moderna.</p>
-        </div>
-
-        <!-- Video 2: Gaslight District -->
-        <div class="group">
-          <div class="relative aspect-video bg-black rounded-xl overflow-hidden tango-border-glow mb-6 cursor-pointer" 
-               onclick="this.innerHTML = '<iframe class=\'w-full h-full\' src=\'https://www.youtube.com/embed/BgAGAJpMPZM?autoplay=1\' frameborder=\'0\' allow=\'autoplay; encrypted-media\' allowfullscreen></iframe>'">
-            <img src="https://img.youtube.com/vi/BgAGAJpMPZM/maxresdefault.jpg" class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" alt="Gaslight District"/>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-16 h-16 rounded-full bg-tango-accent/90 flex items-center justify-center scale-90 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 shadow-2xl shadow-tango-accent/50">
-                <span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-              </div>
-            </div>
-          </div>
-          <h4 class="font-headline font-bold text-white text-xl mb-2">Gaslight District</h4>
-          <p class="text-tango-accent text-xs uppercase tracking-widest font-bold mb-3">Poetry & Tango Fusion</p>
-          <div class="text-zinc-500 text-[10px] space-y-1">
-            <p><span class="text-zinc-400">Poema y Performance:</span> Christina Linhardt</p>
-            <p><span class="text-zinc-400">M&uacute;sica:</span> Astor Piazzolla (Tango Etude No. 3)</p>
-            <p><span class="text-zinc-400">Viola y Arreglos:</span> John Acevedo</p>
-            <p><span class="text-zinc-400">Film:</span> John Di Bona &bull; <span class="text-zinc-400">Sonido:</span> Laszlo Mezo</p>
-          </div>
-        </div>
-
-        <!-- Video 3: Traumerei -->
-        <div class="group">
-          <div class="relative aspect-video bg-black rounded-xl overflow-hidden tango-border-glow mb-6 cursor-pointer" 
-               onclick="this.innerHTML = '<iframe class=\'w-full h-full\' src=\'https://www.youtube.com/embed/UacP7EdG2bs?autoplay=1\' frameborder=\'0\' allow=\'autoplay; encrypted-media\' allowfullscreen></iframe>'">
-            <img src="https://img.youtube.com/vi/UacP7EdG2bs/maxresdefault.jpg" class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" alt="Traumerei"/>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-16 h-16 rounded-full bg-tango-accent/90 flex items-center justify-center scale-90 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 shadow-2xl shadow-tango-accent/50">
-                <span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-              </div>
-            </div>
-          </div>
-          <h4 class="font-headline font-bold text-white text-xl mb-2">Traumerei</h4>
-          <p class="text-tango-accent text-xs uppercase tracking-widest font-bold mb-3">R. Schumann / John Acevedo</p>
-          <div class="text-zinc-500 text-[10px] space-y-1">
-            <p><span class="text-zinc-400">Viola:</span> John Acevedo</p>
-            <p><span class="text-zinc-400">Danza y Poes&iacute;a:</span> Aimee Delphyne Lissantheia</p>
-          </div>
-        </div>
-
-        <!-- Video 4: Henri Vieuxtemps -->
-        <div class="group">
-          <div class="relative aspect-video bg-black rounded-xl overflow-hidden tango-border-glow mb-6 cursor-pointer" 
-               onclick="this.innerHTML = '<iframe class=\'w-full h-full\' src=\'https://www.youtube.com/embed/3DWwqq0EpHU?autoplay=1\' frameborder=\'0\' allow=\'autoplay; encrypted-media\' allowfullscreen></iframe>'">
-            <img src="https://img.youtube.com/vi/3DWwqq0EpHU/maxresdefault.jpg" class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" alt="Henri Vieuxtemps"/>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-16 h-16 rounded-full bg-tango-accent/90 flex items-center justify-center scale-90 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 shadow-2xl shadow-tango-accent/50">
-                <span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-              </div>
-            </div>
-          </div>
-          <h4 class="font-headline font-bold text-white text-xl mb-2">Capriccio for Solo Viola</h4>
-          <p class="text-tango-accent text-xs uppercase tracking-widest font-bold mb-3">Henri Vieuxtemps</p>
-          <div class="text-zinc-500 text-[10px] space-y-1">
-            <p><span class="text-zinc-400">Violista:</span> John Acevedo</p>
-            <p><span class="text-zinc-400">Film:</span> Ron Parker &bull; <span class="text-zinc-400">Ingeniero:</span> Laszlo Mezo</p>
-          </div>
-        </div>
-
-        <!-- Video 5: The Spirit Solitude -->
-        <div class="group">
-          <div class="relative aspect-video bg-black rounded-xl overflow-hidden tango-border-glow mb-6 cursor-pointer" 
-               onclick="this.innerHTML = '<iframe class=\'w-full h-full\' src=\'https://www.youtube.com/embed/PreY4iVXNVg?autoplay=1\' frameborder=\'0\' allow=\'autoplay; encrypted-media\' allowfullscreen></iframe>'">
-            <img src="https://img.youtube.com/vi/PreY4iVXNVg/maxresdefault.jpg" class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" alt="The Spirit Solitude"/>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-16 h-16 rounded-full bg-tango-accent/90 flex items-center justify-center scale-90 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 shadow-2xl shadow-tango-accent/50">
-                <span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-              </div>
-            </div>
-          </div>
-          <h4 class="font-headline font-bold text-white text-xl mb-2">The Spirit Solitude</h4>
-          <p class="text-tango-accent text-xs uppercase tracking-widest font-bold mb-3">Christina Linhardt & John Acevedo</p>
-          <div class="text-zinc-500 text-[10px] space-y-1">
-            <p><span class="text-zinc-400">M&uacute;sica:</span> Astor Piazzolla (Tango Etude No. 4)</p>
-          </div>
-        </div>
-
+        <!-- Hydrated from config -->
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- 5. VIDEO SECTION                             -->
-<!-- ============================================ -->
-<section class="py-24 md:py-32 bg-surface">
+<section id="official-video" class="py-24 md:py-32 bg-surface">
   <div class="max-w-7xl mx-auto px-6 md:px-12">
     <div class="flex items-center gap-4 mb-4">
       <span class="h-px w-12 bg-tango-accent"></span>
@@ -1586,6 +1486,15 @@ document.addEventListener('mousemove', function(e) {
       const config = data[0].config;
       const vis = config.visibility || { stats:true, bio:true, music:true, videography:true, merch:true, shows:true };
       
+      // Safety: Ensure all keys exist
+      ['stats','bio','music','videography','merch','shows'].forEach(k => { if (vis[k] === undefined) vis[k] = true; });
+      
+      // Force Arcoiris visibility for specific sections
+      if (ARTIST_SLUG === 'arcoiris') {
+        vis.music = true;
+        vis.videography = true;
+      }
+
       console.log('[Apex Engine] Live Config Loaded:', config);
 
       // Section Visibility Handling
@@ -1603,7 +1512,15 @@ document.addEventListener('mousemove', function(e) {
       if (vis.stats && config.stats) renderLiveStats(config.stats);
       if (vis.shows && config.shows && config.shows.length > 0) renderLiveShows(config.shows);
       if (vis.music && config.music && config.music.length > 0) renderLiveMusic(config.music);
-      if (vis.videography && config.videography && config.videography.length > 0) renderLiveVideos(config.videography);
+      
+      if (vis.videography) {
+        renderLiveVideos(config.videography || null);
+        // Force display for Arcoiris
+        if (ARTIST_SLUG === 'arcoiris') {
+          const vSect = document.getElementById('videografia');
+          if (vSect) vSect.style.display = 'block';
+        }
+      }
 
       if (vis.bio && config.bio) {
         const bioEl = document.querySelector('#biografia p');
@@ -1676,11 +1593,18 @@ document.addEventListener('mousemove', function(e) {
   }
 
   function renderLiveVideos(videos) {
+    const list = videos || [
+      { url: 'smyZ11kvowg', title: 'Red Ochre Woman', credits: 'A tribute to Isadora Duncan', description: 'Obra coreográfica y musical en homenaje a la pionera de la danza moderna.' },
+      { url: 'BgAGAJpMPZM', title: 'Gaslight District', credits: 'Christina Linhardt, Astor Piazzolla, John Acevedo, John Di Bona, Laszlo Mezo', description: 'Poetry & Tango Fusion. Music: Astor Piazzolla (Tango Etude No. 3).' },
+      { url: 'UacP7EdG2bs', title: 'Traumerei', credits: 'R. Schumann / John Acevedo, Aimee Delphyne Lissantheia', description: 'Viola solo with sacred dance and poem.' },
+      { url: '3DWwqq0EpHU', title: 'Henri Vieuxtemps', credits: 'John Acevedo, Ron Parker, Laszlo Mezo', description: 'Capriccio for solo viola. Virtuoso solo music.' },
+      { url: 'PreY4iVXNVg', title: 'The Spirit Solitude', credits: 'Christina Linhardt, Astor Piazzolla, John Acevedo', description: 'Poetry by Christina Linhardt. Music: Tango Etude No. 4.' }
+    ];
     const container = document.getElementById('obras-gallery');
     if (!container) return;
-    container.innerHTML = videos.map(v => {
+    container.innerHTML = list.map(v => {
       let vidId = '';
-      const url = v.url || '';
+      const url = v.url || v.id || '';
       if (url.includes('v=')) vidId = url.split('v=')[1].split('&')[0];
       else if (url.includes('youtu.be/')) vidId = url.split('youtu.be/')[1].split('?')[0];
       else vidId = url; // assume it's the ID directly
