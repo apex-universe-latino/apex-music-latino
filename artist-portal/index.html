@@ -599,8 +599,28 @@
           </div>
         </div>
 
+        <!-- Outreach Stats -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px;">
+          <div class="stat-card">
+            <div class="stat-label">Emails Sent</div>
+            <div class="stat-value" id="stat-emails-sent">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Campaigns</div>
+            <div class="stat-value" id="stat-campaigns">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Venues in DB</div>
+            <div class="stat-value" id="stat-venues">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Venues Contacted</div>
+            <div class="stat-value" id="stat-venues-contacted">—</div>
+          </div>
+        </div>
+
         <h3 style="font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px;">Quick Actions</h3>
-        <div style="display: flex; gap: 12px;">
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
           <button class="quick-action" onclick="switchView('assets')">
             <span class="material-symbols-outlined" style="font-size: 18px;">qr_code_2</span>
             Generate QR
@@ -612,6 +632,10 @@
           <button class="quick-action" onclick="switchView('epk')">
             <span class="material-symbols-outlined" style="font-size: 18px;">person</span>
             Edit EPK
+          </button>
+          <button class="quick-action" onclick="switchView('marketing')" style="background: rgba(230,0,0,0.1); border-color: rgba(230,0,0,0.2); color: #e60000;">
+            <span class="material-symbols-outlined" style="font-size: 18px;">campaign</span>
+            Marketing Hub
           </button>
         </div>
       </div>
@@ -754,29 +778,145 @@
       <!-- ========== MARKETING HUB (Coming Soon) ========== -->
       <div id="view-marketing" class="view">
         <h2 style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;">Marketing Hub</h2>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 32px;">Amplify your reach and engage your audience.</p>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px;">
-          <div class="coming-soon-card">
-            <span class="material-symbols-outlined">email</span>
-            <h4>Email Campaigns</h4>
-            <p>Coming Soon</p>
+        <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 24px;">Email campaigns, venue outreach, and audience analytics.</p>
+
+        <!-- Tab Navigation -->
+        <div style="display: flex; gap: 4px; margin-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0;">
+          <button class="mktg-tab active" data-tab="campaigns" onclick="switchMarketingTab('campaigns')" style="padding: 10px 20px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s;">
+            <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">email</span> Campaigns
+          </button>
+          <button class="mktg-tab" data-tab="venues" onclick="switchMarketingTab('venues')" style="padding: 10px 20px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s;">
+            <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">location_city</span> Venue Database
+          </button>
+          <button class="mktg-tab" data-tab="analytics" onclick="switchMarketingTab('analytics')" style="padding: 10px 20px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s;">
+            <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">insights</span> Analytics
+          </button>
+        </div>
+
+        <!-- CAMPAIGNS TAB -->
+        <div id="mktg-tab-campaigns" class="mktg-panel">
+          <!-- Stats Row -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;">
+            <div class="stat-card"><div class="stat-label">Total Campaigns</div><div class="stat-value" id="mktg-stat-campaigns">—</div></div>
+            <div class="stat-card"><div class="stat-label">Emails Sent</div><div class="stat-value" id="mktg-stat-sent">—</div></div>
+            <div class="stat-card"><div class="stat-label">Open Rate</div><div class="stat-value" id="mktg-stat-opens">—</div></div>
+            <div class="stat-card"><div class="stat-label">Pending Queue</div><div class="stat-value" id="mktg-stat-pending">—</div></div>
           </div>
-          <div class="coming-soon-card">
-            <span class="material-symbols-outlined">schedule_send</span>
-            <h4>Social Media Scheduler</h4>
-            <p>Coming Soon</p>
+
+          <!-- New Campaign Button -->
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+            <h3 style="font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.6);">Campaign History</h3>
+            <button class="quick-action" onclick="toggleNewCampaignForm()">
+              <span class="material-symbols-outlined" style="font-size: 18px;">add</span> New Campaign
+            </button>
           </div>
-          <div class="coming-soon-card">
-            <span class="material-symbols-outlined">insights</span>
-            <h4>Audience Insights</h4>
-            <p>Coming Soon</p>
+
+          <!-- New Campaign Form (hidden) -->
+          <div id="new-campaign-form" style="display: none; margin-bottom: 24px;" class="stat-card">
+            <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 16px;">Create Email Campaign</h4>
+            <div style="display: grid; gap: 12px;">
+              <div><label style="font-size: 11px; color: rgba(255,255,255,0.35); display: block; margin-bottom: 4px;">Campaign Name</label><input class="epk-input" id="camp-name" placeholder="e.g. Show Reminder March 26" /></div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div><label style="font-size: 11px; color: rgba(255,255,255,0.35); display: block; margin-bottom: 4px;">Audience</label>
+                  <select class="epk-input" id="camp-audience" style="appearance: auto;">
+                    <option value="fans">All Fans</option>
+                    <option value="venues">Venue Contacts</option>
+                  </select>
+                </div>
+                <div><label style="font-size: 11px; color: rgba(255,255,255,0.35); display: block; margin-bottom: 4px;">Schedule (COT)</label><input class="epk-input" id="camp-schedule" type="datetime-local" /></div>
+              </div>
+              <div><label style="font-size: 11px; color: rgba(255,255,255,0.35); display: block; margin-bottom: 4px;">Subject <span style="opacity:0.5">(use {{name}} for personalization)</span></label><input class="epk-input" id="camp-subject" placeholder="e.g. Hola {{name}}, tonight is the night!" /></div>
+              <div><label style="font-size: 11px; color: rgba(255,255,255,0.35); display: block; margin-bottom: 4px;">Email Body (HTML)</label><textarea class="epk-textarea" id="camp-body" style="min-height: 120px; font-family: monospace; font-size: 12px;" placeholder="<h1>Hola {{name}}</h1><p>Your message here...</p>"></textarea></div>
+              <div style="display: flex; gap: 10px;">
+                <button class="quick-action" onclick="createAndScheduleCampaign()" style="background: rgba(34,197,94,0.15); border-color: rgba(34,197,94,0.3); color: #22c55e;">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">schedule_send</span> Schedule & Send
+                </button>
+                <button class="quick-action" onclick="toggleNewCampaignForm()" style="opacity: 0.5;">Cancel</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Campaign History Table -->
+          <div class="frm-container" style="max-height: 400px;">
+            <table class="frm-table" style="min-width: 700px;">
+              <thead><tr>
+                <th style="width: 200px;">Campaign</th>
+                <th style="width: 100px;">Type</th>
+                <th style="width: 80px;">Status</th>
+                <th style="width: 80px;">Sent</th>
+                <th style="width: 80px;">Opened</th>
+                <th style="width: 140px;">Scheduled</th>
+              </tr></thead>
+              <tbody id="campaigns-table-body">
+                <tr><td colspan="6" style="text-align: center; padding: 40px; color: rgba(255,255,255,0.25);">Loading campaigns...</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <div style="text-align: center;">
-          <button class="upgrade-btn">
-            <span class="material-symbols-outlined" style="font-size: 18px;">lock_open</span>
-            Upgrade to unlock Marketing Hub
-          </button>
+
+        <!-- VENUES TAB -->
+        <div id="mktg-tab-venues" class="mktg-panel" style="display: none;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <span id="venue-count" style="font-size: 13px; color: rgba(255,255,255,0.4);"></span>
+              <select class="epk-input" id="venue-category-filter" onchange="filterVenues()" style="width: 180px; appearance: auto; font-size: 12px;">
+                <option value="">All Categories</option>
+              </select>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="quick-action" onclick="importVenueCSV()">
+                <span class="material-symbols-outlined" style="font-size: 18px;">upload_file</span> Import CSV
+              </button>
+              <button class="quick-action" onclick="sendBulkVenueEPK()" style="background: rgba(230,0,0,0.1); border-color: rgba(230,0,0,0.3); color: #e60000;">
+                <span class="material-symbols-outlined" style="font-size: 18px;">send</span> Send EPK to All
+              </button>
+            </div>
+          </div>
+
+          <!-- Hidden file input for CSV import -->
+          <input type="file" id="venue-csv-input" accept=".csv" style="display: none;" onchange="handleVenueCSV(event)" />
+
+          <!-- Venue Table -->
+          <div class="frm-container" style="max-height: 500px;">
+            <table class="frm-table" style="min-width: 900px;">
+              <thead><tr>
+                <th style="width: 200px;">Company</th>
+                <th style="width: 140px;">Category</th>
+                <th style="width: 180px;">Email</th>
+                <th style="width: 130px;">Phone</th>
+                <th style="width: 100px;">Status</th>
+                <th style="width: 100px;">Actions</th>
+              </tr></thead>
+              <tbody id="venues-table-body">
+                <tr><td colspan="6" style="text-align: center; padding: 40px; color: rgba(255,255,255,0.25);">Loading venues...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ANALYTICS TAB -->
+        <div id="mktg-tab-analytics" class="mktg-panel" style="display: none;">
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 32px;">
+            <div class="stat-card"><div class="stat-label">Total Emails Sent</div><div class="stat-value" id="analytics-total-sent">—</div></div>
+            <div class="stat-card"><div class="stat-label">Delivered</div><div class="stat-value" id="analytics-delivered">—</div></div>
+            <div class="stat-card"><div class="stat-label">Opened</div><div class="stat-value" id="analytics-opened">—</div></div>
+            <div class="stat-card"><div class="stat-label">Clicked</div><div class="stat-value" id="analytics-clicked">—</div></div>
+          </div>
+
+          <h3 style="font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 16px;">Recent Email Events</h3>
+          <div class="frm-container" style="max-height: 400px;">
+            <table class="frm-table" style="min-width: 600px;">
+              <thead><tr>
+                <th style="width: 180px;">Recipient</th>
+                <th style="width: 100px;">Event</th>
+                <th style="width: 200px;">Campaign</th>
+                <th style="width: 140px;">Time</th>
+              </tr></thead>
+              <tbody id="analytics-table-body">
+                <tr><td colspan="4" style="text-align: center; padding: 40px; color: rgba(255,255,255,0.25);">No events yet — data populates after first campaign sends.</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
@@ -1094,6 +1234,7 @@ function switchView(viewName) {
   // Load data for specific views
   if (viewName === 'frm') loadFRM();
   if (viewName === 'assets') generateQR();
+  if (viewName === 'marketing') loadMarketingHub();
 }
 
 /* ================================================================
@@ -1133,6 +1274,24 @@ async function loadDashboardStats() {
       return d.created_at.startsWith(today) && (d.source === 'qr' || mp.source === 'qr' || (d.source && d.source.includes('qr')));
     });
     document.getElementById('stat-qr-today').textContent = todayScans.length;
+
+    // Load outreach stats (campaigns + venues)
+    try {
+      const campUrl = `${SUPABASE_URL}/rest/v1/email_campaigns?artist_slug=eq.${currentArtist.slug}&select=id,total_sent`;
+      const campRes = await fetch(campUrl, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
+      const camps = await campRes.json();
+      document.getElementById('stat-campaigns').textContent = camps.length;
+      document.getElementById('stat-emails-sent').textContent = camps.reduce((s, c) => s + (c.total_sent || 0), 0);
+    } catch(e) { /* tables may not exist yet */ }
+
+    try {
+      const venueUrl = `${SUPABASE_URL}/rest/v1/venue_leads?select=id,outreach_status`;
+      const venueRes = await fetch(venueUrl, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
+      const venues = await venueRes.json();
+      document.getElementById('stat-venues').textContent = venues.length;
+      document.getElementById('stat-venues-contacted').textContent = venues.filter(v => v.outreach_status !== 'new').length;
+    } catch(e) { /* table may not exist yet */ }
+
   } catch(err) {
     console.error('Dashboard stats error:', err);
   }
@@ -2122,6 +2281,307 @@ function removeShowItem(i) {
 function previewEPK() {
   const url = `/genre/${currentArtist.genre}/${currentArtist.slug}/`;
   window.open(url, '_blank');
+}
+
+/* ================================================================
+   MARKETING HUB
+   ================================================================ */
+let venueData = [];
+let campaignData = [];
+
+function switchMarketingTab(tab) {
+  document.querySelectorAll('.mktg-tab').forEach(t => {
+    t.classList.remove('active');
+    t.style.color = 'rgba(255,255,255,0.5)';
+    t.style.borderBottomColor = 'transparent';
+  });
+  document.querySelectorAll('.mktg-panel').forEach(p => p.style.display = 'none');
+
+  const activeTab = document.querySelector(`.mktg-tab[data-tab="${tab}"]`);
+  if (activeTab) {
+    activeTab.classList.add('active');
+    activeTab.style.color = '#fff';
+    activeTab.style.borderBottomColor = currentArtist.accent || '#6366f1';
+  }
+  const panel = document.getElementById('mktg-tab-' + tab);
+  if (panel) panel.style.display = 'block';
+
+  if (tab === 'campaigns') loadCampaigns();
+  if (tab === 'venues') loadVenues();
+  if (tab === 'analytics') loadAnalytics();
+}
+
+async function loadMarketingHub() {
+  switchMarketingTab('campaigns');
+}
+
+async function loadCampaigns() {
+  try {
+    // Fetch campaigns for this artist
+    const url = `${SUPABASE_URL}/rest/v1/email_campaigns?artist_slug=eq.${currentArtist.slug}&order=created_at.desc&limit=20`;
+    const res = await fetch(url, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
+    campaignData = await res.json();
+
+    // Fetch pending count
+    const pendingUrl = `${SUPABASE_URL}/rest/v1/scheduled_emails?status=eq.pending&select=id&campaign_id=not.is.null`;
+    const pendingRes = await fetch(pendingUrl, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
+    const pendingEmails = await pendingRes.json();
+
+    // Update stats
+    document.getElementById('mktg-stat-campaigns').textContent = campaignData.length;
+    const totalSent = campaignData.reduce((s, c) => s + (c.total_sent || 0), 0);
+    document.getElementById('mktg-stat-sent').textContent = totalSent;
+    const totalOpened = campaignData.reduce((s, c) => s + (c.total_opened || 0), 0);
+    document.getElementById('mktg-stat-opens').textContent = totalSent > 0 ? Math.round((totalOpened / totalSent) * 100) + '%' : '—';
+    document.getElementById('mktg-stat-pending').textContent = pendingEmails.length;
+
+    // Render table
+    const tbody = document.getElementById('campaigns-table-body');
+    if (campaignData.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:rgba(255,255,255,0.25);">No campaigns yet. Create your first one!</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = campaignData.map(c => {
+      const statusColors = { draft: '#888', scheduled: '#3b82f6', sending: '#f59e0b', sent: '#22c55e', paused: '#888', cancelled: '#ef4444' };
+      const typeIcons = { blast: 'campaign', sequence: 'route', show_reminder: 'event', venue_outreach: 'location_city' };
+      const schedDate = c.scheduled_at ? new Date(c.scheduled_at).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : '—';
+      return `<tr class="main-row">
+        <td style="font-weight:600;color:#fff;">${escHtml(c.campaign_name)}</td>
+        <td><span class="material-symbols-outlined" style="font-size:14px;vertical-align:middle;color:rgba(255,255,255,0.4);margin-right:4px;">${typeIcons[c.campaign_type] || 'email'}</span><span style="font-size:11px;color:rgba(255,255,255,0.4);">${c.campaign_type}</span></td>
+        <td><span class="badge" style="background:${statusColors[c.status]}22;color:${statusColors[c.status]};">${c.status}</span></td>
+        <td style="font-family:monospace;font-size:12px;">${c.total_sent || 0}/${c.total_recipients || 0}</td>
+        <td style="font-size:12px;color:rgba(255,255,255,0.4);">${c.total_opened || 0}</td>
+        <td style="font-size:11px;color:rgba(255,255,255,0.4);">${schedDate}</td>
+      </tr>`;
+    }).join('');
+  } catch (err) {
+    console.error('[Marketing] Load campaigns error:', err);
+  }
+}
+
+function toggleNewCampaignForm() {
+  const form = document.getElementById('new-campaign-form');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+async function createAndScheduleCampaign() {
+  const name = document.getElementById('camp-name').value.trim();
+  const subject = document.getElementById('camp-subject').value.trim();
+  const body = document.getElementById('camp-body').value.trim();
+  const audience = document.getElementById('camp-audience').value;
+  const schedule = document.getElementById('camp-schedule').value;
+
+  if (!name || !subject || !body) { alert('Please fill in campaign name, subject, and body.'); return; }
+
+  const scheduleUTC = schedule ? new Date(schedule).toISOString() : new Date().toISOString();
+  const audienceFilter = audience === 'venues'
+    ? { table: 'venue_leads', city: 'Bucaramanga' }
+    : { table: 'leads_capture', artist_name: currentArtist.name };
+
+  try {
+    // Create campaign
+    const campRes = await fetch(`${SUPABASE_URL}/rest/v1/email_campaigns`, {
+      method: 'POST',
+      headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
+      body: JSON.stringify({
+        artist_slug: currentArtist.slug,
+        campaign_name: name,
+        campaign_type: audience === 'venues' ? 'venue_outreach' : 'blast',
+        subject_template: subject,
+        body_html_template: body,
+        from_label: currentArtist.name,
+        audience_filter: audienceFilter,
+        scheduled_at: scheduleUTC,
+        status: 'draft'
+      })
+    });
+    const camps = await campRes.json();
+    if (!camps.length) throw new Error('Failed to create campaign');
+
+    // Schedule it
+    const schedRes = await fetch('/api/schedule-campaign', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ campaign_id: camps[0].id })
+    });
+    const schedData = await schedRes.json();
+    alert(`Campaign scheduled! ${schedData.scheduled || 0} emails queued.`);
+    toggleNewCampaignForm();
+    loadCampaigns();
+  } catch (err) {
+    console.error('[Marketing] Create campaign error:', err);
+    alert('Error creating campaign: ' + err.message);
+  }
+}
+
+async function loadVenues() {
+  const tbody = document.getElementById('venues-table-body');
+  const countEl = document.getElementById('venue-count');
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;"><div class="spinner" style="margin:0 auto;"></div></td></tr>';
+
+  try {
+    const url = `${SUPABASE_URL}/rest/v1/venue_leads?order=category.asc,company_name.asc&limit=200`;
+    const res = await fetch(url, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
+    venueData = await res.json();
+    countEl.textContent = venueData.length + ' venues';
+
+    // Populate category filter
+    const cats = [...new Set(venueData.map(v => v.category).filter(Boolean))].sort();
+    const filterEl = document.getElementById('venue-category-filter');
+    filterEl.innerHTML = '<option value="">All Categories</option>' + cats.map(c => `<option value="${c}">${c}</option>`).join('');
+
+    renderVenueTable(venueData);
+  } catch (err) {
+    console.error('[Marketing] Load venues error:', err);
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:#e60000;">Error loading venues</td></tr>';
+  }
+}
+
+function filterVenues() {
+  const cat = document.getElementById('venue-category-filter').value;
+  const filtered = cat ? venueData.filter(v => v.category === cat) : venueData;
+  renderVenueTable(filtered);
+}
+
+function renderVenueTable(data) {
+  const tbody = document.getElementById('venues-table-body');
+  if (!data.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:rgba(255,255,255,0.25);">No venues found. Import a CSV to get started.</td></tr>';
+    return;
+  }
+  const statusColors = { new: '#3b82f6', contacted: '#f59e0b', responded: '#8b5cf6', interested: '#22c55e', booked: '#00ff41', declined: '#ef4444', no_response: '#666' };
+  tbody.innerHTML = data.map(v => `<tr class="main-row">
+    <td style="font-weight:600;color:#fff;">${escHtml(v.company_name)}</td>
+    <td><span style="font-size:11px;color:rgba(255,255,255,0.4);">${escHtml(v.category || '—')}</span></td>
+    <td style="font-size:12px;">${v.email ? escHtml(v.email) : '<span style="opacity:0.25">No email</span>'}</td>
+    <td style="font-family:monospace;font-size:12px;">${v.phone ? escHtml(v.phone) : '<span style="opacity:0.25">—</span>'}</td>
+    <td><span class="badge" style="background:${statusColors[v.outreach_status] || '#666'}22;color:${statusColors[v.outreach_status] || '#666'};">${v.outreach_status}</span></td>
+    <td>${v.email ? `<button class="epk-btn" onclick="sendVenueEPK('${v.id}','${escAttr(v.email)}','${escAttr(v.company_name)}')" style="font-size:10px;"><span class="material-symbols-outlined" style="font-size:14px;">send</span> EPK</button>` : ''}</td>
+  </tr>`).join('');
+}
+
+async function sendVenueEPK(venueId, email, name) {
+  if (!confirm(`Send EPK to ${name} (${email})?`)) return;
+  const epkUrl = `https://apexmusiclatino.com/genre/${currentArtist.genre}/${currentArtist.slug}/`;
+  const subject = `${currentArtist.name} — Electronic Press Kit | Apex Music Latino`;
+  const body = `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#131313;color:#ccc;padding:32px;border-radius:16px;">
+    <h1 style="color:#fff;font-size:22px;">Hola ${name},</h1>
+    <p style="line-height:1.6;">Somos <strong style="color:#fff;">${currentArtist.name}</strong>, un proyecto de tango contemporáneo radicado en Bucaramanga. Nos encantaría explorar la posibilidad de presentarnos en su espacio.</p>
+    <p style="line-height:1.6;">Adjuntamos nuestro Electronic Press Kit con toda la información sobre nuestra propuesta artística:</p>
+    <p style="text-align:center;margin:24px 0;"><a href="${epkUrl}" style="display:inline-block;background:#e60000;color:#fff;padding:14px 32px;border-radius:10px;text-decoration:none;font-weight:700;font-size:15px;">Ver EPK de ${currentArtist.name} →</a></p>
+    <p style="line-height:1.6;font-size:13px;color:#888;">Quedamos atentos a cualquier oportunidad de colaboración.</p>
+    <p style="margin-top:24px;color:#aaa;">Cordialmente,<br><strong style="color:#fff;">${currentArtist.name}</strong><br>Apex Music Latino<br>booking@apexmusiclatino.com</p>
+  </div>`;
+
+  try {
+    const res = await fetch('/api/send-blast-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ artist_name: currentArtist.name, subject, body_html: body, test_email: email, from_label: currentArtist.name })
+    });
+    const data = await res.json();
+    if (data.sent > 0) {
+      alert('EPK sent to ' + name + '!');
+      // Update venue status
+      await fetch(`${SUPABASE_URL}/rest/v1/venue_leads?id=eq.${venueId}`, {
+        method: 'PATCH',
+        headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ outreach_status: 'contacted', last_contacted_at: new Date().toISOString() })
+      });
+      loadVenues();
+    } else {
+      alert('Failed to send: ' + (data.error || 'Unknown error'));
+    }
+  } catch (err) {
+    alert('Error: ' + err.message);
+  }
+}
+
+async function sendBulkVenueEPK() {
+  const withEmail = venueData.filter(v => v.email && v.outreach_status === 'new');
+  if (!withEmail.length) { alert('No new venues with email addresses to contact.'); return; }
+  if (!confirm(`Send EPK to ${withEmail.length} venues?`)) return;
+  for (const v of withEmail) {
+    await sendVenueEPK(v.id, v.email, v.company_name);
+  }
+}
+
+function importVenueCSV() {
+  document.getElementById('venue-csv-input').click();
+}
+
+async function handleVenueCSV(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const text = await file.text();
+  const lines = text.split('\n').filter(l => l.trim());
+  if (lines.length < 2) { alert('CSV appears empty.'); return; }
+
+  const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+  const venues = lines.slice(1).map(line => {
+    const cols = line.split(',').map(c => c.trim());
+    return {
+      company_name: cols[headers.indexOf('company name')] || cols[headers.indexOf('company_name')] || cols[0] || '',
+      category: cols[headers.indexOf('category')] || cols[1] || '',
+      website: cols[headers.indexOf('website')] || cols[2] || '',
+      phone: cols[headers.indexOf('phone')] || cols[3] || '',
+      email: cols[headers.indexOf('email')] || cols[4] || ''
+    };
+  }).filter(v => v.company_name);
+
+  if (!venues.length) { alert('No valid venues found in CSV.'); return; }
+
+  try {
+    const res = await fetch('/api/import-venues', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ artist_slug: currentArtist.slug, venues })
+    });
+    const data = await res.json();
+    alert(`Imported ${data.imported} venues (${data.skipped} skipped).`);
+    event.target.value = '';
+    loadVenues();
+  } catch (err) {
+    alert('Import error: ' + err.message);
+  }
+}
+
+async function loadAnalytics() {
+  try {
+    // Fetch aggregate stats from email_events
+    const eventsUrl = `${SUPABASE_URL}/rest/v1/email_events?order=occurred_at.desc&limit=50`;
+    const res = await fetch(eventsUrl, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
+    const events = await res.json();
+
+    const sent = events.filter(e => e.event_type === 'sent').length;
+    const delivered = events.filter(e => e.event_type === 'delivered').length;
+    const opened = events.filter(e => e.event_type === 'opened').length;
+    const clicked = events.filter(e => e.event_type === 'clicked').length;
+
+    document.getElementById('analytics-total-sent').textContent = sent;
+    document.getElementById('analytics-delivered').textContent = delivered;
+    document.getElementById('analytics-opened').textContent = opened;
+    document.getElementById('analytics-clicked').textContent = clicked;
+
+    const tbody = document.getElementById('analytics-table-body');
+    if (events.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:40px;color:rgba(255,255,255,0.25);">No events yet — data populates after first campaign sends.</td></tr>';
+      return;
+    }
+    const eventColors = { sent: '#3b82f6', delivered: '#22c55e', opened: '#f59e0b', clicked: '#8b5cf6', bounced: '#ef4444', complained: '#ef4444', unsubscribed: '#666' };
+    tbody.innerHTML = events.map(e => {
+      const time = new Date(e.occurred_at).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+      return `<tr class="main-row">
+        <td style="font-size:12px;">${escHtml(e.recipient_email)}</td>
+        <td><span class="badge" style="background:${eventColors[e.event_type]}22;color:${eventColors[e.event_type]};">${e.event_type}</span></td>
+        <td style="font-size:11px;color:rgba(255,255,255,0.4);">${e.campaign_id ? e.campaign_id.substring(0, 8) + '...' : '—'}</td>
+        <td style="font-size:11px;color:rgba(255,255,255,0.4);">${time}</td>
+      </tr>`;
+    }).join('');
+  } catch (err) {
+    console.error('[Marketing] Analytics error:', err);
+  }
 }
 
 /* ================================================================
