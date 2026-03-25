@@ -1606,11 +1606,46 @@ document.addEventListener('mousemove', function(e) {
     if (!container) return;
     container.innerHTML = shows.map(s => {
       const d = new Date(s.date);
-      if (isNaN(d.getTime())) return ''; // Avoid invalid dates
+      if (isNaN(d.getTime())) return '';
       const showYear = d.getFullYear();
       const showMonth = d.toLocaleString('es-ES', { month: 'short' }).toUpperCase();
       const showDay = d.getDate();
+      const showTime = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
 
+      // Check if it's a "Premium" show (has description or tags)
+      const isPremium = s.description || (s.tags && s.tags.length > 0);
+
+      if (isPremium) {
+        return `
+          <div class="rounded-xl bg-surface-container-highest/40 border border-tango-accent/30 hover:border-tango-accent/60 transition-all duration-300 group overflow-hidden">
+            <div class="flex items-center gap-6 p-6">
+              <div class="text-center flex-shrink-0 w-16">
+                <div class="text-tango-accent font-headline text-3xl font-bold leading-none">${showDay}</div>
+                <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mt-1">${showMonth}</div>
+                <div class="text-[9px] text-zinc-600 font-bold mt-0.5">${showYear}</div>
+              </div>
+              <div class="h-12 w-px bg-white/10"></div>
+              <div class="flex-1">
+                <h4 class="font-headline font-bold text-on-surface">${s.title}</h4>
+                <p class="text-zinc-500 text-sm italic">${s.venue}</p>
+                <p class="text-zinc-600 text-xs mt-1 uppercase tracking-widest">${s.address || s.city}${s.address ? ' &middot; ' + s.city : ''} &middot; ${showTime}</p>
+              </div>
+              <span class="px-5 py-2 rounded-lg ${s.is_free ? 'bg-tango-accent/10 border border-tango-accent/30 text-tango-accent' : 'border border-white/10 text-zinc-400'} text-sm font-bold whitespace-nowrap">
+                ${s.is_free ? 'Entrada Libre' : 'Entradas'}
+              </span>
+            </div>
+            <div class="px-6 pb-6 pt-0 border-t border-white/5 mt-2 pt-4">
+              <p class="text-zinc-400 text-sm leading-relaxed mb-4">${s.description || ''}</p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                ${(s.tags || []).map(t => `<span class="px-3 py-1 rounded-full bg-tango-accent/10 text-tango-accent text-[10px] font-bold uppercase tracking-widest">${t}</span>`).join('')}
+              </div>
+              ${s.artists ? `<p class="text-zinc-500 text-[10px] uppercase tracking-widest font-medium"><span class="text-zinc-600">Artistas:</span> ${s.artists.join(', ')}</p>` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      // Default Simple Card
       return `
         <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group">
           <div class="text-center flex-shrink-0 w-16">
