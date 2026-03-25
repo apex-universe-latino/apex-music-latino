@@ -545,25 +545,22 @@
         <span class="material-symbols-outlined" style="font-size: 20px;">person</span>
         EPK
       </div>
-      <div class="nav-item disabled" data-view="marketing" onclick="switchView('marketing')">
+      <div class="nav-item" data-view="marketing" onclick="switchView('marketing')">
         <span class="material-symbols-outlined" style="font-size: 20px;">campaign</span>
         Marketing Hub
-        <span class="material-symbols-outlined lock-icon" style="font-size: 16px;">lock</span>
       </div>
       <div class="nav-item" data-view="subscription" onclick="switchView('subscription')">
         <span class="material-symbols-outlined" style="font-size: 20px;">credit_card</span>
         Subscription
         <span id="sidebar-plan-badge" class="badge" style="background: rgba(99,102,241,0.15); color: #818cf8; font-size: 9px; margin-left: auto;">FREE</span>
       </div>
-      <div class="nav-item disabled" data-view="royalties" onclick="switchView('royalties')">
+      <div class="nav-item" data-view="royalties" onclick="switchView('royalties')">
         <span class="material-symbols-outlined" style="font-size: 20px;">payments</span>
         Royalties
-        <span class="material-symbols-outlined lock-icon" style="font-size: 16px;">lock</span>
       </div>
-      <div class="nav-item disabled" data-view="legal" onclick="switchView('legal')">
+      <div class="nav-item" data-view="legal" onclick="switchView('legal')">
         <span class="material-symbols-outlined" style="font-size: 20px;">gavel</span>
         Legal
-        <span class="material-symbols-outlined lock-icon" style="font-size: 16px;">lock</span>
       </div>
     </nav>
     <div style="padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.06);">
@@ -982,6 +979,18 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
    SESSION
    ================================================================ */
 function checkSession() {
+  // URL-based auto-login: /artist-portal/?artist=arcoiris
+  const params = new URLSearchParams(window.location.search);
+  const artistParam = params.get('artist');
+  if (artistParam && ARTISTS[artistParam]) {
+    currentArtist = ARTISTS[artistParam];
+    localStorage.setItem('apex_portal_session', JSON.stringify(currentArtist));
+    // Clean URL without reload
+    history.replaceState(null, '', window.location.pathname + (params.get('checkout') ? '?' + params.toString().replace(/artist=[^&]*&?/, '') : ''));
+    enterPortal();
+    return;
+  }
+
   const stored = localStorage.getItem('apex_portal_session');
   if (stored) {
     try {
