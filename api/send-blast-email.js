@@ -19,7 +19,7 @@ export default async function handler(req, res) {
   }
 
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
-  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID}.supabase.co`;
+  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'iaycaynevtumrqoknemk'}.supabase.co`;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!RESEND_API_KEY) {
@@ -39,10 +39,11 @@ export default async function handler(req, res) {
     ? `${from_label} <booking@apexmusiclatino.com>`
     : 'Apex Music Latino <booking@apexmusiclatino.com>';
 
-  // If test_email, send only to that address
+  // If test_email, send only to that address (skip unsub check for internal notifications)
   if (test_email) {
     try {
-      const result = await sendEmail(RESEND_API_KEY, fromAddress, test_email, subject, body_html);
+      const htmlWithFooter = appendUnsubscribeFooter(body_html, test_email, 'blast');
+      const result = await sendEmail(RESEND_API_KEY, fromAddress, test_email, subject, htmlWithFooter);
       return res.status(200).json({ sent: 1, failed: 0, test: true, id: result.id });
     } catch (err) {
       return res.status(500).json({ sent: 0, failed: 1, test: true, error: err.message });
@@ -82,12 +83,19 @@ export default async function handler(req, res) {
     return true;
   });
 
-  // Send to all unique leads with rate limiting
+  // Fetch unsubscribes list
+  const unsubscribed = await getUnsubscribedEmails(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+
+  // Filter out unsubscribed
+  const eligibleLeads = uniqueLeads.filter(l => !unsubscribed.has(l.email.toLowerCase().trim()));
+
+  // Send to all eligible leads with rate limiting
   let sent = 0;
   let failed = 0;
+  let skipped = uniqueLeads.length - eligibleLeads.length;
   const errors = [];
 
-  for (const lead of uniqueLeads) {
+  for (const lead of eligibleLeads) {
     try {
       // Personalize: replace {{name}} placeholder if present
       const mp = typeof lead.mood_preference === 'string'
@@ -100,6 +108,8 @@ export default async function handler(req, res) {
         .replace(/\{\{fan_id\}\}/g, fanId)
         .replace(/\{\{email\}\}/g, lead.email);
 
+      personalizedHtml = appendUnsubscribeFooter(personalizedHtml, lead.email, 'blast');
+
       await sendEmail(RESEND_API_KEY, fromAddress, lead.email, subject, personalizedHtml);
       sent++;
     } catch (err) {
@@ -110,7 +120,7 @@ export default async function handler(req, res) {
     await new Promise(r => setTimeout(r, 200));
   }
 
-  return res.status(200).json({ sent, failed, total: uniqueLeads.length, errors: errors.slice(0, 10) });
+  return res.status(200).json({ sent, failed, skipped_unsubscribed: skipped, total: uniqueLeads.length, errors: errors.slice(0, 10) });
 }
 
 async function sendEmail(apiKey, from, to, subject, html) {
@@ -128,4 +138,34 @@ async function sendEmail(apiKey, from, to, subject, html) {
     throw new Error(data.message || 'Resend API error');
   }
   return data;
+}
+
+async function getUnsubscribedEmails(supabaseUrl, serviceKey) {
+  const unsubs = new Set();
+  try {
+    const res = await fetch(`${supabaseUrl}/rest/v1/unsubscribes?select=email`, {
+      headers: { 'apikey': serviceKey, 'Authorization': `Bearer ${serviceKey}` }
+    });
+    if (res.ok) {
+      const rows = await res.json();
+      rows.forEach(r => unsubs.add(r.email.toLowerCase().trim()));
+    }
+  } catch (e) {
+    console.warn('[unsubscribe] Could not fetch unsubscribes list:', e.message);
+  }
+  return unsubs;
+}
+
+function appendUnsubscribeFooter(html, email, source) {
+  const token = Buffer.from(email).toString('base64');
+  const unsubUrl = `https://apexmusiclatino.com/api/unsubscribe?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}&source=${encodeURIComponent(source)}`;
+  const footerLink = `<p style="margin-top:12px;"><a href="${unsubUrl}" style="color:#444;font-size:9px;text-decoration:underline;">Cancelar suscripci\u00f3n / Unsubscribe</a></p>`;
+
+  // Insert before the closing </body> or </html> tag, or append at end
+  if (html.includes('</body>')) {
+    return html.replace('</body>', footerLink + '</body>');
+  } else if (html.includes('</html>')) {
+    return html.replace('</html>', footerLink + '</html>');
+  }
+  return html + footerLink;
 }

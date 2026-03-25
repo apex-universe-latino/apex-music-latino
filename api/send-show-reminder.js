@@ -1,22 +1,30 @@
 // Vercel Serverless Function — Send Show Reminder
 // GET /api/send-show-reminder?step=1&key=arcoiris2026
+// GET /api/send-show-reminder?step=1&key=arcoiris2026&schedule_at=2026-03-26T13:00:00Z
 // Step 1 = 8AM morning excitement
 // Step 2 = 12PM midday countdown
 // Step 3 = 3PM final reminder
 // Also: GET /api/send-show-reminder?step=test&key=arcoiris2026&email=your@email.com
+// If schedule_at is provided, uses Resend's native scheduled_at instead of sending immediately
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
-  const { step, key, email: testEmail } = req.query;
+  const { step, key, email: testEmail, schedule_at } = req.query;
 
   // Simple auth key to prevent random hits
   if (key !== 'arcoiris2026') {
     return res.status(401).json({ error: 'Invalid key' });
   }
 
-  if (!step || !['1', '2', '3', 'test'].includes(step)) {
+  if (!step) {
     return res.status(400).json({ error: 'Missing step param. Use ?step=1, ?step=2, ?step=3, or ?step=test&email=you@email.com' });
+  }
+  if (!['1', '2', '3', 'test'].includes(step)) {
+    return res.status(400).json({ error: `Invalid step: "${step}". Valid values are: 1, 2, 3, or test.` });
+  }
+  if (step === 'test' && !testEmail) {
+    return res.status(400).json({ error: 'Test mode requires an email parameter. Use ?step=test&email=you@email.com&key=arcoiris2026' });
   }
 
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -171,10 +179,14 @@ export default async function handler(req, res) {
       return true;
     });
 
+    // Fetch unsubscribes and filter
+    const unsubscribed = await getUnsubscribedEmails(SUPABASE_URL, SUPABASE_KEY);
+    const eligible = unique.filter(l => !unsubscribed.has((l.email || '').toLowerCase().trim()));
+
     // If test mode, only send to test email
     const recipients = step === 'test'
       ? [{ email: testEmail, mood_preference: { name: 'Test User' } }]
-      : unique;
+      : eligible;
 
     const template = templates[step === 'test' ? '1' : step];
     let sent = 0;
@@ -186,23 +198,51 @@ export default async function handler(req, res) {
       const name = mp.name || mp.fan_name || 'Fan';
 
       try {
+        const emailHtml = appendUnsubscribeFooter(template.build(name), lead.email, 'show-reminder');
+        const resendPayload = {
+          from: 'Arcoiris <booking@apexmusiclatino.com>',
+          to: [lead.email],
+          subject: template.subject,
+          html: emailHtml
+        };
+
+        // If schedule_at is provided, use Resend's native scheduling
+        if (schedule_at) {
+          resendPayload.scheduled_at = new Date(schedule_at).toISOString();
+        }
+
         const emailRes = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${RESEND_API_KEY}`,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
-            from: 'Arcoiris <booking@apexmusiclatino.com>',
-            to: [lead.email],
-            subject: template.subject,
-            html: template.build(name)
-          })
+          body: JSON.stringify(resendPayload)
         });
 
         const data = await emailRes.json();
         if (emailRes.ok) {
           sent++;
+
+          // Log scheduled email to Supabase if using scheduling
+          if (schedule_at) {
+            await fetch(`${SUPABASE_URL}/rest/v1/scheduled_emails`, {
+              method: 'POST',
+              headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                recipient_email: lead.email,
+                subject: template.subject,
+                from_label: 'Arcoiris',
+                artist_slug: 'arcoiris',
+                campaign_type: 'show_reminder',
+                journey_step: parseInt(step === 'test' ? '1' : step),
+                resend_message_id: data.id,
+                send_at: new Date(schedule_at).toISOString(),
+                status: 'scheduled',
+                scheduling_method: 'resend_native'
+              })
+            }).catch(() => {}); // Non-critical logging
+          }
         } else {
           failed++;
           errors.push({ email: lead.email, error: data.message });
@@ -221,6 +261,8 @@ export default async function handler(req, res) {
       sent,
       failed,
       total_recipients: recipients.length,
+      scheduled_at: schedule_at || null,
+      mode: schedule_at ? 'resend_native_schedule' : 'immediate',
       errors: errors.slice(0, 5)
     });
 
@@ -228,4 +270,33 @@ export default async function handler(req, res) {
     console.error('[send-show-reminder] Error:', err);
     return res.status(500).json({ error: err.message });
   }
+}
+
+async function getUnsubscribedEmails(supabaseUrl, serviceKey) {
+  const unsubs = new Set();
+  try {
+    const res = await fetch(`${supabaseUrl}/rest/v1/unsubscribes?select=email`, {
+      headers: { 'apikey': serviceKey, 'Authorization': `Bearer ${serviceKey}` }
+    });
+    if (res.ok) {
+      const rows = await res.json();
+      rows.forEach(r => unsubs.add(r.email.toLowerCase().trim()));
+    }
+  } catch (e) {
+    console.warn('[unsubscribe] Could not fetch unsubscribes list:', e.message);
+  }
+  return unsubs;
+}
+
+function appendUnsubscribeFooter(html, email, source) {
+  const token = Buffer.from(email).toString('base64');
+  const unsubUrl = `https://apexmusiclatino.com/api/unsubscribe?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}&source=${encodeURIComponent(source)}`;
+  const footerLink = `<p style="margin-top:12px;"><a href="${unsubUrl}" style="color:#444;font-size:9px;text-decoration:underline;">Cancelar suscripci\u00f3n / Unsubscribe</a></p>`;
+
+  if (html.includes('</body>')) {
+    return html.replace('</body>', footerLink + '</body>');
+  } else if (html.includes('</html>')) {
+    return html.replace('</html>', footerLink + '</html>');
+  }
+  return html + footerLink;
 }

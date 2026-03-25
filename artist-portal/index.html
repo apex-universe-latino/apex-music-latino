@@ -1227,8 +1227,23 @@ const ARTISTS = {
   'andrade': { name: 'Andrade',  slug: 'andrade',  genre: 'reggaeton', accent: '#ff007b' }
 };
 
-const SUPABASE_URL = 'https://iaycaynevtumrqoknemk.supabase.co';
-const SERVICE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk3ODE0MCwiZXhwIjoyMDg5NTU0MTQwfQ.-V6swXvqL2X6kAH9UCeRXq59q-R4KcojANvVXRyxKuM';
+const PROXY_URL = '/api/supabase-proxy';
+
+// Proxy helper: routes all service-role requests through the serverless proxy
+async function sbProxy(path, method, body, prefer) {
+  const res = await fetch(PROXY_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      path,
+      method: method || 'GET',
+      body: body || undefined,
+      prefer: prefer || undefined,
+      artist_slug: currentArtist ? currentArtist.slug : 'arcoiris'
+    })
+  });
+  return res;
+}
 
 let currentArtist = null;
 let frmData = [];
@@ -1294,10 +1309,8 @@ async function enterPortal() {
 
   // Fetch config from Supabase and merge with localStorage (Supabase wins)
   try {
-    const configUrl = `${SUPABASE_URL}/rest/v1/artists_config?slug=eq.${encodeURIComponent(currentArtist.slug)}&select=config,updated_at&limit=1`;
-    const configRes = await fetch(configUrl, {
-      headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY }
-    });
+    const configPath = `/rest/v1/artists_config?slug=eq.${encodeURIComponent(currentArtist.slug)}&select=config,updated_at&limit=1`;
+    const configRes = await sbProxy(configPath, 'GET');
     if (configRes.ok) {
       const rows = await configRes.json();
       if (rows.length > 0 && rows[0].config) {
@@ -1385,13 +1398,8 @@ function switchView(viewName) {
    ================================================================ */
 async function loadDashboardStats() {
   try {
-    const url = `${SUPABASE_URL}/rest/v1/leads_capture?artist_name=eq.${encodeURIComponent(currentArtist.name)}&order=created_at.desc`;
-    const res = await fetch(url, {
-      headers: {
-        'apikey': SERVICE_KEY,
-        'Authorization': 'Bearer ' + SERVICE_KEY
-      }
-    });
+    const leadsPath = `/rest/v1/leads_capture?artist_name=eq.${encodeURIComponent(currentArtist.name)}&order=created_at.desc`;
+    const res = await sbProxy(leadsPath, 'GET');
     const data = await res.json();
 
     // Total fans
@@ -1420,16 +1428,16 @@ async function loadDashboardStats() {
 
     // Load outreach stats (campaigns + venues)
     try {
-      const campUrl = `${SUPABASE_URL}/rest/v1/email_campaigns?artist_slug=eq.${currentArtist.slug}&select=id,total_sent`;
-      const campRes = await fetch(campUrl, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
+      const campPath = `/rest/v1/email_campaigns?artist_slug=eq.${currentArtist.slug}&select=id,total_sent`;
+      const campRes = await sbProxy(campPath, 'GET');
       const camps = await campRes.json();
       document.getElementById('stat-campaigns').textContent = camps.length;
       document.getElementById('stat-emails-sent').textContent = camps.reduce((s, c) => s + (c.total_sent || 0), 0);
     } catch(e) { /* tables may not exist yet */ }
 
     try {
-      const venueUrl = `${SUPABASE_URL}/rest/v1/venue_leads?select=id,outreach_status`;
-      const venueRes = await fetch(venueUrl, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
+      const venuePath = `/rest/v1/venue_leads?select=id,outreach_status`;
+      const venueRes = await sbProxy(venuePath, 'GET');
       const venues = await venueRes.json();
       document.getElementById('stat-venues').textContent = venues.length;
       document.getElementById('stat-venues-contacted').textContent = venues.filter(v => v.outreach_status !== 'new').length;
@@ -1543,16 +1551,11 @@ async function loadFRM() {
 
   try {
     const artistName = currentArtist.name;
-    const url = SUPABASE_URL + '/rest/v1/leads_capture?artist_name=eq.' + encodeURIComponent(artistName) + '&order=created_at.desc';
-    console.log('[FRM] Fetching:', url);
+    const frmPath = '/rest/v1/leads_capture?artist_name=eq.' + encodeURIComponent(artistName) + '&order=created_at.desc';
+    console.log('[FRM] Fetching via proxy:', frmPath);
     statusEl.textContent = 'Loading...';
 
-    const res = await fetch(url, {
-      headers: {
-        'apikey': SERVICE_KEY,
-        'Authorization': 'Bearer ' + SERVICE_KEY
-      }
-    });
+    const res = await sbProxy(frmPath, 'GET');
 
     console.log('[FRM] Response status:', res.status);
 
@@ -1569,8 +1572,8 @@ async function loadFRM() {
     statusEl.textContent = frmData.length + ' records';
 
     if (frmData.length === 0) {
-      const allUrl = SUPABASE_URL + '/rest/v1/leads_capture?order=created_at.desc&limit=5';
-      const allRes = await fetch(allUrl, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
+      const allPath = '/rest/v1/leads_capture?order=created_at.desc&limit=5';
+      const allRes = await sbProxy(allPath, 'GET');
       const allData = await allRes.json();
       console.log('[FRM] All records (unfiltered):', allData.length);
       if (allData.length > 0) {
@@ -1969,20 +1972,11 @@ async function publishEPK() {
   btn.innerHTML = '<span class="material-symbols-outlined animate-spin" style="font-size:16px;">progress_activity</span> Syncing...';
   
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/artists_config`, {
-      method: 'POST',
-      headers: {
-        'apikey': SERVICE_KEY,
-        'Authorization': 'Bearer ' + SERVICE_KEY,
-        'Content-Type': 'application/json',
-        'Prefer': 'resolution=merge-duplicates'
-      },
-      body: JSON.stringify({
+    const res = await sbProxy('/rest/v1/artists_config', 'POST', {
         slug: currentArtist.slug,
         config: data,
         updated_at: new Date().toISOString()
-      })
-    });
+      }, 'resolution=merge-duplicates');
     if (res.ok) {
         epkLastPublished = new Date();
         updateEPKSaveStatus('published');
@@ -2468,13 +2462,13 @@ async function loadMarketingHub() {
 async function loadCampaigns() {
   try {
     // Fetch campaigns for this artist
-    const url = `${SUPABASE_URL}/rest/v1/email_campaigns?artist_slug=eq.${currentArtist.slug}&order=created_at.desc&limit=20`;
-    const res = await fetch(url, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
+    const url = `/rest/v1/email_campaigns?artist_slug=eq.${currentArtist.slug}&order=created_at.desc&limit=20`;
+    const res = await sbProxy(url, 'GET');
     campaignData = await res.json();
 
     // Fetch pending count
-    const pendingUrl = `${SUPABASE_URL}/rest/v1/scheduled_emails?status=eq.pending&select=id&campaign_id=not.is.null`;
-    const pendingRes = await fetch(pendingUrl, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
+    const pendingUrl = `/rest/v1/scheduled_emails?status=eq.pending&select=id&campaign_id=not.is.null`;
+    const pendingRes = await sbProxy(pendingUrl, 'GET');
     const pendingEmails = await pendingRes.json();
 
     // Update stats
@@ -2531,10 +2525,7 @@ async function createAndScheduleCampaign() {
 
   try {
     // Create campaign
-    const campRes = await fetch(`${SUPABASE_URL}/rest/v1/email_campaigns`, {
-      method: 'POST',
-      headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
-      body: JSON.stringify({
+    const campRes = await sbProxy('/rest/v1/email_campaigns', 'POST', {
         artist_slug: currentArtist.slug,
         campaign_name: name,
         campaign_type: audience === 'venues' ? 'venue_outreach' : 'blast',
@@ -2544,8 +2535,7 @@ async function createAndScheduleCampaign() {
         audience_filter: audienceFilter,
         scheduled_at: scheduleUTC,
         status: 'draft'
-      })
-    });
+      }, 'return=representation');
     const camps = await campRes.json();
     if (!camps.length) throw new Error('Failed to create campaign');
 
@@ -2605,8 +2595,8 @@ async function loadVenues() {
   if (inboxEl) inboxEl.innerHTML = '<div style="padding:40px;text-align:center;"><div class="spinner" style="margin:0 auto;"></div></div>';
 
   try {
-    const url = `${SUPABASE_URL}/rest/v1/venue_leads?order=category.asc,company_name.asc&limit=500`;
-    const res = await fetch(url, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
+    const url = `/rest/v1/venue_leads?order=category.asc,company_name.asc&limit=500`;
+    const res = await sbProxy(url, 'GET');
     venueData = await res.json();
     if (countEl) countEl.textContent = venueData.length + ' venues';
 
@@ -2787,11 +2777,7 @@ booking@apexmusiclatino.com</textarea>
 /* --- CRM Actions --- */
 async function crmUpdateStatus(venueId, status) {
   try {
-    await fetch(`${SUPABASE_URL}/rest/v1/venue_leads?id=eq.${venueId}`, {
-      method: 'PATCH',
-      headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer '+SERVICE_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ outreach_status: status })
-    });
+    await sbProxy(`/rest/v1/venue_leads?id=eq.${venueId}`, 'PATCH', { outreach_status: status });
     const v = venueData.find(x => x.id === venueId);
     if (v) v.outreach_status = status;
     crmRenderInbox();
@@ -2803,11 +2789,7 @@ async function crmSaveNotes(venueId) {
   const el = document.getElementById('crm-notes-'+venueId);
   if (!el) return;
   try {
-    await fetch(`${SUPABASE_URL}/rest/v1/venue_leads?id=eq.${venueId}`, {
-      method: 'PATCH',
-      headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer '+SERVICE_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ notes: el.value })
-    });
+    await sbProxy(`/rest/v1/venue_leads?id=eq.${venueId}`, 'PATCH', { notes: el.value });
     const v = venueData.find(x => x.id === venueId);
     if (v) v.notes = el.value;
   } catch (err) { console.error('[CRM] Save notes error:', err); }
@@ -2816,10 +2798,7 @@ async function crmSaveNotes(venueId) {
 async function crmDeleteVenue(venueId) {
   if (!confirm('Delete this venue from the CRM?')) return;
   try {
-    await fetch(`${SUPABASE_URL}/rest/v1/venue_leads?id=eq.${venueId}`, {
-      method: 'DELETE',
-      headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer '+SERVICE_KEY }
-    });
+    await sbProxy(`/rest/v1/venue_leads?id=eq.${venueId}`, 'DELETE');
     venueData = venueData.filter(v => v.id !== venueId);
     crmSelectedVenueId = null;
     crmRenderInbox();
@@ -2881,11 +2860,7 @@ async function crmSendEmail(venueId) {
     const data = await res.json();
     if (data.sent > 0) {
       alert('Email sent to '+v.company_name+'!');
-      await fetch(`${SUPABASE_URL}/rest/v1/venue_leads?id=eq.${venueId}`, {
-        method: 'PATCH',
-        headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer '+SERVICE_KEY, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ outreach_status: v.outreach_status==='new'?'contacted':v.outreach_status, last_contacted_at: new Date().toISOString() })
-      });
+      await sbProxy(`/rest/v1/venue_leads?id=eq.${venueId}`, 'PATCH', { outreach_status: v.outreach_status==='new'?'contacted':v.outreach_status, last_contacted_at: new Date().toISOString() });
       const vx = venueData.find(x => x.id === venueId);
       if (vx) { if(vx.outreach_status==='new') vx.outreach_status='contacted'; vx.last_contacted_at=new Date().toISOString(); }
       crmRenderInbox();
@@ -2916,11 +2891,7 @@ async function crmSendToAllNew() {
       const data = await res.json();
       if (data.sent > 0) {
         sent++;
-        await fetch(`${SUPABASE_URL}/rest/v1/venue_leads?id=eq.${v.id}`, {
-          method: 'PATCH',
-          headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer '+SERVICE_KEY, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ outreach_status: 'contacted', last_contacted_at: new Date().toISOString() })
-        });
+        await sbProxy(`/rest/v1/venue_leads?id=eq.${v.id}`, 'PATCH', { outreach_status: 'contacted', last_contacted_at: new Date().toISOString() });
         v.outreach_status = 'contacted'; v.last_contacted_at = new Date().toISOString();
       }
     } catch(err) { console.error('[CRM] Bulk send error for '+v.company_name, err); }
@@ -2975,11 +2946,7 @@ async function crmSaveNewVenue() {
     artist_slug: currentArtist.slug, country: 'Colombia'
   };
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/venue_leads`, {
-      method: 'POST',
-      headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer '+SERVICE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
-      body: JSON.stringify(venue)
-    });
+    const res = await sbProxy('/rest/v1/venue_leads', 'POST', venue, 'return=representation');
     const rows = await res.json();
     if (rows && rows.length) { venueData.push(rows[0]); crmRenderInbox(); document.getElementById('crm-add-venue-modal').remove(); }
     else throw new Error('Insert failed');
@@ -3130,11 +3097,7 @@ async function crmExecuteImport() {
     });
     if (batch.length) {
       try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/venue_leads`, {
-          method:'POST',
-          headers:{'apikey':SERVICE_KEY,'Authorization':'Bearer '+SERVICE_KEY,'Content-Type':'application/json','Prefer':'return=representation'},
-          body:JSON.stringify(batch)
-        });
+        const res = await sbProxy('/rest/v1/venue_leads', 'POST', batch, 'return=representation');
         const rows = await res.json();
         if(Array.isArray(rows)) { imported+=rows.length; venueData.push(...rows); rows.forEach(r=>{if(r.email)existingEmails.add(r.email.toLowerCase().trim());}); }
       } catch(err) { console.error('[CRM] Import batch error:',err); }
@@ -3345,8 +3308,8 @@ function crmSaveAssignments(ji) {
 async function loadAnalytics() {
   try {
     // Fetch aggregate stats from email_events
-    const eventsUrl = `${SUPABASE_URL}/rest/v1/email_events?order=occurred_at.desc&limit=50`;
-    const res = await fetch(eventsUrl, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
+    const eventsUrl = `/rest/v1/email_events?order=occurred_at.desc&limit=50`;
+    const res = await sbProxy(eventsUrl, 'GET');
     const events = await res.json();
 
     const sent = events.filter(e => e.event_type === 'sent').length;
@@ -3413,10 +3376,8 @@ async function pullFromServer() {
   btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px;animation:spin 0.6s linear infinite;">progress_activity</span> Pulling...';
 
   try {
-    const url = `${SUPABASE_URL}/rest/v1/artists_config?slug=eq.${encodeURIComponent(currentArtist.slug)}&select=config,updated_at&limit=1`;
-    const res = await fetch(url, {
-      headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY }
-    });
+    const url = `/rest/v1/artists_config?slug=eq.${encodeURIComponent(currentArtist.slug)}&select=config,updated_at&limit=1`;
+    const res = await sbProxy(url, 'GET');
     if (!res.ok) throw new Error('Fetch failed: ' + res.status);
     const rows = await res.json();
 

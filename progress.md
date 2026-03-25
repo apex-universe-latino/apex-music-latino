@@ -72,3 +72,30 @@
 - Created progress.md (this file)
 - Created architecture/, tools/, .tmp/ directories
 - Protocol initialization complete
+
+---
+
+## 2026-03-25: Artist Portal CRM & Branding Finalization
+
+### What was done
+1. **Booking CRM Infrastructure Built**
+   - High-performance **Venue Inbox** with search and advanced filtering (Genre / City).
+   - **6-Stage Pipeline Implementation**: New, Contacted, Responded, Interested, Booked, Declined.
+   - **Outreach Template Library**: 8+ category-specific templates (Theaters, Restaurants, Schools, etc.).
+   - **Outreach Journey Builder**: Sequence-based follow-up system (12 stages).
+   - **Advanced CSV Importer**: With field mapping, data cleaning, and duplication check.
+
+2. **EPK & Branding Refinement**
+   - **Arcoiris EPK Branding**: Switched to `aml_favicon.svg` (white version) as the site header logo.
+   - **Show Structure Restoration**: Re-implemented the premium theater-style layout for the March 25th show.
+   - **Media Sync**: Fixed video/music rendering logic to handle YouTube IDs natively and provide fallback art.
+   - **Navigation & Favicon**: Standardized `aml_favicon.svg` across all 15+ pages.
+
+3. **Artist Portal Enhancements**
+   - Cleaned all redundant global variable declarations and resolved JavaScript execution errors.
+   - Refactored `crmSendIndividualEmail` to utilize the production `/api/send-blast-email` Vercel function.
+   - Implemented real-time CRM searching and status updates.
+
+### Deployment
+- Committed: `Final CRM & EPK Sync`
+- Status: Live at `apexmusiclatino.com`

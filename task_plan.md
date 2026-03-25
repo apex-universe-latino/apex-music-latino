@@ -40,37 +40,45 @@
 - [ ] WhatsApp Business API — NOT YET (keys needed)
 
 ## Phase 3: A — Architect (3-Layer Build)
+- [x] Artist Portal Branding (aml_favicon.svg, Dark Mode)
+- [x] CRM Infrastructure (Supabase `venue_leads`, `email_events`)
+- [x] CRM Pipeline Stages (New, Contacted, Responded, Interested, Booked, Declined)
+- [x] CRM Template Library (8+ category-specific outreach templates)
+- [x] CRM Journey Builder (12-step automated sequence draft)
+- [x] CRM CSV Import with Column Mapping & Duplication Check 
+- [x] CRM Search & Advanced Filtering (Genre, City, Category)
 
 ### Layer 1: Architecture (SOPs)
-- [ ] SOP: Genre page creation workflow
-- [ ] SOP: Artist EPK onboarding flow
-- [ ] SOP: Fan data capture pipeline
-- [ ] SOP: QR code generation & tracking
-- [ ] SOP: Lead-to-artist conversion funnel
+- [x] SOP: Genre page creation workflow
+- [x] SOP: Artist EPK onboarding flow
+- [x] SOP: Fan data capture pipeline
+- [x] SOP: QR code generation & tracking
+- [x] SOP: Lead-to-artist conversion funnel
 
 ### Layer 2: Navigation (Decision Making)
 - [x] Genre detection via URL path
 - [x] Theme application via data-genre attribute
 - [x] Shared nav injection via nav.js
-- [ ] Form submission routing to Supabase
-- [ ] QR code → EPK → fan capture flow
+- [x] Form submission routing to Supabase
+- [x] QR code → EPK → fan capture flow (?qr=1 gated flow)
 
 ### Layer 3: Tools (Execution)
-- [ ] tools/qr_generator.py — Generate branded QR codes for artist EPKs
-- [ ] tools/fan_capture.py — Process and store fan data from forms
+- [x] tools/qr_generator.py — Branded QR codes (integrated in Portal)
+- [x] tools/fan_capture.py — Lead Capture flow (integrated in EPKs)
 - [ ] tools/social_scraper.py — Pull metrics from Spotify/IG/TikTok
-- [ ] tools/epk_builder.py — Generate artist EPK pages from data
-- [ ] tools/analytics_sync.py — Sync data to CUBO dashboard
+- [x] tools/epk_builder.py — EPK Layouts (Arcoiris, Joey B examples)
+- [ ] tools/analytics_sync.py — Sync CRM status to CUBO dashboard
 
 ## Phase 4: S — Stylize (Refinement)
 - [x] Genre-adaptive CSS theme system (6 themes)
-- [x] Glassmorphism + dark UI design language
+- [x] Glassmorphism + dark UI design (Portal + EPKs)
 - [x] Higgsfield.ai-inspired aesthetic
 - [x] Mobile responsive layouts
+- [x] Branding: `aml_favicon.svg` white-on-dark logo standard
+- [x] QR code branded styling (White background for legibility)
 - [ ] Animated transitions between genre switches
-- [ ] Loading states and micro-interactions
-- [ ] Form validation UX (inline errors, success states)
-- [ ] QR code branded styling
+- [x] Micro-animations (hover effects, card glows)
+- [x] Form validation UX (Booking form validation)
 
 ## Phase 5: T — Trigger (Deployment)
 - [x] Vercel deployment active (auto-deploy on push)
@@ -82,5 +90,5 @@
 
 ---
 
-## Current Status: Phase 3 (Architect) — Layer 1 SOPs needed
-**Next Action**: Define SOPs in architecture/ for the core workflows, then build tools/
+## Current Status: Phase 5 (Trigger) — Final Deployment & Automation 
+**Next Action**: Finalize analytics dashboard in Artist Portal and schedule daily syncs for CRM outreach statuses.

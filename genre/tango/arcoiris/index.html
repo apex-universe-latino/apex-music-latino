@@ -2,7 +2,7 @@
 
 <html class="dark" lang="es" data-genre="tango"><head>
 <meta charset="utf-8"/>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="icon" type="image/svg+xml" href="/Branding /aml_favicon.svg"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Arcoiris | Apex Music Latino</title>
 <meta name="description" content="Arcoiris - Tango contempor&aacute;neo, danza, poes&iacute;a y teatro. John Acevedo (Los &Aacute;ngeles) y Alisson Trigos (Bucaramanga). EPK oficial. Representados por Apex Music Latino."/>
@@ -647,7 +647,10 @@ document.addEventListener('mousemove', function(e) {
 
 <!-- TopNavBar -->
 <nav class="fixed top-0 w-full z-50 flex justify-between items-center px-6 md:px-8 h-20 bg-zinc-950/70 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] font-['Space_Grotesk'] tracking-tight">
-  <a href="/" class="text-2xl font-bold tracking-tighter text-tango-accent uppercase">Apex Music Latino</a>
+  <a href="/" class="flex items-center gap-2 group">
+    <img src="/Branding /aml_favicon.svg" class="w-8 h-8 invert transition-transform duration-500 group-hover:scale-110" alt="Apex Music Latino Logo">
+    <span class="text-xl font-bold tracking-tighter text-white uppercase group-hover:text-tango-accent transition-colors">Apex</span>
+  </a>
   <div class="hidden md:flex items-center gap-8">
     <a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="/">Inicio</a>
     <a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="/genre/tango/">Tango</a>
@@ -1013,7 +1016,7 @@ document.addEventListener('mousemove', function(e) {
         <!-- Real QR Code -->
         <div class="glass-panel rounded-2xl p-8 border border-white/10 tango-border-glow flex items-center gap-8">
           <div class="w-36 h-36 bg-white rounded-xl flex items-center justify-center flex-shrink-0 p-2 shadow-inner">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://apexmusiclatino.com/genre/tango/arcoiris" class="w-full h-full object-contain" alt="EPK QR Code"/>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://apexmusiclatino.com/genre/tango/arcoiris?qr=1" class="w-full h-full object-contain" alt="EPK QR Code"/>
           </div>
           <div>
             <h4 class="font-headline font-bold text-on-surface text-lg mb-2">Escane&aacute; para contenido exclusivo</h4>
@@ -1407,15 +1410,17 @@ document.addEventListener('mousemove', function(e) {
   </div>
 </section>
 
-<!-- Booking Modal -->
 <div id="booking-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500">
   <div class="bg-[#1a1a1a] w-full max-w-lg mx-6 rounded-3xl overflow-hidden border border-white/10 shadow-2xl transform scale-95 transition-all duration-500 group">
     <div class="p-8 border-b border-white/5 bg-gradient-to-r from-tango-accent/10 to-transparent flex justify-between items-center">
-      <div>
-        <h3 class="font-headline text-2xl font-bold">Booking & Inquiries</h3>
-        <p class="text-zinc-500 text-xs mt-1 uppercase tracking-widest font-bold">Represented by Ariel Hanasi</p>
+      <div class="flex items-center gap-4">
+        <img src="/Branding /aml_favicon.svg" class="w-10 h-10 invert transition-all duration-500" alt="AML Logo">
+        <div>
+          <h3 class="font-headline text-2xl font-bold">Booking & Inquiries</h3>
+          <p class="text-zinc-500 text-[10px] mt-0.5 uppercase tracking-widest font-bold">Represented by Ariel Hanasi</p>
+        </div>
       </div>
-      <button onclick="document.getElementById('booking-modal').classList.add('opacity-0', 'pointer-events-none'); document.getElementById('booking-modal').querySelector('> div').classList.add('scale-95');" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-tango-accent hover:text-white transition-all">
+      <button onclick="closeBookingModal()" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-tango-accent hover:text-white transition-all">
         <span class="material-symbols-outlined">close</span>
       </button>
     </div>
@@ -1483,50 +1488,19 @@ document.addEventListener('mousemove', function(e) {
       };
 
       try {
-        // 1. Save to Supabase leads_capture
-        var sbRes = await fetch('https://iaycaynevtumrqoknemk.supabase.co/rest/v1/leads_capture', {
-          method: 'POST',
-          headers: {
-            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k',
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            artist_name: 'Arcoiris',
-            genre: 'tango',
-            email: data.email,
-            mood_preference: {
-              name: data.name,
-              phone: data.phone,
-              title: data.organization,
-              source: 'booking_form',
-              event_type: data.event_type,
-              message: data.message,
-              timestamp: data.timestamp
-            },
-            marketing_source: 'EPK_BOOKING',
-            source: 'booking_form'
-          })
-        });
-
-        // 2. Send notification email to booking@apexmusiclatino.com
-        await fetch('/api/send-blast-email', {
+        // Save to Supabase + send notification via dedicated booking endpoint
+        await fetch('/api/send-booking-notification', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            artist_name: 'Arcoiris',
-            subject: 'New Booking Inquiry: ' + data.event_type + ' — ' + data.name,
-            body_html: '<div style="font-family:Arial;max-width:600px;background:#131313;color:#ccc;padding:32px;border-radius:16px;border:1px solid rgba(230,0,0,0.15);">' +
-              '<h2 style="color:#e60000;margin:0 0 16px;">New Booking Request</h2>' +
-              '<p><strong style="color:#fff;">Name:</strong> ' + data.name + '</p>' +
-              '<p><strong style="color:#fff;">Email:</strong> ' + data.email + '</p>' +
-              '<p><strong style="color:#fff;">Phone:</strong> ' + (data.phone || 'N/A') + '</p>' +
-              '<p><strong style="color:#fff;">Organization:</strong> ' + (data.organization || 'N/A') + '</p>' +
-              '<p><strong style="color:#fff;">Type:</strong> ' + data.event_type + '</p>' +
-              '<p><strong style="color:#fff;">Message:</strong></p><p style="background:#0c0c0c;padding:16px;border-radius:8px;border:1px solid #222;">' + data.message + '</p>' +
-              '<p style="margin-top:24px;font-size:11px;color:#666;">Source: EPK Booking Form | ' + data.timestamp + '</p></div>',
-            test_email: 'booking@apexmusiclatino.com',
-            from_label: 'Booking Alert'
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            organization: data.organization,
+            event_type: data.event_type,
+            message: data.message,
+            artist: 'Arcoiris',
+            timestamp: data.timestamp
           })
         });
 
@@ -1556,6 +1530,11 @@ document.addEventListener('mousemove', function(e) {
     const modal = document.getElementById('booking-modal');
     modal.classList.remove('opacity-0', 'pointer-events-none');
     modal.querySelector('.transform').classList.remove('scale-95');
+  }
+  function closeBookingModal() {
+    const modal = document.getElementById('booking-modal');
+    modal.classList.add('opacity-0', 'pointer-events-none');
+    modal.querySelector('.transform').classList.add('scale-95');
   }
 </script>
 
@@ -1699,20 +1678,34 @@ document.addEventListener('mousemove', function(e) {
   }
 
   function renderLiveShows(shows) {
+    const list = (shows && shows.length > 0) ? shows : [
+      {
+        id: 'arcoiris-25-mar',
+        title: 'Mi Corazón es una Llama Errante',
+        date: '2026-03-25T17:30:00',
+        venue: 'Casa del Libro Total (El Libro Total)',
+        city: 'Bucaramanga',
+        address: 'Cra 35 #9-81 Centro',
+        is_free: true,
+        description: 'Una obra escénica de danza y teatro inspirada en la poesía del poeta colombiano Porfirio Barba Jacob.',
+        tags: ['Tango', 'Danza Contemporánea', 'Poesía Declamada', 'Viola en Vivo'],
+        artists: ['John Acevedo', 'Alisson Trigos', 'Sulay Perez', 'Walter Gómez', 'Dayana Hernández']
+      },
+      { title: 'Teatro Colón', date: '2026-04-18T20:00:00', venue: 'Teatro Colón', city: 'Buenos Aires, Argentina', ticket_url: '#' },
+      { title: 'Palau de la Música', date: '2026-05-05T19:30:00', venue: 'Palau de la Música', city: 'Barcelona, España', ticket_url: '#' },
+      { title: 'Le Bataclan', date: '2026-06-21T21:00:00', venue: 'Le Bataclan', city: 'París, Francia', ticket_url: '#' }
+    ];
     const container = document.getElementById('shows-list');
     if (!container) return;
-    container.innerHTML = shows.map(s => {
+    
+    container.innerHTML = list.map(s => {
       const d = new Date(s.date);
-      if (isNaN(d.getTime())) return '';
-      const showYear = d.getFullYear();
-      const showMonth = d.toLocaleString('es-ES', { month: 'short' }).toUpperCase();
       const showDay = d.getDate();
+      const showMonth = d.toLocaleString('es-ES', { month: 'short' }).toUpperCase().replace('.','');
+      const showYear = d.getFullYear();
       const showTime = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
 
-      // Check if it's a "Premium" show (has description or tags)
-      const isPremium = s.description || (s.tags && s.tags.length > 0);
-
-      if (isPremium) {
+      if (s.id === 'arcoiris-25-mar' || s.description) {
         return `
           <div class="rounded-xl bg-surface-container-highest/40 border border-tango-accent/30 hover:border-tango-accent/60 transition-all duration-300 group overflow-hidden">
             <div class="flex items-center gap-6 p-6">
@@ -1742,7 +1735,6 @@ document.addEventListener('mousemove', function(e) {
         `;
       }
 
-      // Default Simple Card
       return `
         <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group">
           <div class="text-center flex-shrink-0 w-16">
@@ -1764,9 +1756,16 @@ document.addEventListener('mousemove', function(e) {
   }
 
   function renderLiveMusic(music) {
+    const list = (music && music.length > 0) ? music : [
+      { id: 'm1', title: 'Red Ochre Woman', type: 'Single', year: '2026', artwork_url: 'https://img.youtube.com/vi/smyZ11kvowg/hqdefault.jpg' },
+      { id: 'm2', title: 'Gaslight District', type: 'Single', year: '2025', artwork_url: 'https://img.youtube.com/vi/BgAGAJpMPZM/hqdefault.jpg' },
+      { id: 'm3', title: 'The Spirit Solitude', type: 'Single', year: '2025', artwork_url: 'https://img.youtube.com/vi/PreY4iVXNVg/hqdefault.jpg' },
+      { id: 'm4', title: 'Henri Vieuxtemps Capriccio', type: 'Album', year: '2024', artwork_url: 'https://img.youtube.com/vi/3DWwqq0EpHU/hqdefault.jpg' },
+      { id: 'm5', title: 'Traumerei', type: 'EP', year: '2024', artwork_url: 'https://img.youtube.com/vi/UacP7EdG2bs/hqdefault.jpg' }
+    ];
     const container = document.getElementById('discografia-list');
     if (!container) return;
-    container.innerHTML = music.map(m => `
+    container.innerHTML = list.map(m => `
       <div class="group cursor-pointer">
         <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl tango-border-glow">
           <img src="${m.artwork_url || 'https://img.youtube.com/vi/aN5xoSQ5S3c/hqdefault.jpg'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="${m.title}" onerror="this.src='https://img.youtube.com/vi/aN5xoSQ5S3c/hqdefault.jpg'"/>
@@ -1781,25 +1780,23 @@ document.addEventListener('mousemove', function(e) {
   }
 
   function renderLiveVideos(videos) {
-    const list = videos || [
-      { url: 'smyZ11kvowg', title: 'Red Ochre Woman', credits: 'A tribute to Isadora Duncan', description: 'Obra coreográfica y musical en homenaje a la pionera de la danza moderna.' },
-      { url: 'BgAGAJpMPZM', title: 'Gaslight District', credits: 'Christina Linhardt, Astor Piazzolla, John Acevedo, John Di Bona, Laszlo Mezo', description: 'Poetry & Tango Fusion. Music: Astor Piazzolla (Tango Etude No. 3).' },
-      { url: 'UacP7EdG2bs', title: 'Traumerei', credits: 'R. Schumann / John Acevedo, Aimee Delphyne Lissantheia', description: 'Viola solo with sacred dance and poem.' },
-      { url: '3DWwqq0EpHU', title: 'Henri Vieuxtemps', credits: 'John Acevedo, Ron Parker, Laszlo Mezo', description: 'Capriccio for solo viola. Virtuoso solo music.' },
-      { url: 'PreY4iVXNVg', title: 'The Spirit Solitude', credits: 'Christina Linhardt, Astor Piazzolla, John Acevedo', description: 'Poetry by Christina Linhardt. Music: Tango Etude No. 4.' }
+    const list = (videos && videos.length > 0) ? videos : [
+      { url: 'smyZ11kvowg', title: 'Red Ochre Woman', credits: 'A tribute to Isadora Duncan', description: 'Music: Tango to No. 3 by Astor Piazzolla. Arranged for viola and performed by John Acevedo.' },
+      { url: 'BgAGAJpMPZM', title: 'Gaslight District', credits: 'Satirical poem by Christina Linhardt', description: 'Music: Tango Etude No. 3. Viola solo by John Acevedo. Film editing by John Di Bona.' },
+      { url: 'UacP7EdG2bs', title: 'Traumerei', credits: 'R. Schumann / John Acevedo', description: 'Viola solo with sacred dance and poem. Violist John Acevedo, Dancer Aimee Delphyne.' },
+      { url: '3DWwqq0EpHU', title: 'Henri Vieuxtemps', credits: 'Capriccio for solo viola', description: 'John Acevedo - violist. Virtuoso viola solo music. Recorded by Ron Parker.' },
+      { url: 'PreY4iVXNVg', title: 'The Spirit Solitude', credits: 'Poetry by Christina Linhardt', description: 'Music: Tango Etude No. 4 by Astor Piazzolla, Arr. for viola. Performed by John Acevedo.' }
     ];
     const container = document.getElementById('obras-gallery');
     if (!container) return;
     container.innerHTML = list.filter(v => v.title && v.url).map(v => {
       let vidId = '';
       const url = v.url || v.id || '';
-      
-      // De-duplicate: If it's the official video, skip it in the gallery
-      if (v.title.includes('No.3') || url === 'aN5xoSQ5S3c') return ''; 
-
       if (url.includes('v=')) vidId = url.split('v=')[1].split('&')[0];
       else if (url.includes('youtu.be/')) vidId = url.split('youtu.be/')[1].split('?')[0];
       else vidId = url;
+
+      if (vidId === 'aN5xoSQ5S3c') return ''; // Skip official video
 
       return `
         <div class="group">

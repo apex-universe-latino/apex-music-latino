@@ -180,6 +180,19 @@ export default async function handler(req, res) {
 </body>
 </html>`;
 
+  // Check unsubscribe list
+  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'iaycaynevtumrqoknemk'}.supabase.co`;
+  const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (SUPABASE_KEY) {
+    const unsubscribed = await getUnsubscribedEmails(SUPABASE_URL, SUPABASE_KEY);
+    if (unsubscribed.has(email.toLowerCase().trim())) {
+      return res.status(200).json({ success: false, skipped: true, reason: 'Email is unsubscribed' });
+    }
+  }
+
+  // Append unsubscribe footer
+  const finalHtml = appendUnsubscribeFooter(htmlEmail, email, 'welcome');
+
   try {
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -191,7 +204,7 @@ export default async function handler(req, res) {
         from: 'Apex Music Latino <noreply@apexmusiclatino.com>',
         to: [email],
         subject: `🎵 ¡Bienvenido al Universo de ${artistDisplay}! Tu Fan ID: ${fan_id}`,
-        html: htmlEmail,
+        html: finalHtml,
       }),
     });
 
@@ -207,4 +220,33 @@ export default async function handler(req, res) {
     console.error('Email send error:', err);
     return res.status(500).json({ error: 'Internal server error' });
   }
+}
+
+async function getUnsubscribedEmails(supabaseUrl, serviceKey) {
+  const unsubs = new Set();
+  try {
+    const res = await fetch(`${supabaseUrl}/rest/v1/unsubscribes?select=email`, {
+      headers: { 'apikey': serviceKey, 'Authorization': `Bearer ${serviceKey}` }
+    });
+    if (res.ok) {
+      const rows = await res.json();
+      rows.forEach(r => unsubs.add(r.email.toLowerCase().trim()));
+    }
+  } catch (e) {
+    console.warn('[unsubscribe] Could not fetch unsubscribes list:', e.message);
+  }
+  return unsubs;
+}
+
+function appendUnsubscribeFooter(html, email, source) {
+  const token = Buffer.from(email).toString('base64');
+  const unsubUrl = `https://apexmusiclatino.com/api/unsubscribe?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}&source=${encodeURIComponent(source)}`;
+  const footerLink = `<p style="margin-top:12px;"><a href="${unsubUrl}" style="color:#444;font-size:9px;text-decoration:underline;">Cancelar suscripci\u00f3n / Unsubscribe</a></p>`;
+
+  if (html.includes('</body>')) {
+    return html.replace('</body>', footerLink + '</body>');
+  } else if (html.includes('</html>')) {
+    return html.replace('</html>', footerLink + '</html>');
+  }
+  return html + footerLink;
 }
