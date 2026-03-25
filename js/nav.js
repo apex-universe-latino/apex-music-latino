@@ -122,7 +122,7 @@
             <div class="flex items-center gap-12">
                 <a href="/" class="flex items-center gap-2 group">
                     <img src="/Branding /aml_favicon.svg" alt="Apex" class="h-8 w-8 invert transition-transform duration-500 group-hover:scale-110"/>
-                    <span class="text-xl font-bold tracking-tighter text-neutral-100 uppercase" style="font-family: var(--font-headline);">Apex</span>
+                    <span class="text-xl font-bold tracking-tighter text-neutral-100 uppercase" style="font-family: var(--font-headline);">Apex Music Latino</span>
                 </a>
                 <div class="hidden lg:flex items-center gap-6 overflow-x-auto py-2" style="scrollbar-width: none;">
                     ${genreSelectorHTML()}
@@ -163,7 +163,7 @@
                     <div class="col-span-2">
                         <div class="flex items-center gap-3 mb-6">
                             <img src="/Branding /aml_favicon.svg" class="w-10 h-10 invert" alt="Apex">
-                            <div class="text-2xl font-bold tracking-tighter uppercase" style="font-family: var(--font-headline); color: var(--accent);">Apex</div>
+                            <div class="text-2xl font-bold tracking-tighter uppercase" style="font-family: var(--font-headline); color: var(--accent);">Apex Music Latino</div>
                         </div>
                         <p class="text-zinc-500 max-w-sm mb-8 leading-relaxed">The premier ecosystem for the evolution of Latin music. Driven by data, inspired by passion, built for the future.</p>
                         <div class="flex gap-4">
