@@ -149,50 +149,54 @@
     }
     .quick-action:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
 
-    /* FRM table improvements */
+    /* FRM table improvements (Excel Style) */
     .frm-container {
       background: rgba(255,255,255,0.02);
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 12px;
       overflow-x: auto;
+      max-width: 100%;
+      height: calc(100vh - 280px); /* Fixed height for sticky header */
+      position: relative;
     }
     .frm-table { 
       width: 100%; 
-      border-collapse: collapse; 
+      border-collapse: separate; 
+      border-spacing: 0;
       font-size: 13px; 
-      table-layout: fixed; /* Fixed layout for truncation control */
-      min-width: 900px; 
+      min-width: 1100px; 
     }
     .frm-table thead th {
       text-align: left;
-      padding: 12px 16px;
+      padding: 14px 16px;
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: rgba(255,254,254,0.4);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.45);
+      border-bottom: 2px solid rgba(255,255,255,0.1);
       font-weight: 700;
-      background: rgba(255,255,255,0.02);
+      background: #161616; /* Solid background for sticky */
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
     .frm-table tbody tr.main-row { 
-      border-bottom: 1px solid rgba(255,255,255,0.04); 
       cursor: pointer;
       transition: background 0.15s; 
     }
-    .frm-table tbody tr.main-row:hover { background: rgba(255,255,255,0.03); }
+    .frm-table tbody tr.main-row:hover { background: rgba(255,255,255,0.035); }
     .frm-table td { 
       padding: 14px 16px; 
-      color: rgba(255,255,255,0.8); 
+      color: rgba(255,255,255,0.85); 
+      border-bottom: 1px solid rgba(255,255,255,0.04);
       white-space: nowrap; 
-      overflow: hidden; 
-      text-overflow: ellipsis;
     }
-    .details-row { display: none; background: rgba(0,0,0,0.2); }
+    .details-row { display: none; background: rgba(0,0,0,0.3); }
     .details-row.active { display: table-row; }
-    .details-content { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .details-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .detail-item label { display: block; font-size: 10px; color: rgba(255,255,255,0.3); text-transform: uppercase; margin-bottom: 4px; }
-    .detail-item span { font-size: 13px; color: #fff; word-break: break-all; }
+    .details-content { padding: 24px; border-bottom: 2px solid rgba(255,255,255,0.04); }
+    .details-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .detail-item label { display: block; font-size: 10px; color: rgba(255,255,255,0.3); text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.05em; }
+    .detail-item span { font-size: 13px; color: #fff; line-height: 1.4; }
 
     /* Asset generator */
     #qr-output canvas, #qr-output img { border-radius: 8px; }
@@ -552,9 +556,10 @@
               <thead>
                 <tr>
                   <th style="width: 140px;">Fan ID</th>
-                  <th style="width: 200px;">Name</th>
-                  <th style="width: 220px;">Email</th>
-                  <th style="width: 140px;">Phone</th>
+                  <th style="width: 180px;">Name</th>
+                  <th style="width: 200px;">Email</th>
+                  <th style="width: 130px;">City</th>
+                  <th style="width: 130px;">Phone</th>
                   <th style="width: 120px;">Device</th>
                   <th style="width: 100px;">Source</th>
                   <th style="width: 140px;">Date</th>
@@ -935,12 +940,17 @@ function renderFRMTable(data) {
     return;
   }
 
-  tbody.innerHTML = data.map(row => {
+  const totalRecords = data.length;
+  tbody.innerHTML = data.map((row, i) => {
     const mp = typeof row.mood_preference === 'string' ? JSON.parse(row.mood_preference || '{}') : (row.mood_preference || {});
     const name = mp.name || mp.fan_name || '—';
+    const email = row.email || '—';
     const phone = mp.phone || mp.telefono || '—';
-    const title = mp.title || mp.song_title || mp.mood || '—';
+    const city = mp.city || (mp.geo ? `Lat: ${mp.geo.lat.toFixed(2)}` : '—');
     const fanId = mp.fan_id || row.id || '—';
+    
+    // Virtual Sequence for clarity
+    const seq = totalRecords - i;
 
     // Comprehensive Device/Model detection
     const deviceObj = mp.device || {};
@@ -1021,20 +1031,28 @@ function renderFRMTable(data) {
 
     return `
     <tr class="main-row" onclick="toggleRowDetails('${row.id}')">
-      <td style="font-family:monospace;font-size:11px;color:rgba(255,255,255,0.35);">${fanId}</td>
+      <td style="color:#00ff41;font-weight:700;font-size:11px;letter-spacing:1px;font-family:monospace;">${fanId}</td>
       <td style="font-weight:600;color:#fff;">${escHtml(name)}</td>
-      <td>${escHtml(row.email || '—')}</td>
-      <td>${escHtml(phone)}</td>
+      <td style="color:rgba(255,255,255,0.5);font-size:12px;">${escHtml(email)}</td>
+      <td><span style="background:rgba(0,186,211,0.1);color:#00bad3;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;">${escHtml(city)}</span></td>
+      <td style="font-family:monospace;font-size:12px;">${escHtml(phone)}</td>
       <td>
-        <span class="badge" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.85);">${deviceLabel}</span>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span class="material-symbols-outlined" style="font-size:14px;color:rgba(255,255,255,0.4);">${deviceIcon}</span>
+          <span style="font-size:11px;color:rgba(255,255,255,0.4);">${deviceModel}</span>
+        </div>
       </td>
-      <td><span style="opacity:0.5;font-size:11px;">${escHtml(source)}</span></td>
-      <td style="white-space:nowrap;font-size:11px;opacity:0.6;">${dateStr}</td>
+      <td><span style="font-size:10px;text-transform:uppercase;letter-spacing:0.05em;color:rgba(255,255,255,0.3);">${escHtml(source)}</span></td>
+      <td style="font-size:11px;color:rgba(255,255,255,0.4);white-space:nowrap;">${dateStr}</td>
     </tr>
     <tr id="details-${row.id}" class="details-row">
-      <td colspan="7">
+      <td colspan="8">
         <div class="details-content" style="background: rgba(255,255,255,0.015); border-left: 2px solid ${currentArtist.accent || '#6366f1'}; border-radius: 0 0 8px 8px; margin: 0 16px 16px 16px;">
           <div class="details-grid">
+            <div class="detail-item">
+              <label>Sequence ID / Entry</label>
+              <span style="color:#00ff41;font-weight:700;">#${seq}</span>
+            </div>
             <div class="detail-item">
               <label>Identidad y Cargo</label>
               <span>${escHtml(name)} ${title && title !== '—' ? `<br><small style="color:rgba(255,255,255,0.4)">${escHtml(title)}</small>` : ''}</span>
@@ -1168,8 +1186,45 @@ function getEPKData() {
   };
 }
 
-function saveEPKData(data) {
+async function saveEPKData(data) {
   localStorage.setItem('apex_artist_' + currentArtist.slug, JSON.stringify(data));
+  const fb = document.getElementById('save-feedback');
+  if (fb) { fb.style.opacity = '1'; setTimeout(() => fb.style.opacity='0', 2000); }
+}
+
+async function publishEPK() {
+  const data = getEPKData();
+  const btn = document.getElementById('publish-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="material-symbols-outlined animate-spin" style="font-size:16px;">progress_activity</span> Syncing...';
+  
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/artists_config`, {
+      method: 'POST',
+      headers: {
+        'apikey': SERVICE_KEY,
+        'Authorization': 'Bearer ' + SERVICE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify({
+        slug: currentArtist.slug,
+        config: data,
+        updated_at: new Date().toISOString()
+      })
+    });
+    if (res.ok) {
+        alert('Publicación Exitosa! Los cambios están en vivo.');
+    } else {
+        throw new Error('Sync failed');
+    }
+  } catch(e) {
+    console.error(e);
+    alert('Error al publicar. Los cambios solo se guardaron localmente.');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px;">cloud_upload</span> Publicar Cambios';
+  }
 }
 
 function renderEPKEditor() {
@@ -1290,6 +1345,14 @@ function renderEPKEditor() {
       <div id="epk-shows-editor" style="display:none;">
         <div id="epk-shows-list"></div>
       </div>
+    </div>
+
+    <!-- Global Save/Publish -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:40px;padding:24px;background:rgba(255,255,255,0.03);border-radius:16px;border:1px solid rgba(255,255,255,0.06);">
+        <button id="publish-btn" onclick="publishEPK()" class="upgrade-btn" style="margin-top:0;background:linear-gradient(135deg, #00ff41, #008b26);color:#000;font-weight:700;">
+            <span class="material-symbols-outlined" style="font-size:18px;">cloud_upload</span> Publicar Cambios Live
+        </button>
+        <span id="save-feedback" style="opacity:0;transition:opacity 0.3s;font-size:12px;color:#00ff41;">Guardado localmente</span>
     </div>
   `;
 
@@ -1437,13 +1500,29 @@ function renderShowItems(data) {
   const list = document.getElementById('epk-shows-list');
   if (!list) return;
   list.innerHTML = (data.shows || []).map((s, i) => `
-    <div class="repeatable-item">
-      <div style="display:grid;grid-template-columns:1fr 1fr 120px 1fr auto;gap:8px;align-items:end;">
-        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Venue</label><input class="epk-input show-venue" value="${escAttr(s.venue)}" onchange="onEPKChange()" /></div>
-        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">City</label><input class="epk-input show-city" value="${escAttr(s.city)}" onchange="onEPKChange()" /></div>
-        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Date</label><input class="epk-input show-date" type="date" value="${escAttr(s.date)}" onchange="onEPKChange()" /></div>
-        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Ticket URL</label><input class="epk-input show-ticket" value="${escAttr(s.ticket_url)}" onchange="onEPKChange()" /></div>
-        <button class="epk-btn" style="height:34px;" onclick="removeShowItem(${i})"><span class="material-symbols-outlined" style="font-size:16px;">delete</span></button>
+    <div class="repeatable-item" style="background:rgba(255,255,255,0.02);padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);margin-bottom:16px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 120px;gap:12px;margin-bottom:12px;">
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Title / Headline</label><input class="epk-input show-title" value="${escAttr(s.title)}" onchange="onEPKChange()" /></div>
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Subtitle</label><input class="epk-input show-subtitle" value="${escAttr(s.subtitle)}" onchange="onEPKChange()" /></div>
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Show Date</label><input class="epk-input show-date" type="date" value="${escAttr(s.date)}" onchange="onEPKChange()" /></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 100px;gap:12px;margin-bottom:12px;">
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Venue Name</label><input class="epk-input show-venue" value="${escAttr(s.venue)}" onchange="onEPKChange()" /></div>
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Address</label><input class="epk-input show-address" value="${escAttr(s.address)}" onchange="onEPKChange()" /></div>
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Time</label><input class="epk-input show-time" value="${escAttr(s.time)}" placeholder="e.g. 5:30 PM" onchange="onEPKChange()" /></div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="font-size:10px;color:rgba(255,255,255,0.3);">City</label><input class="epk-input show-city" value="${escAttr(s.city)}" onchange="onEPKChange()" />
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="font-size:10px;color:rgba(255,255,255,0.3);">Tags (comma separated)</label><input class="epk-input show-tags" value="${escAttr(s.tags)}" placeholder="Tango, Live, Event" onchange="onEPKChange()" />
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="font-size:10px;color:rgba(255,255,255,0.3);">Artists (comma separated)</label><input class="epk-input show-artists" value="${escAttr(s.artists)}" onchange="onEPKChange()" />
+      </div>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end;">
+        <div><label style="font-size:10px;color:rgba(255,255,255,0.3);">Description</label><textarea class="epk-textarea show-desc" style="min-height:60px;" onchange="onEPKChange()">${escHtml(s.description)}</textarea></div>
+        <button class="epk-btn" style="height:44px;background:rgba(239,68,68,0.1);color:#ef4444;border-color:rgba(239,68,68,0.2);" onclick="removeShowItem(${i})"><span class="material-symbols-outlined" style="font-size:20px;">delete</span></button>
       </div>
     </div>
   `).join('');
@@ -1451,13 +1530,20 @@ function renderShowItems(data) {
 
 function collectShowItems() {
   const items = [];
-  const venues = document.querySelectorAll('.show-venue');
-  venues.forEach((el, i) => {
+  const titles = document.querySelectorAll('.show-title');
+  titles.forEach((el, i) => {
     items.push({
-      venue: el.value,
+      title: el.value,
+      subtitle: document.querySelectorAll('.show-subtitle')[i]?.value || '',
+      venue: document.querySelectorAll('.show-venue')[i]?.value || '',
       city: document.querySelectorAll('.show-city')[i]?.value || '',
       date: document.querySelectorAll('.show-date')[i]?.value || '',
-      ticket_url: document.querySelectorAll('.show-ticket')[i]?.value || ''
+      address: document.querySelectorAll('.show-address')[i]?.value || '',
+      time: document.querySelectorAll('.show-time')[i]?.value || '',
+      tags: document.querySelectorAll('.show-tags')[i]?.value || '',
+      artists: document.querySelectorAll('.show-artists')[i]?.value || '',
+      description: document.querySelectorAll('.show-desc')[i]?.value || '',
+      ticket_url: '' // Deprecated or kept for compatibility
     });
   });
   return items;
@@ -1465,7 +1551,19 @@ function collectShowItems() {
 
 function addShowItem() {
   const data = getEPKData();
-  data.shows.push({ venue: '', city: '', date: '', ticket_url: '' });
+  data.shows.push({ 
+    title: '', 
+    subtitle: '', 
+    venue: '', 
+    city: '', 
+    date: '', 
+    address: '', 
+    time: '', 
+    tags: '', 
+    artists: '', 
+    description: '',
+    ticket_url: '' 
+  });
   saveEPKData(data);
   renderShowItems(data);
   document.getElementById('epk-shows-editor').style.display = 'block';

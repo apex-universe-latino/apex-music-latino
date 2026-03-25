@@ -263,12 +263,22 @@
   var GENRE_CODE = 'TN'; // TN=Tango, RP=Rap, RG=Reggaeton, RK=Rock, EL=Electronic, AF=Afro-Latin
   var ARTIST_CODE = 'ARC'; // ARC=Arcoiris
   function generateFanId() {
-    var counter = parseInt(localStorage.getItem('apex_fan_counter') || '0') + 1;
-    localStorage.setItem('apex_fan_counter', counter.toString());
-    var publicId = 'AML-' + GENRE_CODE + '-' + ARTIST_CODE + '-' + counter.toString().padStart(3, '0');
-    // Master internal ID (for Apex internal use)
-    var masterId = 'APEX-' + Date.now().toString(36).toUpperCase() + '-' + counter.toString().padStart(5, '0');
-    return { publicId: publicId, masterId: masterId, seq: counter };
+    var count = parseInt(localStorage.getItem('apex_fan_counter') || '0') + 1;
+    localStorage.setItem('apex_fan_counter', count.toString());
+    
+    // DISTRIBUTED UNIQUE SALT: Added to prevent Everyone globally starting at "001" 
+    // when scanning on separate devices. Format: AML-TN-ARC-001 (seq) + 4-char unique salt
+    var salt = Math.random().toString(36).substring(2, 6).toUpperCase();
+    var publicId = 'AML-' + GENRE_CODE + '-' + ARTIST_CODE + '-' + count.toString().padStart(3, '0') + '-' + salt;
+    
+    // Master internal ID
+    var masterId = 'APEX-' + Date.now().toString(36).toUpperCase() + '-' + count.toString().padStart(5, '0');
+
+    // Best-effort city detection from TZ
+    var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    var city = tz.split('/').pop().replace('_', ' ') || 'Arcoiris Local';
+
+    return { publicId: publicId, masterId: masterId, seq: count, city: city };
   }
 
   // Collect full device, geo, browser, and environment data
@@ -548,6 +558,7 @@
           fan_id: fanIdObj.publicId,
           master_id: fanIdObj.masterId,
           fan_seq: fanIdObj.seq,
+          city: fanIdObj.city,
           device: deviceData,
           geo: geoData || null
         },
