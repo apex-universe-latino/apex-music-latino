@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   <script src="https://js.stripe.com/v3/"></script>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="/Branding /aml_favicon.svg" />
   <link rel="stylesheet" href="/css/themes.css" />
   <script src="/js/i18n.js"></script>
   <style>
@@ -494,6 +494,100 @@
     .save-status-badge .status-dot { width: 6px; height: 6px; border-radius: 50%; }
     .save-status-badge.local .status-dot { background: #eab308; }
     .save-status-badge.published .status-dot { background: #22c55e; }
+
+    /* ============ BOOKING CRM STYLES ============ */
+    .crm-layout { display: flex; height: calc(100vh - 280px); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; overflow: hidden; background: rgba(0,0,0,0.2); }
+    .crm-inbox-list { width: 340px; min-width: 340px; border-right: 1px solid rgba(255,255,255,0.06); overflow-y: auto; background: rgba(255,255,255,0.015); }
+    .crm-detail-panel { flex: 1; overflow-y: auto; background: rgba(255,255,255,0.01); }
+    .crm-inbox-header { padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 10px; background: rgba(255,255,255,0.02); position: sticky; top: 0; z-index: 5; }
+    .crm-search { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 8px 12px; color: #fff; font-size: 12px; width: 100%; outline: none; }
+    .crm-search:focus { border-color: rgba(255,255,255,0.2); }
+    .crm-search::placeholder { color: rgba(255,255,255,0.25); }
+    .crm-venue-item { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); cursor: pointer; transition: background 0.12s; display: flex; gap: 12px; align-items: flex-start; }
+    .crm-venue-item:hover { background: rgba(255,255,255,0.04); }
+    .crm-venue-item.active { background: rgba(99,102,241,0.08); border-left: 3px solid #6366f1; }
+    .crm-venue-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .crm-venue-info { flex: 1; min-width: 0; }
+    .crm-venue-name { font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .crm-venue-meta { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; display: flex; gap: 8px; align-items: center; }
+    .crm-status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .crm-empty-detail { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: rgba(255,255,255,0.2); text-align: center; padding: 40px; }
+    .crm-detail-header { padding: 24px; border-bottom: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); }
+    .crm-detail-body { padding: 24px; }
+    .crm-field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .crm-field label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.3); margin-bottom: 4px; }
+    .crm-field span, .crm-field a { font-size: 13px; color: rgba(255,255,255,0.8); }
+    .crm-field a { color: #818cf8; text-decoration: none; }
+    .crm-field a:hover { text-decoration: underline; }
+    .crm-notes-area { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 10px 12px; color: #fff; font-size: 12px; width: 100%; min-height: 60px; resize: vertical; outline: none; font-family: 'Inter', sans-serif; }
+    .crm-notes-area:focus { border-color: rgba(255,255,255,0.15); }
+    .crm-timeline { margin-top: 20px; }
+    .crm-timeline-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+    .crm-timeline-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+    .crm-timeline-text { font-size: 12px; color: rgba(255,255,255,0.5); }
+    .crm-timeline-date { font-size: 10px; color: rgba(255,255,255,0.25); margin-top: 2px; }
+    .crm-compose { margin-top: 20px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 20px; }
+    .crm-compose-subject { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 8px 12px; color: #fff; font-size: 13px; width: 100%; outline: none; margin-bottom: 10px; }
+    .crm-compose-subject:focus { border-color: rgba(255,255,255,0.2); }
+    .crm-compose-body { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px; color: #fff; font-size: 13px; width: 100%; min-height: 160px; resize: vertical; outline: none; font-family: 'Inter', sans-serif; line-height: 1.6; }
+    .crm-compose-body:focus { border-color: rgba(255,255,255,0.2); }
+    .crm-merge-btn { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; cursor: pointer; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.5); transition: all 0.12s; font-family: monospace; }
+    .crm-merge-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    .crm-preview-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 16px; margin-top: 10px; font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; max-height: 200px; overflow-y: auto; }
+    .crm-pipeline { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
+    .crm-pipeline-stage { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color: rgba(255,255,255,0.4); transition: all 0.15s; }
+    .crm-pipeline-stage:hover { background: rgba(255,255,255,0.06); }
+    .crm-pipeline-stage.active { color: #fff; }
+    .crm-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #fff; transition: all 0.15s; }
+    .crm-btn:hover { background: rgba(255,255,255,0.1); }
+    .crm-btn.primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); border-color: transparent; }
+    .crm-btn.primary:hover { opacity: 0.85; }
+    .crm-btn.danger { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.3); color: #ef4444; }
+    .crm-btn.success { background: rgba(34,197,94,0.12); border-color: rgba(34,197,94,0.3); color: #22c55e; }
+
+    /* Template cards */
+    .tpl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .tpl-card { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 20px; transition: border-color 0.2s; }
+    .tpl-card:hover { border-color: rgba(255,255,255,0.12); }
+    .tpl-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .tpl-card-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .tpl-card-title { font-size: 14px; font-weight: 600; color: #fff; }
+    .tpl-card-cat { font-size: 10px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.05em; }
+    .tpl-card-subject { font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+    .tpl-card-preview { font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.5; max-height: 60px; overflow: hidden; margin-bottom: 12px; }
+    .tpl-card-actions { display: flex; gap: 8px; }
+
+    /* Journey builder */
+    .journey-list { display: flex; flex-direction: column; gap: 12px; }
+    .journey-card { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 20px; }
+    .journey-card:hover { border-color: rgba(255,255,255,0.1); }
+    .journey-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .journey-steps { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; }
+    .journey-step-card { min-width: 200px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 14px; flex-shrink: 0; }
+    .journey-step-num { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: rgba(99,102,241,0.2); color: #818cf8; font-size: 11px; font-weight: 700; margin-bottom: 8px; }
+    .journey-step-delay { font-size: 10px; color: rgba(255,255,255,0.3); margin-bottom: 6px; }
+    .journey-step-subject { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.7); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .journey-step-preview { font-size: 10px; color: rgba(255,255,255,0.25); line-height: 1.4; max-height: 40px; overflow: hidden; }
+
+    /* CSV Import modal */
+    .crm-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 100; display: flex; align-items: center; justify-content: center; }
+    .crm-modal { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 28px; width: 700px; max-width: 90vw; max-height: 85vh; overflow-y: auto; }
+    .crm-modal h3 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+    .crm-import-preview { width: 100%; border-collapse: collapse; font-size: 11px; margin: 12px 0; }
+    .crm-import-preview th { text-align: left; padding: 8px; color: rgba(255,255,255,0.4); border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 10px; text-transform: uppercase; }
+    .crm-import-preview td { padding: 8px; color: rgba(255,255,255,0.6); border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .crm-import-preview tr.duplicate { background: rgba(245,158,11,0.08); }
+    .crm-progress-bar { height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; margin: 12px 0; }
+    .crm-progress-fill { height: 100%; background: linear-gradient(90deg, #6366f1, #8b5cf6); border-radius: 2px; transition: width 0.3s; width: 0%; }
+    .crm-col-map { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; margin: 8px 0; }
+    .crm-col-map select { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 6px 10px; color: #fff; font-size: 11px; outline: none; }
+    .crm-col-map select option { background: #1a1a1a; }
+
+    /* Toggle switch */
+    .crm-toggle { position: relative; width: 40px; height: 22px; background: rgba(255,255,255,0.1); border-radius: 11px; cursor: pointer; transition: background 0.2s; }
+    .crm-toggle.on { background: rgba(34,197,94,0.4); }
+    .crm-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform 0.2s; }
+    .crm-toggle.on::after { transform: translateX(18px); }
   </style>
 </head>
 <body>
@@ -502,8 +596,9 @@
 <div id="login-screen">
   <div class="glass-card" style="width: 400px; padding: 40px;">
     <div style="text-align: center; margin-bottom: 32px;">
-      <h1 style="font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: #00ff41;">Apex Music Latino (TEST)</h1>
-      <p style="font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 6px;">Artist Portal v1.1 Audit Mode</p>
+      <img src="/Branding /aml_favicon.svg" style="width: 50px; margin: 0 auto 20px; filter: brightness(0) invert(1);" alt="AML Logo">
+      <h1 style="font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: #fff;">Artist Portal</h1>
+      <p style="font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 6px;">Secure Access Audit Mode</p>
     </div>
     <form id="login-form" autocomplete="off">
       <div style="margin-bottom: 16px;">
@@ -524,9 +619,9 @@
 <div id="portal">
   <!-- Sidebar -->
   <aside class="sidebar">
-    <div class="sidebar-brand">
-      <h2 style="font-size: 15px; font-weight: 700; letter-spacing: -0.02em;">Apex Music Latino</h2>
-      <p id="sidebar-artist-name" style="font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 4px;"></p>
+    <div class="sidebar-brand" style="display: flex; align-items: center; gap: 12px; padding: 20px;">
+      <img src="/Branding /aml_favicon.svg" style="width: 32px; filter: brightness(0) invert(1);" alt="AML">
+      <p id="sidebar-artist-name" style="font-size: 14px; font-weight: 700; color: #fff; letter-spacing: -0.01em;"></p>
     </div>
     <nav style="padding: 12px 0; flex: 1;">
       <div class="nav-item active" data-view="dashboard" onclick="switchView('dashboard')">
@@ -775,20 +870,30 @@
         <div id="epk-sections"></div>
       </div>
 
-      <!-- ========== MARKETING HUB (Coming Soon) ========== -->
       <div id="view-marketing" class="view">
-        <h2 style="font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;">Marketing Hub</h2>
-        <p style="font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 24px;">Email campaigns, venue outreach, and audience analytics.</p>
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+          <img src="/Branding /aml_favicon.svg" style="width: 48px; filter: brightness(0) invert(1);" alt="AML Logo">
+          <div>
+            <h2 style="font-size: 24px; font-weight: 700; letter-spacing: -0.02em;">Marketing & Booking CRM</h2>
+            <p style="font-size: 14px; color: rgba(255,255,255,0.35);">Manage venue outreach, campaigns, and lead conversions.</p>
+          </div>
+        </div>
 
         <!-- Tab Navigation -->
-        <div style="display: flex; gap: 4px; margin-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0;">
-          <button class="mktg-tab active" data-tab="campaigns" onclick="switchMarketingTab('campaigns')" style="padding: 10px 20px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s;">
+        <div style="display: flex; gap: 4px; margin-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0; overflow-x: auto;">
+          <button class="mktg-tab active" data-tab="campaigns" onclick="switchMarketingTab('campaigns')" style="padding: 10px 16px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap;">
             <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">email</span> Campaigns
           </button>
-          <button class="mktg-tab" data-tab="venues" onclick="switchMarketingTab('venues')" style="padding: 10px 20px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s;">
-            <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">location_city</span> Venue Database
+          <button class="mktg-tab" data-tab="venues" onclick="switchMarketingTab('venues')" style="padding: 10px 16px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap;">
+            <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">contact_mail</span> Booking CRM
           </button>
-          <button class="mktg-tab" data-tab="analytics" onclick="switchMarketingTab('analytics')" style="padding: 10px 20px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s;">
+          <button class="mktg-tab" data-tab="templates" onclick="switchMarketingTab('templates')" style="padding: 10px 16px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap;">
+            <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">draft</span> Templates
+          </button>
+          <button class="mktg-tab" data-tab="journeys" onclick="switchMarketingTab('journeys')" style="padding: 10px 16px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap;">
+            <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">route</span> Journeys
+          </button>
+          <button class="mktg-tab" data-tab="analytics" onclick="switchMarketingTab('analytics')" style="padding: 10px 16px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s; white-space: nowrap;">
             <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">insights</span> Analytics
           </button>
         </div>
@@ -854,43 +959,81 @@
           </div>
         </div>
 
-        <!-- VENUES TAB -->
+        <!-- VENUES / BOOKING CRM TAB -->
         <div id="mktg-tab-venues" class="mktg-panel" style="display: none;">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
-            <div style="display: flex; align-items: center; gap: 16px;">
-              <span id="venue-count" style="font-size: 13px; color: rgba(255,255,255,0.4);"></span>
-              <select class="epk-input" id="venue-category-filter" onchange="filterVenues()" style="width: 180px; appearance: auto; font-size: 12px;">
-                <option value="">All Categories</option>
-              </select>
+          <!-- Pipeline filter + actions bar -->
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+            <div class="crm-pipeline" id="crm-pipeline-filter">
+              <button class="crm-pipeline-stage active" data-status="all" onclick="crmFilterPipeline('all')">All <span id="crm-count-all" style="opacity:0.5;margin-left:4px;">0</span></button>
+              <button class="crm-pipeline-stage" data-status="new" onclick="crmFilterPipeline('new')" style="border-color:rgba(59,130,246,0.3);">New</button>
+              <button class="crm-pipeline-stage" data-status="contacted" onclick="crmFilterPipeline('contacted')" style="border-color:rgba(245,158,11,0.3);">Contacted</button>
+              <button class="crm-pipeline-stage" data-status="responded" onclick="crmFilterPipeline('responded')" style="border-color:rgba(139,92,246,0.3);">Responded</button>
+              <button class="crm-pipeline-stage" data-status="interested" onclick="crmFilterPipeline('interested')" style="border-color:rgba(34,197,94,0.3);">Interested</button>
+              <button class="crm-pipeline-stage" data-status="booked" onclick="crmFilterPipeline('booked')" style="border-color:rgba(0,255,65,0.3);">Booked</button>
+              <button class="crm-pipeline-stage" data-status="declined" onclick="crmFilterPipeline('declined')" style="border-color:rgba(239,68,68,0.3);">Declined</button>
             </div>
             <div style="display: flex; gap: 8px;">
-              <button class="quick-action" onclick="importVenueCSV()">
-                <span class="material-symbols-outlined" style="font-size: 18px;">upload_file</span> Import CSV
-              </button>
-              <button class="quick-action" onclick="sendBulkVenueEPK()" style="background: rgba(230,0,0,0.1); border-color: rgba(230,0,0,0.3); color: #e60000;">
-                <span class="material-symbols-outlined" style="font-size: 18px;">send</span> Send EPK to All
-              </button>
+              <button class="crm-btn" onclick="crmShowAddVenue()"><span class="material-symbols-outlined" style="font-size:16px;">add</span> Add Venue</button>
+              <button class="crm-btn" onclick="crmShowImportModal()"><span class="material-symbols-outlined" style="font-size:16px;">upload_file</span> Import CSV</button>
+              <button class="crm-btn success" onclick="crmSendToAllNew()"><span class="material-symbols-outlined" style="font-size:16px;">send</span> Send to All New</button>
             </div>
           </div>
 
           <!-- Hidden file input for CSV import -->
-          <input type="file" id="venue-csv-input" accept=".csv" style="display: none;" onchange="handleVenueCSV(event)" />
+          <input type="file" id="venue-csv-input" accept=".csv" style="display: none;" onchange="crmHandleCSVFile(event)" />
 
-          <!-- Venue Table -->
-          <div class="frm-container" style="max-height: 500px;">
-            <table class="frm-table" style="min-width: 900px;">
-              <thead><tr>
-                <th style="width: 200px;">Company</th>
-                <th style="width: 140px;">Category</th>
-                <th style="width: 180px;">Email</th>
-                <th style="width: 130px;">Phone</th>
-                <th style="width: 100px;">Status</th>
-                <th style="width: 100px;">Actions</th>
-              </tr></thead>
-              <tbody id="venues-table-body">
-                <tr><td colspan="6" style="text-align: center; padding: 40px; color: rgba(255,255,255,0.25);">Loading venues...</td></tr>
-              </tbody>
-            </table>
+          <!-- CRM Inbox Layout -->
+          <div class="crm-layout" id="crm-layout">
+            <!-- Left: Inbox list -->
+            <div class="crm-inbox-list" id="crm-inbox-list">
+              <div class="crm-inbox-header">
+                <input class="crm-search" id="crm-search-input" placeholder="Search venues..." oninput="crmSearchVenues()" />
+                <div style="display:flex;gap:8px;">
+                  <select class="crm-search" id="crm-cat-filter" onchange="crmApplyFilters()" style="flex:1;">
+                    <option value="">All Categories</option>
+                  </select>
+                  <span id="venue-count" style="font-size:11px;color:rgba(255,255,255,0.3);white-space:nowrap;display:flex;align-items:center;"></span>
+                </div>
+              </div>
+              <div id="crm-inbox-items">
+                <div style="padding:40px;text-align:center;"><div class="spinner" style="margin:0 auto;"></div></div>
+              </div>
+            </div>
+            <!-- Right: Detail panel -->
+            <div class="crm-detail-panel" id="crm-detail-panel">
+              <div class="crm-empty-detail">
+                <span class="material-symbols-outlined" style="font-size:48px;opacity:0.3;margin-bottom:12px;">contact_mail</span>
+                <h3 style="font-size:16px;font-weight:600;margin-bottom:4px;">Booking Outreach CRM</h3>
+                <p style="font-size:13px;color:rgba(255,255,255,0.25);">Select a venue to view details, or add a new one.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TEMPLATES TAB -->
+        <div id="mktg-tab-templates" class="mktg-panel" style="display: none;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+            <div>
+              <h3 style="font-size:16px;font-weight:600;color:#fff;">Email Template Library</h3>
+              <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Pre-built outreach templates by venue category. Use merge fields for personalization.</p>
+            </div>
+          </div>
+          <div class="tpl-grid" id="tpl-grid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- JOURNEYS TAB -->
+        <div id="mktg-tab-journeys" class="mktg-panel" style="display: none;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+            <div>
+              <h3 style="font-size:16px;font-weight:600;color:#fff;">Outreach Journeys</h3>
+              <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Multi-step automated sequences. Assign venues and let the CRM follow up.</p>
+            </div>
+            <button class="crm-btn primary" onclick="crmAddJourney()"><span class="material-symbols-outlined" style="font-size:16px;">add</span> New Journey</button>
+          </div>
+          <div class="journey-list" id="journey-list">
+            <!-- Populated by JS -->
           </div>
         </div>
 
@@ -2288,6 +2431,11 @@ function previewEPK() {
    ================================================================ */
 let venueData = [];
 let campaignData = [];
+let crmSelectedVenueId = null;
+let crmCurrentFilter = 'all';
+let crmCurrentCatFilter = '';
+let crmSearchQuery = '';
+let crmComposePreviewMode = false;
 
 function switchMarketingTab(tab) {
   document.querySelectorAll('.mktg-tab').forEach(t => {
@@ -2308,6 +2456,8 @@ function switchMarketingTab(tab) {
 
   if (tab === 'campaigns') loadCampaigns();
   if (tab === 'venues') loadVenues();
+  if (tab === 'templates') renderTemplateLibrary();
+  if (tab === 'journeys') renderJourneyBuilder();
   if (tab === 'analytics') loadAnalytics();
 }
 
@@ -2415,136 +2565,781 @@ async function createAndScheduleCampaign() {
   }
 }
 
+/* --- CRM Status Config --- */
+const CRM_STATUS_CONFIG = {
+  new: { color: '#3b82f6', label: 'New', icon: 'fiber_new' },
+  contacted: { color: '#f59e0b', label: 'Contacted', icon: 'outgoing_mail' },
+  responded: { color: '#8b5cf6', label: 'Responded', icon: 'reply' },
+  interested: { color: '#22c55e', label: 'Interested', icon: 'thumb_up' },
+  booked: { color: '#00ff41', label: 'Booked', icon: 'event_available' },
+  declined: { color: '#ef4444', label: 'Declined', icon: 'block' }
+};
+const CRM_CAT_ICONS = {
+  'restaurante': { icon: 'restaurant', bg: 'rgba(245,158,11,0.15)', color: '#f59e0b' },
+  'teatro': { icon: 'theater_comedy', bg: 'rgba(139,92,246,0.15)', color: '#8b5cf6' },
+  'universidad': { icon: 'school', bg: 'rgba(59,130,246,0.15)', color: '#3b82f6' },
+  'colegio': { icon: 'menu_book', bg: 'rgba(34,197,94,0.15)', color: '#22c55e' },
+  'evento': { icon: 'celebration', bg: 'rgba(236,72,153,0.15)', color: '#ec4899' },
+  'museo': { icon: 'museum', bg: 'rgba(168,85,247,0.15)', color: '#a855f7' },
+  'galeria': { icon: 'palette', bg: 'rgba(168,85,247,0.15)', color: '#a855f7' },
+  'libreria': { icon: 'local_library', bg: 'rgba(20,184,166,0.15)', color: '#14b8a6' },
+  'hotel': { icon: 'hotel', bg: 'rgba(99,102,241,0.15)', color: '#6366f1' },
+  'bar': { icon: 'local_bar', bg: 'rgba(239,68,68,0.15)', color: '#ef4444' },
+  'centro cultural': { icon: 'account_balance', bg: 'rgba(245,158,11,0.15)', color: '#f59e0b' },
+  'default': { icon: 'location_city', bg: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.4)' }
+};
+
+function getCatIcon(cat) {
+  if (!cat) return CRM_CAT_ICONS['default'];
+  const lower = cat.toLowerCase();
+  for (const key of Object.keys(CRM_CAT_ICONS)) {
+    if (key !== 'default' && lower.includes(key)) return CRM_CAT_ICONS[key];
+  }
+  return CRM_CAT_ICONS['default'];
+}
+
+/* --- Load Venues --- */
 async function loadVenues() {
-  const tbody = document.getElementById('venues-table-body');
   const countEl = document.getElementById('venue-count');
-  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;"><div class="spinner" style="margin:0 auto;"></div></td></tr>';
+  const inboxEl = document.getElementById('crm-inbox-items');
+  if (inboxEl) inboxEl.innerHTML = '<div style="padding:40px;text-align:center;"><div class="spinner" style="margin:0 auto;"></div></div>';
 
   try {
-    const url = `${SUPABASE_URL}/rest/v1/venue_leads?order=category.asc,company_name.asc&limit=200`;
+    const url = `${SUPABASE_URL}/rest/v1/venue_leads?order=category.asc,company_name.asc&limit=500`;
     const res = await fetch(url, { headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY } });
     venueData = await res.json();
-    countEl.textContent = venueData.length + ' venues';
+    if (countEl) countEl.textContent = venueData.length + ' venues';
 
-    // Populate category filter
     const cats = [...new Set(venueData.map(v => v.category).filter(Boolean))].sort();
-    const filterEl = document.getElementById('venue-category-filter');
-    filterEl.innerHTML = '<option value="">All Categories</option>' + cats.map(c => `<option value="${c}">${c}</option>`).join('');
+    const filterEl = document.getElementById('crm-cat-filter');
+    if (filterEl) filterEl.innerHTML = '<option value="">All Categories</option>' + cats.map(c => `<option value="${escHtml(c)}">${escHtml(c)}</option>`).join('');
 
-    renderVenueTable(venueData);
+    const allCount = document.getElementById('crm-count-all');
+    if (allCount) allCount.textContent = venueData.length;
+
+    crmRenderInbox();
   } catch (err) {
-    console.error('[Marketing] Load venues error:', err);
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:#e60000;">Error loading venues</td></tr>';
+    console.error('[CRM] Load venues error:', err);
+    if (inboxEl) inboxEl.innerHTML = '<div style="padding:40px;text-align:center;color:#ef4444;">Error loading venues</div>';
   }
 }
 
-function filterVenues() {
-  const cat = document.getElementById('venue-category-filter').value;
-  const filtered = cat ? venueData.filter(v => v.category === cat) : venueData;
-  renderVenueTable(filtered);
+function crmGetFilteredVenues() {
+  let filtered = venueData;
+  if (crmCurrentFilter !== 'all') filtered = filtered.filter(v => v.outreach_status === crmCurrentFilter);
+  if (crmCurrentCatFilter) filtered = filtered.filter(v => v.category === crmCurrentCatFilter);
+  if (crmSearchQuery) {
+    const q = crmSearchQuery.toLowerCase();
+    filtered = filtered.filter(v => (v.company_name||'').toLowerCase().includes(q) || (v.email||'').toLowerCase().includes(q) || (v.category||'').toLowerCase().includes(q) || (v.city||'').toLowerCase().includes(q));
+  }
+  return filtered;
 }
 
-function renderVenueTable(data) {
-  const tbody = document.getElementById('venues-table-body');
-  if (!data.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:rgba(255,255,255,0.25);">No venues found. Import a CSV to get started.</td></tr>';
+function crmFilterPipeline(status) {
+  crmCurrentFilter = status;
+  document.querySelectorAll('#crm-pipeline-filter .crm-pipeline-stage').forEach(b => {
+    b.classList.toggle('active', b.dataset.status === status);
+    const s = CRM_STATUS_CONFIG[b.dataset.status];
+    if (b.classList.contains('active') && s) { b.style.background = s.color+'22'; b.style.color = s.color; b.style.borderColor = s.color+'55'; }
+    else if (b.classList.contains('active') && b.dataset.status === 'all') { b.style.background = 'rgba(255,255,255,0.08)'; b.style.color = '#fff'; b.style.borderColor = 'rgba(255,255,255,0.15)'; }
+    else { b.style.background = 'rgba(255,255,255,0.03)'; b.style.color = 'rgba(255,255,255,0.4)'; }
+  });
+  crmRenderInbox();
+}
+
+function crmSearchVenues() {
+  crmSearchQuery = (document.getElementById('crm-search-input') || {}).value || '';
+  crmRenderInbox();
+}
+
+function crmApplyFilters() {
+  crmCurrentCatFilter = (document.getElementById('crm-cat-filter') || {}).value || '';
+  crmRenderInbox();
+}
+
+function crmRenderInbox() {
+  const container = document.getElementById('crm-inbox-items');
+  if (!container) return;
+  const filtered = crmGetFilteredVenues();
+  const countEl = document.getElementById('venue-count');
+  if (countEl) countEl.textContent = filtered.length + ' venues';
+
+  if (!filtered.length) {
+    container.innerHTML = '<div style="padding:40px;text-align:center;color:rgba(255,255,255,0.25);font-size:13px;">No venues match filters.</div>';
     return;
   }
-  const statusColors = { new: '#3b82f6', contacted: '#f59e0b', responded: '#8b5cf6', interested: '#22c55e', booked: '#00ff41', declined: '#ef4444', no_response: '#666' };
-  tbody.innerHTML = data.map(v => `<tr class="main-row">
-    <td style="font-weight:600;color:#fff;">${escHtml(v.company_name)}</td>
-    <td><span style="font-size:11px;color:rgba(255,255,255,0.4);">${escHtml(v.category || '—')}</span></td>
-    <td style="font-size:12px;">${v.email ? escHtml(v.email) : '<span style="opacity:0.25">No email</span>'}</td>
-    <td style="font-family:monospace;font-size:12px;">${v.phone ? escHtml(v.phone) : '<span style="opacity:0.25">—</span>'}</td>
-    <td><span class="badge" style="background:${statusColors[v.outreach_status] || '#666'}22;color:${statusColors[v.outreach_status] || '#666'};">${v.outreach_status}</span></td>
-    <td>${v.email ? `<button class="epk-btn" onclick="sendVenueEPK('${v.id}','${escAttr(v.email)}','${escAttr(v.company_name)}')" style="font-size:10px;"><span class="material-symbols-outlined" style="font-size:14px;">send</span> EPK</button>` : ''}</td>
-  </tr>`).join('');
+
+  container.innerHTML = filtered.map(v => {
+    const s = CRM_STATUS_CONFIG[v.outreach_status] || CRM_STATUS_CONFIG['new'];
+    const cat = getCatIcon(v.category);
+    const lastContact = v.last_contacted_at ? new Date(v.last_contacted_at).toLocaleDateString('es-ES',{day:'2-digit',month:'short'}) : '';
+    return `<div class="crm-venue-item${v.id===crmSelectedVenueId?' active':''}" onclick="crmSelectVenue('${v.id}')">
+      <div class="crm-venue-icon" style="background:${cat.bg};"><span class="material-symbols-outlined" style="font-size:18px;color:${cat.color};">${cat.icon}</span></div>
+      <div class="crm-venue-info">
+        <div class="crm-venue-name">${escHtml(v.company_name)}</div>
+        <div class="crm-venue-meta">
+          <span class="crm-status-dot" style="background:${s.color};"></span>
+          <span>${s.label}</span>
+          ${v.category?'<span style="opacity:0.5;">'+escHtml(v.category)+'</span>':''}
+          ${lastContact?'<span style="margin-left:auto;">'+lastContact+'</span>':''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-async function sendVenueEPK(venueId, email, name) {
-  if (!confirm(`Send EPK to ${name} (${email})?`)) return;
+function crmSelectVenue(venueId) {
+  crmSelectedVenueId = venueId;
+  crmRenderInbox();
+  crmRenderDetail();
+}
+
+function crmRenderDetail() {
+  const panel = document.getElementById('crm-detail-panel');
+  if (!panel) return;
+  const v = venueData.find(x => x.id === crmSelectedVenueId);
+  if (!v) {
+    panel.innerHTML = '<div class="crm-empty-detail"><span class="material-symbols-outlined" style="font-size:48px;opacity:0.3;margin-bottom:12px;">contact_mail</span><h3 style="font-size:16px;font-weight:600;margin-bottom:4px;">Booking Outreach CRM</h3><p style="font-size:13px;color:rgba(255,255,255,0.25);">Select a venue to view details.</p></div>';
+    return;
+  }
+
+  const s = CRM_STATUS_CONFIG[v.outreach_status] || CRM_STATUS_CONFIG['new'];
+  const cat = getCatIcon(v.category);
+
+  panel.innerHTML = `
+    <div class="crm-detail-header">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div class="crm-venue-icon" style="background:${cat.bg};width:44px;height:44px;">
+            <span class="material-symbols-outlined" style="font-size:22px;color:${cat.color};">${cat.icon}</span>
+          </div>
+          <div>
+            <h3 style="font-size:18px;font-weight:700;color:#fff;margin-bottom:2px;">${escHtml(v.company_name)}</h3>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="badge" style="background:${s.color}22;color:${s.color};">${s.label}</span>
+              ${v.category?'<span style="font-size:11px;color:rgba(255,255,255,0.35);">'+escHtml(v.category)+'</span>':''}
+              ${v.city?'<span style="font-size:11px;color:rgba(255,255,255,0.25);">'+escHtml(v.city)+'</span>':''}
+            </div>
+          </div>
+        </div>
+        <button class="crm-btn danger" onclick="crmDeleteVenue('${v.id}')" style="font-size:11px;padding:6px 12px;">
+          <span class="material-symbols-outlined" style="font-size:14px;">delete</span>
+        </button>
+      </div>
+      <div style="display:flex;gap:6px;margin-top:14px;flex-wrap:wrap;">
+        ${Object.entries(CRM_STATUS_CONFIG).map(([key,cfg])=>`<button class="crm-pipeline-stage${v.outreach_status===key?' active':''}" style="${v.outreach_status===key?'background:'+cfg.color+'22;color:'+cfg.color+';border-color:'+cfg.color+'55;':''}" onclick="crmUpdateStatus('${v.id}','${key}')">${cfg.label}</button>`).join('')}
+      </div>
+    </div>
+    <div class="crm-detail-body">
+      <div class="crm-field-grid">
+        <div class="crm-field"><label>Email</label>${v.email?'<a href="mailto:'+escAttr(v.email)+'">'+escHtml(v.email)+'</a>':'<span style="opacity:0.3;">Not set</span>'}</div>
+        <div class="crm-field"><label>Phone</label>${v.phone?'<span style="font-family:monospace;">'+escHtml(v.phone)+'</span>':'<span style="opacity:0.3;">Not set</span>'}</div>
+        <div class="crm-field"><label>Website</label>${v.website?'<a href="'+escAttr(v.website)+'" target="_blank">'+escHtml(v.website)+'</a>':'<span style="opacity:0.3;">Not set</span>'}</div>
+        <div class="crm-field"><label>Contact Name</label><span>${v.contact_name?escHtml(v.contact_name):'<span style="opacity:0.3;">Not set</span>'}</span></div>
+        <div class="crm-field"><label>Source</label><span>${v.source?escHtml(v.source):'<span style="opacity:0.3;">--</span>'}</span></div>
+        <div class="crm-field"><label>Last Contacted</label><span>${v.last_contacted_at?new Date(v.last_contacted_at).toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'<span style="opacity:0.3;">Never</span>'}</span></div>
+        <div class="crm-field"><label>Tags</label><span>${v.tags?(Array.isArray(v.tags)?v.tags.join(', '):v.tags):'<span style="opacity:0.3;">None</span>'}</span></div>
+        <div class="crm-field"><label>Country</label><span>${v.country?escHtml(v.country):'<span style="opacity:0.3;">--</span>'}</span></div>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <label style="font-size:10px;text-transform:uppercase;letter-spacing:0.05em;color:rgba(255,255,255,0.3);display:block;margin-bottom:6px;">Notes</label>
+        <textarea class="crm-notes-area" id="crm-notes-${v.id}" placeholder="Add notes about this venue..." onblur="crmSaveNotes('${v.id}')">${escHtml(v.notes||'')}</textarea>
+      </div>
+
+      <div class="crm-compose">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <h4 style="font-size:14px;font-weight:600;color:#fff;"><span class="material-symbols-outlined" style="font-size:18px;vertical-align:middle;margin-right:4px;">edit</span> Compose Email</h4>
+          <button class="crm-btn" onclick="crmTogglePreview()" style="font-size:11px;padding:5px 12px;">
+            <span class="material-symbols-outlined" style="font-size:14px;">visibility</span> Preview
+          </button>
+        </div>
+        <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;">
+          <button class="crm-merge-btn" onclick="crmInsertMerge('{{venue_name}}')">{{venue_name}}</button>
+          <button class="crm-merge-btn" onclick="crmInsertMerge('{{artist_name}}')">{{artist_name}}</button>
+          <button class="crm-merge-btn" onclick="crmInsertMerge('{{epk_url}}')">{{epk_url}}</button>
+          <button class="crm-merge-btn" onclick="crmInsertMerge('{{city}}')">{{city}}</button>
+        </div>
+        <input class="crm-compose-subject" id="crm-compose-subject" placeholder="Subject line..." value="${escAttr(currentArtist.name)} -- Electronic Press Kit" />
+        <textarea class="crm-compose-body" id="crm-compose-body" placeholder="Write your email here...">Hola {{venue_name}},
+
+Somos {{artist_name}}, un proyecto de tango contemporáneo radicado en Bucaramanga. Nos encantaría explorar la posibilidad de presentarnos en su espacio.
+
+Adjuntamos nuestro Electronic Press Kit con toda la información:
+{{epk_url}}
+
+Quedamos atentos a cualquier oportunidad.
+
+Cordialmente,
+{{artist_name}}
+Apex Music Latino
+booking@apexmusiclatino.com</textarea>
+        <div id="crm-preview-box" style="display:none;"></div>
+        <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end;">
+          <button class="crm-btn primary" onclick="crmSendEmail('${v.id}')">
+            <span class="material-symbols-outlined" style="font-size:16px;">send</span> Send Now
+          </button>
+        </div>
+      </div>
+    </div>`;
+}
+
+/* --- CRM Actions --- */
+async function crmUpdateStatus(venueId, status) {
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/venue_leads?id=eq.${venueId}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer '+SERVICE_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ outreach_status: status })
+    });
+    const v = venueData.find(x => x.id === venueId);
+    if (v) v.outreach_status = status;
+    crmRenderInbox();
+    crmRenderDetail();
+  } catch (err) { console.error('[CRM] Status update error:', err); }
+}
+
+async function crmSaveNotes(venueId) {
+  const el = document.getElementById('crm-notes-'+venueId);
+  if (!el) return;
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/venue_leads?id=eq.${venueId}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer '+SERVICE_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ notes: el.value })
+    });
+    const v = venueData.find(x => x.id === venueId);
+    if (v) v.notes = el.value;
+  } catch (err) { console.error('[CRM] Save notes error:', err); }
+}
+
+async function crmDeleteVenue(venueId) {
+  if (!confirm('Delete this venue from the CRM?')) return;
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/venue_leads?id=eq.${venueId}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer '+SERVICE_KEY }
+    });
+    venueData = venueData.filter(v => v.id !== venueId);
+    crmSelectedVenueId = null;
+    crmRenderInbox();
+    crmRenderDetail();
+  } catch (err) { alert('Delete error: '+err.message); }
+}
+
+function crmInsertMerge(field) {
+  const el = document.getElementById('crm-compose-body');
+  if (!el) return;
+  const start = el.selectionStart, end = el.selectionEnd;
+  el.value = el.value.substring(0,start) + field + el.value.substring(end);
+  el.focus();
+  el.selectionStart = el.selectionEnd = start + field.length;
+}
+
+function crmTogglePreview() {
+  crmComposePreviewMode = !crmComposePreviewMode;
+  const box = document.getElementById('crm-preview-box');
+  const bodyEl = document.getElementById('crm-compose-body');
+  if (!box || !bodyEl) return;
+  if (crmComposePreviewMode) {
+    const v = venueData.find(x => x.id === crmSelectedVenueId);
+    const epkUrl = `https://apexmusiclatino.com/genre/${currentArtist.genre}/${currentArtist.slug}/`;
+    let text = bodyEl.value
+      .replace(/\{\{venue_name\}\}/g, v?v.company_name:'Venue')
+      .replace(/\{\{artist_name\}\}/g, currentArtist.name)
+      .replace(/\{\{epk_url\}\}/g, epkUrl)
+      .replace(/\{\{city\}\}/g, v&&v.city?v.city:'Bucaramanga');
+    box.innerHTML = '<div class="crm-preview-box">'+escHtml(text).replace(/\n/g,'<br>')+'</div>';
+    box.style.display = 'block';
+    bodyEl.style.display = 'none';
+  } else {
+    box.style.display = 'none';
+    bodyEl.style.display = 'block';
+  }
+}
+
+async function crmSendEmail(venueId) {
+  const v = venueData.find(x => x.id === venueId);
+  if (!v||!v.email) { alert('This venue has no email address.'); return; }
+  if (!confirm(`Send email to ${v.company_name} (${v.email})?`)) return;
+
+  const subjectEl = document.getElementById('crm-compose-subject');
+  const bodyEl = document.getElementById('crm-compose-body');
+  if (!subjectEl||!bodyEl) return;
+
   const epkUrl = `https://apexmusiclatino.com/genre/${currentArtist.genre}/${currentArtist.slug}/`;
-  const subject = `${currentArtist.name} — Electronic Press Kit | Apex Music Latino`;
-  const body = `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#131313;color:#ccc;padding:32px;border-radius:16px;">
-    <h1 style="color:#fff;font-size:22px;">Hola ${name},</h1>
-    <p style="line-height:1.6;">Somos <strong style="color:#fff;">${currentArtist.name}</strong>, un proyecto de tango contemporáneo radicado en Bucaramanga. Nos encantaría explorar la posibilidad de presentarnos en su espacio.</p>
-    <p style="line-height:1.6;">Adjuntamos nuestro Electronic Press Kit con toda la información sobre nuestra propuesta artística:</p>
-    <p style="text-align:center;margin:24px 0;"><a href="${epkUrl}" style="display:inline-block;background:#e60000;color:#fff;padding:14px 32px;border-radius:10px;text-decoration:none;font-weight:700;font-size:15px;">Ver EPK de ${currentArtist.name} →</a></p>
-    <p style="line-height:1.6;font-size:13px;color:#888;">Quedamos atentos a cualquier oportunidad de colaboración.</p>
-    <p style="margin-top:24px;color:#aaa;">Cordialmente,<br><strong style="color:#fff;">${currentArtist.name}</strong><br>Apex Music Latino<br>booking@apexmusiclatino.com</p>
-  </div>`;
+  const subject = subjectEl.value.replace(/\{\{venue_name\}\}/g,v.company_name).replace(/\{\{artist_name\}\}/g,currentArtist.name).replace(/\{\{epk_url\}\}/g,epkUrl).replace(/\{\{city\}\}/g,v.city||'Bucaramanga');
+  const bodyText = bodyEl.value.replace(/\{\{venue_name\}\}/g,v.company_name).replace(/\{\{artist_name\}\}/g,currentArtist.name).replace(/\{\{epk_url\}\}/g,epkUrl).replace(/\{\{city\}\}/g,v.city||'Bucaramanga');
+  const bodyHtml = `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#131313;color:#ccc;padding:32px;border-radius:16px;">${bodyText.split('\n').map(l=>l.trim()?'<p style="line-height:1.6;margin:8px 0;">'+escHtml(l).replace(/(https?:\/\/[^\s]+)/g,'<a href="$1" style="color:#e60000;text-decoration:none;font-weight:600;">$1</a>')+'</p>':'').join('')}<div style="margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;gap:16px;"><img src="https://apexmusiclatino.com/Branding%20/aml_favicon.svg" width="40" style="filter:brightness(0) invert(1);"><div><p style="margin:0;font-size:14px;color:#fff;font-weight:700;">${escHtml(currentArtist.name)}</p><p style="margin:0;font-size:12px;color:#888;">Apex Music Latino | Booking</p></div></div></div>`;
 
   try {
     const res = await fetch('/api/send-blast-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ artist_name: currentArtist.name, subject, body_html: body, test_email: email, from_label: currentArtist.name })
+      body: JSON.stringify({ artist_name: currentArtist.name, subject, body_html: bodyHtml, test_email: v.email, from_label: currentArtist.name })
     });
     const data = await res.json();
     if (data.sent > 0) {
-      alert('EPK sent to ' + name + '!');
-      // Update venue status
+      alert('Email sent to '+v.company_name+'!');
       await fetch(`${SUPABASE_URL}/rest/v1/venue_leads?id=eq.${venueId}`, {
         method: 'PATCH',
-        headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer ' + SERVICE_KEY, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ outreach_status: 'contacted', last_contacted_at: new Date().toISOString() })
+        headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer '+SERVICE_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ outreach_status: v.outreach_status==='new'?'contacted':v.outreach_status, last_contacted_at: new Date().toISOString() })
       });
-      loadVenues();
-    } else {
-      alert('Failed to send: ' + (data.error || 'Unknown error'));
-    }
-  } catch (err) {
-    alert('Error: ' + err.message);
-  }
+      const vx = venueData.find(x => x.id === venueId);
+      if (vx) { if(vx.outreach_status==='new') vx.outreach_status='contacted'; vx.last_contacted_at=new Date().toISOString(); }
+      crmRenderInbox();
+      crmRenderDetail();
+    } else { alert('Failed to send: '+(data.error||'Unknown error')); }
+  } catch (err) { alert('Error: '+err.message); }
 }
 
-async function sendBulkVenueEPK() {
+async function crmSendToAllNew() {
   const withEmail = venueData.filter(v => v.email && v.outreach_status === 'new');
   if (!withEmail.length) { alert('No new venues with email addresses to contact.'); return; }
-  if (!confirm(`Send EPK to ${withEmail.length} venues?`)) return;
+  if (!confirm(`Send outreach email to ${withEmail.length} new venues?`)) return;
+  let sent = 0;
   for (const v of withEmail) {
-    await sendVenueEPK(v.id, v.email, v.company_name);
+    try {
+      const epkUrl = `https://apexmusiclatino.com/genre/${currentArtist.genre}/${currentArtist.slug}/`;
+      const subject = `${currentArtist.name} -- Electronic Press Kit | Apex Music Latino`;
+      const bodyHtml = `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#131313;color:#ccc;padding:32px;border-radius:16px;">
+        <h1 style="color:#fff;font-size:22px;">Hola ${escHtml(v.company_name)},</h1>
+        <p style="line-height:1.6;">Somos <strong style="color:#fff;">${escHtml(currentArtist.name)}</strong>, un proyecto de tango contemporáneo radicado en Bucaramanga.</p>
+        <p style="text-align:center;margin:24px 0;"><a href="${epkUrl}" style="display:inline-block;background:#e60000;color:#fff;padding:14px 32px;border-radius:10px;text-decoration:none;font-weight:700;">Ver EPK de ${escHtml(currentArtist.name)}</a></p>
+        <p style="margin-top:24px;color:#aaa;">Cordialmente,<br><strong style="color:#fff;">${escHtml(currentArtist.name)}</strong><br>Apex Music Latino</p></div>`;
+      const res = await fetch('/api/send-blast-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ artist_name: currentArtist.name, subject, body_html: bodyHtml, test_email: v.email, from_label: currentArtist.name })
+      });
+      const data = await res.json();
+      if (data.sent > 0) {
+        sent++;
+        await fetch(`${SUPABASE_URL}/rest/v1/venue_leads?id=eq.${v.id}`, {
+          method: 'PATCH',
+          headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer '+SERVICE_KEY, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ outreach_status: 'contacted', last_contacted_at: new Date().toISOString() })
+        });
+        v.outreach_status = 'contacted'; v.last_contacted_at = new Date().toISOString();
+      }
+    } catch(err) { console.error('[CRM] Bulk send error for '+v.company_name, err); }
   }
+  alert(`Sent to ${sent} of ${withEmail.length} venues.`);
+  crmRenderInbox();
 }
 
-function importVenueCSV() {
-  document.getElementById('venue-csv-input').click();
+/* --- Add Venue Modal --- */
+function crmShowAddVenue() {
+  const existing = document.getElementById('crm-add-venue-modal');
+  if (existing) existing.remove();
+  const modal = document.createElement('div');
+  modal.id = 'crm-add-venue-modal';
+  modal.className = 'crm-modal-overlay';
+  modal.innerHTML = `<div class="crm-modal" style="width:500px;">
+    <h3><span class="material-symbols-outlined" style="font-size:22px;vertical-align:middle;margin-right:6px;">add_business</span> Add New Venue</h3>
+    <div style="display:grid;gap:12px;">
+      <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Company Name *</label><input class="epk-input" id="add-venue-name" placeholder="e.g. Teatro Santander" /></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Category</label><input class="epk-input" id="add-venue-cat" placeholder="e.g. Restaurante, Teatro" /></div>
+        <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">City</label><input class="epk-input" id="add-venue-city" placeholder="e.g. Bucaramanga" /></div>
+      </div>
+      <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Email</label><input class="epk-input" id="add-venue-email" type="email" placeholder="contact@venue.com" /></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Phone</label><input class="epk-input" id="add-venue-phone" placeholder="+57 300 123 4567" /></div>
+        <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Website</label><input class="epk-input" id="add-venue-website" placeholder="https://venue.com" /></div>
+      </div>
+      <div><label style="font-size:11px;color:rgba(255,255,255,0.35);display:block;margin-bottom:4px;">Notes</label><textarea class="epk-textarea" id="add-venue-notes" style="min-height:60px;" placeholder="Additional notes..."></textarea></div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px;">
+        <button class="crm-btn" onclick="document.getElementById('crm-add-venue-modal').remove()">Cancel</button>
+        <button class="crm-btn primary" onclick="crmSaveNewVenue()"><span class="material-symbols-outlined" style="font-size:16px;">save</span> Save Venue</button>
+      </div>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click', e => { if(e.target===modal) modal.remove(); });
 }
 
-async function handleVenueCSV(event) {
+async function crmSaveNewVenue() {
+  const name = document.getElementById('add-venue-name').value.trim();
+  if (!name) { alert('Company name is required.'); return; }
+  const venue = {
+    company_name: name,
+    category: document.getElementById('add-venue-cat').value.trim(),
+    city: document.getElementById('add-venue-city').value.trim(),
+    email: document.getElementById('add-venue-email').value.trim(),
+    phone: document.getElementById('add-venue-phone').value.trim(),
+    website: document.getElementById('add-venue-website').value.trim(),
+    notes: document.getElementById('add-venue-notes').value.trim(),
+    outreach_status: 'new', source: 'manual',
+    artist_slug: currentArtist.slug, country: 'Colombia'
+  };
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/venue_leads`, {
+      method: 'POST',
+      headers: { 'apikey': SERVICE_KEY, 'Authorization': 'Bearer '+SERVICE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
+      body: JSON.stringify(venue)
+    });
+    const rows = await res.json();
+    if (rows && rows.length) { venueData.push(rows[0]); crmRenderInbox(); document.getElementById('crm-add-venue-modal').remove(); }
+    else throw new Error('Insert failed');
+  } catch(err) { alert('Error saving venue: '+err.message); }
+}
+
+/* --- CSV Import with Preview --- */
+let crmImportParsed = [];
+let crmImportColMap = {};
+let crmImportHeaders = [];
+
+function crmShowImportModal() { document.getElementById('venue-csv-input').click(); }
+
+async function crmHandleCSVFile(event) {
   const file = event.target.files[0];
   if (!file) return;
+  event.target.value = '';
   const text = await file.text();
   const lines = text.split('\n').filter(l => l.trim());
   if (lines.length < 2) { alert('CSV appears empty.'); return; }
 
-  const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-  const venues = lines.slice(1).map(line => {
-    const cols = line.split(',').map(c => c.trim());
-    return {
-      company_name: cols[headers.indexOf('company name')] || cols[headers.indexOf('company_name')] || cols[0] || '',
-      category: cols[headers.indexOf('category')] || cols[1] || '',
-      website: cols[headers.indexOf('website')] || cols[2] || '',
-      phone: cols[headers.indexOf('phone')] || cols[3] || '',
-      email: cols[headers.indexOf('email')] || cols[4] || ''
-    };
+  crmImportHeaders = lines[0].split(',').map(h => h.trim());
+  const rows = lines.slice(1).map(line => {
+    const cols = []; let current = ''; let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      if (line[i]==='"') inQuotes = !inQuotes;
+      else if (line[i]===',' && !inQuotes) { cols.push(current.trim()); current = ''; }
+      else current += line[i];
+    }
+    cols.push(current.trim());
+    return cols;
+  });
+  crmImportParsed = rows;
+
+  const targetFields = ['company_name','category','email','phone','website','city','contact_name'];
+  const autoMap = {};
+  const headerLower = crmImportHeaders.map(h => h.toLowerCase().replace(/[^a-z0-9]/g,''));
+  const aliases = {
+    company_name: ['companyname','company','name','venue','business','empresa','nombre'],
+    category: ['category','type','categoria','tipo'],
+    email: ['email','correo','mail','emailaddress'],
+    phone: ['phone','telefono','tel','phonenumber','celular'],
+    website: ['website','web','url','sitio','sitioweb','paginaweb'],
+    city: ['city','ciudad'],
+    contact_name: ['contactname','contact','contacto']
+  };
+  targetFields.forEach(field => {
+    const idx = headerLower.findIndex(h => aliases[field] && aliases[field].some(a => h.includes(a)));
+    if (idx >= 0) autoMap[field] = idx;
+  });
+  crmImportColMap = autoMap;
+
+  const existingEmails = new Set(venueData.map(v => (v.email||'').toLowerCase().trim()).filter(Boolean));
+  const existingNames = new Set(venueData.map(v => (v.company_name||'').toLowerCase().trim()).filter(Boolean));
+
+  const existingModal = document.getElementById('crm-import-modal');
+  if (existingModal) existingModal.remove();
+
+  const previewRows = rows.slice(0, 5);
+  const modal = document.createElement('div');
+  modal.id = 'crm-import-modal';
+  modal.className = 'crm-modal-overlay';
+  const fieldOptions = targetFields.map(f => '<option value="'+f+'">'+f.replace(/_/g,' ')+'</option>').join('');
+
+  modal.innerHTML = `<div class="crm-modal" style="width:750px;">
+    <h3><span class="material-symbols-outlined" style="font-size:22px;vertical-align:middle;margin-right:6px;">upload_file</span> Import CSV &mdash; ${rows.length} rows detected</h3>
+    <h4 style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.6);margin:16px 0 10px;">Column Mapping</h4>
+    <div style="display:grid;gap:8px;margin-bottom:16px;">
+      ${crmImportHeaders.map((h,i) => '<div class="crm-col-map"><span style="font-size:12px;color:rgba(255,255,255,0.5);font-family:monospace;">'+escHtml(h)+'</span><span class="material-symbols-outlined" style="font-size:16px;color:rgba(255,255,255,0.2);">arrow_forward</span><select class="crm-import-col-select" data-col="'+i+'"><option value="">-- Skip --</option>'+fieldOptions+'</select></div>').join('')}
+    </div>
+    <h4 style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.6);margin-bottom:10px;">Preview (first 5 rows)</h4>
+    <div style="overflow-x:auto;">
+      <table class="crm-import-preview">
+        <thead><tr>${crmImportHeaders.map(h=>'<th>'+escHtml(h)+'</th>').join('')}<th>Status</th></tr></thead>
+        <tbody>${previewRows.map(row => {
+          const emailIdx = autoMap.email; const nameIdx = autoMap.company_name;
+          const email = emailIdx!==undefined?(row[emailIdx]||'').toLowerCase().trim():'';
+          const rname = nameIdx!==undefined?(row[nameIdx]||'').toLowerCase().trim():'';
+          const isDupe = (email&&existingEmails.has(email))||(rname&&existingNames.has(rname));
+          return '<tr class="'+(isDupe?'duplicate':'')+'">'+row.map(c=>'<td>'+escHtml(c||'')+'</td>').join('')+'<td>'+(isDupe?'<span style="color:#f59e0b;font-size:10px;">Duplicate</span>':'<span style="color:#22c55e;font-size:10px;">New</span>')+'</td></tr>';
+        }).join('')}</tbody>
+      </table>
+    </div>
+    <div class="crm-progress-bar" id="import-progress-bar" style="display:none;"><div class="crm-progress-fill" id="import-progress-fill"></div></div>
+    <p id="import-status-text" style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:8px;display:none;"></p>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;">
+      <button class="crm-btn" onclick="crmCleanImportData()"><span class="material-symbols-outlined" style="font-size:16px;">cleaning_services</span> Clean Data</button>
+      <button class="crm-btn" onclick="document.getElementById('crm-import-modal').remove()">Cancel</button>
+      <button class="crm-btn primary" id="import-execute-btn" onclick="crmExecuteImport()"><span class="material-symbols-outlined" style="font-size:16px;">download</span> Import ${rows.length} Venues</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click', e => { if(e.target===modal) modal.remove(); });
+
+  setTimeout(() => {
+    document.querySelectorAll('.crm-import-col-select').forEach(sel => {
+      const colIdx = parseInt(sel.dataset.col);
+      for (const [field,idx] of Object.entries(autoMap)) { if(idx===colIdx) { sel.value=field; break; } }
+    });
+  }, 50);
+}
+
+function crmCleanImportData() {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  let cleaned = 0;
+  const emailIdx = crmImportColMap.email;
+  const phoneIdx = crmImportColMap.phone;
+  crmImportParsed.forEach(row => {
+    for(let i=0;i<row.length;i++) row[i]=(row[i]||'').trim();
+    if (phoneIdx!==undefined&&row[phoneIdx]) {
+      let p = row[phoneIdx].replace(/[^\d+]/g,'');
+      if(p.length===10&&!p.startsWith('+')) p='+57'+p;
+      row[phoneIdx]=p; cleaned++;
+    }
+    if (emailIdx!==undefined&&row[emailIdx]) {
+      if(!emailRegex.test(row[emailIdx])) { row[emailIdx]=''; cleaned++; }
+    }
+  });
+  alert('Cleaned '+cleaned+' fields (trimmed whitespace, standardized phones, removed invalid emails).');
+}
+
+async function crmExecuteImport() {
+  const selects = document.querySelectorAll('.crm-import-col-select');
+  const colMap = {};
+  selects.forEach(sel => { if(sel.value) colMap[sel.value]=parseInt(sel.dataset.col); });
+  if (colMap.company_name===undefined) { alert('Please map at least the Company Name column.'); return; }
+
+  const progressBar = document.getElementById('import-progress-bar');
+  const progressFill = document.getElementById('import-progress-fill');
+  const statusText = document.getElementById('import-status-text');
+  const btn = document.getElementById('import-execute-btn');
+  progressBar.style.display='block'; statusText.style.display='block'; btn.disabled=true;
+
+  const venues = crmImportParsed.map(row => {
+    const v = { outreach_status:'new', source:'csv_import', artist_slug:currentArtist.slug };
+    for(const [field,idx] of Object.entries(colMap)) v[field]=row[idx]||'';
+    return v;
   }).filter(v => v.company_name);
 
-  if (!venues.length) { alert('No valid venues found in CSV.'); return; }
+  const batchSize = 20;
+  let imported = 0, skipped = 0;
+  const existingEmails = new Set(venueData.map(v=>(v.email||'').toLowerCase().trim()).filter(Boolean));
 
-  try {
-    const res = await fetch('/api/import-venues', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ artist_slug: currentArtist.slug, venues })
+  for(let i=0;i<venues.length;i+=batchSize) {
+    const batch = venues.slice(i,i+batchSize).filter(v => {
+      if(v.email&&existingEmails.has(v.email.toLowerCase().trim())) { skipped++; return false; }
+      return true;
     });
-    const data = await res.json();
-    alert(`Imported ${data.imported} venues (${data.skipped} skipped).`);
-    event.target.value = '';
-    loadVenues();
-  } catch (err) {
-    alert('Import error: ' + err.message);
+    if (batch.length) {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/venue_leads`, {
+          method:'POST',
+          headers:{'apikey':SERVICE_KEY,'Authorization':'Bearer '+SERVICE_KEY,'Content-Type':'application/json','Prefer':'return=representation'},
+          body:JSON.stringify(batch)
+        });
+        const rows = await res.json();
+        if(Array.isArray(rows)) { imported+=rows.length; venueData.push(...rows); rows.forEach(r=>{if(r.email)existingEmails.add(r.email.toLowerCase().trim());}); }
+      } catch(err) { console.error('[CRM] Import batch error:',err); }
+    }
+    const pct = Math.min(100,Math.round(((i+batchSize)/venues.length)*100));
+    progressFill.style.width=pct+'%';
+    statusText.textContent='Importing... '+imported+' imported, '+skipped+' skipped';
   }
+  progressFill.style.width='100%';
+  statusText.textContent='Done! Imported '+imported+' venues, skipped '+skipped+' duplicates.';
+  btn.textContent='Done';
+  setTimeout(()=>{const m=document.getElementById('crm-import-modal');if(m)m.remove();crmRenderInbox();},1500);
+}
+
+/* Keep old function names working */
+function handleVenueCSV(event) { crmHandleCSVFile(event); }
+function importVenueCSV() { crmShowImportModal(); }
+function filterVenues() { crmApplyFilters(); }
+function renderVenueTable() { crmRenderInbox(); }
+function sendVenueEPK(id) { crmSelectedVenueId=id; crmRenderDetail(); }
+function sendBulkVenueEPK() { crmSendToAllNew(); }
+
+/* ================================================================
+   TEMPLATE LIBRARY
+   ================================================================ */
+const CRM_TEMPLATES = [
+  { id:'restaurant', category:'Restaurants', icon:'restaurant', iconBg:'rgba(245,158,11,0.15)', iconColor:'#f59e0b', title:'Restaurant / Dinner Music',
+    subject:'{{artist_name}} -- Live Tango for Dinner Events',
+    body:'Hola {{venue_name}},\n\nSomos {{artist_name}}, un ensamble de tango contemporaneo que fusiona la tradicion del bandoneon con produccion moderna.\n\nNos especializamos en crear ambientes elegantes para espacios gastronomicos -- musica en vivo que eleva la experiencia de sus comensales.\n\nNuestro formato incluye:\n- Sets de 45-90 minutos adaptados a su horario\n- Repertorio de tango, bossa nova y jazz acustico\n- Setup discreto, sin requerimientos tecnicos complejos\n\nLe invitamos a conocer nuestra propuesta artistica:\n{{epk_url}}\n\nQuedamos atentos a explorar una colaboracion.\n\nCordialmente,\n{{artist_name}}\nApex Music Latino' },
+  { id:'theater', category:'Theaters', icon:'theater_comedy', iconBg:'rgba(139,92,246,0.15)', iconColor:'#8b5cf6', title:'Theater / Performance',
+    subject:'{{artist_name}} -- Propuesta de show de tango contemporaneo',
+    body:'Estimado equipo de {{venue_name}},\n\nLes escribo desde Apex Music Latino para presentar a {{artist_name}}, un ensamble de tango contemporaneo con una propuesta escenica completa.\n\nNuestro show incluye:\n- Ensamble en vivo: violin, bandoneon, guitarra y voz\n- Danza contemporanea integrada a la musica\n- Produccion visual y diseno de iluminacion\n- Duracion flexible: 60 a 120 minutos\n\nHemos presentado exitosamente en Casa del Libro Total y otros espacios culturales de {{city}}.\n\nNuestro EPK completo:\n{{epk_url}}\n\nCordialmente,\n{{artist_name}}' },
+  { id:'university', category:'Universities', icon:'school', iconBg:'rgba(59,130,246,0.15)', iconColor:'#3b82f6', title:'University / Cultural Events',
+    subject:'Evento cultural: {{artist_name}} -- Tango contemporaneo para su comunidad',
+    body:'Estimado equipo de Bienestar Universitario de {{venue_name}},\n\nNos dirigimos a ustedes desde Apex Music Latino para proponer un evento cultural unico para su comunidad estudiantil.\n\n{{artist_name}} ofrece:\n- Concierto de tango contemporaneo con elementos de fusion\n- Charla sobre la historia y evolucion del tango en Colombia\n- Taller practico de apreciacion musical (opcional)\n- Formato adaptable a auditorios, plazoletas o salones\n\nConozcan nuestra propuesta completa:\n{{epk_url}}\n\nCordialmente,\n{{artist_name}}\nApex Music Latino' },
+  { id:'school', category:'Schools', icon:'menu_book', iconBg:'rgba(34,197,94,0.15)', iconColor:'#22c55e', title:'School / Educational',
+    subject:'Programa educativo de tango -- {{artist_name}} para {{venue_name}}',
+    body:'Estimados directivos de {{venue_name}},\n\nDesde Apex Music Latino, presentamos nuestro programa educativo de tango contemporaneo.\n\nNuestro programa incluye:\n- Introduccion al tango como patrimonio cultural\n- Demostracion de instrumentos en vivo (bandoneon, violin, guitarra)\n- Taller interactivo de ritmo y movimiento\n- Material didactico complementario\n- Duracion: 60-90 minutos\n\nMas informacion:\n{{epk_url}}\n\nCordialmente,\n{{artist_name}}' },
+  { id:'event_venue', category:'Event Venues', icon:'celebration', iconBg:'rgba(236,72,153,0.15)', iconColor:'#ec4899', title:'Event Venue / Corporate',
+    subject:'{{artist_name}} -- Musica en vivo para eventos corporativos y sociales',
+    body:'Hola {{venue_name}},\n\nEstan buscando entretenimiento en vivo que impresione a sus invitados?\n\n{{artist_name}} ofrece una experiencia de tango contemporaneo perfecta para:\n- Eventos corporativos y lanzamientos\n- Bodas y celebraciones\n- Galas y cenas de gala\n- Cocteles y networking events\n\nIncluimos:\n- Ensamble musical profesional\n- Danza de tango (opcional)\n- Repertorio personalizable\n- Equipo de sonido propio\n\nCotizacion y EPK completo:\n{{epk_url}}\n\n{{artist_name}}\nApex Music Latino' },
+  { id:'museum', category:'Museums / Galleries', icon:'museum', iconBg:'rgba(168,85,247,0.15)', iconColor:'#a855f7', title:'Museum / Gallery -- Art + Music',
+    subject:'Fusion de arte y musica: {{artist_name}} para {{venue_name}}',
+    body:'Estimados {{venue_name}},\n\nProponemos una experiencia que fusiona las artes visuales con musica en vivo.\n\n{{artist_name}} crea ambientes sonoros que dialogan con exposiciones artisticas -- tango contemporaneo como instalacion sonora viva.\n\nFormatos disponibles:\n- Concierto en sala de exposicion\n- Intervencion musical durante inauguraciones\n- Performance art + musica + danza\n- Sesiones de ambient tango para recorridos\n\nNuestra propuesta artistica:\n{{epk_url}}\n\nCordialmente,\n{{artist_name}}' },
+  { id:'bookstore', category:'Bookstores', icon:'local_library', iconBg:'rgba(20,184,166,0.15)', iconColor:'#14b8a6', title:'Bookstore / Literary Events',
+    subject:'Tango y letras: {{artist_name}} para {{venue_name}}',
+    body:'Hola {{venue_name}},\n\nEl tango es poesia que se baila. Proponemos un evento que une la literatura con la musica en vivo.\n\n{{artist_name}} ofrece para librerias y espacios literarios:\n- Concierto intimo de tango con lectura de poesia\n- Eventos tematicos: "El tango en la literatura argentina"\n- Musica ambiental para presentaciones de libros\n- Formato acustico ideal para espacios pequenos\n\nNuestro EPK incluye repertorio, fotos y video:\n{{epk_url}}\n\n{{artist_name}}\nApex Music Latino' },
+  { id:'general', category:'General', icon:'mail', iconBg:'rgba(255,255,255,0.06)', iconColor:'rgba(255,255,255,0.4)', title:'Universal Cold Outreach',
+    subject:'{{artist_name}} -- Tango contemporaneo disponible para su espacio',
+    body:'Hola {{venue_name}},\n\nMi nombre es Ariel Hanasi y represento a {{artist_name}}, un ensamble de tango contemporaneo radicado en {{city}}.\n\nFusionamos la tradicion del bandoneon con produccion moderna y visual de vanguardia. Nos encantaria explorar la posibilidad de presentarnos en su espacio.\n\nLe comparto nuestro Electronic Press Kit:\n{{epk_url}}\n\nQuedamos atentos a cualquier oportunidad.\n\nCordialmente,\nAriel Hanasi\nDirector -- Apex Music Latino\nbooking@apexmusiclatino.com' }
+];
+
+function renderTemplateLibrary() {
+  const grid = document.getElementById('tpl-grid');
+  if (!grid) return;
+  grid.innerHTML = CRM_TEMPLATES.map(t => `<div class="tpl-card">
+    <div class="tpl-card-header">
+      <div class="tpl-card-icon" style="background:${t.iconBg};"><span class="material-symbols-outlined" style="color:${t.iconColor};">${t.icon}</span></div>
+      <div><div class="tpl-card-title">${escHtml(t.title)}</div><div class="tpl-card-cat">${escHtml(t.category)}</div></div>
+    </div>
+    <div class="tpl-card-subject"><strong>Subject:</strong> ${escHtml(t.subject)}</div>
+    <div class="tpl-card-preview">${escHtml(t.body.substring(0,180))}...</div>
+    <div class="tpl-card-actions">
+      <button class="crm-btn" onclick="crmUseTemplate('${t.id}')" style="font-size:11px;padding:6px 12px;"><span class="material-symbols-outlined" style="font-size:14px;">edit</span> Use Template</button>
+      <button class="crm-btn" onclick="crmAICustomize('${t.id}')" style="font-size:11px;padding:6px 12px;opacity:0.6;"><span class="material-symbols-outlined" style="font-size:14px;">auto_awesome</span> AI Customize</button>
+    </div>
+  </div>`).join('');
+}
+
+function crmUseTemplate(templateId) {
+  const tpl = CRM_TEMPLATES.find(t => t.id === templateId);
+  if (!tpl) return;
+  switchMarketingTab('venues');
+  setTimeout(() => {
+    if (crmSelectedVenueId) {
+      const subjectEl = document.getElementById('crm-compose-subject');
+      const bodyEl = document.getElementById('crm-compose-body');
+      if(subjectEl) subjectEl.value = tpl.subject;
+      if(bodyEl) bodyEl.value = tpl.body;
+    } else { alert('Select a venue first in the Booking CRM, then use a template.'); }
+  }, 200);
+}
+
+function crmAICustomize() {
+  alert('AI Customization: AI will tailor this message based on the venue profile, category, and previous interactions. This feature is coming soon.');
+}
+
+/* ================================================================
+   JOURNEY BUILDER
+   ================================================================ */
+let crmJourneys = [];
+
+function getDefaultJourney() {
+  return {
+    id:'default-12-step', name:'12-Step Cold Outreach',
+    description:'The complete Arcoiris outreach sequence from initial contact to final follow-up.',
+    active:false, assignedVenues:[],
+    steps:[
+      {step:1,delay:0,subject:'Arcoiris -- Tango Contemporaneo disponible para su espacio',preview:'Introduction + EPK link'},
+      {step:2,delay:3,subject:'Arcoiris -- Video en vivo + propuesta artistica',preview:'Live video showcase + YouTube link'},
+      {step:3,delay:5,subject:'Eventos culturales en su agenda? -- Arcoiris Tango',preview:'Ask about cultural programming'},
+      {step:4,delay:7,subject:'Caso de exito: Arcoiris en Casa del Libro Total',preview:'Social proof + metrics from past show'},
+      {step:5,delay:10,subject:'Propuesta especial para {{venue_name}}',preview:'Special offer + pricing + 15% discount'},
+      {step:6,delay:14,subject:'El tango que Bucaramanga necesita -- Arcoiris',preview:'Market positioning + value proposition'},
+      {step:7,delay:18,subject:'Galeria de fotos -- Arcoiris en accion',preview:'Photo gallery + EPK walkthrough'},
+      {step:8,delay:21,subject:'Ultimo aviso: disponibilidad para abril-mayo',preview:'Urgency play + scheduling push'},
+      {step:9,delay:25,subject:'Colaboracion cultural -- Arcoiris + {{venue_name}}',preview:'Long-term partnership options'},
+      {step:10,delay:30,subject:'Testimonios de nuestros shows -- Arcoiris',preview:'Testimonial from Casa del Libro Total'},
+      {step:11,delay:35,subject:'Seguimiento: Recibio nuestra propuesta?',preview:'Gentle follow-up, save EPK request'},
+      {step:12,delay:42,subject:'Gracias por su tiempo -- siempre disponible',preview:'Graceful close, open door for future'}
+    ]
+  };
+}
+
+function loadJourneys() {
+  const stored = localStorage.getItem('crm_journeys_'+(currentArtist?currentArtist.slug:''));
+  if(stored) { try{crmJourneys=JSON.parse(stored);}catch(e){crmJourneys=[getDefaultJourney()];} }
+  else crmJourneys=[getDefaultJourney()];
+}
+
+function saveJourneys() {
+  localStorage.setItem('crm_journeys_'+(currentArtist?currentArtist.slug:''), JSON.stringify(crmJourneys));
+}
+
+function renderJourneyBuilder() {
+  loadJourneys();
+  const container = document.getElementById('journey-list');
+  if(!container) return;
+  if(!crmJourneys.length) {
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:rgba(255,255,255,0.25);">No journeys yet. Create your first outreach sequence.</div>';
+    return;
+  }
+  container.innerHTML = crmJourneys.map((j,ji) => `<div class="journey-card">
+    <div class="journey-header">
+      <div>
+        <h3 style="font-size:16px;font-weight:700;color:#fff;">${escHtml(j.name)}</h3>
+        <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">${escHtml(j.description||'')} -- ${j.steps.length} steps</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <span style="font-size:11px;color:rgba(255,255,255,0.35);">${j.assignedVenues?j.assignedVenues.length:0} venues</span>
+        <button class="crm-btn" onclick="crmAssignVenuesToJourney(${ji})" style="font-size:11px;padding:5px 12px;"><span class="material-symbols-outlined" style="font-size:14px;">group_add</span> Assign</button>
+        <div class="crm-toggle${j.active?' on':''}" onclick="crmToggleJourney(${ji})" title="${j.active?'Deactivate':'Activate'}"></div>
+        <button class="crm-btn" onclick="crmAddStepToJourney(${ji})" style="font-size:11px;padding:5px 12px;"><span class="material-symbols-outlined" style="font-size:14px;">add</span> Step</button>
+      </div>
+    </div>
+    <div class="journey-steps">
+      ${j.steps.map(s => `<div class="journey-step-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span class="journey-step-num">${s.step}</span>
+          <span class="journey-step-delay">${s.delay===0?'Immediately':'Day '+s.delay}</span>
+        </div>
+        <div class="journey-step-subject">${escHtml(s.subject)}</div>
+        <div class="journey-step-preview">${escHtml(s.preview||'')}</div>
+      </div>`).join('<div style="display:flex;align-items:center;flex-shrink:0;"><span class="material-symbols-outlined" style="font-size:20px;color:rgba(255,255,255,0.1);">arrow_forward</span></div>')}
+    </div>
+  </div>`).join('');
+}
+
+function crmToggleJourney(ji) { crmJourneys[ji].active=!crmJourneys[ji].active; saveJourneys(); renderJourneyBuilder(); }
+
+function crmAddJourney() {
+  const name = prompt('Journey name:','New Outreach Sequence');
+  if(!name) return;
+  crmJourneys.push({id:'journey-'+Date.now(),name,description:'Custom outreach sequence',active:false,assignedVenues:[],
+    steps:[{step:1,delay:0,subject:'Introduction -- '+(currentArtist?currentArtist.name:'Artist'),preview:'Initial outreach'}]});
+  saveJourneys(); renderJourneyBuilder();
+}
+
+function crmAddStepToJourney(ji) {
+  const j=crmJourneys[ji]; const last=j.steps[j.steps.length-1];
+  const delay=parseInt(prompt('Delay in days after sequence start:',(last.delay+3).toString()));
+  if(isNaN(delay)) return;
+  const subject=prompt('Email subject:','Follow-up -- '+(currentArtist?currentArtist.name:'Artist'));
+  if(!subject) return;
+  j.steps.push({step:j.steps.length+1,delay,subject,preview:'Custom follow-up step'});
+  saveJourneys(); renderJourneyBuilder();
+}
+
+function crmAssignVenuesToJourney(ji) {
+  const j=crmJourneys[ji];
+  const newVenues=venueData.filter(v=>v.outreach_status==='new'&&v.email);
+  if(!newVenues.length){alert('No new venues with email to assign.');return;}
+  const existingM=document.getElementById('crm-assign-modal');
+  if(existingM) existingM.remove();
+  const modal=document.createElement('div');
+  modal.id='crm-assign-modal'; modal.className='crm-modal-overlay';
+  modal.innerHTML=`<div class="crm-modal" style="width:500px;">
+    <h3>Assign Venues to "${escHtml(j.name)}"</h3>
+    <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-bottom:16px;">Select venues to enroll in this ${j.steps.length}-step sequence.</p>
+    <div style="max-height:300px;overflow-y:auto;margin-bottom:16px;">
+      ${newVenues.map(v=>'<label style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03);cursor:pointer;font-size:13px;color:rgba(255,255,255,0.7);"><input type="checkbox" value="'+v.id+'" class="crm-assign-checkbox" '+((j.assignedVenues||[]).includes(v.id)?'checked':'')+' />'+escHtml(v.company_name)+' <span style="font-size:11px;color:rgba(255,255,255,0.3);margin-left:auto;">'+escHtml(v.email)+'</span></label>').join('')}
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button class="crm-btn" onclick="document.getElementById('crm-assign-modal').remove()">Cancel</button>
+      <button class="crm-btn primary" onclick="crmSaveAssignments(${ji})">Save Assignments</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click',e=>{if(e.target===modal)modal.remove();});
+}
+
+function crmSaveAssignments(ji) {
+  const cbs=document.querySelectorAll('.crm-assign-checkbox:checked');
+  crmJourneys[ji].assignedVenues=Array.from(cbs).map(cb=>cb.value);
+  saveJourneys(); document.getElementById('crm-assign-modal').remove(); renderJourneyBuilder();
 }
 
 async function loadAnalytics() {
