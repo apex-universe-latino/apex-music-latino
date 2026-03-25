@@ -5,7 +5,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Arcoiris | Apex Music Latino</title>
-<meta name="description" content="Arcoiris - Neo-Tango colectivo de Buenos Aires. Electronic Press Kit oficial. Representados por Apex Music Latino."/>
+<meta name="description" content="Arcoiris - Tango contempor&aacute;neo, danza, poes&iacute;a y teatro. John Acevedo (Los &Aacute;ngeles) y Alisson Trigos (Bucaramanga). EPK oficial. Representados por Apex Music Latino."/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -271,36 +271,130 @@
     return { publicId: publicId, masterId: masterId, seq: counter };
   }
 
-  // Collect device, geo, and browser data
+  // Collect full device, geo, browser, and environment data
   function collectDeviceData() {
+    var ua = navigator.userAgent;
+    var uaLower = ua.toLowerCase();
     var data = {
-      user_agent: navigator.userAgent,
+      user_agent: ua,
       platform: navigator.platform || 'unknown',
       language: navigator.language || 'unknown',
+      languages: navigator.languages ? navigator.languages.join(', ') : navigator.language,
       screen_width: screen.width,
       screen_height: screen.height,
+      viewport_width: window.innerWidth,
+      viewport_height: window.innerHeight,
       pixel_ratio: window.devicePixelRatio || 1,
+      color_depth: screen.colorDepth,
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown',
       online: navigator.onLine,
+      touch_support: 'ontouchstart' in window,
+      max_touch_points: navigator.maxTouchPoints || 0,
+      connection_type: (navigator.connection && navigator.connection.effectiveType) || 'unknown',
+      downlink: (navigator.connection && navigator.connection.downlink) || 'unknown',
+      memory: navigator.deviceMemory || 'unknown',
+      cpu_cores: navigator.hardwareConcurrency || 'unknown',
       referrer: document.referrer || 'direct',
       url_params: window.location.search,
-      touch_support: 'ontouchstart' in window,
-      connection_type: (navigator.connection && navigator.connection.effectiveType) || 'unknown'
+      page_url: window.location.pathname,
+      cookies_enabled: navigator.cookieEnabled,
+      do_not_track: navigator.doNotTrack || 'unset',
+      pdf_viewer: navigator.pdfViewerEnabled || false,
+      webdriver: navigator.webdriver || false,
+      orientation: (screen.orientation && screen.orientation.type) || 'unknown',
+      prefers_color_scheme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+      prefers_reduced_motion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      session_entry_time: new Date().toISOString()
     };
-    // Detect device type
-    var ua = navigator.userAgent.toLowerCase();
-    if (/iphone/.test(ua)) data.device = 'iPhone';
-    else if (/ipad/.test(ua)) data.device = 'iPad';
-    else if (/android/.test(ua)) data.device = 'Android';
-    else if (/mac/.test(ua)) data.device = 'Mac';
-    else if (/windows/.test(ua)) data.device = 'Windows';
-    else data.device = 'Other';
-    // Detect browser
-    if (/chrome/.test(ua) && !/edg/.test(ua)) data.browser = 'Chrome';
-    else if (/safari/.test(ua) && !/chrome/.test(ua)) data.browser = 'Safari';
-    else if (/firefox/.test(ua)) data.browser = 'Firefox';
-    else if (/edg/.test(ua)) data.browser = 'Edge';
+
+    // Device + Model Detection (comprehensive)
+    if (/iphone/.test(uaLower)) {
+      data.device = 'iPhone';
+      if (screen.width >= 430) data.model = 'iPhone Pro Max';
+      else if (screen.width >= 393) data.model = 'iPhone 15/16';
+      else if (screen.width >= 390) data.model = 'iPhone 12/13/14';
+      else if (screen.width >= 375) data.model = 'iPhone X/11';
+      else if (screen.width >= 320) data.model = 'iPhone SE/8';
+      else data.model = 'iPhone (Standard)';
+    }
+    else if (/ipad/.test(uaLower) || (navigator.maxTouchPoints > 1 && /macintosh/.test(uaLower))) {
+      data.device = 'iPad';
+      if (screen.width >= 1024) data.model = 'iPad Pro';
+      else if (screen.width >= 834) data.model = 'iPad Air';
+      else data.model = 'iPad';
+    }
+    else if (/android/.test(uaLower)) {
+      data.device = 'Android';
+      if (/samsung|sm-|gt-/i.test(uaLower)) {
+        data.model = 'Samsung Galaxy';
+        if (/sm-s9/i.test(uaLower)) data.model = 'Samsung Galaxy S24';
+        else if (/sm-s91/i.test(uaLower)) data.model = 'Samsung Galaxy S24 Ultra';
+        else if (/sm-f9/i.test(uaLower)) data.model = 'Samsung Galaxy Z Fold';
+        else if (/sm-f7/i.test(uaLower)) data.model = 'Samsung Galaxy Z Flip';
+        else if (/sm-a/i.test(uaLower)) data.model = 'Samsung Galaxy A Series';
+      } else if (/pixel\s*(\d)/i.test(uaLower)) {
+        data.model = 'Google Pixel ' + (uaLower.match(/pixel\s*(\d)/i)[1]);
+      } else if (/pixel/i.test(uaLower)) {
+        data.model = 'Google Pixel';
+      } else if (/huawei|honor/i.test(uaLower)) {
+        data.model = 'Huawei/Honor';
+      } else if (/xiaomi|redmi|poco/i.test(uaLower)) {
+        data.model = 'Xiaomi/Redmi';
+      } else if (/oneplus/i.test(uaLower)) {
+        data.model = 'OnePlus';
+      } else if (/oppo/i.test(uaLower)) {
+        data.model = 'OPPO';
+      } else if (/vivo/i.test(uaLower)) {
+        data.model = 'Vivo';
+      } else if (/motorola|moto/i.test(uaLower)) {
+        data.model = 'Motorola';
+      } else {
+        data.model = 'Android Device';
+      }
+      if (screen.width >= 600) data.tablet = true;
+    }
+    else if (/macintosh|mac os/.test(uaLower)) {
+      data.device = 'Mac';
+      data.model = 'macOS Desktop';
+    }
+    else if (/windows/.test(uaLower)) {
+      data.device = 'Windows';
+      if (/windows nt 10/.test(uaLower)) data.model = 'Windows 10/11';
+      else data.model = 'Windows Desktop';
+    }
+    else if (/linux/.test(uaLower) && !/android/.test(uaLower)) {
+      data.device = 'Linux';
+      if (/cros/.test(uaLower)) { data.device = 'ChromeOS'; data.model = 'Chromebook'; }
+      else data.model = 'Linux Desktop';
+    }
+    else if (/smart-tv|smarttv|googletv|appletv|hbbtv|roku|webos/i.test(uaLower)) {
+      data.device = 'SmartTV';
+      data.model = 'Smart TV';
+    }
+    else {
+      data.device = 'Other';
+      data.model = navigator.platform || 'Unknown';
+    }
+
+    // Browser detection
+    if (/chrome/.test(uaLower) && !/edg/.test(uaLower) && !/opr/.test(uaLower)) data.browser = 'Chrome';
+    else if (/safari/.test(uaLower) && !/chrome/.test(uaLower)) data.browser = 'Safari';
+    else if (/firefox/.test(uaLower)) data.browser = 'Firefox';
+    else if (/edg/.test(uaLower)) data.browser = 'Edge';
+    else if (/opr|opera/.test(uaLower)) data.browser = 'Opera';
+    else if (/samsungbrowser/.test(uaLower)) data.browser = 'Samsung Internet';
     else data.browser = 'Other';
+
+    // Battery (best-effort)
+    if (navigator.getBattery) {
+      try {
+        navigator.getBattery().then(function(batt) {
+          data.battery_level = Math.round(batt.level * 100);
+          data.battery_charging = batt.charging;
+        });
+      } catch(e) {}
+    }
+
     return data;
   }
 
@@ -561,7 +655,7 @@ document.addEventListener('mousemove', function(e) {
 <section class="relative min-h-screen flex items-end pb-24 md:pb-32 overflow-hidden">
   <!-- Background Image -->
   <div class="absolute inset-0 z-0">
-    <img alt="Arcoiris — Alisson Trigos y John Acevedo en pose de tango" class="w-full h-full object-cover scale-105" src="/artists/Arcoiris/gallery/_73A1900_2.JPG"/>
+    <img alt="Arcoiris — Alisson Trigos y John Acevedo en pose de tango" class="w-full h-full object-cover scale-105 object-[center_20%]" src="/artists/Arcoiris/gallery/_73A1900_2.JPG"/>
     <!-- Multi-layer gradients for depth -->
     <div class="absolute inset-0 bg-gradient-to-t from-[#131313] via-[#131313]/60 to-transparent"></div>
     <div class="absolute inset-0 bg-gradient-to-r from-[#131313] via-transparent to-transparent"></div>
@@ -579,7 +673,7 @@ document.addEventListener('mousemove', function(e) {
     <!-- Genre Badge -->
     <div class="flex items-center gap-4 mb-6">
       <span class="h-px w-16 bg-tango-accent"></span>
-      <span class="text-tango-accent font-headline tracking-[0.4em] text-xs uppercase font-bold bg-tango-accent/10 px-4 py-1.5 rounded-full border border-tango-accent/20">Neo-Tango</span>
+      <span class="text-tango-accent font-headline tracking-[0.4em] text-xs uppercase font-bold bg-tango-accent/10 px-4 py-1.5 rounded-full border border-tango-accent/20">Tango Contempor&aacute;neo</span>
     </div>
 
     <!-- Group Name -->
@@ -595,7 +689,7 @@ document.addEventListener('mousemove', function(e) {
     <!-- Location -->
     <div class="flex items-center gap-2 text-zinc-500 mb-10">
       <span class="material-symbols-outlined text-tango-accent text-lg">location_on</span>
-      <span class="text-sm tracking-widest uppercase">Buenos Aires, Argentina</span>
+      <span class="text-sm tracking-widest uppercase">Los &Aacute;ngeles, USA &bull; Bucaramanga, Colombia</span>
     </div>
 
     <!-- CTA Buttons -->
@@ -666,13 +760,14 @@ document.addEventListener('mousemove', function(e) {
           El Futuro del Tango<br/><span class="text-gradient-tango">Es Ahora.</span>
         </h2>
         <p class="text-zinc-400 text-lg md:text-xl leading-relaxed font-light mb-8">
-          Arcoiris redefine el tango para la era digital. Un colectivo que fusiona la tradici&oacute;n del bandone&oacute;n con producci&oacute;n electr&oacute;nica de vanguardia. Representados por Apex Music Latino, est&aacute;n llevando el tango argentino a escenarios globales con datos, pasi&oacute;n y tecnolog&iacute;a.
+          Arcoiris es un proyecto esc&eacute;nico y colaborativo que investiga y expande el tango desde lenguajes contempor&aacute;neos y perspectivas inclusivas. Co-producido por John Acevedo (Los &Aacute;ngeles) y Alisson Trigos (Bucaramanga), fusiona danza, poes&iacute;a, m&uacute;sica en vivo y teatro. Representados por Apex Music Latino.
         </p>
         <div class="flex flex-wrap gap-3">
-          <span class="px-4 py-2 rounded-full bg-tango-accent/10 text-tango-accent text-xs font-bold uppercase tracking-wider border border-tango-accent/20">Neo-Tango</span>
-          <span class="px-4 py-2 rounded-full bg-zinc-800/50 text-zinc-400 text-xs font-bold uppercase tracking-wider border border-white/5">Electr&oacute;nica</span>
-          <span class="px-4 py-2 rounded-full bg-zinc-800/50 text-zinc-400 text-xs font-bold uppercase tracking-wider border border-white/5">Bandone&oacute;n</span>
-          <span class="px-4 py-2 rounded-full bg-zinc-800/50 text-zinc-400 text-xs font-bold uppercase tracking-wider border border-white/5">Buenos Aires</span>
+          <span class="px-4 py-2 rounded-full bg-tango-accent/10 text-tango-accent text-xs font-bold uppercase tracking-wider border border-tango-accent/20">Tango Contempor&aacute;neo</span>
+          <span class="px-4 py-2 rounded-full bg-zinc-800/50 text-zinc-400 text-xs font-bold uppercase tracking-wider border border-white/5">Danza</span>
+          <span class="px-4 py-2 rounded-full bg-zinc-800/50 text-zinc-400 text-xs font-bold uppercase tracking-wider border border-white/5">Poes&iacute;a</span>
+          <span class="px-4 py-2 rounded-full bg-zinc-800/50 text-zinc-400 text-xs font-bold uppercase tracking-wider border border-white/5">Teatro</span>
+          <span class="px-4 py-2 rounded-full bg-zinc-800/50 text-zinc-400 text-xs font-bold uppercase tracking-wider border border-white/5">M&uacute;sica en Vivo</span>
         </div>
       </div>
     </div>
