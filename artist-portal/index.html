@@ -149,21 +149,50 @@
     }
     .quick-action:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
 
-    /* FRM table */
-    .frm-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    /* FRM table improvements */
+    .frm-container {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      overflow-x: auto;
+    }
+    .frm-table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      font-size: 13px; 
+      table-layout: fixed; /* Fixed layout for truncation control */
+      min-width: 900px; 
+    }
     .frm-table thead th {
       text-align: left;
-      padding: 10px 12px;
+      padding: 12px 16px;
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: rgba(255,255,255,0.35);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      font-weight: 600;
+      color: rgba(255,254,254,0.4);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-weight: 700;
+      background: rgba(255,255,255,0.02);
     }
-    .frm-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.1s; }
-    .frm-table tbody tr:hover { background: rgba(255,255,255,0.02); }
-    .frm-table td { padding: 10px 12px; color: rgba(255,255,255,0.7); }
+    .frm-table tbody tr.main-row { 
+      border-bottom: 1px solid rgba(255,255,255,0.04); 
+      cursor: pointer;
+      transition: background 0.15s; 
+    }
+    .frm-table tbody tr.main-row:hover { background: rgba(255,255,255,0.03); }
+    .frm-table td { 
+      padding: 14px 16px; 
+      color: rgba(255,255,255,0.8); 
+      white-space: nowrap; 
+      overflow: hidden; 
+      text-overflow: ellipsis;
+    }
+    .details-row { display: none; background: rgba(0,0,0,0.2); }
+    .details-row.active { display: table-row; }
+    .details-content { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .details-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .detail-item label { display: block; font-size: 10px; color: rgba(255,255,255,0.3); text-transform: uppercase; margin-bottom: 4px; }
+    .detail-item span { font-size: 13px; color: #fff; word-break: break-all; }
 
     /* Asset generator */
     #qr-output canvas, #qr-output img { border-radius: 8px; }
@@ -337,8 +366,8 @@
 <div id="login-screen">
   <div class="glass-card" style="width: 400px; padding: 40px;">
     <div style="text-align: center; margin-bottom: 32px;">
-      <h1 style="font-size: 22px; font-weight: 700; letter-spacing: -0.02em;">Apex Music Latino</h1>
-      <p style="font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 6px;">Artist Portal</p>
+      <h1 style="font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: #00ff41;">Apex Music Latino (TEST)</h1>
+      <p style="font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 6px;">Artist Portal v1.1 Audit Mode</p>
     </div>
     <form id="login-form" autocomplete="off">
       <div style="margin-bottom: 16px;">
@@ -518,26 +547,23 @@
         </div>
 
         <!-- Table -->
-        <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; overflow: hidden;">
-          <div style="overflow-x: auto;">
+        <div class="frm-container">
             <table class="frm-table">
               <thead>
                 <tr>
-                  <th>Fan ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Title</th>
-                  <th>Device</th>
-                  <th>Source</th>
-                  <th>Date</th>
+                  <th style="width: 140px;">Fan ID</th>
+                  <th style="width: 200px;">Name</th>
+                  <th style="width: 220px;">Email</th>
+                  <th style="width: 140px;">Phone</th>
+                  <th style="width: 120px;">Device</th>
+                  <th style="width: 100px;">Source</th>
+                  <th style="width: 140px;">Date</th>
                 </tr>
               </thead>
               <tbody id="frm-table-body">
-                <tr><td colspan="8" style="text-align: center; padding: 40px; color: rgba(255,255,255,0.25);"><div class="spinner" style="margin: 0 auto;"></div></td></tr>
+                <tr><td colspan="7" style="text-align: center; padding: 40px; color: rgba(255,255,255,0.25);"><div class="spinner" style="margin: 0 auto;"></div></td></tr>
               </tbody>
             </table>
-          </div>
         </div>
       </div>
 
@@ -916,11 +942,74 @@ function renderFRMTable(data) {
     const title = mp.title || mp.song_title || mp.mood || '—';
     const fanId = mp.fan_id || row.id || '—';
 
-    // Device detection
-    const ua = mp.user_agent || mp.userAgent || '';
-    let device = 'Desktop';
-    if (/iPhone|iPad/i.test(ua)) device = 'iPhone';
-    else if (/Android/i.test(ua)) device = 'Android';
+    // Comprehensive Device/Model detection
+    const deviceObj = mp.device || {};
+    const ua = row.user_agent || mp.user_agent || mp.userAgent || deviceObj.user_agent || '';
+    const uaLower = ua.toLowerCase();
+    const platform = deviceObj.platform || '';
+    const screenWidth = deviceObj.screen_width || 0;
+
+    let deviceLabel = deviceObj.model || '';
+    if (!deviceLabel) {
+      if (/iphone/i.test(ua)) {
+        deviceLabel = 'iPhone';
+        if (screenWidth >= 430) deviceLabel = 'iPhone Pro Max';
+        else if (screenWidth >= 393) deviceLabel = 'iPhone 15/16';
+        else if (screenWidth >= 390) deviceLabel = 'iPhone 12/13/14';
+        else if (screenWidth >= 375) deviceLabel = 'iPhone X/11';
+        else if (screenWidth >= 320) deviceLabel = 'iPhone SE/8';
+      } else if (/ipad/i.test(ua) || (deviceObj.max_touch_points > 1 && /macintosh/i.test(ua))) {
+        deviceLabel = 'iPad';
+        if (screenWidth >= 1024) deviceLabel = 'iPad Pro';
+        else if (screenWidth >= 834) deviceLabel = 'iPad Air';
+      } else if (/android/i.test(ua)) {
+        if (/samsung|sm-|gt-/i.test(ua)) deviceLabel = 'Samsung Galaxy';
+        else if (/pixel/i.test(ua)) deviceLabel = 'Google Pixel';
+        else if (/huawei|honor/i.test(ua)) deviceLabel = 'Huawei/Honor';
+        else if (/xiaomi|redmi|poco/i.test(ua)) deviceLabel = 'Xiaomi/Redmi';
+        else if (/oneplus/i.test(ua)) deviceLabel = 'OnePlus';
+        else if (/oppo/i.test(ua)) deviceLabel = 'OPPO';
+        else if (/vivo/i.test(ua)) deviceLabel = 'Vivo';
+        else if (/motorola|moto/i.test(ua)) deviceLabel = 'Motorola';
+        else deviceLabel = 'Android';
+        if (screenWidth >= 600) deviceLabel += ' (Tablet)';
+      } else if (/macintosh/i.test(ua)) {
+        deviceLabel = 'Mac';
+      } else if (/windows/i.test(ua)) {
+        deviceLabel = 'Windows';
+      } else if (/linux/i.test(ua) && !/android/i.test(ua)) {
+        deviceLabel = /cros/i.test(ua) ? 'Chromebook' : 'Linux';
+      } else if (/smart-tv|smarttv|googletv|appletv|roku|webos/i.test(ua)) {
+        deviceLabel = 'Smart TV';
+      } else {
+        deviceLabel = platform || 'Desktop';
+      }
+    }
+
+    // Browser badge
+    const browserLabel = deviceObj.browser || '';
+
+    // Location (Geo)
+    const geo = mp.geo || {};
+    let locationStr = '—';
+    if (geo.lat && geo.lng) {
+      locationStr = `${geo.lat.toFixed(2)}, ${geo.lng.toFixed(2)}`;
+    }
+
+    // Connection & extra context for tooltip
+    const connType = deviceObj.connection_type || '';
+    const tz = deviceObj.timezone || '';
+    const battLevel = deviceObj.battery_level != null ? deviceObj.battery_level + '%' : '';
+    const screenInfo = deviceObj.screen_width ? `${deviceObj.screen_width}x${deviceObj.screen_height}` : '';
+    const tooltipParts = [
+      screenInfo ? `Screen: ${screenInfo}` : '',
+      deviceObj.pixel_ratio ? `DPR: ${deviceObj.pixel_ratio}` : '',
+      browserLabel ? `Browser: ${browserLabel}` : '',
+      connType && connType !== 'unknown' ? `Net: ${connType}` : '',
+      tz && tz !== 'unknown' ? `TZ: ${tz}` : '',
+      battLevel ? `Batt: ${battLevel}` : '',
+      deviceObj.orientation && deviceObj.orientation !== 'unknown' ? `Orient: ${deviceObj.orientation}` : ''
+    ].filter(Boolean).join(' · ');
 
     const source = row.source || mp.source || '—';
 
@@ -930,17 +1019,63 @@ function renderFRMTable(data) {
       dateStr = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' }) + ' ' + d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
     }
 
-    return `<tr>
-      <td style="font-family:monospace;font-size:11px;color:rgba(255,255,255,0.35);">${String(fanId).substring(0,8)}</td>
-      <td style="font-weight:500;color:#fff;">${escHtml(name)}</td>
+    return `
+    <tr class="main-row" onclick="toggleRowDetails('${row.id}')">
+      <td style="font-family:monospace;font-size:11px;color:rgba(255,255,255,0.35);">${fanId}</td>
+      <td style="font-weight:600;color:#fff;">${escHtml(name)}</td>
       <td>${escHtml(row.email || '—')}</td>
       <td>${escHtml(phone)}</td>
-      <td>${escHtml(title)}</td>
-      <td><span class="badge" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);">${device}</span></td>
-      <td>${escHtml(source)}</td>
-      <td style="white-space:nowrap;">${dateStr}</td>
+      <td>
+        <span class="badge" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.85);">${deviceLabel}</span>
+      </td>
+      <td><span style="opacity:0.5;font-size:11px;">${escHtml(source)}</span></td>
+      <td style="white-space:nowrap;font-size:11px;opacity:0.6;">${dateStr}</td>
+    </tr>
+    <tr id="details-${row.id}" class="details-row">
+      <td colspan="7">
+        <div class="details-content" style="background: rgba(255,255,255,0.015); border-left: 2px solid ${currentArtist.accent || '#6366f1'}; border-radius: 0 0 8px 8px; margin: 0 16px 16px 16px;">
+          <div class="details-grid">
+            <div class="detail-item">
+              <label>Identidad y Cargo</label>
+              <span>${escHtml(name)} ${title && title !== '—' ? `<br><small style="color:rgba(255,255,255,0.4)">${escHtml(title)}</small>` : ''}</span>
+            </div>
+            <div class="detail-item">
+              <label>Contacto Directo</label>
+              <span>${escHtml(row.email || 'N/A')}<br>${escHtml(phone)}</span>
+            </div>
+            <div class="detail-item">
+              <label>Origen de Captura</label>
+              <span>${escHtml(source)}<br><small style="opacity:0.5">${dateStr}</small></span>
+            </div>
+            <div class="detail-item">
+              <label>Perfil Tecnológico</label>
+              <span style="font-size:11px;opacity:0.8;">OS: ${platform}<br>Res: ${screenInfo || 'N/A'} | Browser: ${browserLabel || 'Other'}</span>
+            </div>
+            <div class="detail-item">
+              <label>Ubicación y Red</label>
+              <span>${locationStr !== '—' ? `📍 ${locationStr}` : 'Sin GPS'}<br>Net: ${connType || 'unknown'} | TZ: ${tz || 'unknown'}</span>
+            </div>
+            <div class="detail-item">
+              <label>User Agent Signature</label>
+              <span style="font-size:9px;line-height:1.2;opacity:0.3;display:block;margin-top:4px;">${escHtml(ua)}</span>
+            </div>
+          </div>
+        </div>
+      </td>
     </tr>`;
   }).join('');
+}
+
+function toggleRowDetails(id) {
+  const allDetails = document.querySelectorAll('.details-row');
+  const target = document.getElementById('details-' + id);
+  const isActive = target.classList.contains('active');
+  
+  // Close others for a clean accordion effect if preferred
+  // allDetails.forEach(d => d.classList.remove('active'));
+  
+  if (isActive) target.classList.remove('active');
+  else target.classList.add('active');
 }
 
 function filterFRM() {

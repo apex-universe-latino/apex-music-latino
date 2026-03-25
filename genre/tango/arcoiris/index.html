@@ -851,27 +851,54 @@ document.addEventListener('mousemove', function(e) {
       <span class="h-px w-12 bg-tango-accent"></span>
       <span class="text-tango-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Video Oficial</span>
     </div>
-    <h2 class="font-headline text-4xl md:text-5xl font-bold mb-12">Cinem&aacute;tico</h2>
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <h2 class="font-headline text-4xl md:text-5xl font-bold">Cinem&aacute;tico</h2>
+        <a href="https://www.youtube.com/@JohnAcevedoViolist?sub_confirmation=1" target="_blank" class="flex items-center gap-2 bg-[#ff0000] text-white px-5 py-2 rounded-full font-headline font-bold text-xs uppercase tracking-widest hover:scale-105 transition-transform duration-300 shadow-lg shadow-red-600/20">
+            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">notifications</span>
+            Suscribirse
+        </a>
+    </div>
 
-    <div class="relative rounded-2xl overflow-hidden group cursor-pointer crimson-glow" style="aspect-ratio: 21/9;">
-      <img alt="Arcoiris — tango contemporáneo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" src="/artists/Arcoiris/gallery/_73A1705.JPG"/>
-      <!-- Dark overlay -->
-      <div class="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-colors duration-500"></div>
-      <!-- Play button -->
-      <div class="absolute inset-0 flex items-center justify-center">
-        <div class="w-24 h-24 rounded-full border-2 border-white/30 flex items-center justify-center backdrop-blur-md group-hover:border-tango-accent group-hover:scale-110 transition-all duration-500 bg-tango-accent/10">
-          <span class="material-symbols-outlined text-5xl text-white group-hover:text-tango-accent transition-colors" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+    <div class="relative rounded-3xl overflow-hidden group cursor-pointer crimson-glow bg-black/40" style="aspect-ratio: 16/9;">
+      <!-- Main Poster/Thumbnail -->
+      <img alt="John Acevedo — Tango Etude No.3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 opacity-90" src="/artists/Arcoiris/gallery/astopiazoola%20solo%20.png"/>
+      
+      <!-- Video Overlay Layer -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-[#131313]/20 to-transparent"></div>
+      
+      <!-- Play Trigger Overlay (Opens Modal or Replaces with Iframe) -->
+      <div class="absolute inset-0 flex items-center justify-center z-20 group-hover:bg-black/20 transition-all duration-500" onclick="this.parentElement.innerHTML = '<iframe class=\'w-full h-full\' src=\'https://www.youtube.com/embed/aN5xoSQ5S3c?autoplay=1&start=13\' frameborder=\'0\' allow=\'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\' allowfullscreen></iframe>'">
+        <div class="w-28 h-28 rounded-full border-2 border-white/20 flex items-center justify-center backdrop-blur-xl group-hover:border-tango-accent group-hover:scale-110 transition-all duration-500 bg-tango-accent/5">
+          <div class="w-20 h-20 rounded-full bg-tango-accent flex items-center justify-center shadow-2xl shadow-tango-accent/40">
+            <span class="material-symbols-outlined text-4xl text-white" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+          </div>
         </div>
       </div>
-      <!-- Video info -->
-      <div class="absolute bottom-8 left-8 z-10">
-        <div class="text-[10px] uppercase tracking-[0.3em] font-bold text-tango-accent mb-2">Video Musical Oficial</div>
-        <div class="text-3xl font-headline font-bold text-white">Noches de Fuego</div>
-        <div class="text-zinc-400 text-sm mt-1">Dirigido por Mart&iacute;n Rejtman &bull; Buenos Aires, 2026</div>
+
+      <!-- Video Meta Description -->
+      <div class="absolute bottom-8 left-8 md:bottom-12 md:left-12 z-10 pointer-events-none">
+        <div class="text-[10px] uppercase tracking-[0.4em] font-bold text-tango-accent mb-3 flex items-center gap-2">
+            <span class="w-8 h-[2px] bg-tango-accent"></span>
+            Astor Piazzolla Solo
+        </div>
+        <div class="text-2xl md:text-3xl font-headline font-bold text-white max-w-xl leading-tight">
+            Tango Etude No.3 <br/>
+            <span class="text-zinc-500 font-light text-base md:text-xl">Arr. by John Acevedo</span>
+        </div>
+        <div class="flex flex-col gap-1 mt-4">
+            <div class="text-zinc-400 text-[11px] md:text-xs uppercase tracking-widest font-medium">
+                <span class="text-tango-accent">Violist:</span> John Acevedo
+            </div>
+            <div class="text-zinc-500 text-[10px] md:text-[11px] uppercase tracking-widest leading-loose">
+                Eng: Laszlo Mezo &bull; Wardrobe: Mia Mezo
+            </div>
+        </div>
       </div>
+
       <!-- Duration badge -->
-      <div class="absolute bottom-8 right-8 glass-panel px-4 py-2 rounded-lg border border-white/10">
-        <span class="text-white text-sm font-headline font-bold">4:32</span>
+      <div class="absolute top-8 right-8 glass-panel px-4 py-2 rounded-lg border border-white/10 flex items-center gap-2 backdrop-blur-md">
+        <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+        <span class="text-white text-[11px] font-headline font-bold uppercase tracking-widest">4:05</span>
       </div>
     </div>
   </div>
