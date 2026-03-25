@@ -1420,22 +1420,33 @@ document.addEventListener('mousemove', function(e) {
       </button>
     </div>
     
-    <form class="p-8 space-y-6" onsubmit="event.preventDefault(); alert('Booking request sent successfully to Ariel Hanasi.'); document.getElementById('booking-modal').classList.add('opacity-0', 'pointer-events-none');">
+    <form id="booking-form" class="p-8 space-y-6" onsubmit="submitBookingForm(event)">
       <div class="grid grid-cols-2 gap-4">
         <div class="space-y-2">
           <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-1">Your Name</label>
-          <input type="text" required placeholder="Full Name" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-tango-accent outline-none transition-all"/>
+          <input type="text" id="booking-name" required placeholder="Full Name" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-tango-accent outline-none transition-all"/>
         </div>
         <div class="space-y-2">
           <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-1">Email</label>
-          <input type="email" required placeholder="email@address.com" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-tango-accent outline-none transition-all"/>
+          <input type="email" id="booking-email" required placeholder="email@address.com" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-tango-accent outline-none transition-all"/>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-1">Phone</label>
+          <input type="tel" id="booking-phone" placeholder="+57 300 000 0000" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-tango-accent outline-none transition-all"/>
+        </div>
+        <div class="space-y-2">
+          <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-1">Organization / Venue</label>
+          <input type="text" id="booking-org" placeholder="Company or Venue name" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-tango-accent outline-none transition-all"/>
         </div>
       </div>
       <div class="space-y-2">
         <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-1">Event Type / Inquiry</label>
-        <select class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-tango-accent outline-none transition-all appearance-none text-zinc-400">
+        <select id="booking-type" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-tango-accent outline-none transition-all appearance-none text-zinc-400">
           <option>Live Performance</option>
           <option>Private Event</option>
+          <option>Corporate Event</option>
           <option>Commercial Collaboration</option>
           <option>Interview / Press</option>
           <option>Other</option>
@@ -1443,13 +1454,99 @@ document.addEventListener('mousemove', function(e) {
       </div>
       <div class="space-y-2">
         <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-1">Message</label>
-        <textarea rows="4" required placeholder="Tell us about the project or event..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-tango-accent outline-none transition-all resize-none"></textarea>
+        <textarea id="booking-message" rows="4" required placeholder="Tell us about the project or event..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-tango-accent outline-none transition-all resize-none"></textarea>
       </div>
-      
-      <button type="submit" class="w-full py-4 bg-tango-accent text-white font-headline font-bold uppercase tracking-widest text-sm rounded-xl hover:shadow-lg hover:shadow-tango-accent/30 transition-all duration-300 transform active:scale-[0.98]">
+      <div id="booking-status" style="display:none;" class="text-sm text-center py-3 px-4 rounded-xl"></div>
+      <button type="submit" id="booking-submit-btn" class="w-full py-4 bg-tango-accent text-white font-headline font-bold uppercase tracking-widest text-sm rounded-xl hover:shadow-lg hover:shadow-tango-accent/30 transition-all duration-300 transform active:scale-[0.98]">
         Submit Inquiry
       </button>
     </form>
+    <script>
+    async function submitBookingForm(e) {
+      e.preventDefault();
+      var btn = document.getElementById('booking-submit-btn');
+      var status = document.getElementById('booking-status');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      status.style.display = 'none';
+
+      var data = {
+        name: document.getElementById('booking-name').value.trim(),
+        email: document.getElementById('booking-email').value.trim(),
+        phone: document.getElementById('booking-phone').value.trim(),
+        organization: document.getElementById('booking-org').value.trim(),
+        event_type: document.getElementById('booking-type').value,
+        message: document.getElementById('booking-message').value.trim(),
+        artist: 'Arcoiris',
+        source: 'epk_booking_form',
+        timestamp: new Date().toISOString()
+      };
+
+      try {
+        // 1. Save to Supabase leads_capture
+        var sbRes = await fetch('https://iaycaynevtumrqoknemk.supabase.co/rest/v1/leads_capture', {
+          method: 'POST',
+          headers: {
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            artist_name: 'Arcoiris',
+            genre: 'tango',
+            email: data.email,
+            mood_preference: {
+              name: data.name,
+              phone: data.phone,
+              title: data.organization,
+              source: 'booking_form',
+              event_type: data.event_type,
+              message: data.message,
+              timestamp: data.timestamp
+            },
+            marketing_source: 'EPK_BOOKING',
+            source: 'booking_form'
+          })
+        });
+
+        // 2. Send notification email to booking@apexmusiclatino.com
+        await fetch('/api/send-blast-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            artist_name: 'Arcoiris',
+            subject: 'New Booking Inquiry: ' + data.event_type + ' — ' + data.name,
+            body_html: '<div style="font-family:Arial;max-width:600px;background:#131313;color:#ccc;padding:32px;border-radius:16px;border:1px solid rgba(230,0,0,0.15);">' +
+              '<h2 style="color:#e60000;margin:0 0 16px;">New Booking Request</h2>' +
+              '<p><strong style="color:#fff;">Name:</strong> ' + data.name + '</p>' +
+              '<p><strong style="color:#fff;">Email:</strong> ' + data.email + '</p>' +
+              '<p><strong style="color:#fff;">Phone:</strong> ' + (data.phone || 'N/A') + '</p>' +
+              '<p><strong style="color:#fff;">Organization:</strong> ' + (data.organization || 'N/A') + '</p>' +
+              '<p><strong style="color:#fff;">Type:</strong> ' + data.event_type + '</p>' +
+              '<p><strong style="color:#fff;">Message:</strong></p><p style="background:#0c0c0c;padding:16px;border-radius:8px;border:1px solid #222;">' + data.message + '</p>' +
+              '<p style="margin-top:24px;font-size:11px;color:#666;">Source: EPK Booking Form | ' + data.timestamp + '</p></div>',
+            test_email: 'booking@apexmusiclatino.com',
+            from_label: 'Booking Alert'
+          })
+        });
+
+        status.style.display = 'block';
+        status.style.background = 'rgba(34,197,94,0.1)';
+        status.style.border = '1px solid rgba(34,197,94,0.3)';
+        status.style.color = '#22c55e';
+        status.textContent = '✓ Inquiry sent! We will contact you within 24 hours.';
+        document.getElementById('booking-form').reset();
+      } catch(err) {
+        status.style.display = 'block';
+        status.style.background = 'rgba(239,68,68,0.1)';
+        status.style.border = '1px solid rgba(239,68,68,0.3)';
+        status.style.color = '#ef4444';
+        status.textContent = 'Error sending. Please email booking@apexmusiclatino.com directly.';
+      }
+      btn.disabled = false;
+      btn.textContent = 'Submit Inquiry';
+    }
+    </script>
   </div>
 </div>
 
