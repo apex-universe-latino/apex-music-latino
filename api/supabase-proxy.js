@@ -6,7 +6,7 @@
 // The frontend sends requests here instead of directly to Supabase with the service key.
 // Auth: the request must include an artist_slug that matches a valid ARTISTS config entry.
 
-const VALID_ARTISTS = ['arcoiris', 'joey-b', 'andrade'];
+const VALID_ARTISTS = ['arcoiris', 'joey-b', 'andrade', 'onboarding'];
 
 // Allowlist of path prefixes that the proxy can access
 const ALLOWED_PATHS = [

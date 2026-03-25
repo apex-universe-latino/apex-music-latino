@@ -1,450 +1,1095 @@
 <!DOCTYPE html>
-<html class="light" lang="en"><head>
+<html class="dark" lang="es">
+<head>
 <meta charset="utf-8"/>
 <link rel="icon" type="image/svg+xml" href="/Branding /aml_favicon.svg"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Kubo Data Onboarding 360 | Apex</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onboarding | Apex Music Latino</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="/css/themes.css" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "on-secondary-container": "#65003c",
-                        "surface-container-low": "#fffbf7",
-                        "on-secondary-fixed-variant": "#e0218a",
-                        "surface-container-high": "#fceee5",
-                        "inverse-primary": "#ff9e40",
-                        "primary-fixed-dim": "#ff9e40",
-                        "secondary": "#E0218A",
-                        "surface-container": "#fdf3eb",
-                        "on-primary-fixed": "#351a00",
-                        "on-secondary": "#ffffff",
-                        "secondary-fixed": "#ffd9df",
-                        "primary": "#FF7A00",
-                        "surface-tint": "#FF7A00",
-                        "tertiary-fixed": "#ffa44c",
-                        "tertiary-container": "#ffa44c",
-                        "secondary-container": "#ffe8f2",
-                        "on-tertiary": "#fff7f4",
-                        "on-secondary-fixed": "#820038",
-                        "on-primary-fixed-variant": "#613400",
-                        "primary-dim": "#cc6200",
-                        "error-dim": "#70030f",
-                        "on-background": "#2e251f",
-                        "secondary-dim": "#b31a6e",
-                        "on-tertiary-fixed": "#351a00",
-                        "on-tertiary-fixed-variant": "#613400",
-                        "surface-container-lowest": "#ffffff",
-                        "secondary-fixed-dim": "#ffc6d1",
-                        "surface-bright": "#fffaf5",
-                        "on-tertiary-container": "#552d00",
-                        "on-error": "#fff7f6",
-                        "surface-dim": "#f2e8de",
-                        "tertiary": "#8f4f00",
-                        "background": "#fffaf5",
-                        "primary-container": "#ffedd5",
-                        "on-surface-variant": "#6b5e54",
-                        "on-primary": "#ffffff",
-                        "tertiary-dim": "#7e4500",
-                        "inverse-surface": "#1f1a16",
-                        "inverse-on-surface": "#f2e8de",
-                        "tertiary-fixed-dim": "#fd9000",
-                        "on-primary-container": "#4a2400",
-                        "error": "#ac3434",
-                        "outline": "#857365",
-                        "surface-container-highest": "#f9e4d4",
-                        "on-surface": "#2e251f",
-                        "error-container": "#f56965",
-                        "outline-variant": "#d8c4b4",
-                        "primary-fixed": "#ffedd5",
-                        "surface": "#fffaf5",
-                        "on-error-container": "#65000b",
-                        "surface-variant": "#f9e4d4"
-                    },
-                    fontFamily: {
-                        "headline": ["Space Grotesk"],
-                        "body": ["Manrope"],
-                        "label": ["Space Grotesk"]
-                    },
-                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
-                },
-            },
-        }
-    </script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        base: "#0A0A0A",
+        surface: "#111111",
+        "surface-high": "#1A1A1A",
+        "surface-higher": "#222222",
+        accent: "#00ff41",
+        "accent-dim": "#00cc33",
+        pink: "#E0218A",
+        cyan: "#00E3FD",
+        gold: "#FFB800",
+        "text-primary": "#FAFAFA",
+        "text-secondary": "#A0A0A0",
+        "text-muted": "#666666",
+      },
+      fontFamily: {
+        headline: ["Space Grotesk"],
+        body: ["Inter"],
+      },
+    },
+  },
+}
+</script>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-        }
-        body {
-            background-color: #fffaf5;}
-    </style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+  /* Step transitions */
+  .step-screen {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: translateX(60px);
+    transition: opacity 0.5s cubic-bezier(.4,0,.2,1), transform 0.5s cubic-bezier(.4,0,.2,1);
+    pointer-events: none;
+    padding: 1.5rem;
+  }
+  .step-screen.active {
+    opacity: 1; transform: translateX(0); pointer-events: auto;
+  }
+  .step-screen.exit-left {
+    opacity: 0; transform: translateX(-60px); pointer-events: none;
+  }
+
+  /* Glow effects */
+  .glow-accent { box-shadow: 0 0 40px rgba(0,255,65,0.15), 0 0 80px rgba(0,255,65,0.05); }
+  .glow-pink { box-shadow: 0 0 40px rgba(224,33,138,0.15), 0 0 80px rgba(224,33,138,0.05); }
+  .glow-cyan { box-shadow: 0 0 40px rgba(0,227,253,0.15); }
+
+  /* Dot pulse */
+  @keyframes dot-pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+  .dot-active { animation: dot-pulse 2s ease-in-out infinite; }
+
+  /* Floating particles background */
+  .particle-bg {
+    background-image: radial-gradient(circle, rgba(0,255,65,0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Genre card hover */
+  .genre-card {
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    cursor: pointer;
+    border: 2px solid transparent;
+  }
+  .genre-card:hover { transform: translateY(-4px); }
+  .genre-card.selected { border-color: var(--sel-color, #00ff41); transform: scale(1.03); }
+
+  /* Social connect button */
+  .social-btn {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .social-btn:hover { transform: translateY(-2px); }
+  .social-btn.connected {
+    border-color: #00ff41 !important;
+    background: rgba(0,255,65,0.08) !important;
+  }
+  .social-btn.connected::after {
+    content: '';
+    position: absolute; top: 8px; right: 8px;
+    width: 12px; height: 12px;
+    background: #00ff41; border-radius: 50%;
+  }
+
+  /* Input focus */
+  .apex-input:focus {
+    border-color: #00ff41;
+    box-shadow: 0 0 0 3px rgba(0,255,65,0.1);
+    outline: none;
+  }
+
+  /* Hero image */
+  .hero-img {
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+
+  /* Typewriter for Kujo */
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+  .cursor-blink::after {
+    content: '|'; animation: blink 1s step-end infinite; color: #00ff41;
+  }
+
+  /* Progress ring */
+  .progress-ring { transition: stroke-dashoffset 0.6s ease; }
+
+  /* Shake on error */
+  @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-8px)} 40%,80%{transform:translateX(8px)} }
+  .shake { animation: shake 0.4s ease; }
+
+  /* Floating animation for hero images */
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  .float { animation: float 6s ease-in-out infinite; }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #00ff41, #00E3FD);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gradient-text-pink {
+    background: linear-gradient(135deg, #E0218A, #ff6bac);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gradient-text-gold {
+    background: linear-gradient(135deg, #FFB800, #ff6b00);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Mobile scrollable steps */
+  @media (max-width: 768px) {
+    .step-screen { padding: 1rem; align-items: flex-start; overflow-y: auto; padding-top: 5rem; }
+  }
+</style>
 </head>
-<body class="bg-surface font-body text-on-surface antialiased">
-<!-- Top Navigation -->
-<nav class="fixed top-0 w-full z-50 bg-white/60 backdrop-blur-xl h-16 flex justify-between items-center px-8 border-b border-orange-100/30">
-<a href="/" class="text-2xl font-bold tracking-tighter font-headline text-on-surface">Apex</a>
-<div class="flex items-center gap-4">
-<a href="/artists/" class="text-sm font-label text-on-surface-variant hover:text-primary transition-colors">Artists</a>
-<a href="/studio/" class="text-sm font-label text-on-surface-variant hover:text-primary transition-colors">Studio</a>
-<a href="/marketplace/" class="text-sm font-label text-on-surface-variant hover:text-primary transition-colors">Marketplace</a>
-<a href="/academy/" class="text-sm font-label text-on-surface-variant hover:text-primary transition-colors">Academy</a>
-</div>
-</nav>
 
-<aside class="h-screen w-64 fixed left-0 top-0 border-r border-orange-100/50 bg-[#fffcf9] flex flex-col py-6 z-40 hidden md:flex">
-<div class="px-6 mb-10 pt-16">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hub</span>
-</div>
-<div>
-<h2 class="text-lg font-bold text-slate-900 font-headline leading-tight">Artist OS</h2>
-<p class="text-xs text-slate-500 uppercase tracking-widest font-label">Management Suite</p>
-</div>
-</div>
-</div>
-<nav class="flex-1 space-y-1">
-<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:bg-orange-50 hover:pl-2 transition-all duration-300 font-label text-sm font-medium" href="/">
-<span class="material-symbols-outlined">dashboard</span>
-            Dashboard
-        </a>
-<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:bg-orange-50 hover:pl-2 transition-all duration-300 font-label text-sm font-medium" href="/artists/">
-<span class="material-symbols-outlined">groups</span>
-            Fan CRM
-        </a>
-<a class="flex items-center gap-4 px-6 py-3 bg-[#FF7A00]/10 text-slate-900 border-r-4 border-[#FF7A00] font-label text-sm font-medium" href="/onboarding/">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">database</span>
-            Kubo Data
-        </a>
-<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:bg-orange-50 hover:pl-2 transition-all duration-300 font-label text-sm font-medium" href="/dashboard/">
-<span class="material-symbols-outlined">monitoring</span>
-            Analytics
-        </a>
-<a class="flex items-center gap-4 px-6 py-3 text-slate-500 hover:bg-orange-50 hover:pl-2 transition-all duration-300 font-label text-sm font-medium" href="/studio/">
-<span class="material-symbols-outlined">smart_toy</span>
-            Kujo AI
-        </a>
-</nav>
-<div class="px-6 mt-auto space-y-4">
-<div class="p-4 rounded-xl bg-slate-900 text-white space-y-3">
-<p class="text-xs font-label uppercase tracking-widest opacity-70">Power User</p>
-<p class="text-sm font-headline font-bold">Upgrade to Pro</p>
-<button class="w-full py-2 bg-primary text-white rounded-full text-xs font-bold hover:bg-primary-dim transition-colors">Boost Insights</button>
-</div>
-<div class="pt-4 border-t border-slate-200">
-<a class="flex items-center gap-4 py-2 text-slate-500 hover:text-slate-900 transition-colors font-label text-xs uppercase tracking-widest" href="/academy/">
-<span class="material-symbols-outlined text-sm">help</span>
-                Support
-            </a>
-<a class="flex items-center gap-4 py-2 text-slate-500 hover:text-slate-900 transition-colors font-label text-xs uppercase tracking-widest" href="/onboarding/">
-<span class="material-symbols-outlined text-sm">settings</span>
-                Settings
-            </a>
-</div>
-</div>
-</aside>
-<main class="md:ml-64 min-h-screen p-8 lg:p-12 pt-24">
-<header class="flex justify-between items-end mb-12">
-<div>
-<nav class="flex items-center gap-2 text-xs font-label text-outline uppercase tracking-widest mb-4">
-<a href="/">Artist OS</a>
-<span class="material-symbols-outlined text-[10px]">chevron_right</span>
-<span class="text-primary font-bold">Kubo Fusion</span>
-</nav>
-<h1 class="text-5xl font-black font-headline text-on-surface tracking-tighter">Intelligence View</h1>
-</div>
-<div class="flex items-center gap-4">
-<div class="flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full border border-primary/20">
-<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-<span class="text-xs font-bold font-label uppercase text-on-surface-variant">Live Syncing</span>
-</div>
-<button class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-lowest shadow-sm text-on-surface hover:bg-surface-container-high transition-all">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary shadow-sm">
-<img alt="User avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACSrpFdFL-Xd3590Mer88JSXZ780SBmNWp0z3okdZnmbsc0CTEOZIfILsTJMiLLoczGSCjWirkn049hO30SXrNv8cR-fWJxO9twNN9FcGyI6zihVKO6NAHf6Pr-vB1iZuUFZrMIs_n_lK0jy0amOhh-3VGMO0ghjG7okQ4RXa_E3GL79eXPY1kLugMJc77adyXZRGXweRE08Q_qzDXWemEAoA-7dSw0xz8DIpH1EDx-5f7PugI8E5x720lHems33w-NVBP0jaSUcs"/>
-</div>
-</div>
+<body class="bg-base text-text-primary font-body antialiased h-full overflow-hidden relative">
+
+<!-- Background effects -->
+<div class="fixed inset-0 particle-bg pointer-events-none z-0"></div>
+<div class="fixed top-0 right-0 w-[600px] h-[600px] bg-accent/5 blur-[150px] rounded-full -z-10 translate-x-1/3 -translate-y-1/3" id="bg-orb-1"></div>
+<div class="fixed bottom-0 left-0 w-[400px] h-[400px] bg-pink/5 blur-[120px] rounded-full -z-10 -translate-x-1/3 translate-y-1/3" id="bg-orb-2"></div>
+
+<!-- Top bar with logo + progress dots -->
+<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-base/80 backdrop-blur-xl border-b border-white/5">
+  <a href="/" class="flex items-center gap-3">
+    <img src="/Branding /aml_favicon.svg" alt="Apex" class="w-8 h-8" onerror="this.style.display='none'"/>
+    <span class="font-headline font-bold text-lg tracking-tight text-text-primary">Apex Music Latino</span>
+  </a>
+
+  <!-- Progress dots -->
+  <div class="flex items-center gap-2" id="progress-dots">
+    <!-- Dots will be generated by JS -->
+  </div>
+
+  <!-- Lang toggle -->
+  <button id="lang-toggle" class="text-xs font-headline uppercase tracking-widest text-text-muted hover:text-accent transition-colors px-3 py-1.5 border border-white/10 rounded-full">
+    ES / EN
+  </button>
 </header>
-<div class="grid grid-cols-12 gap-6">
-<section class="col-span-12 lg:col-span-4 space-y-6">
-<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-orange-50 flex flex-col gap-6">
-<div class="flex justify-between items-start">
-<h3 class="text-xl font-bold font-headline tracking-tight">Collection Status</h3>
-<span class="material-symbols-outlined text-primary">sensors</span>
-</div>
-<div class="space-y-4">
-<div class="p-4 bg-surface-container-low rounded-lg flex items-center justify-between border border-transparent hover:border-primary/20 transition-all">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 bg-white rounded flex items-center justify-center shadow-sm">
-<span class="material-symbols-outlined text-on-surface">qr_code_2</span>
-</div>
-<div>
-<p class="text-sm font-bold">Event QR Scans</p>
-<p class="text-xs text-on-surface-variant">Active at 12 venues</p>
-</div>
-</div>
-<div class="text-right">
-<p class="text-sm font-black text-primary">84%</p>
-<p class="text-[10px] uppercase font-label text-outline">Capture Rate</p>
-</div>
-</div>
-<div class="p-4 bg-surface-container-low rounded-lg flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 bg-[#1DB954] text-white rounded flex items-center justify-center shadow-sm">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">podcasts</span>
-</div>
-<div>
-<p class="text-sm font-bold">Spotify API</p>
-<p class="text-xs text-on-surface-variant">Token valid • 2m ago</p>
-</div>
-</div>
-<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
-</div>
-<div class="p-4 bg-surface-container-low rounded-lg flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 bg-gradient-to-tr from-[#FF7A00] via-[#E0218A] to-[#6228d7] text-white rounded flex items-center justify-center shadow-sm">
-<span class="material-symbols-outlined">photo_camera</span>
-</div>
-<div>
-<p class="text-sm font-bold">Instagram Graph</p>
-<p class="text-xs text-on-surface-variant">Syncing mentions</p>
-</div>
-</div>
-<div class="w-12 h-1 bg-surface-container rounded-full overflow-hidden">
-<div class="w-2/3 h-full bg-secondary"></div>
-</div>
-</div>
-</div>
-</div>
-<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm flex flex-col gap-4 border border-orange-50">
-<h3 class="text-xs font-bold font-label uppercase tracking-widest text-outline">Fan Sentiment Pulse</h3>
-<div class="flex items-end gap-1 h-24">
-<div class="flex-1 bg-primary/10 rounded-t-sm h-[40%]"></div>
-<div class="flex-1 bg-primary/20 rounded-t-sm h-[60%]"></div>
-<div class="flex-1 bg-secondary/30 rounded-t-sm h-[80%]"></div>
-<div class="flex-1 bg-secondary rounded-t-sm h-[95%]"></div>
-<div class="flex-1 bg-primary rounded-t-sm h-[70%]"></div>
-<div class="flex-1 bg-primary/30 rounded-t-sm h-[50%]"></div>
-</div>
-<div class="flex justify-between items-center">
-<p class="text-2xl font-black font-headline text-secondary">+42.8%</p>
-<p class="text-xs text-on-surface-variant font-medium">Positive vs Last Week</p>
-</div>
-</div>
-</section>
-<section class="col-span-12 lg:col-span-8">
-<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm h-full relative overflow-hidden flex flex-col border border-orange-50">
-<div class="flex justify-between items-center mb-10">
-<div>
-<h3 class="text-2xl font-bold font-headline tracking-tight">Fuzzy Fusion Engine</h3>
-<p class="text-sm text-on-surface-variant">Merging heterogeneous data points into unified fan identities.</p>
-</div>
-<button class="px-6 py-2 bg-surface-container-low text-primary rounded-full text-xs font-bold font-label uppercase hover:bg-surface-container-high transition-colors">
-                        Configure Weights
-                    </button>
-</div>
-<div class="flex-1 flex items-center justify-center relative">
-<div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
-<div class="w-[500px] h-[500px] border-[40px] border-primary-container rounded-full blur-[100px]"></div>
-</div>
-<div class="grid grid-cols-3 gap-16 relative z-10 w-full max-w-2xl">
-<div class="flex flex-col justify-center gap-12">
-<div class="flex items-center gap-3">
-<div class="w-12 h-12 bg-surface-container-low rounded-xl flex items-center justify-center border-l-4 border-secondary">
-<span class="material-symbols-outlined text-secondary">mail</span>
-</div>
-<span class="h-px w-8 bg-gradient-to-r from-secondary/40 to-transparent"></span>
-</div>
-<div class="flex items-center gap-3">
-<div class="w-12 h-12 bg-surface-container-low rounded-xl flex items-center justify-center border-l-4 border-primary">
-<span class="material-symbols-outlined text-primary">smartphone</span>
-</div>
-<span class="h-px w-12 bg-gradient-to-r from-primary/40 to-transparent"></span>
-</div>
-<div class="flex items-center gap-3">
-<div class="w-12 h-12 bg-surface-container-low rounded-xl flex items-center justify-center border-l-4 border-secondary">
-<span class="material-symbols-outlined text-secondary">public</span>
-</div>
-<span class="h-px w-8 bg-gradient-to-r from-secondary/40 to-transparent"></span>
-</div>
-</div>
-<div class="flex items-center justify-center">
-<div class="w-48 h-48 rounded-full bg-surface-container relative flex items-center justify-center group">
-<div class="absolute inset-0 rounded-full border-4 border-dashed border-primary/30 animate-spin" style="animation-duration: 20s;"></div>
-<div class="w-32 h-32 rounded-full bg-white shadow-2xl flex flex-col items-center justify-center text-center p-4">
-<span class="text-3xl font-black font-headline text-primary">892</span>
-<p class="text-[10px] font-bold uppercase font-label leading-none">Identities Unified</p>
-</div>
-</div>
-</div>
-<div class="flex flex-col justify-center gap-8">
-<div class="flex items-center gap-3 translate-x-4">
-<span class="h-px w-8 bg-gradient-to-l from-primary/40 to-transparent"></span>
-<div class="w-10 h-10 rounded-full border-2 border-white shadow-md overflow-hidden">
-<img alt="Unified profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyuOqkPPXDxDZ0Vw_Msb8Q_FdttyYIV4KRNNWZYE3wmHx4HWcYRcN7xjm7nYL2U131iqjyJCD5Nu1L4RMqW3Jbq0y9H_rEXYgbPAEXJ-0RTpbxteljG-dZzduboQoOvNn605awRH2WUpMYXSAB3BZe8SA6BlylVx23BAq0AQDgk_tILc3AkCPpjpxs8O7Qq9eVHWPnLBtq0vF3YnRJJo7WNnebss3KmDhx1rOVUAEBSRMjnkv1_JmFQqh_0CJkXnVFs9fKkcpCIIE"/>
-</div>
-</div>
-<div class="flex items-center gap-3">
-<span class="h-px w-12 bg-gradient-to-l from-secondary/40 to-transparent"></span>
-<div class="w-14 h-14 rounded-full border-2 border-secondary shadow-xl overflow-hidden relative">
-<img alt="Unified profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzzyCQgG7_GtAfYxGPbBZUo5ElmP6QatPMXWMLBk_BpU0fsQuU3IaeXY45QsF-wp6vHH4CrZzhZA1TXBvcP0JavAcl-j-ZOMq4WFgqUjpxHDzqRIKi47dDq14-sy0PQlTjTsHu4jFBZv3Nfr3qfPUHkIK-TrKLeegnuzFP5wgx6BkaDk7PpGll34wjhRVb4bvhD18Q_yY1u36AJFiqcDt6QC7Q_VKpH0dq6S_m26f4PrTs4gnNCYh7FTNWlFLpbpjFSYEJXHbM3HY"/>
-<div class="absolute bottom-0 right-0 bg-secondary w-4 h-4 rounded-full flex items-center justify-center text-[8px] text-white">99%</div>
-</div>
-</div>
-<div class="flex items-center gap-3 translate-x-4">
-<span class="h-px w-8 bg-gradient-to-l from-primary/40 to-transparent"></span>
-<div class="w-10 h-10 rounded-full border-2 border-white shadow-md overflow-hidden">
-<img alt="Unified profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxWvehknJ8_21U0Smp3RVnqumzlw5WNuGmExCNHOlD9cQTPwwKYn1ZFifiNF5quCAc-x7LpdCC0YFmhuVwLbbbHN4xvEEMksKqwiKDPwvYpXpDrjNU3hRs2fT-Py9m4awTvneE-pLA9no-6P5t40V0Djy_K1W6FDWeJvA0oPlHGTwm0HiJGO1xnhc6_87cg4eq9k8kGItuKV0MMTa6MmqU2iIbMoydsL1r-6aoD753TDeQuFcNFG83zo27nZCiCBGT1s42MBb6uUU"/>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="mt-auto grid grid-cols-3 gap-4 pt-8 border-t border-surface-container">
-<div class="text-center">
-<p class="text-xs text-on-surface-variant font-label uppercase mb-1">Inlet Streams</p>
-<p class="text-lg font-bold font-headline tracking-tighter text-primary">14,209/hr</p>
-</div>
-<div class="text-center border-x border-surface-container">
-<p class="text-xs text-on-surface-variant font-label uppercase mb-1">Match Confidence</p>
-<p class="text-lg font-bold font-headline tracking-tighter text-secondary">94.2% Avg</p>
-</div>
-<div class="text-center">
-<p class="text-xs text-on-surface-variant font-label uppercase mb-1">Storage Cost</p>
-<p class="text-lg font-bold font-headline tracking-tighter">-$0.024/fan</p>
-</div>
-</div>
-</div>
-</section>
-<section class="col-span-12 lg:col-span-7">
-<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm space-y-8 border border-orange-50">
-<div class="flex justify-between items-center">
-<h3 class="text-xl font-bold font-headline tracking-tight">Audience Segments</h3>
-<div class="flex gap-2">
-<span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-bold uppercase">Whales</span>
-<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full text-[10px] font-bold uppercase">Newcomers</span>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-8">
-<div>
-<p class="text-xs font-label uppercase text-outline mb-4">Top Regions</p>
-<div class="space-y-3">
-<div class="flex items-center justify-between">
-<span class="text-sm font-medium">Mexico City</span>
-<div class="flex items-center gap-2">
-<div class="w-24 h-2 bg-surface-container rounded-full overflow-hidden">
-<div class="w-[85%] h-full bg-primary"></div>
-</div>
-<span class="text-xs font-bold text-primary">85%</span>
-</div>
-</div>
-<div class="flex items-center justify-between">
-<span class="text-sm font-medium">Bogota</span>
-<div class="flex items-center gap-2">
-<div class="w-24 h-2 bg-surface-container rounded-full overflow-hidden">
-<div class="w-[62%] h-full bg-secondary"></div>
-</div>
-<span class="text-xs font-bold text-secondary">62%</span>
-</div>
-</div>
-<div class="flex items-center justify-between">
-<span class="text-sm font-medium">Madrid</span>
-<div class="flex items-center gap-2">
-<div class="w-24 h-2 bg-surface-container rounded-full overflow-hidden">
-<div class="w-[44%] h-full bg-primary"></div>
-</div>
-<span class="text-xs font-bold text-primary">44%</span>
-</div>
-</div>
-</div>
-</div>
-<div>
-<p class="text-xs font-label uppercase text-outline mb-4">Engagement Distribution</p>
-<div class="flex items-center gap-4">
-<div class="relative w-24 h-24">
-<svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#fdf3eb" stroke-width="3"></path>
-<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#FF7A00" stroke-dasharray="70, 100" stroke-width="3"></path>
-</svg>
-<div class="absolute inset-0 flex items-center justify-center">
-<span class="text-sm font-black text-primary">70%</span>
-</div>
-</div>
-<div class="space-y-2">
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-primary"></span>
-<span class="text-xs font-medium">Direct Merch Buyers</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-surface-container"></span>
-<span class="text-xs font-medium">Casual Streamers</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="col-span-12 lg:col-span-5 grid grid-cols-2 gap-6">
-<div class="bg-primary p-6 rounded-xl text-white flex flex-col justify-between shadow-lg shadow-primary/20">
-<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">bolt</span>
-<div>
-<p class="text-[10px] font-label uppercase tracking-widest opacity-80 mb-1">Real-time Pulse</p>
-<p class="text-2xl font-black font-headline">2.4k</p>
-<p class="text-xs opacity-80">Fans online now</p>
-</div>
-</div>
-<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-orange-100 flex flex-col justify-between">
-<div class="flex items-center gap-2 text-secondary">
-<span class="material-symbols-outlined text-sm">trending_up</span>
-<span class="text-[10px] font-bold uppercase font-label">Hype Factor</span>
-</div>
-<div>
-<p class="text-2xl font-black font-headline tracking-tighter text-on-surface">Gold</p>
-<p class="text-xs text-secondary font-medium">Momentum is peaking</p>
-</div>
-</div>
-<div class="col-span-2 bg-secondary/5 border border-secondary/10 p-6 rounded-xl flex items-center justify-between">
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-sm text-secondary">
-<span class="material-symbols-outlined">auto_awesome</span>
-</div>
-<div>
-<h4 class="text-sm font-bold">Kujo AI Recommendation</h4>
-<p class="text-xs text-on-surface-variant">Target 'Madrid' segment with Vinyl pre-sale today.</p>
-</div>
-</div>
-<a href="/studio/" class="material-symbols-outlined text-on-surface hover:text-secondary transition-colors">arrow_forward</a>
-</div>
-</section>
-</div>
-<footer class="bg-neutral-950 w-full py-12 px-8 border-t border-neutral-800/20 mt-16 rounded-xl overflow-hidden">
-<div class="flex flex-col md:flex-row justify-between items-center gap-6">
-<div class="flex items-center gap-6">
-<span class="text-xs font-label uppercase tracking-widest text-slate-400">&copy; 2024 Apex. All rights reserved.</span>
-</div>
-<div class="flex gap-8">
-<a class="text-xs font-label uppercase tracking-widest text-slate-400 hover:text-primary transition-colors" href="/dashboard/">Transparency</a>
-<a class="text-xs font-label uppercase tracking-widest text-slate-400 hover:text-primary transition-colors" href="/academy/">Rights</a>
-<a class="text-xs font-label uppercase tracking-widest text-slate-400 hover:text-primary transition-colors" href="/onboarding/">Privacy</a>
-<a class="text-xs font-label uppercase tracking-widest text-slate-400 hover:text-primary transition-colors" href="/onboarding/">Terms</a>
-<a class="text-xs font-label uppercase tracking-widest text-slate-400 hover:text-primary transition-colors" href="/studio/">API</a>
-</div>
-</div>
-</footer>
-</main>
 
-<script src="/js/i18n.js"></script>
-    <script src="/js/nav.js"></script>
-<script src="/js/apex-engine.js"></script>
-</body></html>
+<!-- ============================================ -->
+<!-- STEP 0: WELCOME SPLASH                       -->
+<!-- ============================================ -->
+<div class="step-screen active" data-step="0">
+  <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+    <!-- Left: Text -->
+    <div class="space-y-8 text-center lg:text-left">
+      <div>
+        <p class="text-xs font-headline uppercase tracking-[0.3em] text-accent mb-4" data-i18n="welcome_tag">BIENVENIDO A TU IMPERIO</p>
+        <h1 class="text-5xl md:text-7xl font-black font-headline tracking-tighter leading-[0.9]">
+          <span data-i18n="welcome_h1_1">Tu Musica.</span><br/>
+          <span class="gradient-text" data-i18n="welcome_h1_2">Tu Plataforma.</span><br/>
+          <span data-i18n="welcome_h1_3">Tu Control.</span>
+        </h1>
+      </div>
+      <p class="text-lg text-text-secondary max-w-md mx-auto lg:mx-0 leading-relaxed" data-i18n="welcome_sub">
+        Configura tu perfil en 90 segundos. Conecta tus redes, activa tu base de fans 360° y deja que la IA trabaje para ti.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+        <button onclick="goToStep(1)" class="px-10 py-4 bg-accent text-base font-headline font-black text-sm uppercase tracking-widest rounded-lg hover:bg-accent-dim transition-all glow-accent">
+          <span data-i18n="welcome_cta">Comenzar Ahora</span>
+          <span class="material-symbols-outlined text-sm align-middle ml-2">arrow_forward</span>
+        </button>
+        <button onclick="goToStep(1)" class="px-8 py-4 border border-white/10 text-text-secondary font-headline font-bold text-sm uppercase tracking-widest rounded-lg hover:border-accent/30 hover:text-accent transition-all">
+          <span class="material-symbols-outlined text-sm align-middle mr-2">timer</span>
+          <span data-i18n="welcome_time">90 segundos</span>
+        </button>
+      </div>
+      <!-- Trust badges -->
+      <div class="flex items-center gap-6 justify-center lg:justify-start pt-4">
+        <div class="flex items-center gap-2 text-text-muted text-xs">
+          <span class="material-symbols-outlined text-accent text-sm" style="font-variation-settings:'FILL' 1;">lock</span>
+          <span data-i18n="trust_encrypt">Cifrado AES-256</span>
+        </div>
+        <div class="flex items-center gap-2 text-text-muted text-xs">
+          <span class="material-symbols-outlined text-accent text-sm" style="font-variation-settings:'FILL' 1;">shield</span>
+          <span data-i18n="trust_nopost">Nunca publicamos por ti</span>
+        </div>
+      </div>
+    </div>
+    <!-- Right: Hero image carousel -->
+    <div class="relative hidden lg:block">
+      <div class="float">
+        <img src="/Branding /reggaeton_value_prop_es_1774470505207.png" alt="Reggaeton Artist Dashboard" class="w-full rounded-2xl shadow-2xl hero-img" id="hero-carousel"/>
+      </div>
+      <!-- Small floating cards -->
+      <div class="absolute -bottom-4 -left-4 bg-surface-high/90 backdrop-blur-xl border border-white/10 rounded-xl p-4 flex items-center gap-3" style="animation: float 5s ease-in-out 1s infinite;">
+        <div class="w-10 h-10 bg-accent/20 rounded-lg flex items-center justify-center">
+          <span class="material-symbols-outlined text-accent" style="font-variation-settings:'FILL' 1;">smart_toy</span>
+        </div>
+        <div>
+          <p class="text-xs font-bold text-accent">Kujo AI</p>
+          <p class="text-[10px] text-text-muted" data-i18n="hero_kujo">Analizando tendencias globales</p>
+        </div>
+      </div>
+      <div class="absolute -top-4 -right-4 bg-surface-high/90 backdrop-blur-xl border border-white/10 rounded-xl p-3 flex items-center gap-2" style="animation: float 4s ease-in-out 2s infinite;">
+        <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+        <span class="text-[10px] font-bold text-text-secondary uppercase tracking-widest" data-i18n="hero_live">En Vivo</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- STEP 1: ARTIST NAME (Tinder-style)           -->
+<!-- ============================================ -->
+<div class="step-screen" data-step="1">
+  <div class="max-w-xl w-full space-y-10 text-center">
+    <div>
+      <div class="w-20 h-20 mx-auto mb-6 bg-surface-high rounded-2xl flex items-center justify-center border border-white/5">
+        <span class="material-symbols-outlined text-accent text-4xl" style="font-variation-settings:'FILL' 1;">mic_external_on</span>
+      </div>
+      <h2 class="text-4xl md:text-5xl font-black font-headline tracking-tighter" data-i18n="name_title">Mi nombre artistico es...</h2>
+      <p class="text-text-secondary mt-3" data-i18n="name_sub">El nombre que tus fans conocen</p>
+    </div>
+    <div class="relative max-w-md mx-auto">
+      <input id="artist-name" type="text" placeholder="Ej: Bad Bunny, Rosalia..."
+        class="apex-input w-full bg-surface-high border border-white/10 rounded-xl py-5 px-6 text-2xl font-headline text-center text-text-primary placeholder:text-text-muted/40 transition-all"
+        autocomplete="off" autofocus/>
+    </div>
+    <button onclick="validateAndNext(1)" class="px-12 py-4 bg-accent text-base font-headline font-black text-sm uppercase tracking-widest rounded-lg hover:bg-accent-dim transition-all glow-accent">
+      <span data-i18n="next">Siguiente</span>
+      <span class="material-symbols-outlined text-sm align-middle ml-2">arrow_forward</span>
+    </button>
+    <!-- Kujo hint -->
+    <div class="flex items-center gap-3 justify-center text-text-muted text-sm mt-8">
+      <span class="material-symbols-outlined text-accent text-lg" style="font-variation-settings:'FILL' 1;">smart_toy</span>
+      <span class="italic" data-i18n="name_kujo">"Usa el nombre que ya tienes en redes. Asi unificamos tu identidad digital."</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- STEP 2: EMAIL                                -->
+<!-- ============================================ -->
+<div class="step-screen" data-step="2">
+  <div class="max-w-xl w-full space-y-10 text-center">
+    <div>
+      <div class="w-20 h-20 mx-auto mb-6 bg-surface-high rounded-2xl flex items-center justify-center border border-white/5">
+        <span class="material-symbols-outlined text-cyan text-4xl">mail</span>
+      </div>
+      <h2 class="text-4xl md:text-5xl font-black font-headline tracking-tighter" data-i18n="email_title">Tu email profesional</h2>
+      <p class="text-text-secondary mt-3" data-i18n="email_sub">Para recibir oportunidades de booking y colaboraciones</p>
+    </div>
+    <div class="max-w-md mx-auto">
+      <input id="artist-email" type="email" placeholder="artista@email.com"
+        class="apex-input w-full bg-surface-high border border-white/10 rounded-xl py-5 px-6 text-xl font-headline text-center text-text-primary placeholder:text-text-muted/40 transition-all"
+        autocomplete="email"/>
+    </div>
+    <button onclick="validateAndNext(2)" class="px-12 py-4 bg-accent text-base font-headline font-black text-sm uppercase tracking-widest rounded-lg hover:bg-accent-dim transition-all glow-accent">
+      <span data-i18n="next">Siguiente</span>
+      <span class="material-symbols-outlined text-sm align-middle ml-2">arrow_forward</span>
+    </button>
+    <div class="flex items-center gap-2 justify-center text-text-muted text-xs">
+      <span class="material-symbols-outlined text-accent text-sm" style="font-variation-settings:'FILL' 1;">lock</span>
+      <span data-i18n="email_trust">Tu email queda privado. Solo venues aprobados podran contactarte.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- STEP 3: GENRE SELECTION                      -->
+<!-- ============================================ -->
+<div class="step-screen" data-step="3">
+  <div class="max-w-3xl w-full space-y-10 text-center">
+    <div>
+      <h2 class="text-4xl md:text-5xl font-black font-headline tracking-tighter" data-i18n="genre_title">Tu genero principal</h2>
+      <p class="text-text-secondary mt-3" data-i18n="genre_sub">Selecciona uno. Puedes agregar mas despues.</p>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="genre-grid">
+      <div class="genre-card bg-surface-high rounded-2xl p-6 flex flex-col items-center gap-3 border border-white/5 hover:border-pink/40" data-genre="reggaeton" style="--sel-color: #E0218A;" onclick="selectGenre(this)">
+        <span class="text-4xl">🔥</span>
+        <span class="font-headline font-bold text-sm">Reggaeton</span>
+        <span class="text-[10px] text-text-muted uppercase tracking-widest">Perreo & Trap</span>
+      </div>
+      <div class="genre-card bg-surface-high rounded-2xl p-6 flex flex-col items-center gap-3 border border-white/5 hover:border-red-500/40" data-genre="tango" style="--sel-color: #e60000;" onclick="selectGenre(this)">
+        <span class="text-4xl">🌹</span>
+        <span class="font-headline font-bold text-sm">Tango</span>
+        <span class="text-[10px] text-text-muted uppercase tracking-widest">Neo & Clasico</span>
+      </div>
+      <div class="genre-card bg-surface-high rounded-2xl p-6 flex flex-col items-center gap-3 border border-white/5 hover:border-cyan/40" data-genre="rap" style="--sel-color: #00d4ff;" onclick="selectGenre(this)">
+        <span class="text-4xl">🎤</span>
+        <span class="font-headline font-bold text-sm">Rap / Hip-Hop</span>
+        <span class="text-[10px] text-text-muted uppercase tracking-widest">Freestyle & Boom Bap</span>
+      </div>
+      <div class="genre-card bg-surface-high rounded-2xl p-6 flex flex-col items-center gap-3 border border-white/5 hover:border-orange-500/40" data-genre="rock" style="--sel-color: #ff6b00;" onclick="selectGenre(this)">
+        <span class="text-4xl">🎸</span>
+        <span class="font-headline font-bold text-sm">Rock Latino</span>
+        <span class="text-[10px] text-text-muted uppercase tracking-widest">Indie & Alternativo</span>
+      </div>
+      <div class="genre-card bg-surface-high rounded-2xl p-6 flex flex-col items-center gap-3 border border-white/5 hover:border-emerald-400/40" data-genre="electronic" style="--sel-color: #00ffcc;" onclick="selectGenre(this)">
+        <span class="text-4xl">🎛️</span>
+        <span class="font-headline font-bold text-sm">Electronica</span>
+        <span class="text-[10px] text-text-muted uppercase tracking-widest">House & Techno</span>
+      </div>
+      <div class="genre-card bg-surface-high rounded-2xl p-6 flex flex-col items-center gap-3 border border-white/5 hover:border-gold/40" data-genre="afro-latin" style="--sel-color: #FFB800;" onclick="selectGenre(this)">
+        <span class="text-4xl">🥁</span>
+        <span class="font-headline font-bold text-sm">Afro-Latin</span>
+        <span class="text-[10px] text-text-muted uppercase tracking-widest">Cumbia & Salsa</span>
+      </div>
+    </div>
+    <button onclick="validateAndNext(3)" id="genre-next-btn" class="px-12 py-4 bg-white/5 text-text-muted font-headline font-black text-sm uppercase tracking-widest rounded-lg cursor-not-allowed transition-all" disabled>
+      <span data-i18n="select_genre">Selecciona tu genero</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- STEP 4: CONNECT SOCIAL MEDIA                 -->
+<!-- ============================================ -->
+<div class="step-screen" data-step="4">
+  <div class="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+    <!-- Main: Social connections -->
+    <div class="lg:col-span-3 space-y-8">
+      <div>
+        <h2 class="text-4xl md:text-5xl font-black font-headline tracking-tighter" data-i18n="social_title">Conecta tus Redes</h2>
+        <p class="text-text-secondary mt-3" data-i18n="social_sub">Conecta al menos 1 para activar tu Base de Datos de Fans 360°</p>
+      </div>
+
+      <div class="space-y-3" id="social-list">
+        <!-- Instagram -->
+        <button class="social-btn w-full bg-surface-high border border-white/10 rounded-xl p-5 flex items-center gap-4 text-left hover:border-pink/30" data-social="instagram" onclick="toggleSocial(this)">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#833AB4] via-[#E1306C] to-[#F77737] flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-white">photo_camera</span>
+          </div>
+          <div class="flex-1">
+            <p class="font-headline font-bold">Instagram</p>
+            <p class="text-xs text-text-muted" data-i18n="ig_desc">Sincronizar seguidores, stories y menciones</p>
+          </div>
+          <span class="material-symbols-outlined text-text-muted connect-icon">link</span>
+        </button>
+
+        <!-- Spotify -->
+        <button class="social-btn w-full bg-surface-high border border-white/10 rounded-xl p-5 flex items-center gap-4 text-left hover:border-[#1DB954]/30" data-social="spotify" onclick="toggleSocial(this)">
+          <div class="w-12 h-12 rounded-xl bg-[#1DB954] flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-white" style="font-variation-settings:'FILL' 1;">podcasts</span>
+          </div>
+          <div class="flex-1">
+            <p class="font-headline font-bold">Spotify for Artists</p>
+            <p class="text-xs text-text-muted" data-i18n="sp_desc">Streams, oyentes mensuales y playlists</p>
+          </div>
+          <span class="material-symbols-outlined text-text-muted connect-icon">link</span>
+        </button>
+
+        <!-- TikTok -->
+        <button class="social-btn w-full bg-surface-high border border-white/10 rounded-xl p-5 flex items-center gap-4 text-left hover:border-white/20" data-social="tiktok" onclick="toggleSocial(this)">
+          <div class="w-12 h-12 rounded-xl bg-black border border-white/20 flex items-center justify-center flex-shrink-0">
+            <span class="font-headline font-black text-lg text-white">T</span>
+          </div>
+          <div class="flex-1">
+            <p class="font-headline font-bold">TikTok</p>
+            <p class="text-xs text-text-muted" data-i18n="tt_desc">Videos virales, tendencias y audiencia</p>
+          </div>
+          <span class="material-symbols-outlined text-text-muted connect-icon">link</span>
+        </button>
+
+        <!-- YouTube -->
+        <button class="social-btn w-full bg-surface-high border border-white/10 rounded-xl p-5 flex items-center gap-4 text-left hover:border-red-500/30" data-social="youtube" onclick="toggleSocial(this)">
+          <div class="w-12 h-12 rounded-xl bg-[#FF0000] flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-white" style="font-variation-settings:'FILL' 1;">play_arrow</span>
+          </div>
+          <div class="flex-1">
+            <p class="font-headline font-bold">YouTube</p>
+            <p class="text-xs text-text-muted" data-i18n="yt_desc">Videos, suscriptores y analytics</p>
+          </div>
+          <span class="material-symbols-outlined text-text-muted connect-icon">link</span>
+        </button>
+
+        <!-- Facebook -->
+        <button class="social-btn w-full bg-surface-high border border-white/10 rounded-xl p-5 flex items-center gap-4 text-left hover:border-[#1877F2]/30" data-social="facebook" onclick="toggleSocial(this)">
+          <div class="w-12 h-12 rounded-xl bg-[#1877F2] flex items-center justify-center flex-shrink-0">
+            <span class="font-headline font-black text-xl text-white">f</span>
+          </div>
+          <div class="flex-1">
+            <p class="font-headline font-bold">Facebook</p>
+            <p class="text-xs text-text-muted" data-i18n="fb_desc">Pagina de artista y eventos</p>
+          </div>
+          <span class="material-symbols-outlined text-text-muted connect-icon">link</span>
+        </button>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <p class="text-xs text-text-muted" id="social-count" data-i18n="social_count">0 de 5 conectadas</p>
+        <button onclick="validateAndNext(4)" id="social-next-btn" class="px-10 py-4 bg-white/5 text-text-muted font-headline font-black text-sm uppercase tracking-widest rounded-lg cursor-not-allowed transition-all" disabled>
+          <span data-i18n="next">Siguiente</span>
+          <span class="material-symbols-outlined text-sm align-middle ml-2">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sidebar: Kujo AI + trust -->
+    <div class="lg:col-span-2 space-y-4 hidden lg:block">
+      <!-- Value prop image -->
+      <div class="rounded-2xl overflow-hidden border border-white/5">
+        <img src="/assetts/reggaeton_cubo_frm.png" alt="CUBO FRM" class="w-full" id="sidebar-genre-img"/>
+      </div>
+      <!-- Kujo AI -->
+      <div class="bg-surface-high/60 backdrop-blur-xl rounded-xl border border-accent/10 p-5 space-y-3">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-full bg-accent/20 flex items-center justify-center">
+            <span class="material-symbols-outlined text-accent text-sm" style="font-variation-settings:'FILL' 1;">smart_toy</span>
+          </div>
+          <span class="font-headline font-bold text-accent text-xs tracking-widest">KUJO AI</span>
+        </div>
+        <p class="text-sm text-text-secondary leading-relaxed italic" data-i18n="social_kujo">
+          "Conectar tus redes me permite analizar tu audiencia y generar estrategias de crecimiento personalizadas."
+        </p>
+      </div>
+      <!-- Trust -->
+      <div class="bg-surface-high/40 rounded-xl border border-white/5 p-4 flex items-center gap-3">
+        <span class="material-symbols-outlined text-accent" style="font-variation-settings:'FILL' 1;">verified_user</span>
+        <div>
+          <p class="text-xs font-bold text-text-primary" data-i18n="trust_title">Privacidad Garantizada</p>
+          <p class="text-[10px] text-text-muted" data-i18n="trust_detail">Nunca publicamos, comentamos o seguimos en tu nombre.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- STEP 5: CONNECT GMAIL / EMAIL SYNC           -->
+<!-- ============================================ -->
+<div class="step-screen" data-step="5">
+  <div class="max-w-xl w-full space-y-10 text-center">
+    <div>
+      <div class="w-20 h-20 mx-auto mb-6 bg-surface-high rounded-2xl flex items-center justify-center border border-white/5">
+        <span class="material-symbols-outlined text-cyan text-4xl">inbox</span>
+      </div>
+      <h2 class="text-4xl md:text-5xl font-black font-headline tracking-tighter" data-i18n="gmail_title">Conecta tu Email</h2>
+      <p class="text-text-secondary mt-3 max-w-md mx-auto" data-i18n="gmail_sub">
+        Sincroniza tu bandeja para que Kujo AI detecte oportunidades de booking, colaboraciones y contratos automaticamente.
+      </p>
+    </div>
+
+    <div class="space-y-4 max-w-md mx-auto">
+      <!-- Gmail -->
+      <button class="social-btn w-full bg-surface-high border border-white/10 rounded-xl p-5 flex items-center gap-4 text-left hover:border-cyan/30" data-social="gmail" onclick="toggleSocial(this)">
+        <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-[#EA4335] text-2xl">mail</span>
+        </div>
+        <div class="flex-1">
+          <p class="font-headline font-bold">Gmail</p>
+          <p class="text-xs text-text-muted" data-i18n="gmail_desc">Detectar bookings y oportunidades</p>
+        </div>
+        <span class="material-symbols-outlined text-text-muted connect-icon">link</span>
+      </button>
+
+      <!-- Outlook -->
+      <button class="social-btn w-full bg-surface-high border border-white/10 rounded-xl p-5 flex items-center gap-4 text-left hover:border-[#0078D4]/30" data-social="outlook" onclick="toggleSocial(this)">
+        <div class="w-12 h-12 rounded-xl bg-[#0078D4] flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-white text-2xl">mail</span>
+        </div>
+        <div class="flex-1">
+          <p class="font-headline font-bold">Outlook / Hotmail</p>
+          <p class="text-xs text-text-muted" data-i18n="outlook_desc">Sincronizar bandeja profesional</p>
+        </div>
+        <span class="material-symbols-outlined text-text-muted connect-icon">link</span>
+      </button>
+    </div>
+
+    <div class="space-y-4">
+      <button onclick="goToStep(6)" class="px-12 py-4 bg-accent text-base font-headline font-black text-sm uppercase tracking-widest rounded-lg hover:bg-accent-dim transition-all glow-accent">
+        <span data-i18n="next">Siguiente</span>
+        <span class="material-symbols-outlined text-sm align-middle ml-2">arrow_forward</span>
+      </button>
+      <br/>
+      <button onclick="goToStep(6)" class="text-text-muted text-sm hover:text-text-secondary transition-colors" data-i18n="skip_step">
+        Saltar este paso por ahora
+      </button>
+    </div>
+
+    <div class="flex items-center gap-2 justify-center text-text-muted text-xs">
+      <span class="material-symbols-outlined text-accent text-sm" style="font-variation-settings:'FILL' 1;">lock</span>
+      <span data-i18n="gmail_trust">Solo lectura. Nunca enviamos emails en tu nombre.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- STEP 6: MAGIC MOMENT - Your EPK Preview      -->
+<!-- ============================================ -->
+<div class="step-screen" data-step="6">
+  <div class="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+    <!-- Left: EPK Preview card -->
+    <div class="space-y-6">
+      <div>
+        <p class="text-xs font-headline uppercase tracking-[0.3em] text-accent mb-3" data-i18n="magic_tag">TU PERFIL ESTA LISTO</p>
+        <h2 class="text-4xl md:text-5xl font-black font-headline tracking-tighter" data-i18n="magic_title">Asi se ve tu Imperio</h2>
+      </div>
+
+      <!-- EPK Card -->
+      <div class="bg-surface-high rounded-2xl border border-white/10 overflow-hidden glow-accent">
+        <!-- Cover -->
+        <div class="h-32 bg-gradient-to-br from-accent/20 via-pink/10 to-cyan/10 relative flex items-end p-6">
+          <div class="absolute inset-0 bg-[url('/Branding%20/reggaeton_value_prop_es_1774470505207.png')] bg-cover bg-center opacity-20"></div>
+          <div class="relative flex items-end gap-4">
+            <div class="w-20 h-20 rounded-xl bg-surface border-4 border-surface-high flex items-center justify-center text-3xl" id="epk-avatar">
+              🎵
+            </div>
+            <div>
+              <h3 class="font-headline font-black text-2xl" id="epk-name">Artista</h3>
+              <p class="text-sm text-accent font-headline uppercase tracking-widest" id="epk-genre">Genero</p>
+            </div>
+          </div>
+        </div>
+        <!-- Stats -->
+        <div class="p-6 space-y-4">
+          <div class="grid grid-cols-3 gap-4">
+            <div class="text-center">
+              <p class="text-2xl font-black font-headline text-accent" id="epk-socials">0</p>
+              <p class="text-[10px] text-text-muted uppercase tracking-widest" data-i18n="epk_connected">Redes</p>
+            </div>
+            <div class="text-center border-x border-white/5">
+              <p class="text-2xl font-black font-headline text-pink">360°</p>
+              <p class="text-[10px] text-text-muted uppercase tracking-widest" data-i18n="epk_fandb">Fan DB</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl font-black font-headline text-cyan">AI</p>
+              <p class="text-[10px] text-text-muted uppercase tracking-widest" data-i18n="epk_kujo">Kujo Activo</p>
+            </div>
+          </div>
+
+          <!-- Connected platforms -->
+          <div class="flex flex-wrap gap-2" id="epk-platforms"></div>
+
+          <!-- Completion bar -->
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-xs text-text-muted" data-i18n="epk_progress">Perfil completado</span>
+              <span class="text-xs font-bold text-accent" id="epk-percent">40%</span>
+            </div>
+            <div class="w-full h-2 bg-surface rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-accent to-cyan rounded-full transition-all duration-1000" id="epk-bar" style="width: 40%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Genre hero image + CTA -->
+    <div class="space-y-6">
+      <div class="rounded-2xl overflow-hidden border border-white/5 float">
+        <img src="/Branding /rap_value_prop_es_1774470542084.png" alt="Artist Dashboard" class="w-full" id="magic-hero-img"/>
+      </div>
+      <div class="space-y-4 text-center">
+        <button onclick="finishOnboarding()" class="w-full px-12 py-5 bg-accent text-base font-headline font-black text-sm uppercase tracking-widest rounded-xl hover:bg-accent-dim transition-all glow-accent">
+          <span data-i18n="magic_cta">Activar Mi Imperio</span>
+          <span class="material-symbols-outlined text-sm align-middle ml-2">rocket_launch</span>
+        </button>
+        <p class="text-xs text-text-muted" data-i18n="magic_note">Puedes completar tu perfil despues. Tu dashboard estara listo en segundos.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- STEP 7: SUCCESS / WELCOME DASHBOARD          -->
+<!-- ============================================ -->
+<div class="step-screen" data-step="7">
+  <div class="max-w-2xl w-full text-center space-y-8">
+    <!-- Celebration -->
+    <div class="relative">
+      <div class="w-28 h-28 mx-auto bg-accent/10 rounded-full flex items-center justify-center glow-accent">
+        <span class="material-symbols-outlined text-accent text-6xl" style="font-variation-settings:'FILL' 1;">check_circle</span>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-4xl md:text-6xl font-black font-headline tracking-tighter">
+        <span data-i18n="success_h1">Bienvenido al</span> <span class="gradient-text" data-i18n="success_h2">Imperio</span>
+      </h2>
+      <p class="text-lg text-text-secondary mt-4 max-w-lg mx-auto" id="success-msg" data-i18n="success_sub">
+        Tu perfil esta activo. Kujo AI esta analizando tus datos para generar tu primera estrategia.
+      </p>
+    </div>
+
+    <!-- Quick stats -->
+    <div class="grid grid-cols-3 gap-4 max-w-lg mx-auto">
+      <div class="bg-surface-high rounded-xl p-4 border border-white/5">
+        <span class="material-symbols-outlined text-accent text-2xl mb-2">hub</span>
+        <p class="font-headline font-black text-lg" id="final-socials">0</p>
+        <p class="text-[10px] text-text-muted uppercase tracking-widest" data-i18n="final_connected">Conectadas</p>
+      </div>
+      <div class="bg-surface-high rounded-xl p-4 border border-white/5">
+        <span class="material-symbols-outlined text-pink text-2xl mb-2" style="font-variation-settings:'FILL' 1;">database</span>
+        <p class="font-headline font-black text-lg text-pink">CUBO</p>
+        <p class="text-[10px] text-text-muted uppercase tracking-widest" data-i18n="final_db">Fan DB Activa</p>
+      </div>
+      <div class="bg-surface-high rounded-xl p-4 border border-white/5">
+        <span class="material-symbols-outlined text-cyan text-2xl mb-2" style="font-variation-settings:'FILL' 1;">smart_toy</span>
+        <p class="font-headline font-black text-lg text-cyan">Kujo</p>
+        <p class="text-[10px] text-text-muted uppercase tracking-widest" data-i18n="final_ai">AI Activada</p>
+      </div>
+    </div>
+
+    <!-- Next actions -->
+    <div class="space-y-3 max-w-md mx-auto pt-4">
+      <a href="/dashboard/" class="block w-full px-8 py-4 bg-accent text-base font-headline font-black text-sm uppercase tracking-widest rounded-xl hover:bg-accent-dim transition-all glow-accent text-center">
+        <span data-i18n="success_cta">Ir a Mi Dashboard</span>
+        <span class="material-symbols-outlined text-sm align-middle ml-2">arrow_forward</span>
+      </a>
+      <a href="/artists/" class="block w-full px-8 py-4 border border-white/10 text-text-secondary font-headline font-bold text-sm uppercase tracking-widest rounded-xl hover:border-accent/30 hover:text-accent transition-all text-center">
+        <span data-i18n="success_explore">Explorar Artistas</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================ -->
+<!-- JAVASCRIPT ENGINE                            -->
+<!-- ============================================ -->
+<script>
+// ---- STATE ----
+const state = {
+  currentStep: 0,
+  totalSteps: 8,
+  artistName: '',
+  email: '',
+  genre: '',
+  connectedSocials: new Set(),
+  lang: localStorage.getItem('apex-lang') || 'es'
+};
+
+// ---- HERO IMAGE CAROUSEL ----
+const heroImages = [
+  '/Branding /reggaeton_value_prop_es_1774470505207.png',
+  '/Branding /rap_value_prop_es_1774470542084.png',
+  '/Branding /tango_value_prop_es_1774470524384.png',
+  '/assetts/reggaeton_cubo_frm.png',
+  '/assetts/tango_cubo_frm.png'
+];
+let heroIdx = 0;
+setInterval(() => {
+  heroIdx = (heroIdx + 1) % heroImages.length;
+  const el = document.getElementById('hero-carousel');
+  if (el) { el.style.opacity = 0; setTimeout(() => { el.src = heroImages[heroIdx]; el.style.opacity = 1; }, 400); }
+}, 4000);
+
+// ---- GENRE IMAGE MAP ----
+const genreImages = {
+  reggaeton: '/Branding /reggaeton_value_prop_es_1774470505207.png',
+  tango: '/Branding /tango_value_prop_es_1774470524384.png',
+  rap: '/Branding /rap_value_prop_es_1774470542084.png',
+  rock: '/Branding /rap_value_prop_es_1774470542084.png',
+  electronic: '/Branding /reggaeton_value_prop_es_1774470505207.png',
+  'afro-latin': '/Branding /reggaeton_value_prop_es_1774470505207.png'
+};
+const genreCuboImages = {
+  reggaeton: '/assetts/reggaeton_cubo_frm.png',
+  tango: '/assetts/tango_cubo_frm.png',
+  rap: '/assetts/reggaeton_cubo_frm.png',
+  rock: '/assetts/tango_cubo_frm.png',
+  electronic: '/assetts/reggaeton_cubo_frm.png',
+  'afro-latin': '/assetts/reggaeton_cubo_frm.png'
+};
+const genreEmojis = {
+  reggaeton: '🔥', tango: '🌹', rap: '🎤', rock: '🎸', electronic: '🎛️', 'afro-latin': '🥁'
+};
+
+// ---- PROGRESS DOTS ----
+function renderDots() {
+  const container = document.getElementById('progress-dots');
+  container.innerHTML = '';
+  for (let i = 0; i < state.totalSteps; i++) {
+    const dot = document.createElement('div');
+    dot.className = `w-2 h-2 rounded-full transition-all duration-500 ${
+      i < state.currentStep ? 'bg-accent w-2 h-2' :
+      i === state.currentStep ? 'bg-accent w-6 h-2 rounded-full dot-active' :
+      'bg-white/15 w-2 h-2'
+    }`;
+    container.appendChild(dot);
+  }
+}
+
+// ---- NAVIGATION ----
+function goToStep(n) {
+  const prev = document.querySelector(`.step-screen[data-step="${state.currentStep}"]`);
+  const next = document.querySelector(`.step-screen[data-step="${n}"]`);
+  if (!prev || !next) return;
+
+  // Direction
+  const forward = n > state.currentStep;
+  prev.classList.remove('active');
+  prev.classList.add(forward ? 'exit-left' : '');
+  prev.style.transform = forward ? 'translateX(-60px)' : 'translateX(60px)';
+  prev.style.opacity = '0';
+
+  next.style.transform = forward ? 'translateX(60px)' : 'translateX(-60px)';
+  next.style.opacity = '0';
+
+  setTimeout(() => {
+    prev.classList.remove('exit-left');
+    next.classList.add('active');
+    next.style.transform = '';
+    next.style.opacity = '';
+  }, 50);
+
+  state.currentStep = n;
+  renderDots();
+
+  // Auto-focus inputs
+  setTimeout(() => {
+    const input = next.querySelector('input');
+    if (input) input.focus();
+  }, 600);
+}
+
+// ---- VALIDATION ----
+function validateAndNext(step) {
+  switch(step) {
+    case 1: {
+      const name = document.getElementById('artist-name').value.trim();
+      if (!name) {
+        document.getElementById('artist-name').classList.add('shake');
+        setTimeout(() => document.getElementById('artist-name').classList.remove('shake'), 500);
+        return;
+      }
+      state.artistName = name;
+      goToStep(2);
+      break;
+    }
+    case 2: {
+      const email = document.getElementById('artist-email').value.trim();
+      if (!email || !email.includes('@')) {
+        document.getElementById('artist-email').classList.add('shake');
+        setTimeout(() => document.getElementById('artist-email').classList.remove('shake'), 500);
+        return;
+      }
+      state.email = email;
+      goToStep(3);
+      break;
+    }
+    case 3: {
+      if (!state.genre) return;
+      // Update sidebar image for social step
+      const sideImg = document.getElementById('sidebar-genre-img');
+      if (sideImg) sideImg.src = genreCuboImages[state.genre] || genreCuboImages.reggaeton;
+      goToStep(4);
+      break;
+    }
+    case 4: {
+      if (state.connectedSocials.size === 0) return;
+      goToStep(5);
+      break;
+    }
+  }
+}
+
+// Enter key advances
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    if (state.currentStep >= 1 && state.currentStep <= 2) {
+      validateAndNext(state.currentStep);
+    }
+  }
+});
+
+// ---- GENRE SELECTION ----
+function selectGenre(el) {
+  // Remove previous selection
+  document.querySelectorAll('.genre-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  state.genre = el.dataset.genre;
+
+  // Enable next button
+  const btn = document.getElementById('genre-next-btn');
+  btn.disabled = false;
+  btn.className = 'px-12 py-4 bg-accent text-base font-headline font-black text-sm uppercase tracking-widest rounded-lg hover:bg-accent-dim transition-all glow-accent cursor-pointer';
+  btn.querySelector('span').textContent = state.lang === 'es' ? 'Siguiente' : 'Next';
+
+  // Update background orb colors
+  const colors = {
+    reggaeton: ['#E0218A', '#ff007b'],
+    tango: ['#e60000', '#cc0000'],
+    rap: ['#00d4ff', '#0088cc'],
+    rock: ['#ff6b00', '#cc5500'],
+    electronic: ['#00ffcc', '#00cc99'],
+    'afro-latin': ['#FFB800', '#cc9300']
+  };
+  const c = colors[state.genre] || colors.reggaeton;
+  document.getElementById('bg-orb-1').style.background = `${c[0]}08`;
+  document.getElementById('bg-orb-2').style.background = `${c[1]}08`;
+}
+
+// ---- SOCIAL CONNECTIONS ----
+function toggleSocial(el) {
+  const social = el.dataset.social;
+  const icon = el.querySelector('.connect-icon');
+
+  if (el.classList.contains('connected')) {
+    el.classList.remove('connected');
+    state.connectedSocials.delete(social);
+    if (icon) { icon.textContent = 'link'; }
+  } else {
+    el.classList.add('connected');
+    state.connectedSocials.add(social);
+    if (icon) { icon.textContent = 'check_circle'; icon.style.color = '#00ff41'; }
+    // Brief celebration animation
+    el.style.transform = 'scale(1.02)';
+    setTimeout(() => el.style.transform = '', 200);
+  }
+
+  // Update count
+  const count = state.connectedSocials.size;
+  const countEl = document.getElementById('social-count');
+  if (countEl) countEl.textContent = `${count} de 5 conectadas`;
+
+  // Enable/disable next
+  const btn = document.getElementById('social-next-btn');
+  if (btn) {
+    if (count > 0) {
+      btn.disabled = false;
+      btn.className = 'px-10 py-4 bg-accent text-base font-headline font-black text-sm uppercase tracking-widest rounded-lg hover:bg-accent-dim transition-all glow-accent cursor-pointer';
+    } else {
+      btn.disabled = true;
+      btn.className = 'px-10 py-4 bg-white/5 text-text-muted font-headline font-black text-sm uppercase tracking-widest rounded-lg cursor-not-allowed transition-all';
+    }
+  }
+}
+
+// ---- EPK PREVIEW (Magic Moment) ----
+function updateEPK() {
+  const nameEl = document.getElementById('epk-name');
+  const genreEl = document.getElementById('epk-genre');
+  const avatarEl = document.getElementById('epk-avatar');
+  const socialsEl = document.getElementById('epk-socials');
+  const platformsEl = document.getElementById('epk-platforms');
+  const percentEl = document.getElementById('epk-percent');
+  const barEl = document.getElementById('epk-bar');
+  const finalSocials = document.getElementById('final-socials');
+  const heroImg = document.getElementById('magic-hero-img');
+
+  if (nameEl) nameEl.textContent = state.artistName || 'Artista';
+  if (genreEl) genreEl.textContent = (state.genre || 'genero').charAt(0).toUpperCase() + (state.genre || 'genero').slice(1);
+  if (avatarEl) avatarEl.textContent = genreEmojis[state.genre] || '🎵';
+
+  const count = state.connectedSocials.size;
+  if (socialsEl) socialsEl.textContent = count;
+  if (finalSocials) finalSocials.textContent = count;
+
+  // Platform pills
+  if (platformsEl) {
+    platformsEl.innerHTML = '';
+    const platformColors = {
+      instagram: 'from-[#833AB4] to-[#E1306C]',
+      spotify: 'from-[#1DB954] to-[#1ed760]',
+      tiktok: 'from-gray-800 to-gray-600',
+      youtube: 'from-[#FF0000] to-[#cc0000]',
+      facebook: 'from-[#1877F2] to-[#0d6efd]',
+      gmail: 'from-[#EA4335] to-[#FBBC05]',
+      outlook: 'from-[#0078D4] to-[#00a4ef]'
+    };
+    state.connectedSocials.forEach(s => {
+      const pill = document.createElement('span');
+      pill.className = `px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-white bg-gradient-to-r ${platformColors[s] || 'from-accent to-cyan'}`;
+      pill.textContent = s;
+      platformsEl.appendChild(pill);
+    });
+  }
+
+  // Calculate completion
+  let pct = 20; // base
+  if (state.artistName) pct += 15;
+  if (state.email) pct += 15;
+  if (state.genre) pct += 10;
+  pct += Math.min(count * 8, 40);
+  pct = Math.min(pct, 100);
+
+  if (percentEl) percentEl.textContent = pct + '%';
+  if (barEl) barEl.style.width = pct + '%';
+
+  // Update hero image based on genre
+  if (heroImg && state.genre) {
+    heroImg.src = genreImages[state.genre] || genreImages.reggaeton;
+  }
+}
+
+// ---- FINISH ONBOARDING ----
+function finishOnboarding() {
+  // Save to Supabase
+  saveLead();
+  goToStep(7);
+}
+
+// ---- SUPABASE LEAD CAPTURE + WELCOME EMAIL ----
+async function saveLead() {
+  const platforms = Array.from(state.connectedSocials);
+
+  // 1. Save to Supabase via server-side proxy (keeps service key secure)
+  try {
+    const proxyRes = await fetch('/api/supabase-proxy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        path: '/rest/v1/leads_capture',
+        method: 'POST',
+        artist_slug: 'onboarding',
+        prefer: 'return=minimal',
+        body: {
+          artist_name: state.artistName,
+          email: state.email,
+          genre: state.genre,
+          mood_preference: {
+            source: 'onboarding_flow_v2',
+            timestamp: new Date().toISOString(),
+            connected_platforms: platforms,
+            device: navigator.userAgent,
+            screen: `${screen.width}x${screen.height}`,
+            lang: state.lang
+          },
+          marketing_source: 'ONBOARDING_V2'
+        }
+      })
+    });
+    if (proxyRes.ok) {
+      console.log('[Onboarding] Lead saved to Supabase');
+    } else {
+      console.warn('[Onboarding] Supabase insert status:', proxyRes.status);
+      // Fallback: save to localStorage
+      const fallback = JSON.parse(localStorage.getItem('apex_onboarding_fallback') || '[]');
+      fallback.push({ name: state.artistName, email: state.email, genre: state.genre, platforms, ts: Date.now() });
+      localStorage.setItem('apex_onboarding_fallback', JSON.stringify(fallback));
+    }
+  } catch(e) {
+    console.error('[Onboarding] Lead capture error:', e);
+    // Fallback: save to localStorage
+    const fallback = JSON.parse(localStorage.getItem('apex_onboarding_fallback') || '[]');
+    fallback.push({ name: state.artistName, email: state.email, genre: state.genre, platforms, ts: Date.now() });
+    localStorage.setItem('apex_onboarding_fallback', JSON.stringify(fallback));
+  }
+
+  // 2. Send welcome email (non-blocking, always attempt even if Supabase fails)
+  try {
+    const emailRes = await fetch('/api/send-welcome-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'onboarding',
+        name: state.artistName,
+        email: state.email,
+        genre: state.genre,
+        platforms: platforms
+      })
+    });
+    const emailData = await emailRes.json();
+    if (emailData.success) {
+      console.log('[Onboarding] Welcome email sent:', emailData.id);
+      // Show artist ID in success screen
+      if (emailData.artist_id) {
+        const msg = document.getElementById('success-msg');
+        if (msg) msg.innerHTML += `<br/><span class="text-accent font-headline font-bold">Tu Artist ID: ${emailData.artist_id}</span>`;
+      }
+    } else {
+      console.warn('[Onboarding] Email skipped or failed:', emailData);
+    }
+  } catch(e) {
+    console.error('[Onboarding] Welcome email error:', e);
+  }
+}
+
+// ---- STEP OBSERVER: Update EPK when entering step 6 ----
+const originalGoToStep = goToStep;
+goToStep = function(n) {
+  if (n === 6) updateEPK();
+  originalGoToStep(n);
+};
+
+// ---- i18n ----
+const translations = {
+  en: {
+    welcome_tag: 'WELCOME TO YOUR EMPIRE',
+    welcome_h1_1: 'Your Music.',
+    welcome_h1_2: 'Your Platform.',
+    welcome_h1_3: 'Your Control.',
+    welcome_sub: 'Set up your profile in 90 seconds. Connect your socials, activate your 360° fan database and let AI work for you.',
+    welcome_cta: 'Get Started',
+    welcome_time: '90 seconds',
+    trust_encrypt: 'AES-256 Encryption',
+    trust_nopost: 'We never post for you',
+    hero_kujo: 'Analyzing global trends',
+    hero_live: 'Live Now',
+    name_title: 'My artist name is...',
+    name_sub: 'The name your fans know',
+    name_kujo: '"Use the name you already have on socials. That way we unify your digital identity."',
+    next: 'Next',
+    email_title: 'Your professional email',
+    email_sub: 'To receive booking opportunities and collaborations',
+    email_trust: 'Your email stays private. Only approved venues can contact you.',
+    genre_title: 'Your main genre',
+    genre_sub: 'Select one. You can add more later.',
+    select_genre: 'Select your genre',
+    social_title: 'Connect your Networks',
+    social_sub: 'Connect at least 1 to activate your 360° Fan Database',
+    ig_desc: 'Sync followers, stories and mentions',
+    sp_desc: 'Streams, monthly listeners and playlists',
+    tt_desc: 'Viral videos, trends and audience',
+    yt_desc: 'Videos, subscribers and analytics',
+    fb_desc: 'Artist page and events',
+    social_count: '0 of 5 connected',
+    social_kujo: '"Connecting your networks lets me analyze your audience and generate personalized growth strategies."',
+    trust_title: 'Privacy Guaranteed',
+    trust_detail: 'We never post, comment or follow on your behalf.',
+    gmail_title: 'Connect your Email',
+    gmail_sub: 'Sync your inbox so Kujo AI can detect booking opportunities, collaborations and contracts automatically.',
+    gmail_desc: 'Detect bookings and opportunities',
+    outlook_desc: 'Sync professional inbox',
+    gmail_trust: 'Read-only. We never send emails on your behalf.',
+    skip_step: 'Skip this step for now',
+    magic_tag: 'YOUR PROFILE IS READY',
+    magic_title: 'This is your Empire',
+    magic_cta: 'Activate My Empire',
+    magic_note: 'You can complete your profile later. Your dashboard will be ready in seconds.',
+    epk_connected: 'Networks',
+    epk_fandb: 'Fan DB',
+    epk_kujo: 'Kujo Active',
+    epk_progress: 'Profile completed',
+    success_h1: 'Welcome to the',
+    success_h2: 'Empire',
+    success_sub: 'Your profile is active. Kujo AI is analyzing your data to generate your first strategy.',
+    success_cta: 'Go to My Dashboard',
+    success_explore: 'Explore Artists',
+    final_connected: 'Connected',
+    final_db: 'Fan DB Active',
+    final_ai: 'AI Activated'
+  }
+};
+
+function setLang(lang) {
+  state.lang = lang;
+  localStorage.setItem('apex-lang', lang);
+  if (lang === 'en') {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (translations.en[key]) el.textContent = translations.en[key];
+    });
+  } else {
+    // Reload for Spanish (default)
+    location.reload();
+  }
+}
+
+document.getElementById('lang-toggle').addEventListener('click', () => {
+  setLang(state.lang === 'es' ? 'en' : 'es');
+});
+
+// Apply saved lang on load
+if (state.lang === 'en') {
+  document.addEventListener('DOMContentLoaded', () => setLang('en'));
+}
+
+// ---- INIT ----
+renderDots();
+</script>
+</body>
+</html>

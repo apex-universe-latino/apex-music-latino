@@ -1,6 +1,8 @@
 // Vercel Serverless Function — Welcome Email via Resend
 // POST /api/send-welcome-email
-// Body: { name, email, fan_id, artist_name, artist_slug, genre }
+// Body: { name, email, fan_id, artist_name, artist_slug, genre, type, platforms }
+// type: 'fan' (default) — fan welcome for artist universe
+// type: 'onboarding' — artist onboarding welcome
 
 export default async function handler(req, res) {
   // CORS headers
@@ -22,7 +24,12 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Email service not configured' });
   }
 
-  const { name, email, fan_id, artist_name, artist_slug, genre } = req.body;
+  const { name, email, fan_id, artist_name, artist_slug, genre, type, platforms } = req.body;
+
+  // Route to onboarding email if type is 'onboarding'
+  if (type === 'onboarding') {
+    return handleOnboardingEmail(req, res, { name, email, genre, platforms, RESEND_API_KEY });
+  }
 
   if (!email || !fan_id || !name) {
     return res.status(400).json({ error: 'Missing required fields: name, email, fan_id' });
@@ -241,7 +248,7 @@ async function getUnsubscribedEmails(supabaseUrl, serviceKey) {
 function appendUnsubscribeFooter(html, email, source) {
   const token = Buffer.from(email).toString('base64');
   const unsubUrl = `https://apexmusiclatino.com/api/unsubscribe?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}&source=${encodeURIComponent(source)}`;
-  const footerLink = `<p style="margin-top:12px;"><a href="${unsubUrl}" style="color:#444;font-size:9px;text-decoration:underline;">Cancelar suscripci\u00f3n / Unsubscribe</a></p>`;
+  const footerLink = `<p style="margin-top:12px;text-align:center;"><a href="${unsubUrl}" style="color:#444;font-size:9px;text-decoration:underline;">Cancelar suscripci\u00f3n / Unsubscribe</a></p>`;
 
   if (html.includes('</body>')) {
     return html.replace('</body>', footerLink + '</body>');
@@ -249,4 +256,121 @@ function appendUnsubscribeFooter(html, email, source) {
     return html.replace('</html>', footerLink + '</html>');
   }
   return html + footerLink;
+}
+
+// ---- ONBOARDING WELCOME EMAIL ----
+async function handleOnboardingEmail(req, res, { name, email, genre, platforms, RESEND_API_KEY }) {
+  if (!email || !name) {
+    return res.status(400).json({ error: 'Missing required fields: name, email' });
+  }
+
+  const genreCode = { reggaeton: 'RG', tango: 'TN', rap: 'RP', rock: 'RK', electronic: 'EL', 'afro-latin': 'AF' }[genre] || 'GN';
+  const salt = Math.random().toString(36).substring(2, 6).toUpperCase();
+  const artistId = `AML-${genreCode}-${salt}`;
+
+  const platformList = (platforms || []).map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(', ') || 'Ninguna conectada aun';
+
+  const gc = {
+    reggaeton: { primary: '#E0218A', gradient: 'linear-gradient(135deg, #E0218A, #ff007b)' },
+    tango: { primary: '#e60000', gradient: 'linear-gradient(135deg, #e60000, #8b0000)' },
+    rap: { primary: '#00d4ff', gradient: 'linear-gradient(135deg, #00d4ff, #0088cc)' },
+    rock: { primary: '#ff6b00', gradient: 'linear-gradient(135deg, #ff6b00, #cc5500)' },
+    electronic: { primary: '#00ffcc', gradient: 'linear-gradient(135deg, #00ffcc, #00cc99)' },
+    'afro-latin': { primary: '#FFB800', gradient: 'linear-gradient(135deg, #FFB800, #cc9300)' }
+  }[genre] || { primary: '#00ff41', gradient: 'linear-gradient(135deg, #00ff41, #00cc33)' };
+
+  const htmlEmail = `<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background:#0a0a0a;font-family:'Helvetica Neue',Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;padding:40px 20px;">
+<tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" style="background:#111;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.05);">
+<tr><td style="height:4px;background:${gc.gradient};"></td></tr>
+<tr><td style="padding:32px 40px 0;text-align:center;">
+  <p style="color:${gc.primary};font-size:11px;letter-spacing:4px;text-transform:uppercase;font-weight:700;margin:0 0 8px;">APEX MUSIC LATINO</p>
+  <h1 style="color:#fff;font-size:28px;font-weight:800;margin:0 0 4px;line-height:1.2;">Bienvenido al Imperio, ${name}!</h1>
+  <p style="color:#888;font-size:13px;margin:0;">Welcome to the Empire, ${name}!</p>
+</td></tr>
+<tr><td style="padding:24px 40px;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#1a1a1a;border-radius:12px;border:1px solid rgba(255,255,255,0.08);">
+  <tr><td style="padding:24px;text-align:center;">
+    <p style="color:#888;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin:0 0 8px;">Tu Artist ID</p>
+    <p style="color:${gc.primary};font-size:28px;font-weight:800;letter-spacing:3px;margin:0;font-family:'Courier New',monospace;">${artistId}</p>
+    <p style="color:#666;font-size:11px;margin:8px 0 0;">Genero: ${(genre || 'General').charAt(0).toUpperCase() + (genre || 'general').slice(1)} · Redes: ${platformList}</p>
+  </td></tr>
+  </table>
+</td></tr>
+<tr><td style="padding:0 40px 16px;">
+  <p style="color:#aaa;font-size:14px;line-height:1.6;margin:0;">Tu perfil de artista esta activo. Kujo AI ya esta analizando tus datos para generar tu primera estrategia de crecimiento.</p>
+  <p style="color:#888;font-size:12px;line-height:1.6;margin:8px 0 0;font-style:italic;">Your artist profile is now active. Kujo AI is analyzing your data to build your first growth strategy.</p>
+</td></tr>
+<tr><td style="padding:0 40px 24px;">
+  <table width="100%" cellpadding="0" cellspacing="0">
+  <tr><td style="padding:12px 16px;background:#1a1a1a;border-radius:8px 8px 0 0;border-bottom:1px solid #222;">
+    <span style="color:${gc.primary};font-size:16px;">1.</span>
+    <span style="color:#ddd;font-size:13px;margin-left:8px;"><strong>Completa tu EPK</strong> — Agrega fotos, bio y links de musica</span>
+  </td></tr>
+  <tr><td style="padding:12px 16px;background:#1a1a1a;border-bottom:1px solid #222;">
+    <span style="color:${gc.primary};font-size:16px;">2.</span>
+    <span style="color:#ddd;font-size:13px;margin-left:8px;"><strong>Activa tu Fan CRM</strong> — Captura fans con QR y smartlinks</span>
+  </td></tr>
+  <tr><td style="padding:12px 16px;background:#1a1a1a;border-radius:0 0 8px 8px;">
+    <span style="color:${gc.primary};font-size:16px;">3.</span>
+    <span style="color:#ddd;font-size:13px;margin-left:8px;"><strong>Explora el Marketplace</strong> — Conecta con marcas y venues</span>
+  </td></tr>
+  </table>
+</td></tr>
+<tr><td style="padding:0 40px 16px;">
+  <a href="https://apexmusiclatino.com/dashboard/" style="display:block;background:${gc.gradient};color:#fff;padding:16px;border-radius:12px;text-decoration:none;font-size:15px;font-weight:700;text-align:center;">Ir a Mi Dashboard →</a>
+</td></tr>
+<tr><td style="padding:0 40px 32px;">
+  <a href="https://apexmusiclatino.com/artists/" style="display:block;background:#1a1a1a;color:${gc.primary};padding:14px;border-radius:12px;text-decoration:none;font-size:13px;font-weight:600;text-align:center;border:1px solid rgba(255,255,255,0.08);">Explorar Artistas en Apex</a>
+</td></tr>
+<tr><td style="padding:24px 40px;background:#0a0a0a;border-top:1px solid #1a1a1a;text-align:center;">
+  <p style="color:#555;font-size:11px;margin:0 0 4px;"><strong style="color:#888;">Apex Music Latino</strong> — A Datos Maestros Company</p>
+  <p style="color:#444;font-size:10px;margin:0 0 8px;">Powered by CUBO Data Engine</p>
+  <p style="color:#444;font-size:9px;margin:0;">Recibiste este email porque completaste el onboarding en apexmusiclatino.com</p>
+</td></tr>
+</table>
+</td></tr></table>
+</body></html>`;
+
+  // Check unsubscribe
+  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'iaycaynevtumrqoknemk'}.supabase.co`;
+  const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (SUPABASE_KEY) {
+    const unsubs = await getUnsubscribedEmails(SUPABASE_URL, SUPABASE_KEY);
+    if (unsubs.has(email.toLowerCase().trim())) {
+      return res.status(200).json({ success: false, skipped: true, reason: 'Email is unsubscribed' });
+    }
+  }
+
+  const finalHtml = appendUnsubscribeFooter(htmlEmail, email, 'onboarding');
+
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'Apex Music Latino <noreply@apexmusiclatino.com>',
+        to: [email],
+        subject: `\u{1F680} ¡Bienvenido al Imperio, ${name}! Tu Artist ID: ${artistId}`,
+        html: finalHtml,
+      }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      return res.status(200).json({ success: true, id: data.id, artist_id: artistId });
+    } else {
+      console.error('Resend error:', data);
+      return res.status(response.status).json({ error: data.message || 'Email send failed' });
+    }
+  } catch (err) {
+    console.error('Email send error:', err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
 }
