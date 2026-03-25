@@ -120,9 +120,9 @@
         nav.id = 'apex-nav';
         nav.innerHTML = `
             <div class="flex items-center gap-12">
-                <a href="/" class="flex items-center gap-3">
-                    <img src="/favicon.svg" alt="AML" class="h-8 w-8" style="filter: invert(1);"/>
-                    <span class="text-xl font-bold tracking-tighter text-neutral-100 hidden sm:inline" style="font-family: var(--font-headline);">Apex Music Latino</span>
+                <a href="/" class="flex items-center gap-2 group">
+                    <img src="/Branding /aml_favicon.svg" alt="Apex" class="h-8 w-8 invert transition-transform duration-500 group-hover:scale-110"/>
+                    <span class="text-xl font-bold tracking-tighter text-neutral-100 uppercase" style="font-family: var(--font-headline);">Apex</span>
                 </a>
                 <div class="hidden lg:flex items-center gap-6 overflow-x-auto py-2" style="scrollbar-width: none;">
                     ${genreSelectorHTML()}
@@ -161,7 +161,10 @@
             <div class="max-w-7xl mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                     <div class="col-span-2">
-                        <div class="text-2xl font-bold tracking-tighter uppercase mb-6" style="font-family: var(--font-headline); color: var(--accent);">Apex Music Latino</div>
+                        <div class="flex items-center gap-3 mb-6">
+                            <img src="/Branding /aml_favicon.svg" class="w-10 h-10 invert" alt="Apex">
+                            <div class="text-2xl font-bold tracking-tighter uppercase" style="font-family: var(--font-headline); color: var(--accent);">Apex</div>
+                        </div>
                         <p class="text-zinc-500 max-w-sm mb-8 leading-relaxed">The premier ecosystem for the evolution of Latin music. Driven by data, inspired by passion, built for the future.</p>
                         <div class="flex gap-4">
                             <a class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-zinc-500 hover:text-white transition-colors" href="https://instagram.com/apexmusiclatino" target="_blank"><span class="material-symbols-outlined">camera</span></a>
@@ -192,7 +195,7 @@
                     </div>
                 </div>
                 <div class="pt-8 border-t border-white/5 text-zinc-600 text-[10px] tracking-[0.2em] uppercase flex flex-col md:flex-row justify-between gap-4">
-                    <div>&copy; 2026 Apex Music Latino. All rights reserved.</div>
+                    <div>&copy; 2026 Apex. All rights reserved.</div>
                     <div class="flex gap-6">
                         <a href="#" class="hover:text-white transition-colors">Transparency</a>
                         <a href="#" class="hover:text-white transition-colors">Rights</a>

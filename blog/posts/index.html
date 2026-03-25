@@ -2,10 +2,10 @@
 <html class="dark" lang="en">
 <head>
     <meta charset="utf-8"/>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <link rel="icon" type="image/svg+xml" href="/Branding /aml_favicon.svg"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Loading... | Apex Music Latino Blog</title>
-    <meta name="description" content="Apex Music Latino Blog — Insights for Latin artists."/>
+    <title>Loading... | Apex Blog</title>
+    <meta name="description" content="Apex Blog — Insights for Latin artists."/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -219,7 +219,7 @@
                     <div class="absolute inset-0 opacity-5" style="background: radial-gradient(circle at 50% 50%, var(--accent), transparent 70%);"></div>
                     <div class="relative z-10">
                         <h2 class="font-headline text-2xl sm:text-3xl font-bold mb-4">Ready to Build Your Empire?</h2>
-                        <p class="text-zinc-400 max-w-xl mx-auto mb-8">Join Apex Music Latino and get access to CUBO analytics, professional EPKs, and the tools that turn talent into industry power.</p>
+                        <p class="text-zinc-400 max-w-xl mx-auto mb-8">Join Apex and get access to CUBO analytics, professional EPKs, and the tools that turn talent into industry power.</p>
                         <a href="/onboarding/" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-semibold text-black transition-all hover:scale-105" style="background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));">
                             Join Apex
                             <span class="material-symbols-outlined text-base">arrow_forward</span>
@@ -233,8 +233,8 @@
     <!-- Footer -->
     <footer class="border-t border-white/5 py-12 px-4 sm:px-8">
         <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-500">
-            <span class="font-headline font-bold text-white tracking-tighter">Apex Music Latino</span>
-            <span>&copy; 2026 Apex Music Latino. All rights reserved.</span>
+            <span class="font-headline font-bold text-white tracking-tighter">Apex</span>
+            <span>&copy; 2026 Apex. All rights reserved.</span>
         </div>
     </footer>
 
@@ -361,7 +361,7 @@
             if (!post) { showNotFound(); return; }
 
             // Update page title & meta
-            document.title = post.title + ' | Apex Music Latino Blog';
+            document.title = post.title + ' | Apex Blog';
             var metaDesc = document.querySelector('meta[name="description"]');
             if (metaDesc) metaDesc.content = post.excerpt;
 
@@ -580,7 +580,7 @@
         function showNotFound() {
             document.getElementById('loading-state').classList.add('hidden');
             document.getElementById('not-found-state').classList.remove('hidden');
-            document.title = 'Post Not Found | Apex Music Latino Blog';
+            document.title = 'Post Not Found | Apex Blog';
         }
 
         // ── Utility ───────────────────────────────────────────

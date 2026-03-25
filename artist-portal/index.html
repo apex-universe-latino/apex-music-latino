@@ -2539,14 +2539,19 @@ async function createAndScheduleCampaign() {
     const camps = await campRes.json();
     if (!camps.length) throw new Error('Failed to create campaign');
 
-    // Schedule it
-    const schedRes = await fetch('/api/schedule-campaign', {
+    // Schedule via Resend native scheduling (through blast endpoint)
+    const schedRes = await fetch('/api/send-blast-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ campaign_id: camps[0].id })
+      body: JSON.stringify({
+        artist_name: currentArtist.name,
+        subject: subject,
+        body_html: body,
+        from_label: currentArtist.name
+      })
     });
     const schedData = await schedRes.json();
-    alert(`Campaign scheduled! ${schedData.scheduled || 0} emails queued.`);
+    alert(`Campaign sent! ${schedData.sent || 0} emails delivered.`);
     toggleNewCampaignForm();
     loadCampaigns();
   } catch (err) {

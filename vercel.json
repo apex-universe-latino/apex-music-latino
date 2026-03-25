@@ -8,11 +8,5 @@
         { "source": "/blog/es/category/:cat*", "destination": "/blog/es/index.html" },
         { "source": "/blog/category/:cat*/", "destination": "/blog/index.html" },
         { "source": "/blog/category/:cat*", "destination": "/blog/index.html" }
-    ],
-    "crons": [
-        {
-            "path": "/api/cron/process-email-queue",
-            "schedule": "0 0 * * *"
-        }
     ]
 }
