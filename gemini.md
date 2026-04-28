@@ -8,9 +8,11 @@
 
 **Name**: Apex Music Latino
 **Mission**: "We don't just sign artists. We turn them into companies."
-**Type**: Music Label + SaaS Platform + Marketplace + Data Engine
+**Type**: Music Label + SaaS Platform + Marketplace + Fan Data Engine
 **Region**: Colombia-first, LATAM expansion
-**Owner**: Datos Maestros (parent company), CUBO (data engine)
+**Owner**: Datos Maestros (parent company)
+**Data Engine**: CUBO — the matching engine and platform heart. Not an agent. The nervous system.
+**Universe**: One of four branches — Apex Music Latino | Apex Modelos Latino | Apex Sports Latino | Apex News Latino
 
 ---
 
@@ -55,15 +57,35 @@
 }
 ```
 
-### 2.3 Fan Data Capture (Future: Supabase `fan_captures`)
+### 2.3 Fan Data Capture (Supabase `fan_captures`)
 ```json
 {
   "id": "uuid",
   "artist_id": "uuid (FK → artists)",
   "fan_email": "string",
-  "source": "enum: QR_SCAN | EPK_FORM | EVENT | MERCH_PAGE",
+  "fan_name": "string | null",
+  "source": "enum: QR_SCAN | EPK_FORM | EVENT | MERCH_PAGE | DM | SOCIAL",
   "genre_context": "string",
-  "captured_at": "timestamp"
+  "social_handles": { "ig": "string", "tiktok": "string", "spotify": "string" },
+  "fan_value_score": "float (0-100)",
+  "purchase_probability": "float (0-100)",
+  "tier": "enum: cold | warm | hot | vip | superfan",
+  "city": "string | null",
+  "country": "string | null",
+  "captured_at": "timestamp",
+  "last_active": "timestamp"
+}
+```
+
+### 2.4 Artist Assets (Supabase `artist_assets`)
+```json
+{
+  "id": "uuid",
+  "artist_id": "uuid (FK → artists)",
+  "type": "enum: QR_CODE | SMARTLINK | EPK | MERCH | FLYER",
+  "target_url": "string",
+  "generated_at": "timestamp",
+  "scan_count": "integer"
 }
 ```
 
@@ -124,22 +146,30 @@
 ├── index.html                    # Main landing
 ├── genre/{genre}/index.html      # Genre landing pages (6)
 ├── genre/{genre}/{artist}/       # Artist EPK pages
+├── artist-portal/index.html      # Artist OS (VS Code layout)
+├── admin/index.html              # Admin master view (all artists)
 ├── academy/index.html            # Education platform
 ├── marketplace/index.html        # Artist discovery marketplace
-├── dashboard/index.html          # Artist OS dashboard
+├── dashboard/index.html          # Public-facing dashboard
 ├── studio/index.html             # CUBO AI studio
 ├── onboarding/index.html         # Artist signup
 ├── artists/index.html            # Artist directory
+├── api/supabase-proxy.js         # Secure DB proxy (SERVICE_ROLE_KEY server-side)
 ├── css/themes.css                # Genre theme system
 ├── js/nav.js                     # Shared navigation injection
 ├── js/apex-engine.js             # Lead capture + Supabase
 ├── sitemap.xml                   # SEO
 ├── gemini.md                     # THIS FILE (constitution)
+├── MEMORY.MD                     # Skills, SOPs, agent roster, patterns
+├── SOUL.md                       # Mission, values, the "why"
+├── HEARTBEAT.md                  # Operational pulse, sprint tracker, roadmap
+├── DESIGN.md                     # Design system tokens
 ├── task_plan.md                  # Phase planning
 ├── findings.md                   # Research & discoveries
 ├── progress.md                   # Execution log
-├── architecture/                 # SOPs
-├── tools/                        # Python scripts
+├── architecture/                 # SOPs + DB schema
+├── tools/                        # Python scripts (Trello, utilities)
+├── docs/                         # Specs, wireframes, prompts
 └── .tmp/                         # Temporary workbench
 ```
 
@@ -158,14 +188,32 @@
 | Supabase | ACTIVE | .env (SUPABASE_ANON_KEY) | Database, auth, lead capture |
 | Vercel | ACTIVE | .env (VERCEL_API_TOKEN) | Hosting & deployment |
 | GitHub | ACTIVE | SSH (Claude_Code_Antigravit) | Version control |
+| Trello | ACTIVE | .env (TRELLO_API_KEY, BOARD_ID) | Bug tracking, sprint board |
 | Spotify API | PLANNED | — | Artist metrics, listener data |
-| Instagram Graph | PLANNED | — | Social data, content pull |
+| Instagram Graph | PLANNED | — | Social data, DM fan ingestion |
 | TikTok API | PLANNED | — | Engagement metrics |
-| WhatsApp Business | PLANNED | — | Fan CRM messaging |
+| WhatsApp Business | PLANNED | — | Fan CRM messaging (Nextel layer) |
+| n8n (GSD VPS) | PLANNED | Existing server | Automation workflows for agents |
+| OpenClaw (GSD VPS) | PLANNED | Existing server | 5 new Apex bots (same VPS as GSD) |
 
 ---
 
-## 6. Changelog
+## 6. Agent Registry
+
+| Agent | Role | Tier | Status |
+|-------|------|------|--------|
+| CUBO | Platform Heart / Data Engine | System | Active (software) |
+| Kujo | Closing / Venue Outreach | Gold | Planned |
+| Benji | Revenue Intelligence | Gold | Planned |
+| Fido | Fiduciary / Legal Watch | Silver | Planned |
+| Roxy | PR / Image / EPK | Gold | Planned |
+| Scout | A&R / Trend Intelligence | Silver | Planned |
+| Nextel | Agent-to-Artist Intercom | System | Planned |
+
+---
+
+## 7. Changelog
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-03-23 | Initial constitution created. 15 pages built, all links verified. | System Pilot |
+| 2026-04-28 | VS Code Artist Portal shipped. Agent roster defined. SOUL.md + HEARTBEAT.md created. CUBO FRM schema added. Server strategy documented. | Antigravity |

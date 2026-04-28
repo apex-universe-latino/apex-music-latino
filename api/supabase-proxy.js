@@ -83,20 +83,40 @@ export default async function handler(req, res) {
     }
 
     const targetUrl = `${SUPABASE_URL}${path}`;
-    const response = await fetch(targetUrl, fetchOptions);
+    
+    try {
+      const response = await fetch(targetUrl, fetchOptions);
 
-    const contentType = response.headers.get('content-type') || '';
-    let data;
+      // Detect "Paused" or "Service Unavailable"
+      if (response.status === 503 || response.status === 504) {
+        return res.status(503).json({ 
+          error: 'Supabase project is paused or starting up.', 
+          message: 'Please visit the Supabase dashboard to unpause the project (iaycaynevtumrqoknemk).',
+          code: 'PROJECT_PAUSED'
+        });
+      }
 
-    if (contentType.includes('application/json')) {
-      data = await response.json();
-    } else {
-      data = await response.text();
+      const contentType = response.headers.get('content-type') || '';
+      let data;
+
+      if (contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        data = await response.text();
+      }
+
+      return res.status(response.status).json(data);
+    } catch (fetchErr) {
+      // DNS errors or network failures often mean project is offline
+      return res.status(503).json({ 
+        error: 'Supabase project is unreachable.', 
+        message: 'This usually happens if the project is paused. Please check the Supabase dashboard.',
+        details: fetchErr.message,
+        code: 'PROJECT_UNREACHABLE'
+      });
     }
-
-    return res.status(response.status).json(data);
   } catch (err) {
-    console.error('[supabase-proxy] Error:', err);
-    return res.status(500).json({ error: 'Proxy error: ' + err.message });
+    console.error('[supabase-proxy] Critical Proxy Error:', err);
+    return res.status(500).json({ error: 'Proxy infrastructure error: ' + err.message });
   }
 }

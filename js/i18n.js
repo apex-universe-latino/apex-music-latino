@@ -58,19 +58,19 @@
 
         // Genre names
         'genre.reggaeton': { en: 'Reggaeton', es: 'Reggaeton' },
-        'genre.tango': { en: 'Tango', es: 'Tango' },
+        'genre.pop': { en: 'Pop', es: 'Pop' },
         'genre.rap': { en: 'Rap', es: 'Rap' },
         'genre.rock': { en: 'Rock', es: 'Rock' },
         'genre.electronic': { en: 'Electronic', es: 'Electrónica' },
-        'genre.afro-latin': { en: 'Afro/Latin', es: 'Afro/Latino' },
+        'genre.salsa-tropical': { en: 'Salsa & Tropical', es: 'Salsa y Tropical' },
 
         // Genre subtitles
         'genre.reggaeton-sub': { en: 'Urban Intelligence', es: 'Inteligencia Urbana' },
-        'genre.tango-sub': { en: 'Passion Data', es: 'Datos con Pasión' },
-        'genre.rap-sub': { en: 'Street Intelligence', es: 'Inteligencia Callejera' },
-        'genre.rock-sub': { en: 'Raw Power', es: 'Poder Crudo' },
-        'genre.electronic-sub': { en: 'Cyber Pulse', es: 'Pulso Cibernético' },
-        'genre.afro-latin-sub': { en: 'Roots & Future', es: 'Raíces y Futuro' },
+        'genre.pop-sub': { en: 'Mainstream Power', es: 'Poder Mainstream' },
+        'genre.rap-sub': { en: 'Street Pulse', es: 'Pulso Callejero' },
+        'genre.rock-sub': { en: 'Raw Energy', es: 'Energía Pura' },
+        'genre.electronic-sub': { en: 'Cyber Rhythms', es: 'Ritmos Cibernéticos' },
+        'genre.salsa-tropical-sub': { en: 'Roots & Soul', es: 'Raíces y Alma' },
 
         // Artists page
         'artists.roster': { en: 'Apex Roster', es: 'Roster de Apex' },

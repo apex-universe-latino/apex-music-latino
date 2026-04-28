@@ -1,0 +1,22 @@
+{
+  "name": "Apex Artist Portal — CUBO Command Center",
+  "short_name": "Apex Portal",
+  "description": "CUBO™ FRM Command Center for Apex Music Latino Artists",
+  "start_url": "/artist-portal/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0c0c0c",
+  "theme_color": "#0c0c0c",
+  "categories": ["music", "business", "productivity"],
+  "icons": [
+    {
+      "src": "/Branding /aml_favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}

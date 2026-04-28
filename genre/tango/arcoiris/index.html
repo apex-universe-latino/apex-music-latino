@@ -154,14 +154,17 @@
             <!-- Offer (compact) -->
             <div class="rounded-lg p-3 mb-5" style="background: rgba(230, 0, 0, 0.08); border: 1px solid rgba(230, 0, 0, 0.15);">
               <p class="text-on-surface font-bold text-xs leading-snug">Recibe GRATIS una clase de tango + curso de 24 pasos</p>
-              <p class="text-zinc-500 text-[10px] mt-0.5">FREE tango class + 24-step course (Coming Soon)</p>
-              <div class="flex items-center gap-2 mt-1.5">
-                <span class="text-tango-accent font-headline font-bold text-sm">Valor $300 USD</span>
-                <span class="text-[#00e639] text-xs font-bold">GRATIS</span>
-              </div>
-              <div class="flex items-center gap-1.5 mt-2">
-                <span class="material-symbols-outlined text-yellow-400 text-sm">timer</span>
-                <span class="text-yellow-400 text-[11px] font-bold uppercase tracking-wide">V&aacute;lido hasta el 31 de marzo / Valid through March 31</span>
+              <div class="space-y-1">
+              <h4 class="text-white font-bold uppercase tracking-widest text-xs flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse"></span>
+                Oferta Exclusiva / Exclusive Offer
+              </h4>
+              <p class="text-zinc-400 text-[11px] leading-tight">
+                Acceso a la grabaci&oacute;n del show Bucaramanga 2026 + Clase de Tango GRATIS<br/>
+                Access to Bucaramanga 2026 show recording + FREE Tango class
+              </p>
+              <div class="pt-1">
+                <span class="text-yellow-400 text-[10px] font-bold uppercase tracking-wide">V&aacute;lido hasta el 30 de junio / Valid through June 30, 2026</span>
               </div>
             </div>
 
@@ -553,7 +556,7 @@
           title: titleValue,
           source: 'qr_gate',
           offer: 'free_tango_class_24_steps',
-          offer_expiry: '2026-03-31',
+          offer_expiry: '2026-06-30',
           timestamp: new Date().toISOString(),
           fan_id: fanIdObj.publicId,
           master_id: fanIdObj.masterId,
@@ -785,7 +788,27 @@ document.addEventListener('mousemove', function(e) {
     <h2 class="font-headline text-4xl md:text-5xl font-bold mb-16">Discograf&iacute;a</h2>
 
     <div id="discografia-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <!-- Hydrated from config -->
+      <!-- Fallback Content -->
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl tango-border-glow">
+          <img src="https://img.youtube.com/vi/smyZ11kvowg/hqdefault.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Red Ochre Woman"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-6xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">Red Ochre Woman</h4>
+        <p class="text-zinc-500 text-sm mt-1">Single &bull; 2026</p>
+      </div>
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl tango-border-glow">
+          <img src="https://img.youtube.com/vi/BgAGAJpMPZM/hqdefault.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Gaslight District"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-6xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">Gaslight District</h4>
+        <p class="text-zinc-500 text-sm mt-1">Single &bull; 2025</p>
+      </div>
     </div>
 
     <div id="videografia" class="mt-24 pt-16 border-t border-white/5" style="display: block !important;">
@@ -1179,13 +1202,13 @@ document.addEventListener('mousemove', function(e) {
     <!-- Section Header -->
     <div class="flex items-center gap-4 mb-4">
       <span class="h-px w-12 bg-tango-accent"></span>
-      <span class="text-tango-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Evento en Vivo</span>
+      <span class="text-tango-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Recuerdos / Memories</span>
     </div>
     <h2 class="font-headline text-4xl md:text-5xl font-bold mb-3 leading-tight">
-      Artistas en Escena <span class="text-gradient-tango">&middot;</span> Bucaramanga 2026
+      Highlights Bucaramanga 2026 <span class="text-gradient-tango">&middot;</span> Marzo 25
     </h2>
     <p class="text-zinc-500 font-headline text-lg md:text-xl mb-12 tracking-wide">
-      25 de Marzo &middot; Casa del Libro Total &middot; 5:30 PM
+      Momentos destacados del show en la Casa del Libro Total
     </p>
 
     <!-- Carousel Container -->
@@ -1197,48 +1220,36 @@ document.addEventListener('mousemove', function(e) {
       <button class="carousel-nav-btn next" id="carousel-next" aria-label="Siguiente">
         <span class="material-symbols-outlined">chevron_right</span>
       </button>
-
-      <!-- Carousel Track -->
       <div class="carousel-track" id="carousel-track">
-        <!-- 1. Main Flyer -->
+        <!-- 1. Main Highlights -->
         <div class="carousel-card">
-          <img src="/assetts/c003eb2d-ab8a-4c82-ad71-017894ab41f3.jpeg" alt="Mi Coraz&oacute;n es una Llama Errante - Flyer principal" loading="lazy"/>
-          <div class="caption">Mi Coraz&oacute;n es una Llama Errante &mdash; Flyer Principal</div>
+          <img src="/artists/Arcoiris/gallery/gavito_festival.jpeg" alt="Festival Gavito 2026" loading="lazy"/>
+          <div class="caption">Festival Gavito &mdash; Highlights</div>
         </div>
         <!-- 2. Artistas en Escena -->
         <div class="carousel-card">
-          <img src="/assetts/52035d8e-24d5-4586-9091-0fc86d533cf6.jpeg" alt="Artistas en Escena 2026" loading="lazy"/>
-          <div class="caption">Artistas en Escena 2026</div>
+          <img src="/artists/Arcoiris/gallery/aroris_tango_radio_station.jpeg" alt="Entrevista Radio 2026" loading="lazy"/>
+          <div class="caption">Promoci&oacute;n Radio &mdash; Bucaramanga</div>
         </div>
         <!-- 3. John Acevedo -->
         <div class="carousel-card">
-          <img src="/assetts/0cf58f0a-12ab-41cb-ab6a-0a39f069b67d.jpeg" alt="John Acevedo" loading="lazy"/>
-          <div class="caption">John Acevedo</div>
+          <img src="/artists/Arcoiris/gallery/John_Acevedo_Tango.jpeg" alt="John Acevedo en vivo" loading="lazy"/>
+          <div class="caption">Mtro. John Acevedo &mdash; Solo Viola</div>
         </div>
-        <!-- 4. Alisson Trigos -->
+        <!-- 4. Trio Performance -->
         <div class="carousel-card">
-          <img src="/assetts/a5a8472c-7882-473d-a69b-a98eaf941bbd.jpeg" alt="Alisson Trigos" loading="lazy"/>
-          <div class="caption">Alisson Trigos</div>
+          <img src="/artists/Arcoiris/gallery/practicin.jpeg" alt="Ensayo Artistas" loading="lazy"/>
+          <div class="caption">Backstage &mdash; Ensayos</div>
         </div>
-        <!-- 5. Sulay Perez -->
+        <!-- 5. Scene -->
         <div class="carousel-card">
-          <img src="/assetts/3dc76f5b-091a-40a3-ac73-967255955bcd.jpeg" alt="Sulay Perez" loading="lazy"/>
-          <div class="caption">Sulay Perez</div>
+          <img src="/artists/Arcoiris/gallery/dinin_room.jpeg" alt="Performance Cena" loading="lazy"/>
+          <div class="caption">Escena Intima &mdash; Tango</div>
         </div>
-        <!-- 6. Walter Gomez -->
-        <div class="carousel-card">
-          <img src="/assetts/01be813f-f7a3-459f-adc4-c27b6d7bd129.jpeg" alt="Walter G&oacute;mez" loading="lazy"/>
-          <div class="caption">Walter G&oacute;mez</div>
-        </div>
-        <!-- 7. Dayana Hernandez -->
-        <div class="carousel-card">
-          <img src="/assetts/b177b3a1-2239-449f-8622-90ce337c99e4.jpeg" alt="Dayana Hern&aacute;ndez" loading="lazy"/>
-          <div class="caption">Dayana Hern&aacute;ndez</div>
-        </div>
-        <!-- 8. El Libro Total Bucaramanga -->
-        <div class="carousel-card">
-          <img src="/assetts/WhatsApp%20Image%202026-03-19%20at%202.03.10%20PM.jpeg" alt="El Libro Total Bucaramanga" loading="lazy"/>
-          <div class="caption">El Libro Total &mdash; Bucaramanga</div>
+        <!-- 6. Original Flyer (Legacy) -->
+        <div class="carousel-card opacity-60">
+          <img src="/assetts/c003eb2d-ab8a-4c82-ad71-017894ab41f3.jpeg" alt="Flyer original" loading="lazy"/>
+          <div class="caption">Flyer Original &mdash; Archivo</div>
         </div>
       </div>
     </div>
@@ -1299,85 +1310,71 @@ document.addEventListener('mousemove', function(e) {
         <h2 class="font-headline text-4xl md:text-5xl font-bold mb-12">Pr&oacute;ximos Shows</h2>
 
         <div id="shows-list" class="space-y-4">
-          <!-- Show: Mi Coraz&oacute;n es una Llama Errante - Bucaramanga -->
-          <div class="rounded-xl bg-surface-container-highest/40 border border-tango-accent/30 hover:border-tango-accent/60 transition-all duration-300 group overflow-hidden">
-            <div class="flex items-center gap-6 p-6">
-              <div class="text-center flex-shrink-0 w-16">
-                <div class="text-tango-accent font-headline text-3xl font-bold leading-none">25</div>
-                <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">MAR</div>
-                <div class="text-[10px] text-zinc-600">2026</div>
-              </div>
-              <div class="h-12 w-px bg-white/10"></div>
-              <div class="flex-1">
-                <h4 class="font-headline font-bold text-on-surface">Mi Coraz&oacute;n es una Llama Errante</h4>
-                <p class="text-zinc-500 text-sm">Casa del Libro Total (El Libro Total)</p>
-                <p class="text-zinc-600 text-xs mt-1">Cra 35 #9-81 Centro, Bucaramanga &middot; 5:30 PM</p>
-              </div>
-              <span class="px-5 py-2 rounded-lg bg-tango-accent/10 border border-tango-accent/30 text-tango-accent text-sm font-bold whitespace-nowrap">
-                Entrada Libre
-              </span>
-            </div>
-            <div class="px-6 pb-6 pt-0">
-              <p class="text-zinc-400 text-sm leading-relaxed mb-3">Una obra esc&eacute;nica de danza y teatro inspirada en la poes&iacute;a del poeta colombiano Porfirio Barba Jacob.</p>
-              <div class="flex flex-wrap gap-2 mb-3">
-                <span class="px-3 py-1 rounded-full bg-tango-accent/10 text-tango-accent text-xs font-bold">Tango</span>
-                <span class="px-3 py-1 rounded-full bg-tango-accent/10 text-tango-accent text-xs font-bold">Danza Contempor&aacute;nea</span>
-                <span class="px-3 py-1 rounded-full bg-tango-accent/10 text-tango-accent text-xs font-bold">Poes&iacute;a Declamada</span>
-                <span class="px-3 py-1 rounded-full bg-tango-accent/10 text-tango-accent text-xs font-bold">Viola en Vivo</span>
-              </div>
-              <p class="text-zinc-500 text-xs">Artistas: John Acevedo, Alisson Trigos, Sulay Perez, Walter G&oacute;mez, Dayana Hern&aacute;ndez</p>
-            </div>
-          </div>
-
-          <!-- Show 2 -->
-          <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group">
-            <div class="text-center flex-shrink-0 w-16">
-              <div class="text-tango-accent font-headline text-3xl font-bold leading-none">18</div>
-              <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">ABR</div>
-              <div class="text-[10px] text-zinc-600">2026</div>
-            </div>
-            <div class="h-12 w-px bg-white/10"></div>
-            <div class="flex-1">
-              <h4 class="font-headline font-bold text-on-surface">Teatro Col&oacute;n</h4>
-              <p class="text-zinc-500 text-sm">Buenos Aires, Argentina</p>
-            </div>
-            <a href="#" class="px-5 py-2 rounded-lg border border-tango-accent/30 text-tango-accent text-sm font-bold hover:bg-tango-accent hover:text-white transition-all duration-300 whitespace-nowrap">
-              Entradas
-            </a>
-          </div>
-
-          <!-- Show 3 -->
+          <!-- Fallback Content -->
           <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group">
             <div class="text-center flex-shrink-0 w-16">
               <div class="text-tango-accent font-headline text-3xl font-bold leading-none">05</div>
-              <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">MAY</div>
-              <div class="text-[10px] text-zinc-600">2026</div>
+              <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mt-1">MAY</div>
+              <div class="text-[9px] text-zinc-600 font-bold mt-0.5">2026</div>
             </div>
             <div class="h-12 w-px bg-white/10"></div>
             <div class="flex-1">
-              <h4 class="font-headline font-bold text-on-surface">Palau de la M&uacute;sica</h4>
-              <p class="text-zinc-500 text-sm">Barcelona, Espa&ntilde;a</p>
+              <h4 class="font-headline font-bold text-on-surface">Buenos Aires &middot; Teatro Col&oacute;n</h4>
+              <p class="text-zinc-500 text-sm italic">Teatro Col&oacute;n &middot; Buenos Aires</p>
             </div>
-            <a href="#" class="px-5 py-2 rounded-lg border border-tango-accent/30 text-tango-accent text-sm font-bold hover:bg-tango-accent hover:text-white transition-all duration-300 whitespace-nowrap">
+            <a href="#" class="px-5 py-2 rounded-lg border border-white/10 text-zinc-400 text-xs font-bold hover:bg-tango-accent hover:text-white hover:border-tango-accent transition-all duration-300 whitespace-nowrap">
               Entradas
             </a>
           </div>
-
-          <!-- Show 4 -->
           <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group">
             <div class="text-center flex-shrink-0 w-16">
               <div class="text-tango-accent font-headline text-3xl font-bold leading-none">21</div>
-              <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">JUN</div>
-              <div class="text-[10px] text-zinc-600">2026</div>
+              <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mt-1">JUN</div>
+              <div class="text-[9px] text-zinc-600 font-bold mt-0.5">2026</div>
             </div>
             <div class="h-12 w-px bg-white/10"></div>
             <div class="flex-1">
-              <h4 class="font-headline font-bold text-on-surface">Le Bataclan</h4>
-              <p class="text-zinc-500 text-sm">Par&iacute;s, Francia</p>
+              <h4 class="font-headline font-bold text-on-surface">Medell&iacute;n &middot; Festival Tango</h4>
+              <p class="text-zinc-500 text-sm italic">Festival de Tango &middot; Medell&iacute;n</p>
             </div>
-            <a href="#" class="px-5 py-2 rounded-lg border border-tango-accent/30 text-tango-accent text-sm font-bold hover:bg-tango-accent hover:text-white transition-all duration-300 whitespace-nowrap">
+            <a href="#" class="px-5 py-2 rounded-lg border border-white/10 text-zinc-400 text-xs font-bold hover:bg-tango-accent hover:text-white hover:border-tango-accent transition-all duration-300 whitespace-nowrap">
               Entradas
             </a>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 mt-16 mb-4">
+          <span class="h-px w-12 bg-zinc-700"></span>
+          <span class="text-zinc-500 font-headline tracking-[0.3em] text-xs uppercase font-bold">Eventos Recientes</span>
+        </div>
+        <div id="past-shows-list" class="space-y-4 opacity-70">
+          <!-- Show: Bucaramanga (Past) -->
+          <div class="rounded-xl bg-surface-container-highest/20 border border-white/5 p-6">
+            <div class="flex items-center gap-6">
+              <div class="text-center flex-shrink-0 w-16 grayscale">
+                <div class="text-zinc-500 font-headline text-3xl font-bold leading-none">25</div>
+                <div class="text-[10px] text-zinc-600 uppercase tracking-widest font-bold">MAR</div>
+              </div>
+              <div class="flex-1">
+                <h4 class="font-headline font-bold text-zinc-400 line-through">Mi Coraz&oacute;n es una Llama Errante</h4>
+                <p class="text-zinc-600 text-xs mt-1 uppercase tracking-widest">Bucaramanga &middot; &Eacute;XITO TOTAL</p>
+              </div>
+              <span class="px-4 py-1 rounded bg-zinc-800 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">Finalizado</span>
+            </div>
+          </div>
+          <!-- Show: Buenos Aires (Past) -->
+          <div class="rounded-xl bg-surface-container-highest/20 border border-white/5 p-6">
+            <div class="flex items-center gap-6">
+              <div class="text-center flex-shrink-0 w-16 grayscale">
+                <div class="text-zinc-500 font-headline text-3xl font-bold leading-none">18</div>
+                <div class="text-[10px] text-zinc-600 uppercase tracking-widest font-bold">ABR</div>
+              </div>
+              <div class="flex-1">
+                <h4 class="font-headline font-bold text-zinc-400 line-through">Teatro Col&oacute;n</h4>
+                <p class="text-zinc-600 text-xs mt-1 uppercase tracking-widest">Buenos Aires &middot; SOLD OUT</p>
+              </div>
+              <span class="px-4 py-1 rounded bg-zinc-800 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">Finalizado</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1600,56 +1597,58 @@ document.addEventListener('mousemove', function(e) {
   const ARTIST_SLUG = 'arcoiris';
 
   async function loadLiveConfig() {
+    let config = { 
+      visibility: { stats:true, bio:true, music:true, videography:true, merch:true, shows:true },
+      stats: {}, shows: [], music: [], videography: [], bio: { es: "" }
+    };
+    
     try {
       const res = await fetch(`${SB_URL}/rest/v1/artists_config?slug=eq.${ARTIST_SLUG}&select=*`, {
         headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
       });
       const data = await res.json();
-      if (!data || data.length === 0) return;
-      const config = data[0].config;
-      const vis = config.visibility || { stats:true, bio:true, music:true, videography:true, merch:true, shows:true };
-      
-      // Safety: Ensure all keys exist
-      ['stats','bio','music','videography','merch','shows'].forEach(k => { if (vis[k] === undefined) vis[k] = true; });
-      
-      // Force Arcoiris visibility for specific sections
-      if (ARTIST_SLUG === 'arcoiris') {
-        vis.music = true;
-        vis.videography = true;
+      if (data && data.length > 0) {
+        config = { ...config, ...data[0].config };
       }
+    } catch(e) { 
+      console.warn('[Apex Engine] Using fallback content:', e); 
+    }
 
-      console.log('[Apex Engine] Live Config Loaded:', config);
+    const { visibility: vis } = config;
+    // Safety: Ensure all keys exist in visibility
+    ['stats','bio','music','videography','merch','shows'].forEach(k => { if (vis[k] === undefined) vis[k] = true; });
+    
+    // Force Arcoiris visibility
+    if (ARTIST_SLUG === 'arcoiris') {
+      vis.music = true;
+      vis.videography = true;
+    }
 
-      // Section Visibility Handling
-      const toggleSection = (id, show) => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = show ? 'block' : 'none';
-      };
+    // Section Visibility Handling
+    const toggleSection = (id, show) => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = show ? 'block' : 'none';
+    };
 
-      toggleSection('musica', vis.music);
-      toggleSection('biografia', vis.bio);
-      toggleSection('shows', vis.shows);
-      toggleSection('metrics-bar', vis.stats); 
-      toggleSection('videografia', vis.videography);
+    toggleSection('musica', vis.music);
+    toggleSection('biografia', vis.bio);
+    toggleSection('shows', vis.shows);
+    toggleSection('metrics-bar', vis.stats); 
+    toggleSection('videografia', vis.videography);
 
-      if (vis.stats && config.stats) renderLiveStats(config.stats);
-      if (vis.shows && config.shows && config.shows.length > 0) renderLiveShows(config.shows);
-      if (vis.music && config.music && config.music.length > 0) renderLiveMusic(config.music);
-      
-      if (vis.videography) {
-        renderLiveVideos(config.videography || null);
-        // Force display for Arcoiris
-        if (ARTIST_SLUG === 'arcoiris') {
-          const vSect = document.getElementById('videografia');
-          if (vSect) vSect.style.display = 'block';
-        }
-      }
+    // Call Render Functions
+    if (config.stats && Object.keys(config.stats).length > 0) renderLiveStats(config.stats);
+    if (config.shows && config.shows.length > 0) renderLiveShows(config.shows);
+    if (config.music && config.music.length > 0) renderLiveMusic(config.music);
+    
+    if (vis.videography && config.videography && config.videography.length > 0) {
+      renderLiveVideos(config.videography);
+    }
 
-      if (vis.bio && config.bio) {
-        const bioEl = document.querySelector('#biografia p');
-        if (bioEl) bioEl.textContent = config.bio.es || bioEl.textContent;
-      }
-    } catch(e) { console.error('[Apex Engine] Failed to sync live content:', e); }
+    if (vis.bio && config.bio) {
+      const bioEl = document.querySelector('#biografia p');
+      if (bioEl) bioEl.textContent = config.bio.es || bioEl.textContent;
+    }
   }
 
   function renderLiveStats(stats) {
@@ -1678,81 +1677,68 @@ document.addEventListener('mousemove', function(e) {
   }
 
   function renderLiveShows(shows) {
-    const list = (shows && shows.length > 0) ? shows : [
-      {
-        id: 'arcoiris-25-mar',
-        title: 'Mi Corazón es una Llama Errante',
-        date: '2026-03-25T17:30:00',
-        venue: 'Casa del Libro Total (El Libro Total)',
-        city: 'Bucaramanga',
-        address: 'Cra 35 #9-81 Centro',
-        is_free: true,
-        description: 'Una obra escénica de danza y teatro inspirada en la poesía del poeta colombiano Porfirio Barba Jacob.',
-        tags: ['Tango', 'Danza Contemporánea', 'Poesía Declamada', 'Viola en Vivo'],
-        artists: ['John Acevedo', 'Alisson Trigos', 'Sulay Perez', 'Walter Gómez', 'Dayana Hernández']
-      },
-      { title: 'Teatro Colón', date: '2026-04-18T20:00:00', venue: 'Teatro Colón', city: 'Buenos Aires, Argentina', ticket_url: '#' },
-      { title: 'Palau de la Música', date: '2026-05-05T19:30:00', venue: 'Palau de la Música', city: 'Barcelona, España', ticket_url: '#' },
-      { title: 'Le Bataclan', date: '2026-06-21T21:00:00', venue: 'Le Bataclan', city: 'París, Francia', ticket_url: '#' }
+    const defaultShows = [
+      { title: 'Buenos Aires · Teatro Colón', date: '2026-05-05T19:30:00', venue: 'Teatro Colón', city: 'Buenos Aires', ticket_url: '#', status: 'Upcoming' },
+      { title: 'Medellín · Festival Tango', date: '2026-06-21T21:00:00', venue: 'Festival de Tango', city: 'Medellín', ticket_url: '#', status: 'Upcoming' },
+      { title: 'Mi Corazón es una Llama Errante', date: '2026-03-25T20:00:00', venue: 'Gavito Festival', city: 'Bucaramanga', ticket_url: '#', status: 'Past', label: 'ÉXITO TOTAL' },
+      { title: 'Teatro Gran Rex', date: '2026-04-18T20:00:00', venue: 'Teatro Gran Rex', city: 'Buenos Aires', ticket_url: '#', status: 'Past', label: 'SOLD OUT' }
     ];
-    const container = document.getElementById('shows-list');
-    if (!container) return;
     
-    container.innerHTML = list.map(s => {
-      const d = new Date(s.date);
-      const showDay = d.getDate();
-      const showMonth = d.toLocaleString('es-ES', { month: 'short' }).toUpperCase().replace('.','');
-      const showYear = d.getFullYear();
-      const showTime = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
-
-      if (s.id === 'arcoiris-25-mar' || s.description) {
+    const list = (shows && shows.length > 0) ? shows : defaultShows;
+    
+    const upcomingContainer = document.getElementById('shows-list');
+    const pastContainer = document.getElementById('past-shows-list');
+    
+    if (upcomingContainer) {
+      const upcoming = list.filter(s => s.status !== 'Past');
+      upcomingContainer.innerHTML = upcoming.map(s => {
+        const d = new Date(s.date);
+        const day = d.getDate();
+        const month = d.toLocaleString('es-ES', { month: 'short' }).toUpperCase().replace('.','');
+        const year = d.getFullYear();
         return `
-          <div class="rounded-xl bg-surface-container-highest/40 border border-tango-accent/30 hover:border-tango-accent/60 transition-all duration-300 group overflow-hidden">
-            <div class="flex items-center gap-6 p-6">
-              <div class="text-center flex-shrink-0 w-16">
-                <div class="text-tango-accent font-headline text-3xl font-bold leading-none">${showDay}</div>
-                <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mt-1">${showMonth}</div>
-                <div class="text-[9px] text-zinc-600 font-bold mt-0.5">${showYear}</div>
-              </div>
-              <div class="h-12 w-px bg-white/10"></div>
-              <div class="flex-1">
-                <h4 class="font-headline font-bold text-on-surface">${s.title}</h4>
-                <p class="text-zinc-500 text-sm italic">${s.venue}</p>
-                <p class="text-zinc-600 text-xs mt-1 uppercase tracking-widest">${s.address || s.city}${s.address ? ' &middot; ' + s.city : ''} &middot; ${showTime}</p>
-              </div>
-              <span class="px-5 py-2 rounded-lg ${s.is_free ? 'bg-tango-accent/10 border border-tango-accent/30 text-tango-accent' : 'border border-white/10 text-zinc-400'} text-sm font-bold whitespace-nowrap">
-                ${s.is_free ? 'Entrada Libre' : 'Entradas'}
-              </span>
+          <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group">
+            <div class="text-center flex-shrink-0 w-16">
+              <div class="text-tango-accent font-headline text-3xl font-bold leading-none">${day}</div>
+              <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mt-1">${month}</div>
+              <div class="text-[9px] text-zinc-600 font-bold mt-0.5">${year}</div>
             </div>
-            <div class="px-6 pb-6 pt-0 border-t border-white/5 mt-2 pt-4">
-              <p class="text-zinc-400 text-sm leading-relaxed mb-4">${s.description || ''}</p>
-              <div class="flex flex-wrap gap-2 mb-4">
-                ${(s.tags || []).map(t => `<span class="px-3 py-1 rounded-full bg-tango-accent/10 text-tango-accent text-[10px] font-bold uppercase tracking-widest">${t}</span>`).join('')}
+            <div class="h-12 w-px bg-white/10"></div>
+            <div class="flex-1">
+              <h4 class="font-headline font-bold text-on-surface">${s.title}</h4>
+              <p class="text-zinc-500 text-sm italic">${s.venue} &middot; ${s.city}</p>
+            </div>
+            <a href="${s.ticket_url || '#'}" class="px-5 py-2 rounded-lg border border-white/10 text-zinc-400 text-xs font-bold hover:bg-tango-accent hover:text-white hover:border-tango-accent transition-all duration-300 whitespace-nowrap">
+              Entradas
+            </a>
+          </div>
+        `;
+      }).join('');
+    }
+
+    if (pastContainer) {
+      const past = list.filter(s => s.status === 'Past');
+      pastContainer.innerHTML = past.map(s => {
+        const d = new Date(s.date);
+        const day = d.getDate();
+        const month = d.toLocaleString('es-ES', { month: 'short' }).toUpperCase().replace('.','');
+        return `
+          <div class="rounded-xl bg-surface-container-highest/20 border border-white/5 p-6">
+            <div class="flex items-center gap-6">
+              <div class="text-center flex-shrink-0 w-16 grayscale">
+                <div class="text-zinc-500 font-headline text-3xl font-bold leading-none">${day}</div>
+                <div class="text-[10px] text-zinc-600 uppercase tracking-widest font-bold">${month}</div>
               </div>
-              ${s.artists ? `<p class="text-zinc-500 text-[10px] uppercase tracking-widest font-medium"><span class="text-zinc-600">Artistas:</span> ${s.artists.join(', ')}</p>` : ''}
+              <div class="flex-1">
+                <h4 class="font-headline font-bold text-zinc-400 line-through">${s.title}</h4>
+                <p class="text-zinc-600 text-xs mt-1 uppercase tracking-widest">${s.city} &middot; ${s.label || 'Finalizado'}</p>
+              </div>
+              <span class="px-4 py-1 rounded bg-zinc-800 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">Finalizado</span>
             </div>
           </div>
         `;
-      }
-
-      return `
-        <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-tango-accent/30 transition-all duration-300 group">
-          <div class="text-center flex-shrink-0 w-16">
-            <div class="text-tango-accent font-headline text-3xl font-bold leading-none">${showDay}</div>
-            <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mt-1">${showMonth}</div>
-            <div class="text-[9px] text-zinc-600 font-bold mt-0.5">${showYear}</div>
-          </div>
-          <div class="h-12 w-px bg-white/10"></div>
-          <div class="flex-1">
-            <h4 class="font-headline font-bold text-on-surface">${s.title}</h4>
-            <p class="text-zinc-500 text-sm">${s.venue} &middot; ${s.city}</p>
-          </div>
-          <a href="${s.ticket_url || '#'}" class="px-5 py-2 rounded-lg border border-white/10 text-zinc-400 text-xs font-bold hover:bg-tango-accent hover:text-white hover:border-tango-accent transition-all duration-300 whitespace-nowrap">
-            Entradas
-          </a>
-        </div>
-      `;
-    }).join('');
+      }).join('');
+    }
   }
 
   function renderLiveMusic(music) {

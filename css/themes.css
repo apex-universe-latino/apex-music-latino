@@ -27,13 +27,22 @@
     --gradient-end: #ffbe0b;
 }
 
-/* Tango — Crimson red */
+/* Tango — Crimson red (Secondary) */
 [data-genre="tango"] {
     --accent: #e60000;
     --accent-glow: rgba(230, 0, 0, 0.3);
     --accent-dark: #8b0000;
     --gradient-start: #e60000;
     --gradient-end: #8b0000;
+}
+
+/* Pop — Vibrant Magenta / Violet */
+[data-genre="pop"] {
+    --accent: #ec4899;
+    --accent-glow: rgba(236, 72, 153, 0.3);
+    --accent-dark: #831843;
+    --gradient-start: #ec4899;
+    --gradient-end: #8b5cf6;
 }
 
 /* Rap — Electric blue / ice */
@@ -63,8 +72,8 @@
     --gradient-end: #7b2ff7;
 }
 
-/* Afro-Latin — Gold / warm */
-[data-genre="afro-latin"] {
+/* Salsa & Tropical — Gold / Warm */
+[data-genre="salsa-tropical"], [data-genre="afro-latin"] {
     --accent: #ffb800;
     --accent-glow: rgba(255, 184, 0, 0.3);
     --accent-dark: #7a5800;

@@ -11,6 +11,12 @@
 
 ## Phase 1: B — Blueprint (Vision & Logic)
 
+### 2026-03-25 — Artist Portal CRM & Branding Finalization
+*   **Booking CRM Finish**: Completed Pipeline stages, Venue Inbox (Search/Filter), CSV Import, and Template/Journey infrastructure.
+*   **Arcoiris EPK verified**: Added five-track YouTube repertoire with detailed artist credits (Linhardt/Acevedo/Lissantheia).
+*   **Global Logo Sync**: Standardized `aml_favicon.svg` and "Apex" text across ecosystem (Home, Marketplace, Academy, Dashboard, Pors, Gate).
+*   **Booking Notification**: Configured `/api/send-booking-notification.js` to message `booking@apexmusiclatino.com`.
+*   **Status**: Phase 4 COMPLETED. Ready for Phase 5 (Automation).
 ### Discovery Questions (5 of 5 answered)
 1. **North Star**: Build a category-defining platform that turns Latin artists into companies — label + SaaS + marketplace + data engine
 2. **Integrations**: Supabase (active), Vercel (active), GitHub (active), Spotify/Instagram/TikTok/WhatsApp (planned)
@@ -71,6 +77,10 @@
 
 ## Phase 4: S — Stylize (Refinement)
 - [x] Genre-adaptive CSS theme system (6 themes)
+- [x] Arcoiris EPK branding: `aml_favicon.svg` (White on Dark)
+- [x] Arcoiris Media: 5 verified Youtube IDs with artist credits
+- [x] Portal: CRM Pipeline + Inbox + Journey Builder + CSV Import
+- [x] Branding: `/Branding /aml_favicon.svg` + "Apex" text standardization (19+ pages)
 - [x] Glassmorphism + dark UI design (Portal + EPKs)
 - [x] Higgsfield.ai-inspired aesthetic
 - [x] Mobile responsive layouts
@@ -80,7 +90,12 @@
 - [x] Micro-animations (hover effects, card glows)
 - [x] Form validation UX (Booking form validation)
 
-## Phase 5: T — Trigger (Deployment)
+## Phase 5: Automation & Deployment (T - Trigger)
+- [ ] 📧 **Email Integration**: Fan Welcome Email (Fan ID delivery via Resend)
+- [ ] 📊 **Dynamic Dashboard**: Live Social Stats (Spotify/YT scraper & API)
+- [ ] 🚀 **CRM Outreach**: Launch automated "Venue Discovery" journeys
+- [ ] 🔒 **Security Hardening**: Move `SERVICE_KEY` and `RESEND_API_KEY` to Vercel Env Vars
+- [ ] 📅 **Campaign Reminders**: March 25 show & March 31 offer countdown notifications
 - [x] Vercel deployment active (auto-deploy on push)
 - [x] GitHub CI pipeline (push to master → deploy)
 - [ ] Cron: Daily social metrics sync
