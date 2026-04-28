@@ -1920,95 +1920,38 @@
 
   <!-- Floating Agent Dock (macOS-style) -->
   <!-- Floating Agent Dock (macOS-style) -->
-  <nav class="agent-dock" id="agent-dock">
+    <!-- ══════ FLOATING MOBILE/WEB DOCK ══════ -->
+  <nav class="agent-dock" id="agent-dock" style="display: flex; gap: 20px; align-items: center; justify-content: space-around; background: rgba(15, 15, 20, 0.85); backdrop-filter: blur(16px); padding: 10px 24px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.05); position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 1000; width: 420px; max-width: 90vw; box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);">
     
-    <!-- CUBO App Icon -->
-    <div class="dock-item" onclick="switchView('dashboard')">
-      <div class="dock-icon" style="background: linear-gradient(135deg, #111, #222); border-color: rgba(128,0,255,0.4); --dock-glow: rgba(128,0,255,0.4);">
-        <!-- Embedded compact CUBO icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="28" height="28">
-          <defs>
-            <linearGradient id="gd1" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9933ff"/><stop offset="100%" stop-color="#6600cc"/></linearGradient>
-            <linearGradient id="gd2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7700dd"/><stop offset="100%" stop-color="#4400aa"/></linearGradient>
-            <linearGradient id="gd3" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#aa44ff"/><stop offset="100%" stop-color="#7722cc"/></linearGradient>
-          </defs>
-          <g transform="translate(60,42)">
-            <polygon points="-10,-22 10,-32 30,-22 10,-12" fill="url(#gd1)"/>
-            <polygon points="10,-32 30,-42 50,-32 30,-22" fill="url(#gd1)" opacity=".9"/>
-            <polygon points="-30,-12 -10,-22 10,-12 -10,-2" fill="url(#gd1)" opacity=".85"/>
-            <polygon points="-10,-22 10,-32 30,-22 10,-12" fill="url(#gd1)" opacity=".75"/>
-            <g transform="skewY(30)">
-              <rect x="-32" y="-12" width="20" height="20" rx="3" fill="url(#gd2)"/><rect x="-32" y="10" width="20" height="20" rx="3" fill="url(#gd2)" opacity=".8"/>
-              <rect x="-32" y="32" width="20" height="20" rx="3" fill="url(#gd2)" opacity=".6"/><rect x="-10" y="-12" width="20" height="20" rx="3" fill="url(#gd2)" opacity=".9"/>
-              <rect x="-10" y="10" width="20" height="20" rx="3" fill="url(#gd2)" opacity=".7"/><rect x="-10" y="32" width="20" height="20" rx="3" fill="url(#gd2)" opacity=".5"/>
-            </g>
-            <g transform="skewY(-30)">
-              <rect x="14" y="-12" width="20" height="20" rx="3" fill="url(#gd3)"/><rect x="14" y="10" width="20" height="20" rx="3" fill="url(#gd3)" opacity=".8"/>
-              <rect x="14" y="32" width="20" height="20" rx="3" fill="url(#gd3)" opacity=".6"/><rect x="36" y="-12" width="20" height="20" rx="3" fill="url(#gd3)" opacity=".9"/>
-              <rect x="36" y="10" width="20" height="20" rx="3" fill="url(#gd3)" opacity=".7"/><rect x="36" y="32" width="20" height="20" rx="3" fill="url(#gd3)" opacity=".5"/>
-            </g>
-          </g>
-        </svg>
-      </div>
-      <span class="dock-label">CUBO</span>
+    <div class="dock-item" onclick="switchView('dashboard')" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; opacity: 0.7; transition: 0.2s;">
+      <span class="material-symbols-outlined" style="font-size: 24px; color: #ef4444;">home</span>
+      <span style="font-size: 10px; font-weight: 600; color: #ef4444;">Inicio</span>
     </div>
 
-    <!-- Fans / Rolodex -->
-    <div class="dock-item" onclick="switchView('frm')">
-      <div class="dock-icon" style="background: linear-gradient(135deg, #1e3a8a, #3b82f6); border-color: rgba(59, 130, 246, 0.4);">
-        <span class="material-symbols-outlined" style="color: white; font-size: 24px;">group</span>
-      </div>
-      <span class="dock-label">Fans</span>
+    <div class="dock-item" onclick="switchView('frm')" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; opacity: 0.5; transition: 0.2s;">
+      <span class="material-symbols-outlined" style="font-size: 24px; color: #3b82f6;">group</span>
+      <span style="font-size: 10px; font-weight: 500;">Fans</span>
     </div>
 
-    <!-- Divider -->
-    <div style="width: 1px; height: 32px; background: rgba(255,255,255,0.2); margin: 0 4px 8px 4px; border-radius: 1px;"></div>
-
-    <!-- Kujo -->
-    <div class="dock-item" onclick="activateDockAgent('kujo')" data-agent="kujo">
-      <div class="dock-badge">1</div>
-      <div class="dock-icon" style="background: linear-gradient(135deg, #14532d, #22c55e); border-color: rgba(34, 197, 94, 0.4); --dock-glow: rgba(34, 197, 94, 0.4);">
-        <span class="material-symbols-outlined" style="color: white; font-size: 26px;">gavel</span>
+    <!-- BENJI CENTER ICON -->
+    <div class="dock-item active" onclick="activateDockAgent('benji')" style="position: relative; top: -15px; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer;">
+      <div style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #713f12, #eab308); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 4px rgba(15, 15, 20, 0.9), 0 0 30px rgba(234, 179, 8, 0.5); border: 2px solid #fde047;">
+        <span class="material-symbols-outlined" style="font-size: 32px; color: #fff;">payments</span>
       </div>
-      <span class="dock-label">Kujo - Legal</span>
+      <div style="text-align: center;">
+        <span style="font-size: 12px; font-weight: 700; color: #eab308; display: block;">Benji</span>
+        <span style="font-size: 8px; color: rgba(255,255,255,0.4);">doble tap</span>
+      </div>
     </div>
 
-    <!-- Benji -->
-    <div class="dock-item active" data-agent="benji" onclick="activateDockAgent('benji')">
-      <div class="dock-badge">3</div>
-      <div class="dock-icon" style="background: linear-gradient(135deg, #713f12, #eab308); border-color: rgba(234, 179, 8, 0.4); --dock-glow: rgba(234, 179, 8, 0.4);">
-        <span class="material-symbols-outlined" style="color: white; font-size: 26px;">attach_money</span>
-      </div>
-      <span class="dock-label">Benji - VIP</span>
+    <div class="dock-item" onclick="switchView('deals')" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; opacity: 0.5; transition: 0.2s;">
+      <span class="material-symbols-outlined" style="font-size: 24px; color: #eab308;">request_quote</span>
+      <span style="font-size: 10px; font-weight: 500;">Deals</span>
     </div>
 
-    <!-- Fido -->
-    <div class="dock-item" onclick="activateDockAgent('fido')" data-agent="fido">
-      <div class="dock-icon" style="background: linear-gradient(135deg, #075985, #0ea5e9); border-color: rgba(14, 165, 233, 0.4); --dock-glow: rgba(14, 165, 233, 0.4);">
-        <span class="material-symbols-outlined" style="color: white; font-size: 26px;">monitoring</span>
-      </div>
-      <span class="dock-label">Fido - Finanzas</span>
-    </div>
-
-    <!-- Roxy -->
-    <div class="dock-item" onclick="activateDockAgent('roxy')" data-agent="roxy">
-      <div class="dock-badge">29</div>
-      <div class="dock-icon" style="background: linear-gradient(135deg, #831843, #f43f5e); border-color: rgba(244, 63, 94, 0.4); --dock-glow: rgba(244, 63, 94, 0.4);">
-        <span class="material-symbols-outlined" style="color: white; font-size: 26px;">campaign</span>
-      </div>
-      <span class="dock-label">Roxy - PR</span>
-    </div>
-
-    <!-- Divider -->
-    <div style="width: 1px; height: 32px; background: rgba(255,255,255,0.2); margin: 0 4px 8px 4px; border-radius: 1px;"></div>
-
-    <!-- Settings / Gears -->
-    <div class="dock-item" onclick="switchView('settings')">
-      <div class="dock-badge">2</div>
-      <div class="dock-icon" style="background: linear-gradient(135deg, #374151, #6b7280); border-color: rgba(107, 114, 128, 0.4);">
-        <span class="material-symbols-outlined" style="color: white; font-size: 26px;">settings</span>
-      </div>
-      <span class="dock-label">Ajustes</span>
+    <div class="dock-item" onclick="switchView('broadcast')" style="display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; opacity: 0.5; transition: 0.2s;">
+      <span class="material-symbols-outlined" style="font-size: 24px; color: #f43f5e;">campaign</span>
+      <span style="font-size: 10px; font-weight: 500;">Masivos</span>
     </div>
 
   </nav>
