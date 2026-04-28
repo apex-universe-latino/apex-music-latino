@@ -11,6 +11,7 @@ const VALID_ARTISTS = ['arcoiris', 'joey-b', 'andrade', 'onboarding'];
 // Allowlist of path prefixes that the proxy can access
 const ALLOWED_PATHS = [
   '/rest/v1/leads_capture',
+  '/rest/v1/fan_leads',
   '/rest/v1/artists_config',
   '/rest/v1/email_campaigns',
   '/rest/v1/scheduled_emails',
