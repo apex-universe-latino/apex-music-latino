@@ -216,63 +216,115 @@
     /* ══════ FLOATING AGENT DOCK (macOS-style) ══════ */
     .agent-dock {
       position: fixed;
-      bottom: 0;
+      bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       align-items: flex-end;
       justify-content: center;
       gap: 12px;
-      padding: 10px 24px 16px;
+      padding: 12px 16px;
       z-index: 9999;
-      background: linear-gradient(to top, rgba(5,7,10,0.98) 0%, rgba(5,7,10,0.85) 60%, transparent 100%);
-      min-width: 400px;
+      background: rgba(20, 20, 25, 0.45);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
     }
     .dock-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      position: relative;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      /* Tooltip base */
     }
-    .dock-item:hover { transform: translateY(-4px); }
-    .dock-item.active { transform: translateY(-10px); }
     .dock-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px; /* iOS/macOS squircle */
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
-      border: 2px solid rgba(255,255,255,0.08);
+      font-size: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
       transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
+    /* Magnification effect */
+    .agent-dock:hover .dock-icon {
+      transform: scale(0.9);
+      opacity: 0.6;
+    }
+    .dock-item:hover .dock-icon {
+      transform: scale(1.3) translateY(-10px);
+      opacity: 1;
+      z-index: 10;
+      border-width: 2px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 24px var(--dock-glow, rgba(255,255,255,0.2));
+    }
+    /* Active bounce */
     .dock-item.active .dock-icon {
-      width: 60px;
-      height: 60px;
-      font-size: 26px;
-      border-width: 3px;
-      box-shadow: 0 0 24px var(--dock-glow, rgba(128,0,255,0.5));
-      animation: dock-bounce 0.5s ease;
+      transform: scale(1.3) translateY(-10px);
+      opacity: 1;
+      border-color: rgba(255,255,255,0.5);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 30px var(--dock-glow, rgba(128,0,255,0.5));
+      animation: dock-bounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
+    .dock-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 0 8px rgba(255,255,255,0.8);
+    }
+    /* Tooltip */
     .dock-label {
-      font-size: 9px;
-      font-weight: 700;
-      color: rgba(255,255,255,0.35);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .dock-item.active .dock-label {
+      position: absolute;
+      top: -45px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
       color: #fff;
-      font-size: 10px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.2s;
+      border: 1px solid rgba(255,255,255,0.1);
     }
-    .dock-hint {
-      font-size: 8px;
-      color: rgba(255,255,255,0.2);
-      margin-top: -2px;
+    .dock-item:hover .dock-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Notification Badge */
+    .dock-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #ff3b30;
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 12px;
+      padding: 2px 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.2);
+      z-index: 15;
+      min-width: 20px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .dock-item:hover .dock-badge {
+      transform: scale(0.8) translate(10px, -10px);
     }
 
     /* Summary Grid */
@@ -1041,9 +1093,45 @@
 
     <!-- Explorer Bar (Sidebar Nav) -->
     <aside class="explorer-bar">
-      <div class="explorer-header">
-        <span class="text-foil" style="font-weight: 800; font-size: 12px;">CUBO FRM</span>
-        <span id="sidebar-artist-name" style="font-size: 10px; opacity: 0.6;"></span>
+      <div class="explorer-header" style="padding: 12px 16px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 120" width="160" height="38">
+          <defs>
+            <linearGradient id="frmGradSidebar" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff0080"/><stop offset="40%" stop-color="#8000ff"/><stop offset="70%" stop-color="#0080ff"/><stop offset="100%" stop-color="#00ff00"/>
+            </linearGradient>
+            <linearGradient id="faceTopSB" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#8000ff"/><stop offset="100%" stop-color="#5500cc"/></linearGradient>
+            <linearGradient id="faceLeftSB" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6600dd"/><stop offset="100%" stop-color="#4400aa"/></linearGradient>
+            <linearGradient id="faceRightSB" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9933ff"/><stop offset="100%" stop-color="#6600cc"/></linearGradient>
+          </defs>
+          <g transform="translate(60, 50) scale(0.25)">
+            <g>
+              <path d="M-90,-90 L-30,-120 L30,-90 L-30,-60 Z" fill="url(#faceTopSB)" rx="4"/>
+              <path d="M-30,-120 L30,-150 L90,-120 L30,-90 Z" fill="url(#faceTopSB)"/><path d="M30,-150 L90,-180 L150,-150 L90,-120 Z" fill="url(#faceTopSB)"/>
+              <path d="M-150,-60 L-90,-90 L-30,-60 L-90,-30 Z" fill="url(#faceTopSB)"/><path d="M-90,-90 L-30,-120 L30,-90 L-30,-60 Z" fill="url(#faceTopSB)" opacity="0.85"/>
+              <path d="M-30,-120 L30,-150 L90,-120 L30,-90 Z" fill="url(#faceTopSB)" opacity="0.85"/><path d="M-210,-30 L-150,-60 L-90,-30 L-150,0 Z" fill="url(#faceTopSB)" opacity="0.7"/>
+              <path d="M-150,-60 L-90,-90 L-30,-60 L-90,-30 Z" fill="url(#faceTopSB)" opacity="0.7"/><path d="M-90,-90 L-30,-120 L30,-90 L-30,-60 Z" fill="url(#faceTopSB)" opacity="0.65"/>
+            </g>
+            <g>
+              <rect x="-152" y="2" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)"/><rect x="-152" y="65" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.85"/>
+              <rect x="-152" y="128" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.7"/><rect x="-89" y="2" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.9"/>
+              <rect x="-89" y="65" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.75"/><rect x="-89" y="128" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.6"/>
+              <rect x="-26" y="2" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.8"/><rect x="-26" y="65" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.65"/>
+              <rect x="-26" y="128" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.5"/>
+            </g>
+            <g>
+              <rect x="38" y="2" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)"/><rect x="38" y="65" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.85"/>
+              <rect x="38" y="128" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.7"/><rect x="101" y="2" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.9"/>
+              <rect x="101" y="65" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.75"/><rect x="101" y="128" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.6"/>
+              <rect x="164" y="2" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.8"/><rect x="164" y="65" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.65"/>
+              <rect x="164" y="128" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.5"/>
+            </g>
+          </g>
+          <g transform="translate(240, 28)">
+            <rect x="0" y="0" width="70" height="35" rx="8" fill="url(#frmGradSidebar)"/>
+            <text x="35" y="25" text-anchor="middle" font-family="'Space Grotesk', 'Inter', sans-serif" font-weight="900" font-size="20" fill="#ffffff" letter-spacing="1">FRM</text>
+          </g>
+          <text x="135" y="55" text-anchor="start" font-family="'Space Grotesk', 'Inter', sans-serif" font-weight="800" font-size="38" fill="url(#frmGradSidebar)" letter-spacing="4">CUBO</text>
+        </svg>
       </div>
       <div class="explorer-content" id="explorer-nav">
         <div class="nav-item active" onclick="switchView('dashboard')">
@@ -1748,50 +1836,98 @@
   </aside>
 
   <!-- Floating Agent Dock (macOS-style) -->
+  <!-- Floating Agent Dock (macOS-style) -->
   <nav class="agent-dock" id="agent-dock">
-    <div class="dock-item" onclick="switchView('dashboard')" title="Dashboard">
-      <div class="dock-icon" style="background: rgba(128,0,255,0.1); border-color: rgba(128,0,255,0.3); --dock-glow: rgba(128,0,255,0.4);">
-        <span class="material-symbols-outlined" style="color: var(--purple);">dashboard</span>
+    
+    <!-- CUBO App Icon -->
+    <div class="dock-item" onclick="switchView('dashboard')">
+      <div class="dock-icon" style="background: linear-gradient(135deg, #111, #222); border-color: rgba(128,0,255,0.4); --dock-glow: rgba(128,0,255,0.4);">
+        <!-- Embedded compact CUBO icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="28" height="28">
+          <defs>
+            <linearGradient id="gd1" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9933ff"/><stop offset="100%" stop-color="#6600cc"/></linearGradient>
+            <linearGradient id="gd2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7700dd"/><stop offset="100%" stop-color="#4400aa"/></linearGradient>
+            <linearGradient id="gd3" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#aa44ff"/><stop offset="100%" stop-color="#7722cc"/></linearGradient>
+          </defs>
+          <g transform="translate(60,42)">
+            <polygon points="-10,-22 10,-32 30,-22 10,-12" fill="url(#gd1)"/>
+            <polygon points="10,-32 30,-42 50,-32 30,-22" fill="url(#gd1)" opacity=".9"/>
+            <polygon points="-30,-12 -10,-22 10,-12 -10,-2" fill="url(#gd1)" opacity=".85"/>
+            <polygon points="-10,-22 10,-32 30,-22 10,-12" fill="url(#gd1)" opacity=".75"/>
+            <g transform="skewY(30)">
+              <rect x="-32" y="-12" width="20" height="20" rx="3" fill="url(#gd2)"/><rect x="-32" y="10" width="20" height="20" rx="3" fill="url(#gd2)" opacity=".8"/>
+              <rect x="-32" y="32" width="20" height="20" rx="3" fill="url(#gd2)" opacity=".6"/><rect x="-10" y="-12" width="20" height="20" rx="3" fill="url(#gd2)" opacity=".9"/>
+              <rect x="-10" y="10" width="20" height="20" rx="3" fill="url(#gd2)" opacity=".7"/><rect x="-10" y="32" width="20" height="20" rx="3" fill="url(#gd2)" opacity=".5"/>
+            </g>
+            <g transform="skewY(-30)">
+              <rect x="14" y="-12" width="20" height="20" rx="3" fill="url(#gd3)"/><rect x="14" y="10" width="20" height="20" rx="3" fill="url(#gd3)" opacity=".8"/>
+              <rect x="14" y="32" width="20" height="20" rx="3" fill="url(#gd3)" opacity=".6"/><rect x="36" y="-12" width="20" height="20" rx="3" fill="url(#gd3)" opacity=".9"/>
+              <rect x="36" y="10" width="20" height="20" rx="3" fill="url(#gd3)" opacity=".7"/><rect x="36" y="32" width="20" height="20" rx="3" fill="url(#gd3)" opacity=".5"/>
+            </g>
+          </g>
+        </svg>
       </div>
-      <span class="dock-label">Inicio</span>
+      <span class="dock-label">CUBO</span>
     </div>
-    <div class="dock-item" onclick="switchView('frm')" title="Fan Rolodex">
-      <div class="dock-icon" style="background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.1);">
-        <span class="material-symbols-outlined" style="color: rgba(255,255,255,0.5);">groups</span>
+
+    <!-- Fans / Rolodex -->
+    <div class="dock-item" onclick="switchView('frm')">
+      <div class="dock-icon" style="background: linear-gradient(135deg, #1e3a8a, #3b82f6); border-color: rgba(59, 130, 246, 0.4);">
+        <span class="material-symbols-outlined" style="color: white; font-size: 24px;">group</span>
       </div>
       <span class="dock-label">Fans</span>
     </div>
-    <div class="dock-item" onclick="activateDockAgent('kujo')" data-agent="kujo" title="Kujo — Deals & Contratos">
-      <div class="dock-icon" style="background: rgba(0,255,0,0.08); border-color: rgba(0,255,0,0.25); --dock-glow: rgba(0,255,0,0.4);">
-        <span style="font-size: 22px;">⚡</span>
+
+    <!-- Divider -->
+    <div style="width: 1px; height: 32px; background: rgba(255,255,255,0.2); margin: 0 4px 8px 4px; border-radius: 1px;"></div>
+
+    <!-- Kujo -->
+    <div class="dock-item" onclick="activateDockAgent('kujo')" data-agent="kujo">
+      <div class="dock-badge">1</div>
+      <div class="dock-icon" style="background: linear-gradient(135deg, #14532d, #22c55e); border-color: rgba(34, 197, 94, 0.4); --dock-glow: rgba(34, 197, 94, 0.4);">
+        <span class="material-symbols-outlined" style="color: white; font-size: 26px;">gavel</span>
       </div>
-      <span class="dock-label">Kujo</span>
+      <span class="dock-label">Kujo - Legal</span>
     </div>
-    <div class="dock-item active" data-agent="benji" onclick="activateDockAgent('benji')" title="Benji — Monetización VIP">
-      <div class="dock-icon" style="background: rgba(250,204,21,0.1); border-color: rgba(250,204,21,0.35); --dock-glow: rgba(250,204,21,0.4);">
-        <span style="font-size: 22px;">💰</span>
+
+    <!-- Benji -->
+    <div class="dock-item active" data-agent="benji" onclick="activateDockAgent('benji')">
+      <div class="dock-badge">3</div>
+      <div class="dock-icon" style="background: linear-gradient(135deg, #713f12, #eab308); border-color: rgba(234, 179, 8, 0.4); --dock-glow: rgba(234, 179, 8, 0.4);">
+        <span class="material-symbols-outlined" style="color: white; font-size: 26px;">attach_money</span>
       </div>
-      <span class="dock-label">Benji</span>
-      <span class="dock-hint">doble tap</span>
+      <span class="dock-label">Benji - VIP</span>
     </div>
-    <div class="dock-item" onclick="activateDockAgent('fido')" data-agent="fido" title="Fido — Finanzas & Royalties">
-      <div class="dock-icon" style="background: rgba(0,128,255,0.08); border-color: rgba(0,128,255,0.25); --dock-glow: rgba(0,128,255,0.4);">
-        <span style="font-size: 22px;">💹</span>
+
+    <!-- Fido -->
+    <div class="dock-item" onclick="activateDockAgent('fido')" data-agent="fido">
+      <div class="dock-icon" style="background: linear-gradient(135deg, #075985, #0ea5e9); border-color: rgba(14, 165, 233, 0.4); --dock-glow: rgba(14, 165, 233, 0.4);">
+        <span class="material-symbols-outlined" style="color: white; font-size: 26px;">monitoring</span>
       </div>
-      <span class="dock-label">Fido</span>
+      <span class="dock-label">Fido - Finanzas</span>
     </div>
-    <div class="dock-item" onclick="activateDockAgent('roxy')" data-agent="roxy" title="Roxy — PR & Contenido">
-      <div class="dock-icon" style="background: rgba(255,0,128,0.08); border-color: rgba(255,0,128,0.25); --dock-glow: rgba(255,0,128,0.4);">
-        <span style="font-size: 22px;">📊</span>
+
+    <!-- Roxy -->
+    <div class="dock-item" onclick="activateDockAgent('roxy')" data-agent="roxy">
+      <div class="dock-badge">29</div>
+      <div class="dock-icon" style="background: linear-gradient(135deg, #831843, #f43f5e); border-color: rgba(244, 63, 94, 0.4); --dock-glow: rgba(244, 63, 94, 0.4);">
+        <span class="material-symbols-outlined" style="color: white; font-size: 26px;">campaign</span>
       </div>
-      <span class="dock-label">Roxy</span>
+      <span class="dock-label">Roxy - PR</span>
     </div>
-    <div class="dock-item" onclick="switchView('broadcast')" title="Broadcast Masivo">
-      <div class="dock-icon" style="background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.1);">
-        <span class="material-symbols-outlined" style="color: rgba(255,255,255,0.5);">campaign</span>
+
+    <!-- Divider -->
+    <div style="width: 1px; height: 32px; background: rgba(255,255,255,0.2); margin: 0 4px 8px 4px; border-radius: 1px;"></div>
+
+    <!-- Settings / Gears -->
+    <div class="dock-item" onclick="switchView('settings')">
+      <div class="dock-badge">2</div>
+      <div class="dock-icon" style="background: linear-gradient(135deg, #374151, #6b7280); border-color: rgba(107, 114, 128, 0.4);">
+        <span class="material-symbols-outlined" style="color: white; font-size: 26px;">settings</span>
       </div>
-      <span class="dock-label">Masivos</span>
+      <span class="dock-label">Ajustes</span>
     </div>
+
   </nav>
 
 </div>
