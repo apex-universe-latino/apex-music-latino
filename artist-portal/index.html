@@ -2305,7 +2305,7 @@ function addAssetToHistory(type, url) {
    ================================================================ */
 async function loadDashboardStats() {
   try {
-    const leadsPath = `/rest/v1/leads_capture?artist_name=eq.${encodeURIComponent(currentArtist.name)}&order=created_at.desc`;
+    const leadsPath = `/rest/v1/leads_capture?artist_name=ilike.${encodeURIComponent(currentArtist.name)}&order=created_at.desc`;
     const res = await sbProxy(leadsPath, 'GET');
     const data = await res.json();
 
