@@ -116,11 +116,12 @@
     #portal { display: none; min-height: 100vh; }
     /* VS Code Style Layout */
     #app-container {
-      display: flex;
+      display: grid;
+      grid-template-columns: 260px 1fr;
       height: 100vh;
       overflow: hidden;
       background: var(--bg-deep);
-      padding-bottom: 80px; /* Space for floating agent dock */
+      padding-bottom: 0px;
     }
 
     /* Activity Bar (Slim Left) */
@@ -224,7 +225,7 @@
     }
 
     /* Agent Sidebar (Right) — HIDDEN, replaced by floating dock */
-    .agent-sidebar { display: none !important; }
+    .agent-sidebar { width: 100%; padding-left: 24px; border-left: 1px solid rgba(255,255,255,0.05); }
     .agent-card {
       background: rgba(10,7,16,0.85);
       border: 1px solid rgba(128,0,255,0.2);
@@ -358,7 +359,21 @@
       gap: 16px;
       margin-bottom: 12px;
     }
+    
     .summary-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-fans::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: #00ffcc; box-shadow: 0 0 10px #00ffcc; }
+    .card-ids::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: #8000ff; box-shadow: 0 0 10px #8000ff; }
+    .card-revenue::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: #fbbf24; box-shadow: 0 0 10px #fbbf24; }
+    .card-engagement::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: #ff0080; box-shadow: 0 0 10px #ff0080; }
+
+    /* old */ .summary-card-disabled {
       background: var(--bg-card);
       border: 1px solid rgba(255,255,255,0.05);
       border-radius: 16px;
@@ -1091,179 +1106,101 @@
 <div id="portal">
   <div id="app-container">
     <!-- Activity Bar -->
-    <aside class="activity-bar">
-      <div class="activity-item active" title="Dashboard" onclick="switchView('dashboard')">
-        <span class="material-symbols-outlined">dashboard</span>
-      </div>
-      <div class="activity-item" title="Asset Generator" onclick="switchView('assets')">
-        <span class="material-symbols-outlined">qr_code_2</span>
-      </div>
-      <div class="activity-item" title="FRM" onclick="switchView('frm')">
-        <span class="material-symbols-outlined">groups</span>
-      </div>
-      <div class="activity-item" title="EPK Editor" onclick="switchView('epk')">
-        <span class="material-symbols-outlined">person</span>
-      </div>
-      <div class="activity-item" title="Marketing Hub" onclick="switchView('marketing')">
-        <span class="material-symbols-outlined">campaign</span>
-      </div>
-      <div class="activity-item" title="Subscription" onclick="switchView('subscription')" style="margin-top: auto;">
-        <span class="material-symbols-outlined">credit_card</span>
-      </div>
-      <div class="activity-item" title="Logout" onclick="logout()">
-        <span class="material-symbols-outlined">logout</span>
-      </div>
-    </aside>
+    
 
     <!-- Explorer Bar (Sidebar Nav) -->
-    <aside class="explorer-bar">
-      <div class="explorer-header" style="padding: 12px 16px;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 120" width="160" height="38">
-          <defs>
-            <linearGradient id="frmGradSidebar" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#ff0080"/><stop offset="40%" stop-color="#8000ff"/><stop offset="70%" stop-color="#0080ff"/><stop offset="100%" stop-color="#00ff00"/>
-            </linearGradient>
-            <linearGradient id="faceTopSB" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#8000ff"/><stop offset="100%" stop-color="#5500cc"/></linearGradient>
-            <linearGradient id="faceLeftSB" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6600dd"/><stop offset="100%" stop-color="#4400aa"/></linearGradient>
-            <linearGradient id="faceRightSB" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#9933ff"/><stop offset="100%" stop-color="#6600cc"/></linearGradient>
-          </defs>
-          <g transform="translate(60, 50) scale(0.25)">
-            <g>
-              <path d="M-90,-90 L-30,-120 L30,-90 L-30,-60 Z" fill="url(#faceTopSB)" rx="4"/>
-              <path d="M-30,-120 L30,-150 L90,-120 L30,-90 Z" fill="url(#faceTopSB)"/><path d="M30,-150 L90,-180 L150,-150 L90,-120 Z" fill="url(#faceTopSB)"/>
-              <path d="M-150,-60 L-90,-90 L-30,-60 L-90,-30 Z" fill="url(#faceTopSB)"/><path d="M-90,-90 L-30,-120 L30,-90 L-30,-60 Z" fill="url(#faceTopSB)" opacity="0.85"/>
-              <path d="M-30,-120 L30,-150 L90,-120 L30,-90 Z" fill="url(#faceTopSB)" opacity="0.85"/><path d="M-210,-30 L-150,-60 L-90,-30 L-150,0 Z" fill="url(#faceTopSB)" opacity="0.7"/>
-              <path d="M-150,-60 L-90,-90 L-30,-60 L-90,-30 Z" fill="url(#faceTopSB)" opacity="0.7"/><path d="M-90,-90 L-30,-120 L30,-90 L-30,-60 Z" fill="url(#faceTopSB)" opacity="0.65"/>
+    
+    <aside class="sidebar" style="width: 260px; min-width: 260px; background: var(--bg-deep); border-right: 1px solid rgba(128,0,255,0.08); display: flex; flex-direction: column; height: 100vh; position: relative; padding-bottom: 24px;">
+      <div class="explorer-header" style="padding: 24px 20px 16px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 120" width="120" height="28">
+            <defs>
+              <linearGradient id="frmGradSidebar" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff0080"/><stop offset="40%" stop-color="#8000ff"/><stop offset="70%" stop-color="#0080ff"/><stop offset="100%" stop-color="#00ff00"/>
+              </linearGradient>
+            </defs>
+            <text x="0" y="55" text-anchor="start" font-family="'Space Grotesk', 'Inter', sans-serif" font-weight="800" font-size="38" fill="url(#frmGradSidebar)" letter-spacing="4">CUBO</text>
+            <g transform="translate(130, 28)">
+              <rect x="0" y="0" width="70" height="35" rx="8" fill="url(#frmGradSidebar)"/>
+              <text x="35" y="25" text-anchor="middle" font-family="'Space Grotesk', 'Inter', sans-serif" font-weight="900" font-size="20" fill="#ffffff" letter-spacing="1">FRM</text>
             </g>
-            <g>
-              <rect x="-152" y="2" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)"/><rect x="-152" y="65" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.85"/>
-              <rect x="-152" y="128" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.7"/><rect x="-89" y="2" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.9"/>
-              <rect x="-89" y="65" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.75"/><rect x="-89" y="128" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.6"/>
-              <rect x="-26" y="2" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.8"/><rect x="-26" y="65" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.65"/>
-              <rect x="-26" y="128" width="58" height="58" rx="6" fill="url(#faceLeftSB)" transform="skewY(30) translate(0, -30)" opacity="0.5"/>
-            </g>
-            <g>
-              <rect x="38" y="2" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)"/><rect x="38" y="65" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.85"/>
-              <rect x="38" y="128" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.7"/><rect x="101" y="2" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.9"/>
-              <rect x="101" y="65" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.75"/><rect x="101" y="128" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.6"/>
-              <rect x="164" y="2" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.8"/><rect x="164" y="65" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.65"/>
-              <rect x="164" y="128" width="58" height="58" rx="6" fill="url(#faceRightSB)" transform="skewY(-30) translate(0, -30)" opacity="0.5"/>
-            </g>
-          </g>
-          <g transform="translate(240, 28)">
-            <rect x="0" y="0" width="70" height="35" rx="8" fill="url(#frmGradSidebar)"/>
-            <text x="35" y="25" text-anchor="middle" font-family="'Space Grotesk', 'Inter', sans-serif" font-weight="900" font-size="20" fill="#ffffff" letter-spacing="1">FRM</text>
-          </g>
-          <text x="135" y="55" text-anchor="start" font-family="'Space Grotesk', 'Inter', sans-serif" font-weight="800" font-size="38" fill="url(#frmGradSidebar)" letter-spacing="4">CUBO</text>
-        </svg>
-      </div>
-      <div class="explorer-content" id="explorer-nav" style="overflow-y: auto;">
-        
-        <!-- OPEN EDITORS -->
-        <div class="explorer-section">
-          <div class="explorer-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-            <span class="material-symbols-outlined chevron">expand_more</span>
-            OPEN EDITORS
-          </div>
-          <div class="explorer-section-content">
-            <div class="nav-item active" onclick="switchView('dashboard')">
-              <span class="material-symbols-outlined" style="font-size:16px;">dashboard</span>
-              Dashboard
-            </div>
-            <div class="nav-item" onclick="switchView('settings')">
-              <span class="material-symbols-outlined" style="font-size:16px;">settings</span>
-              Ajustes
-            </div>
-            <div class="nav-item" onclick="switchView('config')">
-              <span class="material-symbols-outlined" style="font-size:16px;">settings</span>
-              Config
-            </div>
-          </div>
+          </svg>
         </div>
-
-        <!-- WORKSPACES -->
-        <div class="explorer-section">
-          <div class="explorer-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-            <span class="material-symbols-outlined chevron">expand_more</span>
-            WORKSPACES
-          </div>
-          <div class="explorer-section-content">
-            <div class="nav-item indent" onclick="switchView('frm')">
-              <span class="material-symbols-outlined" style="font-size:16px;">folder_open</span>
-              Fan Rolodex
-              <span class="nav-counter">0</span>
-            </div>
-            <div class="nav-item indent" onclick="switchView('marketing')">
-              <span class="material-symbols-outlined" style="font-size:16px;">folder_open</span>
-              Marketing Hub
-            </div>
-            <div class="nav-item indent" onclick="switchView('broadcast')">
-              <span class="material-symbols-outlined" style="font-size:16px;">folder_open</span>
-              Masivos (Inbox)
-            </div>
-            <div class="nav-item indent" onclick="switchView('identity')">
-              <span class="material-symbols-outlined" style="font-size:16px;">folder_open</span>
-              Identity Lab
-            </div>
-            <div class="nav-item indent" onclick="switchView('epk')">
-              <span class="material-symbols-outlined" style="font-size:16px;">folder_open</span>
-              EPK Editor
-            </div>
-            <div class="nav-item indent" onclick="switchView('assets')">
-              <span class="material-symbols-outlined" style="font-size:16px;">folder_open</span>
-              Assets
-            </div>
-            <div class="nav-item indent" onclick="switchView('deals')">
-              <span class="material-symbols-outlined" style="font-size:16px;">folder_open</span>
-              Deals
-            </div>
-            <div class="nav-item indent" onclick="switchView('contracts')">
-              <span class="material-symbols-outlined" style="font-size:16px;">folder_open</span>
-              Contratos
-            </div>
-            <div class="nav-item indent" onclick="switchView('agents')">
-              <span class="material-symbols-outlined" style="font-size:16px;">folder_open</span>
-              Agentes
-            </div>
-            <div class="nav-item indent" onclick="switchView('payments')">
-              <span class="material-symbols-outlined" style="font-size:16px;">folder_open</span>
-              Pagos
-            </div>
-          </div>
-        </div>
-
-        <!-- SKILLS -->
-        <div class="explorer-section">
-          <div class="explorer-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-            <span class="material-symbols-outlined chevron">expand_more</span>
-            SKILLS
-          </div>
-          <div class="explorer-section-content">
-            <div class="nav-item indent">
-              <span class="material-symbols-outlined" style="font-size:16px;color:var(--green)">code</span>
-              25_stem_journey.txt
-            </div>
-            <div class="nav-item indent">
-              <span class="material-symbols-outlined" style="font-size:16px;color:var(--purple)">code</span>
-              scripts.py
-            </div>
-            <div class="nav-item indent">
-              <span class="material-symbols-outlined" style="font-size:16px;color:var(--pink)">favorite</span>
-              heartbeats.md
-            </div>
-          </div>
-        </div>
-
       </div>
       
-      <!-- Onboarding Progress -->
-      <div style="padding: 20px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: auto;">
-        <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 8px;">
-          <span style="color: rgba(255,255,255,0.4);">Onboarding</span>
-          <span id="onboarding-percent" style="color: var(--purple);">82%</span>
+      <div class="explorer-content" id="explorer-nav" style="overflow-y: auto; flex: 1; padding-top: 16px;">
+        <div class="nav-item active" onclick="switchView('dashboard')" style="padding: 12px 20px; font-weight: 500;">
+          <span class="material-symbols-outlined" style="font-size:18px;">dashboard</span>
+          Dashboard
         </div>
-        <div style="height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden;">
-          <div id="onboarding-progress-fill" style="width: 82%; height: 100%; background: var(--gradient-brand); transition: width 0.5s;"></div>
+        <div class="nav-item" onclick="switchView('frm')" style="padding: 12px 20px; font-weight: 500;">
+          <span class="material-symbols-outlined" style="font-size:18px;">groups</span>
+          Fan Rolodex
+          <span class="nav-counter" style="margin-left:auto; background:rgba(255,255,255,0.05); padding:2px 8px; border-radius:12px; font-size:11px;">340</span>
+        </div>
+        <div class="nav-item" onclick="switchView('identity')" style="padding: 12px 20px; font-weight: 500;">
+          <span class="material-symbols-outlined" style="font-size:18px;">fingerprint</span>
+          Identity Lab
+          <span class="nav-counter" style="margin-left:auto; background:rgba(255,255,255,0.05); padding:2px 8px; border-radius:12px; font-size:11px;">28</span>
+        </div>
+        <div class="nav-item" onclick="switchView('assets')" style="padding: 12px 20px; font-weight: 500;">
+          <span class="material-symbols-outlined" style="font-size:18px;">qr_code_2</span>
+          QR & Assets
+        </div>
+        <div class="nav-item" onclick="switchView('broadcast')" style="padding: 12px 20px; font-weight: 500;">
+          <span class="material-symbols-outlined" style="font-size:18px;">campaign</span>
+          Broadcast
+        </div>
+        <div class="nav-item" onclick="switchView('deals')" style="padding: 12px 20px; font-weight: 500;">
+          <span class="material-symbols-outlined" style="font-size:18px;">handshake</span>
+          Deals
+          <span class="nav-counter" style="margin-left:auto; background:rgba(255,255,255,0.05); padding:2px 8px; border-radius:12px; font-size:11px;">3</span>
+        </div>
+        <div class="nav-item" onclick="switchView('contracts')" style="padding: 12px 20px; font-weight: 500;">
+          <span class="material-symbols-outlined" style="font-size:18px;">description</span>
+          Contratos
+          <span class="nav-counter" style="margin-left:auto; background:rgba(255,255,255,0.05); padding:2px 8px; border-radius:12px; font-size:11px;">1</span>
+        </div>
+        <div class="nav-item" onclick="switchView('agents')" style="padding: 12px 20px; font-weight: 500;">
+          <span class="material-symbols-outlined" style="font-size:18px;">smart_toy</span>
+          Agentes
+        </div>
+        <div class="nav-item" onclick="switchView('payments')" style="padding: 12px 20px; font-weight: 500;">
+          <span class="material-symbols-outlined" style="font-size:18px;">payments</span>
+          Pagos
+        </div>
+        <div class="nav-item" onclick="switchView('config')" style="padding: 12px 20px; font-weight: 500;">
+          <span class="material-symbols-outlined" style="font-size:18px;">settings</span>
+          Config
+        </div>
+      </div>
+      
+      <!-- Agentes Activos Section -->
+      <div style="padding: 20px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: auto;">
+        <p style="font-size: 10px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; font-weight: 700;">AGENTES ACTIVOS</p>
+        <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(255,200,0,0.1); border: 1px solid rgba(255,200,0,0.3); display:flex; align-items:center; justify-content:center;">
+             <span class="material-symbols-outlined" style="font-size:16px; color:#fbbf24;">bolt</span>
+          </div>
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0,255,100,0.1); border: 1px solid rgba(0,255,100,0.3); display:flex; align-items:center; justify-content:center;">
+             <span class="material-symbols-outlined" style="font-size:16px; color:#4ade80;">attach_money</span>
+          </div>
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0,200,255,0.1); border: 1px solid rgba(0,200,255,0.3); display:flex; align-items:center; justify-content:center;">
+             <span class="material-symbols-outlined" style="font-size:16px; color:#38bdf8;">monitoring</span>
+          </div>
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(255,0,255,0.1); border: 1px solid rgba(255,0,255,0.3); display:flex; align-items:center; justify-content:center;">
+             <span class="material-symbols-outlined" style="font-size:16px; color:#c026d3;">trending_up</span>
+          </div>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 12px;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--pink); display:flex; align-items:center; justify-content:center; font-weight:700; color:white; font-size:14px;">
+            J
+          </div>
+          <div>
+            <div style="font-size: 13px; font-weight: 600; color: white;">John Acevedo</div>
+            <div style="font-size: 10px; color: rgba(255,255,255,0.4);">Artista Pro · Apex</div>
+          </div>
         </div>
       </div>
     </aside>
@@ -1322,7 +1259,7 @@
         <!-- Rainbow Engine Health Bar -->
         <div class="rainbow-bar"></div>
 
-        <div style="display: grid; grid-template-cols: 1.5fr 1fr; gap: 24px;">
+        <div style="display: grid; grid-template-columns: 1.5fr 1fr 260px; gap: 24px;">
           <!-- Left: Activity Feed -->
           <div>
             <h3 style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px;">Actividad en Tiempo Real</h3>
@@ -1387,6 +1324,76 @@
               <button style="width:100%; padding:10px; background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3); border-radius:10px; font-size:13px; font-weight:700; backdrop-filter:blur(10px);">Crear Campaña →</button>
             </div>
           </div>
+
+<!-- Agent Sidebar (The Pack) -->
+      <aside class="agent-sidebar">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+          <h3 style="font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em;">Agentes CUBO</h3>
+          <span class="material-symbols-outlined" style="font-size: 18px; color: rgba(255,255,255,0.2);">info</span>
+        </div>
+
+        <div class="agent-card">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 32px; height: 32px; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+              <span class="material-symbols-outlined" style="color: #ef4444; font-size: 18px;">gavel</span>
+            </div>
+            <div style="flex:1;">
+              <p style="font-size: 13px; font-weight: 700;">Kujo</p>
+              <p style="font-size: 10px; color: rgba(255,255,255,0.4);">Deals & Contratos</p>
+            </div>
+            <span class="agent-dot"></span>
+          </div>
+          <p style="font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; margin-bottom: 12px;">Protege tus contratos y oportunidades.</p>
+          <button style="width: 100%; padding: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; font-size: 11px; font-weight: 600;">Consultar →</button>
+        </div>
+
+        <div class="agent-card">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 32px; height: 32px; background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+              <span class="material-symbols-outlined" style="color: #fbbf24; font-size: 18px;">payments</span>
+            </div>
+            <div style="flex:1;">
+              <p style="font-size: 13px; font-weight: 700;">Benji</p>
+              <p style="font-size: 10px; color: rgba(255,255,255,0.4);">Monetización VIP</p>
+            </div>
+            <span class="agent-dot"></span>
+          </div>
+          <p style="font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; margin-bottom: 12px;">Maximiza ingresos con fans de alto valor.</p>
+          <button style="width: 100%; padding: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; font-size: 11px; font-weight: 600;">Consultar →</button>
+        </div>
+
+        <div class="agent-card">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 32px; height: 32px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+              <span class="material-symbols-outlined" style="color: #3b82f6; font-size: 18px;">account_balance</span>
+            </div>
+            <div style="flex:1;">
+              <p style="font-size: 13px; font-weight: 700;">Fido</p>
+              <p style="font-size: 10px; color: rgba(255,255,255,0.4);">Finanzas & Royalties</p>
+            </div>
+            <span class="agent-dot"></span>
+          </div>
+          <p style="font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; margin-bottom: 12px;">Controla tus regalías y pagos.</p>
+          <button style="width: 100%; padding: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; font-size: 11px; font-weight: 600;">Consultar →</button>
+        </div>
+
+        <div class="agent-card">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 32px; height: 32px; background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+              <span class="material-symbols-outlined" style="color: #a855f7; font-size: 18px;">campaign</span>
+            </div>
+            <div style="flex:1;">
+              <p style="font-size: 13px; font-weight: 700;">Roxy</p>
+              <p style="font-size: 10px; color: rgba(255,255,255,0.4);">PR & Contenido</p>
+            </div>
+            <span class="agent-dot"></span>
+          </div>
+          <p style="font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; margin-bottom: 12px;">Amplifica tu alcance y presencia.</p>
+          <button style="width: 100%; padding: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; font-size: 11px; font-weight: 600;">Consultar →</button>
+        </div>
+        
+        <p style="text-align: center; font-size: 9px; color: rgba(255,255,255,0.1); margin-top: 40px; text-transform: uppercase; letter-spacing: 0.1em;">Powered by CUBO FRM™ · Apex</p>
+      </aside>
         </div>
       </div>
 
@@ -2192,7 +2199,7 @@ function logout() {
 function applyArtistTheme() {
   const a = currentArtist;
   document.getElementById('sidebar-artist-name').textContent = a.name;
-  document.getElementById('welcome-msg').textContent = 'Bienvenido, ' + a.name;
+  document.getElementById('welcome-msg').textContent = 'Hola, ' + a.name;
   
   // Update Header labeling if we had one, but we are using explorer header
   const sidebarName = document.getElementById('sidebar-artist-name');
@@ -3894,75 +3901,7 @@ function crmShowAddVenue() {
         <button class="crm-btn primary" onclick="crmSaveNewVenue()"><span class="material-symbols-outlined" style="font-size:16px;">save</span> Save Venue</button>
       </div>
 
-      <!-- Agent Sidebar (The Pack) -->
-      <aside class="agent-sidebar">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
-          <h3 style="font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em;">Agentes CUBO</h3>
-          <span class="material-symbols-outlined" style="font-size: 18px; color: rgba(255,255,255,0.2);">info</span>
-        </div>
-
-        <div class="agent-card">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-            <div style="width: 32px; height: 32px; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-              <span class="material-symbols-outlined" style="color: #ef4444; font-size: 18px;">gavel</span>
-            </div>
-            <div style="flex:1;">
-              <p style="font-size: 13px; font-weight: 700;">Kujo</p>
-              <p style="font-size: 10px; color: rgba(255,255,255,0.4);">Deals & Contratos</p>
-            </div>
-            <span class="agent-dot"></span>
-          </div>
-          <p style="font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; margin-bottom: 12px;">Protege tus contratos y oportunidades.</p>
-          <button style="width: 100%; padding: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; font-size: 11px; font-weight: 600;">Consultar →</button>
-        </div>
-
-        <div class="agent-card">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-            <div style="width: 32px; height: 32px; background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-              <span class="material-symbols-outlined" style="color: #fbbf24; font-size: 18px;">payments</span>
-            </div>
-            <div style="flex:1;">
-              <p style="font-size: 13px; font-weight: 700;">Benji</p>
-              <p style="font-size: 10px; color: rgba(255,255,255,0.4);">Monetización VIP</p>
-            </div>
-            <span class="agent-dot"></span>
-          </div>
-          <p style="font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; margin-bottom: 12px;">Maximiza ingresos con fans de alto valor.</p>
-          <button style="width: 100%; padding: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; font-size: 11px; font-weight: 600;">Consultar →</button>
-        </div>
-
-        <div class="agent-card">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-            <div style="width: 32px; height: 32px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-              <span class="material-symbols-outlined" style="color: #3b82f6; font-size: 18px;">account_balance</span>
-            </div>
-            <div style="flex:1;">
-              <p style="font-size: 13px; font-weight: 700;">Fido</p>
-              <p style="font-size: 10px; color: rgba(255,255,255,0.4);">Finanzas & Royalties</p>
-            </div>
-            <span class="agent-dot"></span>
-          </div>
-          <p style="font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; margin-bottom: 12px;">Controla tus regalías y pagos.</p>
-          <button style="width: 100%; padding: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; font-size: 11px; font-weight: 600;">Consultar →</button>
-        </div>
-
-        <div class="agent-card">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-            <div style="width: 32px; height: 32px; background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-              <span class="material-symbols-outlined" style="color: #a855f7; font-size: 18px;">campaign</span>
-            </div>
-            <div style="flex:1;">
-              <p style="font-size: 13px; font-weight: 700;">Roxy</p>
-              <p style="font-size: 10px; color: rgba(255,255,255,0.4);">PR & Contenido</p>
-            </div>
-            <span class="agent-dot"></span>
-          </div>
-          <p style="font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; margin-bottom: 12px;">Amplifica tu alcance y presencia.</p>
-          <button style="width: 100%; padding: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; font-size: 11px; font-weight: 600;">Consultar →</button>
-        </div>
-        
-        <p style="text-align: center; font-size: 9px; color: rgba(255,255,255,0.1); margin-top: 40px; text-transform: uppercase; letter-spacing: 0.1em;">Powered by CUBO FRM™ · Apex</p>
-      </aside>
+      
       </div>
     </div>
   </div>`;
