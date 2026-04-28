@@ -1736,7 +1736,20 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
    SESSION
    ================================================================ */
 function checkSession() {
-  // URL-based auto-login: /artist-portal/?artist=arcoiris
+  // 1. URL path-based auto-login: /artist-portal/arcoiris
+  const pathParts = window.location.pathname.split('/').filter(p => p);
+  // Expected structure: ['artist-portal', 'arcoiris']
+  if (pathParts.length >= 2 && pathParts[0] === 'artist-portal') {
+    const slug = pathParts[1];
+    if (ARTISTS[slug]) {
+      currentArtist = ARTISTS[slug];
+      localStorage.setItem('apex_portal_session', JSON.stringify(currentArtist));
+      enterPortal();
+      return;
+    }
+  }
+
+  // 2. URL search-based auto-login: /artist-portal/?artist=arcoiris
   const params = new URLSearchParams(window.location.search);
   const artistParam = params.get('artist');
   if (artistParam && ARTISTS[artistParam]) {

@@ -7,6 +7,7 @@
         { "source": "/blog/es/category/:cat*/", "destination": "/blog/es/index.html" },
         { "source": "/blog/es/category/:cat*", "destination": "/blog/es/index.html" },
         { "source": "/blog/category/:cat*/", "destination": "/blog/index.html" },
-        { "source": "/blog/category/:cat*", "destination": "/blog/index.html" }
+        { "source": "/blog/category/:cat*", "destination": "/blog/index.html" },
+        { "source": "/artist-portal/:slug*", "destination": "/artist-portal/index.html" }
     ]
 }
