@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #05070a;
+    color: #e5e7eb;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  :root {
+    --gradient-rainbow: linear-gradient(90deg, #ff0080 0%, #8000ff 40%, #0080ff 70%, #00ff00 100%);
+    --gradient-brand: linear-gradient(135deg, #8000ff 0%, #ff0080 100%);
+    --r: 1rem;
+    --pink: #ff0080;
+    --purple: #8000ff;
+    --blue: #0080ff;
+    --green: #00ff00;
+    --gold: #facc15;
+    --bg-deep: #05070a;
+    --bg-card: #0a0710;
+    --bg-inner: #050308;
+    --bg-elevated: #110a1f;
+    --text-muted: #9ca3af;
+  }
+
+  /* ---- LAYOUT ---- */
+  .ds-wrap { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  .ds-header { text-align: center; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .ds-logo { display: inline-flex; align-items: baseline; gap: 4px; margin-bottom: 0.5rem; }
+  .ds-logo-main { font-size: 2.2rem; font-weight: 900; background: var(--gradient-rainbow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; background-size: 300% 300%; animation: shift 6s ease infinite; }
+  .ds-logo-sub { font-size: 1rem; font-weight: 700; color: #4b5563; }
+  .ds-header p { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.15em; margin-top: 0.5rem; }
+
+  /* ---- SECTION TITLES ---- */
+  .section { margin-bottom: 3rem; }
+  .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #8000ff; margin-bottom: 0.5rem; }
+  .section-title { font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 1.25rem; }
+  .section-grid { display: grid; gap: 1rem; }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+  /* ---- COLOR PALETTE ---- */
+  .color-chip { border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 6px; }
+  .chip-swatch { width: 100%; height: 52px; border-radius: 8px; }
+  .chip-name { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+  .chip-hex { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text-muted); }
+  .chip-role { font-size: 0.6rem; color: #4b5563; margin-top: 2px; }
+
+  /* ---- RAINBOW ENGINE ---- */
+  .rb-outer {
+    position: relative;
+    background: var(--gradient-rainbow);
+    border-radius: var(--r);
+    padding: 2px;
+    background-size: 300% 300%;
+    animation: shift 6s ease infinite;
+    display: inline-block;
+  }
+  .rb-inner {
+    background: #0b0f19;
+    border-radius: calc(var(--r) - 2px);
+    position: relative;
+    z-index: 1;
+    padding: 0.75rem 1.5rem;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .rb-full { display: block; width: 100%; }
+
+  @keyframes shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* ---- GLASS CARD ANATOMY ---- */
+  .glass-outer {
+    background: rgba(10, 7, 16, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(128, 0, 255, 0.2);
+    border-radius: 24px;
+    padding: 1.25rem;
+    transition: border-color 0.3s;
+    cursor: default;
+  }
+  .glass-outer:hover { border-color: rgba(128, 0, 255, 0.5); }
+
+  .bezel-inner {
+    background: rgba(5, 3, 8, 0.92);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bezel-inner::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 100px; height: 100px;
+    background: rgba(128,0,255,0.2);
+    border-radius: 50%;
+    filter: blur(30px);
+    pointer-events: none;
+  }
+
+  /* ---- TEXT EFFECTS ---- */
+  .text-gradient {
+    background: var(--gradient-rainbow);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 300% 300%;
+    animation: shift 6s ease infinite;
+  }
+  .text-foil {
+    background: linear-gradient(45deg, #ff0080 0%, #8000ff 25%, #0080ff 50%, #ff0080 75%, #00ff00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 400% 400%;
+    animation: foil 4s ease-in-out infinite;
+  }
+  .text-brand {
+    background: linear-gradient(90deg, #0080ff 0%, #8000ff 50%, #ff0080 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: shift 5s ease-in-out infinite;
+  }
+
+  @keyframes foil {
+    0%, 100% { background-position: 0% 0%; filter: brightness(1); }
+    50% { background-position: 200% 200%; filter: brightness(1.3); }
+  }
+
+  /* ---- TYPOGRAPHY SAMPLES ---- */
+  .type-row { display: flex; flex-direction: column; gap: 1rem; }
+  .type-item {
+    background: #0a0710;
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .type-sample { flex: 1; }
+  .type-meta { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: #4b5563; line-height: 1.7; }
+
+  /* ---- BADGES / PILLS ---- */
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 10px; border-radius: 999px;
+    font-size: 0.65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .badge-green { background: rgba(0,255,0,0.1); border: 1px solid rgba(0,255,0,0.35); color: #00ff00; }
+  .badge-purple { background: rgba(128,0,255,0.15); border: 1px solid rgba(128,0,255,0.4); color: #a855f7; }
+  .badge-pink { background: rgba(255,0,128,0.1); border: 1px solid rgba(255,0,128,0.35); color: #ff0080; }
+  .badge-gold { background: rgba(250,204,21,0.1); border: 1px solid rgba(250,204,21,0.4); color: #facc15; animation: pulse-badge 2s ease infinite; }
+  .badge-blue { background: rgba(0,128,255,0.1); border: 1px solid rgba(0,128,255,0.35); color: #60a5fa; }
+
+  @keyframes pulse-badge {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(250,204,21,0); }
+    50% { box-shadow: 0 0 10px rgba(250,204,21,0.3); }
+  }
+
+  /* ---- PLATFORM NODES ---- */
+  .node {
+    background: #110a1f;
+    border-radius: 14px;
+    padding: 0.75rem;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+  .node-icon { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  .node-name { font-size: 0.7rem; font-weight: 700; color: #e5e7eb; }
+  .node-sub { font-size: 0.6rem; color: var(--text-muted); }
+
+  .node-tinder { border: 1px solid rgba(255,0,128,0.3); } .node-tinder:hover { border-color: rgba(255,0,128,0.8); }
+  .node-ig { border: 1px solid rgba(128,0,255,0.3); } .node-ig:hover { border-color: rgba(128,0,255,0.8); }
+  .node-tg { border: 1px solid rgba(0,128,255,0.3); } .node-tg:hover { border-color: rgba(0,128,255,0.8); }
+  .node-fb { border: 1px solid rgba(0,128,255,0.3); } .node-fb:hover { border-color: rgba(0,128,255,0.8); }
+
+  .node-tinder .node-icon { background: linear-gradient(135deg, #ff0080, #ff8c00); box-shadow: 0 0 10px rgba(255,0,128,0.4); }
+  .node-ig .node-icon { background: linear-gradient(135deg, #8000ff, #ff0080); box-shadow: 0 0 10px rgba(128,0,255,0.4); }
+  .node-tg .node-icon { background: #0088cc; box-shadow: 0 0 10px rgba(0,136,204,0.4); }
+  .node-fb .node-icon { background: #1877f2; box-shadow: 0 0 10px rgba(24,119,242,0.4); }
+
+  /* ---- GOLDEN RECORD CARD ---- */
+  .golden-record {
+    position: relative;
+    background: var(--gradient-rainbow);
+    border-radius: 18px;
+    padding: 2px;
+    background-size: 300% 300%;
+    animation: shift 6s ease infinite;
+  }
+  .golden-record-inner {
+    background: #0b0f19;
+    border-radius: 16px;
+    padding: 1rem;
+  }
+  .avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, #ff0080, #0080ff);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; color: #fff; font-size: 0.85rem;
+    border: 2px solid #0b0f19;
+  }
+  .metric-row {
+    display: flex; justify-content: space-between;
+    background: #0b1121; border-radius: 10px; padding: 0.6rem 0.75rem;
+    border: 1px solid rgba(255,255,255,0.07);
+    margin-top: 0.75rem;
+  }
+  .metric-item { text-align: center; flex: 1; }
+  .metric-label { font-size: 0.55rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .metric-val { font-size: 0.95rem; font-weight: 800; margin-top: 2px; }
+  .divider-v { width: 1px; background: rgba(255,255,255,0.07); align-self: stretch; }
+
+  /* ---- ANIMATIONS DEMO ---- */
+  .anim-row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+  .dot-particle {
+    width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.25);
+    animation: float-particle 4s ease-in-out infinite;
+  }
+  @keyframes float-particle {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.25; }
+    50% { transform: translateY(-12px) scale(1.3); opacity: 0.6; }
+  }
+
+  .spin-ring {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 2px solid transparent; border-top-color: #00ff00;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .pulse-dot {
+    width: 10px; height: 10px; border-radius: 50%; background: #00ff00;
+    animation: pulse-dot 2s ease infinite;
+    box-shadow: 0 0 0 0 rgba(0,255,0,0.5);
+    display: inline-block;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,255,0,0.5); }
+    50% { box-shadow: 0 0 0 8px rgba(0,255,0,0); }
+  }
+
+  .progress-bar-wrap {
+    flex: 1; height: 4px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%; background: linear-gradient(90deg, #8000ff, #ff0080);
+    animation: bar-grow 3s ease-in-out infinite alternate;
+    border-radius: 99px;
+  }
+  @keyframes bar-grow {
+    from { width: 20%; }
+    to { width: 94%; }
+  }
+
+  /* ---- ACTION BUTTON (Inside Card) ---- */
+  .action-bar {
+    background: linear-gradient(135deg, #8000ff, #ff0080);
+    padding: 1px; border-radius: 10px;
+  }
+  .action-bar-inner {
+    background: #050308; border-radius: 9px;
+    padding: 0.5rem 0.75rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  /* ---- ORBS / AMBIENT BG ---- */
+  .orb-demo {
+    position: relative; height: 100px; border-radius: 12px;
+    background: #05070a; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
+  }
+  .orb { position: absolute; border-radius: 50%; filter: blur(40px); mix-blend-mode: screen; }
+
+  /* ---- SPACING GUIDE ---- */
+  .spacing-item { display: flex; align-items: center; gap: 0.75rem; }
+  .spacing-block { background: rgba(128,0,255,0.25); border: 1px solid rgba(128,0,255,0.5); border-radius: 4px; height: 20px; flex-shrink: 0; }
+  .spacing-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text-muted); }
+
+  /* ---- TABS NAV ---- */
+  .ds-nav { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 2rem; padding: 0.5rem; background: #0a0710; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); }
+  .nav-btn { padding: 0.45rem 1rem; border-radius: 10px; border: none; background: transparent; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+  .nav-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+  .nav-btn.active { background: rgba(128,0,255,0.2); color: #a855f7; border: 1px solid rgba(128,0,255,0.4); }
+
+  /* ---- PAGE SECTIONS ---- */
+  .ds-section { display: none; }
+  .ds-section.active { display: block; }
+
+  /* ---- DIVIDERS ---- */
+  .h-rule { height: 1px; background: linear-gradient(90deg, transparent, rgba(128,0,255,0.3), transparent); margin: 1.5rem 0; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .cols-3 { grid-template-columns: 1fr 1fr; }
+    .cols-4 { grid-template-columns: 1fr 1fr; }
+    .cols-2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="ds-wrap">
+
+  <div class="ds-header">
+    <div class="ds-logo">
+      <span class="ds-logo-main">CUBO</span>
+      <span class="ds-logo-sub">FRM</span>
+    </div>
+    <p>Design System &amp; Component Reference</p>
+  </div>
+
+  <!-- NAV TABS -->
+  <div class="ds-nav">
+    <button class="nav-btn active" onclick="showTab('colors')">Colors</button>
+    <button class="nav-btn" onclick="showTab('typography')">Typography</button>
+    <button class="nav-btn" onclick="showTab('borders')">Borders &amp; Bezels</button>
+    <button class="nav-btn" onclick="showTab('components')">Components</button>
+    <button class="nav-btn" onclick="showTab('animation')">Motion</button>
+    <button class="nav-btn" onclick="showTab('spacing')">Spacing</button>
+  </div>
+
+  <!-- ===================== COLORS ===================== -->
+  <div id="tab-colors" class="ds-section active">
+    <div class="section">
+      <div class="section-label">01 — Foundation</div>
+      <div class="section-title">Background Palette</div>
+      <div class="section-grid cols-4">
+        <div class="color-chip" style="background:#111828;">
+          <div class="chip-swatch" style="background:#05070a;border:1px solid rgba(255,255,255,0.08);"></div>
+          <div class="chip-name">Deep Space</div>
+          <div class="chip-hex">#05070a</div>
+          <div class="chip-role">Main BG</div>
+        </div>
+        <div class="color-chip" style="background:#111828;">
+          <div class="chip-swatch" style="background:#0a0710;"></div>
+          <div class="chip-name">Card Base</div>
+          <div class="chip-hex">#0a0710</div>
+          <div class="chip-role">Glass Cards</div>
+        </div>
+        <div class="color-chip" style="background:#111828;">
+          <div class="chip-swatch" style="background:#050308;"></div>
+          <div class="chip-name">Bezel Inner</div>
+          <div class="chip-hex">#050308</div>
+          <div class="chip-role">Screen / Inner</div>
+        </div>
+        <div class="color-chip" style="background:#111828;">
+          <div class="chip-swatch" style="background:#110a1f;"></div>
+          <div class="chip-name">Elevated</div>
+          <div class="chip-hex">#110a1f</div>
+          <div class="chip-role">Panels / Rows</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="h-rule"></div>
+
+    <div class="section">
+      <div class="section-label">02 — Neon Accents</div>
+      <div class="section-title">Primary Signal Colors</div>
+      <div class="section-grid cols-4">
+        <div class="color-chip" style="background:#111828;">
+          <div class="chip-swatch" style="background:linear-gradient(135deg,#ff0080,#ff4da0);box-shadow:0 4px 20px rgba(255,0,128,0.4);"></div>
+          <div class="chip-name">Action Pink</div>
+          <div class="chip-hex">#ff0080</div>
+          <div class="chip-role">Monetization / Tinder</div>
+        </div>
+        <div class="color-chip" style="background:#111828;">
+          <div class="chip-swatch" style="background:linear-gradient(135deg,#8000ff,#a040ff);box-shadow:0 4px 20px rgba(128,0,255,0.4);"></div>
+          <div class="chip-name">AI Purple</div>
+          <div class="chip-hex">#8000ff</div>
+          <div class="chip-role">Brand / Instagram</div>
+        </div>
+        <div class="color-chip" style="background:#111828;">
+          <div class="chip-swatch" style="background:linear-gradient(135deg,#0080ff,#40a0ff);box-shadow:0 4px 20px rgba(0,128,255,0.4);"></div>
+          <div class="chip-name">Data Blue</div>
+          <div class="chip-hex">#0080ff</div>
+          <div class="chip-role">Telegram / FB</div>
+        </div>
+        <div class="color-chip" style="background:#111828;">
+          <div class="chip-swatch" style="background:linear-gradient(135deg,#00ff00,#40ff40);box-shadow:0 4px 20px rgba(0,255,0,0.4);"></div>
+          <div class="chip-name">Revenue Green</div>
+          <div class="chip-hex">#00ff00</div>
+          <div class="chip-role">Success / $$$</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="h-rule"></div>
+
+    <div class="section">
+      <div class="section-label">03 — Rainbow Engine</div>
+      <div class="section-title">The Animated Gradient</div>
+      <div style="background:#0a0710;border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:1.25rem;">
+        <div style="height:12px;border-radius:8px;background:var(--gradient-rainbow);background-size:300% 300%;animation:shift 6s ease infinite;margin-bottom:1rem;"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:#4b5563;line-height:2;">
+          linear-gradient(90deg,<br>
+          &nbsp;&nbsp;<span style="color:#ff0080;">#ff0080</span> 0%,<br>
+          &nbsp;&nbsp;<span style="color:#a855f7;">#8000ff</span> 40%,<br>
+          &nbsp;&nbsp;<span style="color:#60a5fa;">#0080ff</span> 70%,<br>
+          &nbsp;&nbsp;<span style="color:#4ade80;">#00ff00</span> 100%<br>
+          )
+        </div>
+        <div style="margin-top:1rem;font-size:0.7rem;color:var(--text-muted);">
+          Animated via <span style="font-family:monospace;color:#a855f7;">background-size: 300% 300%</span> + <span style="font-family:monospace;color:#a855f7;">animation: shift 6s ease infinite</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TYPOGRAPHY ===================== -->
+  <div id="tab-typography" class="ds-section">
+    <div class="section">
+      <div class="section-label">04 — Type Scale</div>
+      <div class="section-title">Fonts &amp; Styles</div>
+      <div class="type-row">
+
+        <div class="type-item">
+          <div class="type-sample">
+            <span class="text-gradient" style="font-size:2.2rem;font-weight:900;line-height:1;">Gradient Hero</span>
+          </div>
+          <div class="type-meta">font-weight: 900<br>gradient-text class<br>Animated rainbow</div>
+        </div>
+
+        <div class="type-item">
+          <div class="type-sample">
+            <span class="text-foil" style="font-size:2rem;font-weight:900;line-height:1;">$2,340</span>
+          </div>
+          <div class="type-meta">font-weight: 900<br>foil-text class<br>Animated foil</div>
+        </div>
+
+        <div class="type-item">
+          <div class="type-sample">
+            <span class="text-brand" style="font-size:1.6rem;font-weight:800;">Empresarial Blue</span>
+          </div>
+          <div class="type-meta">font-weight: 800<br>empresarial-text<br>Blue→Purple→Pink</div>
+        </div>
+
+        <div class="type-item">
+          <div class="type-sample">
+            <h2 style="font-size:1.5rem;font-weight:800;color:#fff;">Section Heading</h2>
+          </div>
+          <div class="type-meta">font-size: 1.5rem<br>font-weight: 800<br>color: #fff</div>
+        </div>
+
+        <div class="type-item">
+          <div class="type-sample">
+            <p style="font-size:0.92rem;color:#9ca3af;line-height:1.7;">Body copy. Tu clon AI trabaja 24/7 mientras tú vives tu vida.</p>
+          </div>
+          <div class="type-meta">font-size: 0.9rem<br>color: #9ca3af<br>line-height: 1.7</div>
+        </div>
+
+        <div class="type-item">
+          <div class="type-sample">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:#a855f7;">FAN-8829 · +57 318 717 4583</span>
+          </div>
+          <div class="type-meta">font-family: mono<br>IDs / tags / codes<br>color: #a855f7</div>
+        </div>
+
+        <div class="type-item">
+          <div class="type-sample">
+            <span style="font-size:0.62rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#8000ff;">Eyebrow Label</span>
+          </div>
+          <div class="type-meta">font-size: 0.62rem<br>weight: 700<br>tracking: 0.2em<br>uppercase</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== BORDERS & BEZELS ===================== -->
+  <div id="tab-borders" class="ds-section">
+    <div class="section">
+      <div class="section-label">05 — Card Anatomy</div>
+      <div class="section-title">Three Nesting Levels</div>
+      <div class="section-grid cols-2">
+
+        <!-- Level 1: Glass Card -->
+        <div>
+          <div style="font-size:0.65rem;color:#4b5563;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.1em;">L1 — Outer Glass Card</div>
+          <div class="glass-outer">
+            <div style="font-size:0.75rem;font-weight:700;color:#a855f7;margin-bottom:0.5rem;">Glass Panel</div>
+            <div style="font-size:0.65rem;color:var(--text-muted);font-family:monospace;line-height:1.8;">
+              bg: #0a0710 / 85%<br>
+              backdrop-filter: blur(12px)<br>
+              border: 1px rgba(128,0,255,.2)<br>
+              border-radius: 24px<br>
+              hover: border → .5 opacity
+            </div>
+          </div>
+        </div>
+
+        <!-- Level 2: Bezel Inner -->
+        <div>
+          <div style="font-size:0.65rem;color:#4b5563;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.1em;">L2 — Inner Bezel (Screen)</div>
+          <div class="glass-outer">
+            <div class="bezel-inner">
+              <div style="font-size:0.75rem;font-weight:700;color:#60a5fa;margin-bottom:0.5rem;">Bezel Screen</div>
+              <div style="font-size:0.65rem;color:var(--text-muted);font-family:monospace;line-height:1.8;">
+                bg: #050308 / 92%<br>
+                border: 1px rgba(255,255,255,.05)<br>
+                border-radius: 16px<br>
+                overflow: hidden<br>
+                + ambient glow ::before
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Level 3: Rainbow Border CTA -->
+        <div>
+          <div style="font-size:0.65rem;color:#4b5563;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.1em;">L3 — Rainbow Border (CTA Only)</div>
+          <div class="rb-outer rb-full">
+            <div class="rb-inner" style="display:flex;align-items:center;justify-content:center;gap:8px;">
+              <span>✦</span> Comenzar Gratis
+            </div>
+          </div>
+        </div>
+
+        <!-- Level 4: Elevated Row -->
+        <div>
+          <div style="font-size:0.65rem;color:#4b5563;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.1em;">L4 — Elevated Row (Panels)</div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="background:#110a1f;border-radius:8px;padding:0.6rem 0.75rem;border:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:0.72rem;color:#e5e7eb;">Mensaje Privado</span>
+              <span style="font-size:0.72rem;font-weight:700;color:#fff;">$10</span>
+            </div>
+            <div style="background:#110a1f;border-radius:8px;padding:0.6rem 0.75rem;border:1px solid rgba(0,255,0,0.25);display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:0.72rem;color:#00ff00;font-weight:700;">Acceso VIP</span>
+              <span style="font-size:0.72rem;font-weight:700;color:#00ff00;">$50</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== COMPONENTS ===================== -->
+  <div id="tab-components" class="ds-section">
+
+    <!-- Badges -->
+    <div class="section">
+      <div class="section-label">06 — Badges</div>
+      <div class="section-title">Status Pills</div>
+      <div class="anim-row" style="flex-wrap:wrap;gap:0.6rem;">
+        <span class="badge badge-green"><span class="spin-ring"></span> Set up en 5 min</span>
+        <span class="badge badge-purple">✦ CUBO AI Engine</span>
+        <span class="badge badge-pink">🔥 Hot Lead</span>
+        <span class="badge badge-gold">★ GUARDADO!</span>
+        <span class="badge badge-blue">⚡ MASTER FAN ID</span>
+      </div>
+    </div>
+
+    <div class="h-rule"></div>
+
+    <!-- Platform Signal Nodes -->
+    <div class="section">
+      <div class="section-label">07 — Platform Nodes</div>
+      <div class="section-title">Signal Source Cards</div>
+      <div class="section-grid cols-4">
+        <div class="node node-tinder">
+          <div class="node-icon">🔥</div>
+          <div class="node-name">Tinder</div>
+          <div class="node-sub">Match Signal</div>
+        </div>
+        <div class="node node-ig">
+          <div class="node-icon" style="font-size:0.9rem;">📸</div>
+          <div class="node-name">Instagram</div>
+          <div class="node-sub">DM Signal</div>
+        </div>
+        <div class="node node-tg">
+          <div class="node-icon" style="font-size:0.9rem;">💬</div>
+          <div class="node-name">Telegram</div>
+          <div class="node-sub">Chat Signal</div>
+        </div>
+        <div class="node node-fb">
+          <div class="node-icon" style="font-size:0.9rem;">🌐</div>
+          <div class="node-name">Facebook</div>
+          <div class="node-sub">Context Signal</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="h-rule"></div>
+
+    <!-- Golden Record -->
+    <div class="section">
+      <div class="section-label">08 — Golden Record</div>
+      <div class="section-title">Master Fan ID Card</div>
+      <div class="golden-record">
+        <div class="golden-record-inner">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:0.75rem;">
+            <div class="avatar">JS</div>
+            <div>
+              <div style="font-size:1rem;font-weight:800;color:#fff;display:flex;align-items:center;gap:6px;">
+                Jonathan Suarez
+                <span style="color:#00ff00;font-size:0.8rem;">✓</span>
+              </div>
+              <div class="text-foil" style="font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;">Registro de Oro #F-8829</div>
+            </div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-item">
+              <div class="metric-label">Fan Value</div>
+              <div class="metric-val" style="color:#00ff00;">$230</div>
+            </div>
+            <div class="divider-v"></div>
+            <div class="metric-item">
+              <div class="metric-label">Prob. Compra</div>
+              <div class="metric-val" style="color:#fff;">82%</div>
+            </div>
+            <div class="divider-v"></div>
+            <div class="metric-item">
+              <div class="metric-label">Engagement</div>
+              <div class="metric-val" style="color:#ff0080;">🔥 Alto</div>
+            </div>
+          </div>
+          <div style="margin-top:0.75rem;">
+            <div class="action-bar">
+              <div class="action-bar-inner">
+                <span style="font-size:0.7rem;color:#9ca3af;display:flex;align-items:center;gap:5px;">✦ <span style="color:#a855f7;">Acción Inteligente</span></span>
+                <span style="font-size:0.65rem;font-weight:700;color:#fff;background:rgba(255,255,255,0.08);padding:4px 10px;border-radius:6px;">Auto-Mensaje →</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===================== ANIMATION ===================== -->
+  <div id="tab-animation" class="ds-section">
+    <div class="section">
+      <div class="section-label">09 — Motion System</div>
+      <div class="section-title">Animation Tokens</div>
+
+      <div style="display:flex;flex-direction:column;gap:0.75rem;">
+
+        <div class="type-item" style="gap:1rem;">
+          <div style="width:120px;flex-shrink:0;font-size:0.7rem;font-weight:700;color:#e5e7eb;">Floating Particles</div>
+          <div class="anim-row">
+            <div class="dot-particle" style="animation-delay:0s;"></div>
+            <div class="dot-particle" style="animation-delay:0.4s;"></div>
+            <div class="dot-particle" style="animation-delay:0.8s;"></div>
+            <div class="dot-particle" style="animation-delay:1.2s;"></div>
+            <div class="dot-particle" style="animation-delay:1.6s;"></div>
+          </div>
+          <div class="type-meta">float-up 10-15s<br>linear infinite<br>opacity 0→0.3→0</div>
+        </div>
+
+        <div class="type-item">
+          <div style="width:120px;flex-shrink:0;font-size:0.7rem;font-weight:700;color:#e5e7eb;">Loader Ring</div>
+          <div><span class="spin-ring" style="width:22px;height:22px;border-width:3px;border-top-color:#ff0080;"></span></div>
+          <div class="type-meta">spin 0.8s<br>linear infinite<br>border-top only</div>
+        </div>
+
+        <div class="type-item">
+          <div style="width:120px;flex-shrink:0;font-size:0.7rem;font-weight:700;color:#e5e7eb;">Live Pulse Dot</div>
+          <div><span class="pulse-dot"></span></div>
+          <div class="type-meta">box-shadow<br>pulse 2s ease<br>infinite</div>
+        </div>
+
+        <div class="type-item" style="gap:1rem;">
+          <div style="width:120px;flex-shrink:0;font-size:0.7rem;font-weight:700;color:#e5e7eb;">Progress Bar</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill"></div>
+          </div>
+          <div class="type-meta">bar-grow 3s<br>ease alternate<br>infinite</div>
+        </div>
+
+        <div class="type-item" style="gap:1rem;">
+          <div style="width:120px;flex-shrink:0;font-size:0.7rem;font-weight:700;color:#e5e7eb;">Slide Indicators</div>
+          <div style="display:flex;gap:5px;align-items:center;">
+            <div style="height:6px;width:20px;border-radius:99px;background:#8000ff;transition:all 0.3s;"></div>
+            <div style="height:6px;width:6px;border-radius:99px;background:rgba(128,0,255,0.3);"></div>
+            <div style="height:6px;width:6px;border-radius:99px;background:rgba(128,0,255,0.3);"></div>
+            <div style="height:6px;width:6px;border-radius:99px;background:rgba(128,0,255,0.3);"></div>
+          </div>
+          <div class="type-meta">Active: w-5 solid<br>Inactive: w-1.5<br>transition 0.3s</div>
+        </div>
+
+        <div class="type-item">
+          <div style="width:120px;flex-shrink:0;font-size:0.7rem;font-weight:700;color:#e5e7eb;">Fade-In Scroll</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);">
+            Initial: <span style="font-family:monospace;color:#a855f7;">opacity-0 translate-y-12</span><br>
+            Visible: <span style="font-family:monospace;color:#00ff00;">opacity-100 translate-y-0</span><br>
+            Timing: <span style="font-family:monospace;color:#60a5fa;">duration-1000 ease-out</span>
+          </div>
+          <div class="type-meta">IntersectionObserver<br>threshold: 0.1<br>staggered delay</div>
+        </div>
+
+        <div class="type-item">
+          <div style="width:120px;flex-shrink:0;font-size:0.7rem;font-weight:700;color:#e5e7eb;">Ambient Orbs</div>
+          <div class="orb-demo" style="flex:1;">
+            <div class="orb" style="width:120px;height:120px;background:rgba(255,0,128,0.12);top:-20px;left:-20px;"></div>
+            <div class="orb" style="width:100px;height:100px;background:rgba(128,0,255,0.12);bottom:-10px;right:-10px;"></div>
+          </div>
+          <div class="type-meta">mix-blend-mode:<br>screen<br>blur: 80-150px</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== SPACING ===================== -->
+  <div id="tab-spacing" class="ds-section">
+    <div class="section">
+      <div class="section-label">10 — Spatial System</div>
+      <div class="section-title">Border Radii &amp; Spacing</div>
+
+      <div style="display:flex;flex-direction:column;gap:1rem;margin-bottom:2rem;">
+        <div class="spacing-item">
+          <div class="spacing-block" style="width:40px;border-radius:8px;"></div>
+          <div class="spacing-label">border-radius: 8px — Data rows, badges, inner cells</div>
+        </div>
+        <div class="spacing-item">
+          <div class="spacing-block" style="width:60px;border-radius:12px;"></div>
+          <div class="spacing-label">border-radius: 12px — Bezel screens, medium cards</div>
+        </div>
+        <div class="spacing-item">
+          <div class="spacing-block" style="width:80px;border-radius:16px;"></div>
+          <div class="spacing-label">border-radius: 16px — Inner bezels, golden record</div>
+        </div>
+        <div class="spacing-item">
+          <div class="spacing-block" style="width:100px;border-radius:24px;"></div>
+          <div class="spacing-label">border-radius: 24px — Outer glass cards (--r: 1rem)</div>
+        </div>
+        <div class="spacing-item">
+          <div class="spacing-block" style="width:80px;border-radius:999px;height:28px;"></div>
+          <div class="spacing-label">border-radius: 999px — Pills, badges, indicators</div>
+        </div>
+      </div>
+
+      <div class="h-rule"></div>
+
+      <div class="section-title" style="margin-top:1.5rem;">Border Opacity Rules</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:80px;height:1px;background:rgba(128,0,255,0.2);"></div>
+          <span style="font-family:monospace;font-size:0.65rem;color:var(--text-muted);">rgba(128,0,255, 0.2) — Resting / default</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:80px;height:1px;background:rgba(128,0,255,0.5);"></div>
+          <span style="font-family:monospace;font-size:0.65rem;color:var(--text-muted);">rgba(128,0,255, 0.5) — Hover state</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:80px;height:1px;background:rgba(255,255,255,0.05);"></div>
+          <span style="font-family:monospace;font-size:0.65rem;color:var(--text-muted);">rgba(255,255,255, 0.05) — Subtle separators</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:80px;height:2px;background:var(--gradient-rainbow);background-size:300%;animation:shift 6s ease infinite;"></div>
+          <span style="font-family:monospace;font-size:0.65rem;color:var(--text-muted);">Rainbow 2px — CTAs only (never decorative)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.ds-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
