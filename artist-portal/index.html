@@ -1067,6 +1067,20 @@
     .crm-toggle.on { background: rgba(34,197,94,0.4); }
     .crm-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform 0.2s; }
     .crm-toggle.on::after { transform: translateX(18px); }
+  
+    .agent-card-hover:hover {
+      background: rgba(255,255,255,0.08) !important;
+      border-color: rgba(255,255,255,0.15) !important;
+      transform: translateY(-2px);
+    }
+  
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .blinking-cursor {
+      animation: blink 1s step-end infinite;
+    }
   </style>
 </head>
 <body>
@@ -4666,5 +4680,52 @@ window.Onboarding = {
   }
 };
 </script>
+
+<!-- AGENT CLAW DRAWER -->
+<div id="agent-claw" style="position: fixed; top: 0; right: -400px; width: 400px; height: 100vh; background: var(--bg-card); border-left: 1px solid rgba(255,255,255,0.05); z-index: 1000; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -10px 0 30px rgba(0,0,0,0.5); display: flex; flex-direction: column;">
+  <div style="padding: 24px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div id="claw-agent-icon" style="width: 40px; height: 40px; border-radius: 8px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 20px;">🤖</div>
+      <div>
+        <h3 id="claw-agent-name" style="color: #fff; font-size: 18px; font-weight: 700; margin: 0;">Agent</h3>
+        <p id="claw-agent-role" style="color: var(--text-muted); font-size: 12px; margin: 0;">Role</p>
+      </div>
+    </div>
+    <button onclick="closeAgentClaw()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 24px;">&times;</button>
+  </div>
+  
+  <div style="padding: 24px; flex: 1; overflow-y: auto;">
+    <h4 style="color: #fff; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Agent Brain / Heartbeat</h4>
+    <div style="background: var(--bg-inner); border-radius: 8px; padding: 16px; margin-bottom: 24px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #10b981;">
+      > STATUS: ACTIVE<br>
+      > MEMORY: 98% SYNCED<br>
+      > LAST ACTION: 2m ago<br>
+      <span class="blinking-cursor">_</span>
+    </div>
+
+    <h4 style="color: #fff; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Add Skills</h4>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <button style="width: 100%; padding: 12px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.2); border-radius: 8px; color: var(--text-muted); cursor: pointer; text-align: left; display: flex; align-items: center; gap: 8px;">
+        <span style="color: var(--cyan);">+</span> Add new SOP
+      </button>
+      <button style="width: 100%; padding: 12px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.2); border-radius: 8px; color: var(--text-muted); cursor: pointer; text-align: left; display: flex; align-items: center; gap: 8px;">
+        <span style="color: var(--purple);">+</span> Connect Integration
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openAgentClaw(name, role, icon) {
+  document.getElementById('claw-agent-name').innerText = name;
+  document.getElementById('claw-agent-role').innerText = role;
+  document.getElementById('claw-agent-icon').innerText = icon;
+  document.getElementById('agent-claw').style.right = '0';
+}
+function closeAgentClaw() {
+  document.getElementById('agent-claw').style.right = '-400px';
+}
+</script>
+
 </body>
 </html>
