@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es" data-genre="dance"><head>
+<meta charset="utf-8"/>
+  <link rel="icon" type="image/svg+xml" href="/Branding /aml_favicon.svg"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Alisson Trigos | Apex</title>
+<meta name="description" content="Alisson Trigos - Bailarina contempor&aacute;nea. Made in Colombia for the world. EPK oficial. Representada por Apex."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-primary": "#003907",
+            "tertiary": "#fcf8f8",
+            "surface-container-highest": "#353534",
+            "on-surface": "#e5e2e1",
+            "inverse-on-surface": "#313030",
+            "primary-fixed-dim": "#00e639",
+            "error": "#ffb4ab",
+            "surface-container": "#201f1f",
+            "surface-container-lowest": "#0e0e0e",
+            "inverse-primary": "#006e16",
+            "on-surface-variant": "#b9ccb2",
+            "surface-container-high": "#2a2a2a",
+            "primary-container": "#00ff41",
+            "surface": "#131313",
+            "outline-variant": "#3b4b37",
+            "inverse-surface": "#e5e2e1",
+            "surface-tint": "#00e639",
+            "primary": "#ebffe2",
+            "surface-container-low": "#1c1b1b",
+            "on-background": "#e5e2e1",
+            "surface-variant": "#353534",
+            "background": "#131313",
+            "surface-bright": "#3a3939",
+            "surface-dim": "#0a0a0a",
+            "dance-accent": "#e32636",
+            "dance-deep": "#8b0000",
+            "dance-glow": "rgba(227, 38, 54, 0.4)"
+          },
+          fontFamily: {
+            "headline": ["Space Grotesk"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+    }
+    .glass-panel {
+      background: rgba(20, 20, 20, 0.4);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .scarlet-glow {
+      box-shadow: 0 0 60px rgba(227, 38, 54, 0.2), 0 0 120px rgba(227, 38, 54, 0.08);
+    }
+    .scarlet-glow-sm {
+      box-shadow: 0 0 30px rgba(227, 38, 54, 0.15);
+    }
+    .text-gradient-scarlet {
+      background: linear-gradient(135deg, #ff4444, #e32636, #8b0000);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .bg-gradient-scarlet {
+      background: linear-gradient(135deg, #e32636, #8b0000);
+    }
+    .bg-gradient-scarlet-hero {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a0505 50%, #0a0a0a 100%);
+    }
+    .data-grid-texture {
+      background-image: radial-gradient(circle, #e32636 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.03;
+    }
+    .dance-border-glow {
+      border: 1px solid rgba(227, 38, 54, 0.2);
+    }
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .hero-vignette {
+      background: radial-gradient(ellipse at center, transparent 40%, #0a0a0a 100%);
+    }
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: #e32636; border-radius: 3px; }
+
+    /* Nextel Chirp Feed */
+    .chirp-item {
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-left: 3px solid #e32636;
+      border-radius: 4px 12px 12px 4px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: chirp-slide-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      pointer-events: auto;
+      width: 280px;
+    }
+    @keyframes chirp-slide-in {
+      from { transform: translateX(50px) scale(0.9); opacity: 0; }
+      to { transform: translateX(0) scale(1); opacity: 1; }
+    }
+    .chirp-pulse {
+      width: 6px;
+      height: 6px;
+      background: #e32636;
+      border-radius: 50%;
+      position: relative;
+    }
+    .chirp-pulse::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px solid #e32636;
+      animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.5); opacity: 0.8; }
+      80%, 100% { transform: scale(2.5); opacity: 0; }
+    }
+    .chirp-type-badge {
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: rgba(227, 38, 54, 0.15);
+      color: #e32636;
+      border: 1px solid rgba(227, 38, 54, 0.3);
+    }
+  </style>
+<link href="/css/themes.css" rel="stylesheet"/>
+</head>
+<body class="bg-surface text-on-surface font-body overflow-x-hidden selection:bg-dance-accent selection:text-white">
+
+<!-- ============================================ -->
+<!-- LEAD CAPTURE GATE OVERLAY                    -->
+<!-- ============================================ -->
+<div id="alissontrigos-gate" class="fixed inset-0 z-[999]" style="display:none;">
+  <!-- Video background -->
+  <div class="absolute inset-0 z-0 overflow-hidden">
+    <video autoplay muted loop playsinline class="absolute w-full h-full object-cover" style="filter: brightness(0.25) saturate(1.3);" poster="/assetts/c003eb2d-ab8a-4c82-ad71-017894ab41f3.jpeg">
+        <source src="/assetts/arcoiris-promo-web.mp4" type="video/mp4">
+    </video>
+    <img src="/alissontrigos/Instagram_files/485412214_18494438146003515_8710341144907240918_n.jpg" alt="" class="absolute w-full h-full object-cover object-top" style="filter: brightness(0.25) blur(2px);" aria-hidden="true"/>
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-[#e60000]/15 via-transparent to-[#8b0000]/10"></div>
+  </div>
+
+  <!-- Scrollable content layer -->
+  <div class="relative z-10 w-full h-full overflow-y-auto">
+    <div class="flex items-start md:items-center justify-center min-h-full px-4 py-8 md:p-8">
+
+      <!-- Gate card -->
+      <div class="w-full max-w-md" style="flex-shrink: 0;">
+        <div class="rounded-2xl" style="background: rgba(19, 19, 19, 0.8); backdrop-filter: blur(40px) saturate(1.5); -webkit-backdrop-filter: blur(40px) saturate(1.5); border: 1px solid rgba(230, 0, 0, 0.2); box-shadow: 0 0 60px rgba(230, 0, 0, 0.1), 0 20px 40px rgba(0,0,0,0.5);">
+
+          <!-- Top accent bar -->
+          <div class="h-1 w-full rounded-t-2xl bg-gradient-scarlet"></div>
+
+          <div id="gate-card-content" class="px-5 py-6 md:px-8 md:py-8">
+            <!-- Badge -->
+            <div class="flex items-center gap-2 mb-4">
+              <span class="h-px w-8 bg-dance-accent"></span>
+              <span class="text-dance-accent font-headline tracking-[0.3em] text-[9px] uppercase font-bold bg-dance-accent/10 px-2.5 py-0.5 rounded-full border border-dance-accent/20">Exclusive Access</span>
+            </div>
+
+            <!-- Headline -->
+            <h2 class="font-headline text-xl md:text-3xl font-bold leading-tight mb-1">
+              <span class="text-gradient-scarlet">Desbloquea</span> el Mundo de Alisson
+            </h2>
+            <p class="text-zinc-500 text-[10px] uppercase tracking-widest mb-4 font-headline">Unlock Alisson's Universe</p>
+
+            <!-- Offer (compact) -->
+            <div class="rounded-lg p-3 mb-5" style="background: rgba(230, 0, 0, 0.08); border: 1px solid rgba(230, 0, 0, 0.15);">
+              <p class="text-on-surface font-bold text-xs leading-snug">Recibe acceso exclusivo a su portafolio artístico y contenido inédito</p>
+              <div class="space-y-1">
+              <h4 class="text-white font-bold uppercase tracking-widest text-xs flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse"></span>
+                Oferta Exclusiva / Exclusive Offer
+              </h4>
+              <p class="text-zinc-400 text-[11px] leading-tight">
+                Acceso a videos de ensayos, poes&iacute;a y galer&iacute;a privada.<br/>
+                Access to rehearsal videos, poetry, and private gallery.
+              </p>
+              <div class="pt-1">
+                <span class="text-yellow-400 text-[10px] font-bold uppercase tracking-wide">V&aacute;lido por tiempo limitado / Limited time offer</span>
+              </div>
+            </div>
+
+            <!-- Form -->
+            <form id="alissontrigos-gate-form" class="space-y-2.5" novalidate>
+              <input type="text" id="gate-name" name="name" required placeholder="Nombre / Name" class="w-full px-4 py-3 rounded-lg text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-dance-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
+              <input type="email" id="gate-email" name="email" required placeholder="Email" class="w-full px-4 py-3 rounded-lg text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-dance-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
+              <input type="tel" id="gate-phone" name="phone" required placeholder="Tel&eacute;fono / Phone" class="w-full px-4 py-3 rounded-lg text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-dance-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
+              <input type="text" id="gate-title" name="title" placeholder="T&iacute;tulo (Bailar&iacute;n, Manager, Fan) &mdash; Opcional" class="w-full px-4 py-3 rounded-lg text-sm text-on-surface placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-dance-accent/40 transition-all font-body" style="background: rgba(53, 53, 52, 0.5); border: 1px solid rgba(255,255,255,0.08);" />
+
+              <!-- Terms -->
+              <div class="flex items-start gap-2 pt-1">
+                <input type="checkbox" id="gate-terms" required class="mt-0.5 w-4 h-4 rounded border-white/20 text-dance-accent focus:ring-dance-accent/30 bg-surface-container-highest/50 cursor-pointer" />
+                <label for="gate-terms" class="text-zinc-400 text-[11px] leading-snug cursor-pointer">
+                  Acepto los <a href="/legal/terms.html" target="_blank" class="text-dance-accent underline underline-offset-2" onclick="event.stopPropagation();">t&eacute;rminos</a> y pol&iacute;tica de privacidad.
+                </label>
+              </div>
+
+              <!-- Error -->
+              <div id="gate-error" class="hidden text-sm text-center py-2 px-3 rounded-lg bg-red-900/30 border border-red-500/20 text-red-300"></div>
+
+              <!-- Submit -->
+              <button type="submit" id="gate-submit-btn" class="w-full py-3.5 rounded-xl font-headline font-bold text-white text-sm tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2" style="background: linear-gradient(135deg, #e60000, #8b0000); margin-top: 8px;">
+                <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">lock_open</span>
+                Desbloquear Acceso
+              </button>
+            </form>
+
+            <!-- Footer -->
+            <p class="text-center text-[9px] text-zinc-600 mt-4 tracking-wider">
+              Powered by <span class="text-zinc-500">Apex</span> &middot; Datos protegidos
+              <span class="material-symbols-outlined align-middle text-zinc-500" style="font-size: 10px;">shield</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @keyframes gate-fade-in {
+    from { opacity: 0; transform: scale(0.95) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes gate-fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  #arcoiris-gate .animate-float {
+    animation: gate-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes float-slow {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, -20px) scale(1.1); }
+  }
+  #arcoiris-gate.gate-closing {
+    animation: gate-fade-out 0.5s ease-out forwards;
+  }
+  body.gate-active {
+    overflow: hidden;
+  }
+</style>
+
+<script>
+(function() {
+  var STORAGE_KEY = 'alissontrigos_gate_passed';
+  var EXPIRY_DAYS = 30;
+  var gate = document.getElementById('alissontrigos-gate');
+
+  // Check localStorage for existing pass
+  function isGatePassed() {
+    try {
+      var data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (data && data.expires) {
+        if (new Date().getTime() < data.expires) {
+          return true;
+        } else {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  // Save gate pass to localStorage
+  function saveGatePass() {
+    var expires = new Date().getTime() + (EXPIRY_DAYS * 24 * 60 * 60 * 1000);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ passed: true, expires: expires }));
+  }
+
+  // Generate structured Fan Universal ID: AML-{GENRE}-{ARTIST}-{SEQ}
+  // Format: AML-TN-ARC-001 (Apex - Tango - Arcoiris - sequential)
+  var GENRE_CODE = 'DN'; // TN=Tango, DN=Dance, RP=Rap, RG=Reggaeton, RK=Rock, EL=Electronic, AF=Afro-Latin
+  var ARTIST_CODE = 'ALT'; // ALT=Alisson Trigos
+  function generateFanId() {
+    var count = parseInt(localStorage.getItem('apex_fan_counter') || '0') + 1;
+    localStorage.setItem('apex_fan_counter', count.toString());
+    
+    // DISTRIBUTED UNIQUE SALT: Added to prevent Everyone globally starting at "001" 
+    // when scanning on separate devices. Format: AML-TN-ARC-001 (seq) + 4-char unique salt
+    var salt = Math.random().toString(36).substring(2, 6).toUpperCase();
+    var publicId = 'AML-' + GENRE_CODE + '-' + ARTIST_CODE + '-' + count.toString().padStart(3, '0') + '-' + salt;
+    
+    // Master internal ID
+    var masterId = 'APEX-' + Date.now().toString(36).toUpperCase() + '-' + count.toString().padStart(5, '0');
+
+    // Best-effort city detection from TZ
+    var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    var city = tz.split('/').pop().replace('_', ' ') || 'Alisson Trigos Local';
+
+    return { publicId: publicId, masterId: masterId, seq: count, city: city };
+  }
+
+  // Collect full device, geo, browser, and environment data
+  function collectDeviceData() {
+    var ua = navigator.userAgent;
+    var uaLower = ua.toLowerCase();
+    var data = {
+      user_agent: ua,
+      platform: navigator.platform || 'unknown',
+      language: navigator.language || 'unknown',
+      languages: navigator.languages ? navigator.languages.join(', ') : navigator.language,
+      screen_width: screen.width,
+      screen_height: screen.height,
+      viewport_width: window.innerWidth,
+      viewport_height: window.innerHeight,
+      pixel_ratio: window.devicePixelRatio || 1,
+      color_depth: screen.colorDepth,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown',
+      online: navigator.onLine,
+      touch_support: 'ontouchstart' in window,
+      max_touch_points: navigator.maxTouchPoints || 0,
+      connection_type: (navigator.connection && navigator.connection.effectiveType) || 'unknown',
+      downlink: (navigator.connection && navigator.connection.downlink) || 'unknown',
+      memory: navigator.deviceMemory || 'unknown',
+      cpu_cores: navigator.hardwareConcurrency || 'unknown',
+      referrer: document.referrer || 'direct',
+      url_params: window.location.search,
+      page_url: window.location.pathname,
+      cookies_enabled: navigator.cookieEnabled,
+      do_not_track: navigator.doNotTrack || 'unset',
+      pdf_viewer: navigator.pdfViewerEnabled || false,
+      webdriver: navigator.webdriver || false,
+      orientation: (screen.orientation && screen.orientation.type) || 'unknown',
+      prefers_color_scheme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+      prefers_reduced_motion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      session_entry_time: new Date().toISOString()
+    };
+
+    // Device + Model Detection (comprehensive)
+    if (/iphone/.test(uaLower)) {
+      data.device = 'iPhone';
+      if (screen.width >= 430) data.model = 'iPhone Pro Max';
+      else if (screen.width >= 393) data.model = 'iPhone 15/16';
+      else if (screen.width >= 390) data.model = 'iPhone 12/13/14';
+      else if (screen.width >= 375) data.model = 'iPhone X/11';
+      else if (screen.width >= 320) data.model = 'iPhone SE/8';
+      else data.model = 'iPhone (Standard)';
+    }
+    else if (/ipad/.test(uaLower) || (navigator.maxTouchPoints > 1 && /macintosh/.test(uaLower))) {
+      data.device = 'iPad';
+      if (screen.width >= 1024) data.model = 'iPad Pro';
+      else if (screen.width >= 834) data.model = 'iPad Air';
+      else data.model = 'iPad';
+    }
+    else if (/android/.test(uaLower)) {
+      data.device = 'Android';
+      if (/samsung|sm-|gt-/i.test(uaLower)) {
+        data.model = 'Samsung Galaxy';
+        if (/sm-s9/i.test(uaLower)) data.model = 'Samsung Galaxy S24';
+        else if (/sm-s91/i.test(uaLower)) data.model = 'Samsung Galaxy S24 Ultra';
+        else if (/sm-f9/i.test(uaLower)) data.model = 'Samsung Galaxy Z Fold';
+        else if (/sm-f7/i.test(uaLower)) data.model = 'Samsung Galaxy Z Flip';
+        else if (/sm-a/i.test(uaLower)) data.model = 'Samsung Galaxy A Series';
+      } else if (/pixel\s*(\d)/i.test(uaLower)) {
+        data.model = 'Google Pixel ' + (uaLower.match(/pixel\s*(\d)/i)[1]);
+      } else if (/pixel/i.test(uaLower)) {
+        data.model = 'Google Pixel';
+      } else if (/huawei|honor/i.test(uaLower)) {
+        data.model = 'Huawei/Honor';
+      } else if (/xiaomi|redmi|poco/i.test(uaLower)) {
+        data.model = 'Xiaomi/Redmi';
+      } else if (/oneplus/i.test(uaLower)) {
+        data.model = 'OnePlus';
+      } else if (/oppo/i.test(uaLower)) {
+        data.model = 'OPPO';
+      } else if (/vivo/i.test(uaLower)) {
+        data.model = 'Vivo';
+      } else if (/motorola|moto/i.test(uaLower)) {
+        data.model = 'Motorola';
+      } else {
+        data.model = 'Android Device';
+      }
+      if (screen.width >= 600) data.tablet = true;
+    }
+    else if (/macintosh|mac os/.test(uaLower)) {
+      data.device = 'Mac';
+      data.model = 'macOS Desktop';
+    }
+    else if (/windows/.test(uaLower)) {
+      data.device = 'Windows';
+      if (/windows nt 10/.test(uaLower)) data.model = 'Windows 10/11';
+      else data.model = 'Windows Desktop';
+    }
+    else if (/linux/.test(uaLower) && !/android/.test(uaLower)) {
+      data.device = 'Linux';
+      if (/cros/.test(uaLower)) { data.device = 'ChromeOS'; data.model = 'Chromebook'; }
+      else data.model = 'Linux Desktop';
+    }
+    else if (/smart-tv|smarttv|googletv|appletv|hbbtv|roku|webos/i.test(uaLower)) {
+      data.device = 'SmartTV';
+      data.model = 'Smart TV';
+    }
+    else {
+      data.device = 'Other';
+      data.model = navigator.platform || 'Unknown';
+    }
+
+    // Browser detection
+    if (/chrome/.test(uaLower) && !/edg/.test(uaLower) && !/opr/.test(uaLower)) data.browser = 'Chrome';
+    else if (/safari/.test(uaLower) && !/chrome/.test(uaLower)) data.browser = 'Safari';
+    else if (/firefox/.test(uaLower)) data.browser = 'Firefox';
+    else if (/edg/.test(uaLower)) data.browser = 'Edge';
+    else if (/opr|opera/.test(uaLower)) data.browser = 'Opera';
+    else if (/samsungbrowser/.test(uaLower)) data.browser = 'Samsung Internet';
+    else data.browser = 'Other';
+
+    // Battery (best-effort)
+    if (navigator.getBattery) {
+      try {
+        navigator.getBattery().then(function(batt) {
+          data.battery_level = Math.round(batt.level * 100);
+          data.battery_charging = batt.charging;
+        });
+      } catch(e) {}
+    }
+
+    return data;
+  }
+
+  // Attempt geolocation (requires user permission via terms acceptance)
+  function getGeoLocation(callback) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(pos) { callback({ lat: pos.coords.latitude, lng: pos.coords.longitude, accuracy: pos.coords.accuracy }); },
+        function() { callback(null); },
+        { timeout: 5000, enableHighAccuracy: false }
+      );
+    } else { callback(null); }
+  }
+
+  // Show success screen with Fan ID + social follow links
+  function showSuccessScreen(fanIdObj) {
+    var fanId = typeof fanIdObj === 'string' ? fanIdObj : fanIdObj.publicId;
+    var cardContent = document.getElementById('gate-card-content');
+    cardContent.innerHTML = '<div class="text-center py-6">' +
+      '<div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#e32636] to-[#8b0000] flex items-center justify-center">' +
+        '<span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: \'FILL\' 1;">celebration</span>' +
+      '</div>' +
+      '<h3 class="font-headline text-2xl font-bold mb-1">\u00a1Bienvenido al Mundo de Alisson!</h3>' +
+      '<p class="text-zinc-500 text-xs mb-5">Welcome to Alisson Trigos\' Universe</p>' +
+      // Fan ID card
+      '<div class="bg-black/30 rounded-xl p-5 mb-5 border border-[#e32636]/20">' +
+        '<p class="text-zinc-500 text-[10px] uppercase tracking-widest mb-1">Tu Fan ID</p>' +
+        '<p class="text-2xl font-headline font-bold text-[#e32636] tracking-wider">' + fanId + '</p>' +
+        '<p class="text-zinc-600 text-[10px] mt-1">Guarda este n\u00famero para beneficios exclusivos</p>' +
+      '</div>' +
+      // Benefits
+      '<div class="space-y-2 text-left text-xs text-zinc-400 mb-5">' +
+        '<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#e32636]" style="font-size:14px;">check_circle</span> Acceso exclusivo a portafolio in&eacute;dito</p>' +
+        '<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#e32636]" style="font-size:14px;">check_circle</span> Contenido de poes&iacute;a y teatro</p>' +
+        '<p class="flex items-center gap-2"><span class="material-symbols-outlined text-[#e32636]" style="font-size:14px;">check_circle</span> Sorteos exclusivos con tu Fan ID</p>' +
+      '</div>' +
+      // Social follow links
+      '<div class="mb-5">' +
+        '<p class="text-zinc-500 text-[10px] uppercase tracking-widest mb-3">S\u00edguenos / Follow Us</p>' +
+        '<div class="grid grid-cols-2 gap-2">' +
+          '<a href="https://www.instagram.com/alissontrigosart/" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium text-white hover:scale-[1.02] transition-transform" style="background: linear-gradient(135deg, #833AB4, #E1306C, #F77737);">' +
+            '<span class="material-symbols-outlined" style="font-size:16px;">camera</span> Instagram</a>' +
+          '<a href="#" target="_blank" rel="noopener" class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium text-white hover:scale-[1.02] transition-transform" style="background: #000;">' +
+            '<span class="material-symbols-outlined" style="font-size:16px;">music_note</span> TikTok</a>' +
+        '</div>' +
+      '</div>' +
+      // CTA
+      '<button onclick="document.getElementById(\'alissontrigos-gate\').classList.add(\'gate-closing\'); document.body.classList.remove(\'gate-active\'); setTimeout(function(){document.getElementById(\'alissontrigos-gate\').style.display=\'none\';},500);" ' +
+        'class="w-full py-3.5 rounded-xl font-headline font-bold text-white text-sm" style="background: linear-gradient(135deg, #e32636, #8b0000);">' +
+        'Explorar el EPK de Alisson \u2192' +
+      '</button>' +
+    '</div>';
+  }
+
+  // Gate ONLY shows when ?qr=1 is in the URL (QR code scans)
+  // ALWAYS shows for ?qr=1 — even returning visitors (progressive profiling)
+  // Direct visitors (no ?qr=1) see the EPK without any gate
+  var urlParams = new URLSearchParams(window.location.search);
+  var isQrVisit = urlParams.get('qr') === '1';
+
+  if (isQrVisit) {
+    gate.style.display = 'flex';
+    document.body.classList.add('gate-active');
+  }
+
+  // Send welcome email via Vercel serverless function
+  function sendWelcomeEmail(name, email, fanId) {
+    fetch('/api/send-welcome-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        fan_id: fanId,
+        artist_name: 'Alisson Trigos',
+        artist_slug: 'alissontrigos',
+        genre: 'dance'
+      })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.success) { console.log('Welcome email sent:', data.id); }
+      else { console.warn('Email send issue:', data.error); }
+    })
+    .catch(function(err) { console.warn('Email send failed (non-blocking):', err); });
+  }
+
+  // Form submission
+  var form = document.getElementById('alissontrigos-gate-form');
+  var errorEl = document.getElementById('gate-error');
+  var submitBtn = document.getElementById('gate-submit-btn');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    errorEl.classList.add('hidden');
+
+    var nameValue = document.getElementById('gate-name').value.trim();
+    var emailValue = document.getElementById('gate-email').value.trim();
+    var phoneValue = document.getElementById('gate-phone').value.trim();
+    var titleValue = document.getElementById('gate-title').value.trim();
+    var termsChecked = document.getElementById('gate-terms').checked;
+
+    // Validation
+    if (!nameValue || !emailValue || !phoneValue) {
+      showError('Por favor completa todos los campos requeridos.');
+      return;
+    }
+    if (!isValidEmail(emailValue)) {
+      showError('Por favor ingresa un email v\u00e1lido.');
+      return;
+    }
+    if (!termsChecked) {
+      showError('Debes aceptar los t\u00e9rminos y condiciones.');
+      return;
+    }
+
+    // Disable button
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-xl">progress_activity</span> Enviando...';
+
+    // Generate Fan Universal ID (structured: AML-TN-ARC-001)
+    var fanIdObj = generateFanId();
+    var deviceData = collectDeviceData();
+
+    // Send to Supabase (with geo attempt)
+    var SUPABASE_URL = 'https://iaycaynevtumrqoknemk.supabase.co';
+    var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k';
+
+    function sendPayload(geoData) {
+      var payload = {
+        artist_name: 'Alisson Trigos',
+        email: emailValue,
+        genre: 'dance',
+        mood_preference: {
+          name: nameValue,
+          phone: phoneValue,
+          title: titleValue,
+          source: 'qr_gate',
+          offer: 'exclusive_portfolio_access',
+          offer_expiry: 'limited_time',
+          timestamp: new Date().toISOString(),
+          fan_id: fanIdObj.publicId,
+          master_id: fanIdObj.masterId,
+          fan_seq: fanIdObj.seq,
+          city: fanIdObj.city,
+          device: deviceData,
+          geo: geoData || null
+        },
+        marketing_source: 'QR_CODE'
+      };
+      submitToSupabase(payload);
+    }
+
+    // Try to get geo, but don't block on it
+    getGeoLocation(function(geo) { sendPayload(geo); });
+
+    function submitToSupabase(payload) {
+
+    fetch(SUPABASE_URL + '/rest/v1/leads_capture', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON,
+        'Authorization': 'Bearer ' + SUPABASE_ANON,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(function(response) {
+      if (response.ok || response.status === 201) {
+        saveGatePass();
+        sendWelcomeEmail(nameValue, emailValue, fanIdObj.publicId);
+        showSuccessScreen(fanIdObj);
+      } else {
+        console.warn('Supabase insert returned:', response.status);
+        response.text().then(function(t) { console.warn('Body:', t); });
+        saveGatePass();
+        saveFallbackLocal(payload);
+        sendWelcomeEmail(nameValue, emailValue, fanIdObj.publicId);
+        showSuccessScreen(fanIdObj);
+      }
+    })
+    .catch(function(err) {
+      console.error('Gate submission error:', err);
+      saveGatePass();
+      saveFallbackLocal(payload);
+      sendWelcomeEmail(nameValue, emailValue, fanIdObj.publicId);
+      showSuccessScreen(fanIdObj);
+    });
+
+    function saveFallbackLocal(data) {
+      try {
+        var existing = JSON.parse(localStorage.getItem('apex_pending_leads') || '[]');
+        existing.push(data);
+        localStorage.setItem('apex_pending_leads', JSON.stringify(existing));
+      } catch(e) {}
+    }
+    } // close submitToSupabase
+  });
+
+  function closeGate() {
+    gate.classList.add('gate-closing');
+    document.body.classList.remove('gate-active');
+    setTimeout(function() {
+      gate.style.display = 'none';
+      gate.remove();
+    }, 500);
+  }
+
+  function showError(msg) {
+    errorEl.textContent = msg;
+    errorEl.classList.remove('hidden');
+  }
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+})();
+
+// Parallax mouse effect on gate video
+document.addEventListener('mousemove', function(e) {
+    var gate = document.getElementById('alissontrigos-gate');
+    if (!gate || gate.style.display === 'none') return;
+    var video = gate.querySelector('video');
+    if (!video) return;
+    var x = (e.clientX / window.innerWidth - 0.5) * 20;
+    var y = (e.clientY / window.innerHeight - 0.5) * 20;
+    video.style.transform = 'scale(1.25) translate(' + x + 'px, ' + y + 'px)';
+});
+</script>
+
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-6 md:px-8 h-20 bg-zinc-950/70 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] font-['Space_Grotesk'] tracking-tight">
+  <a href="/" class="flex items-center gap-2 group">
+    <img src="/alissontrigos/Branding/alissontrigos_logo.png" class="w-10 h-10 transition-transform duration-500 group-hover:scale-110" alt="Alisson Trigos Logo">
+    <span class="text-xl font-bold tracking-tighter text-white uppercase group-hover:text-dance-accent transition-colors">Alisson</span>
+  </a>
+  <div class="hidden md:flex items-center gap-8">
+    <a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="/">Inicio</a>
+    <a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="/genre/dance/">Danza</a>
+    <a class="text-zinc-400 hover:text-zinc-100 transition-colors" href="/marketplace/">Marketplace</a>
+    <a class="text-dance-accent border-b-2 border-dance-accent pb-1" href="/genre/dance/alissontrigos/">Alisson Trigos</a>
+  </div>
+  <div class="flex items-center gap-4">
+    <button class="material-symbols-outlined text-zinc-400 hover:text-dance-accent transition-all duration-300">share</button>
+    <a href="#contacto" class="bg-gradient-scarlet text-white px-6 py-2 rounded-lg font-bold hover:scale-95 duration-200 transition-transform text-sm">Contrataciones</a>
+  </div>
+</nav>
+
+<!-- ============================================ -->
+<!-- 1. HERO SECTION - Full-screen cinematic      -->
+<!-- ============================================ -->
+<section class="relative min-h-screen flex items-end pb-24 md:pb-32 overflow-hidden">
+  <!-- Background Image -->
+  <div class="absolute inset-0 z-0">
+    <img alt="Alisson Trigos &mdash; Danza Contempor&aacute;nea" class="w-full h-full object-cover scale-105 object-center" src="/alissontrigos/Instagram_files/469568323_18352938472131459_3767128323675660989_n.jpg"/>
+    <!-- Multi-layer gradients for depth -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[#131313] via-[#131313]/60 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-[#131313] via-transparent to-transparent"></div>
+    <div class="absolute inset-0 hero-vignette"></div>
+    <!-- Crimson atmospheric overlay -->
+    <div class="absolute inset-0 bg-gradient-to-br from-dance-accent/10 via-transparent to-dance-deep/5"></div>
+  </div>
+
+  <!-- Floating decorative elements -->
+  <div class="absolute top-1/4 right-16 w-64 h-64 bg-dance-accent/5 rounded-full blur-3xl animate-pulse-slow hidden lg:block"></div>
+  <div class="absolute bottom-1/3 right-1/4 w-32 h-32 bg-dance-deep/10 rounded-full blur-2xl animate-float hidden lg:block"></div>
+
+  <!-- Hero Content -->
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12">
+    <!-- Genre Badge -->
+    <div class="flex items-center gap-4 mb-6">
+      <span class="h-px w-16 bg-dance-accent"></span>
+      <span class="text-dance-accent font-headline tracking-[0.4em] text-xs uppercase font-bold bg-dance-accent/10 px-4 py-1.5 rounded-full border border-dance-accent/20">Danza Contempor&aacute;nea</span>
+    </div>
+
+    <!-- Group Name -->
+    <h1 class="font-headline text-7xl md:text-[9rem] font-bold tracking-tighter leading-[0.85] -ml-1 mb-4">
+      <span class="text-gradient-scarlet">ALISSON</span><span class="text-on-surface">TRIGOS</span>
+    </h1>
+
+    <!-- Tagline -->
+    <p class="font-headline text-2xl md:text-3xl text-zinc-400 font-light tracking-wide mb-2 italic">
+      Made in Colombia for the World
+    </p>
+
+    <!-- Location -->
+    <div class="flex items-center gap-2 text-zinc-500 mb-10">
+      <span class="material-symbols-outlined text-dance-accent text-lg">location_on</span>
+      <span class="text-sm tracking-widest uppercase">Bucaramanga, Colombia &bull; Made for the World</span>
+    </div>
+
+    <!-- CTA Buttons -->
+    <div class="flex flex-wrap gap-4">
+      <a href="#musica" class="px-10 py-4 bg-gradient-scarlet text-white font-headline font-bold rounded-lg hover:scale-105 transition-transform duration-300 flex items-center gap-2 shadow-lg shadow-dance-accent/20">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span> Escuchar Ahora
+      </a>
+      <a href="#contacto" class="px-10 py-4 glass-panel border border-white/10 text-on-surface font-headline font-medium rounded-lg hover:bg-white/10 transition-all duration-300">
+        Contrataciones
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 2. STATS BAR                                 -->
+<!-- ============================================ -->
+<section id="metrics-bar" class="relative py-10 bg-surface-container-lowest border-y border-dance-accent/10">
+  <div class="data-grid-texture absolute inset-0"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 3. BIO SECTION                               -->
+<!-- ============================================ -->
+<section id="biografia" class="py-24 md:py-32 bg-surface relative overflow-hidden">
+  <!-- Atmospheric glow -->
+  <div class="absolute -left-32 top-1/2 -translate-y-1/2 w-96 h-96 bg-dance-accent/5 rounded-full blur-3xl"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
+      <!-- Photo -->
+      <div class="md:col-span-5 relative">
+        <div class="absolute -inset-4 bg-dance-accent/10 blur-3xl rounded-full"></div>
+        <div class="relative rounded-2xl overflow-hidden scarlet-glow dance-border-glow">
+          <img alt="Alisson Trigos &mdash; Arte en movimiento" class="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000" src="/alissontrigos/Instagram_files/434743712_18426499618003515_5674054380672779813_n.jpg"/>
+          <!-- Overlay gradient -->
+          <div class="absolute inset-0 bg-gradient-to-t from-dance-accent/20 via-transparent to-transparent"></div>
+        </div>
+      </div>
+
+      <!-- Bio Text -->
+      <div class="md:col-span-7">
+        <div class="flex items-center gap-4 mb-8">
+          <span class="h-px w-12 bg-dance-accent"></span>
+          <span class="text-dance-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Biograf&iacute;a</span>
+        </div>
+        <h2 class="font-headline text-4xl md:text-5xl font-bold mb-8 leading-tight">
+          El Movimiento<br/><span class="text-gradient-scarlet">Es un Lenguaje.</span>
+        </h2>
+        <p class="text-zinc-400 text-lg md:text-xl leading-relaxed font-light mb-8">
+          Alisson Trigos es una bailarina contempor&aacute;nea colombiana dedicada a la investigaci&oacute;n del movimiento, el teatro y la poes&iacute;a. Su arte fusiona la elegancia con la fuerza de la mujer colombiana ("Colombian Tough"). Una propuesta fluida y poderosa que trasciende fronteras.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <span class="px-4 py-2 rounded-full bg-dance-accent/10 text-dance-accent text-xs font-bold uppercase tracking-wider border border-dance-accent/20">Danza Contempor&aacute;nea</span>
+          <span class="px-4 py-2 rounded-full bg-zinc-800/50 text-zinc-400 text-xs font-bold uppercase tracking-wider border border-white/5">Teatro</span>
+          <span class="px-4 py-2 rounded-full bg-zinc-800/50 text-zinc-400 text-xs font-bold uppercase tracking-wider border border-white/5">Poes&iacute;a</span>
+          <span class="px-4 py-2 rounded-full bg-zinc-800/50 text-zinc-400 text-xs font-bold uppercase tracking-wider border border-white/5">Entrenar</span>
+          <span class="px-4 py-2 rounded-full bg-zinc-800/50 text-zinc-400 text-xs font-bold uppercase tracking-wider border border-white/5">Eventos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 4. MUSIC SECTION - Ultimos Lanzamientos      -->
+<!-- ============================================ -->
+<section id="musica" class="py-24 md:py-32 bg-surface-container-low relative overflow-hidden" style="display: block !important;">
+  <div class="data-grid-texture absolute inset-0"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+    <div class="flex items-center gap-4 mb-4">
+      <span class="h-px w-12 bg-dance-accent"></span>
+      <span class="text-dance-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">&Uacute;ltimos Proyectos</span>
+    </div>
+    <h2 class="font-headline text-4xl md:text-5xl font-bold mb-16">Portafolio</h2>
+
+    <div id="discografia-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Fallback Content -->
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl dance-border-glow">
+          <img src="https://img.youtube.com/vi/smyZ11kvowg/hqdefault.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Red Ochre Woman"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-6xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">Red Ochre Woman</h4>
+        <p class="text-zinc-500 text-sm mt-1">Single &bull; 2026</p>
+      </div>
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl dance-border-glow">
+          <img src="https://img.youtube.com/vi/BgAGAJpMPZM/hqdefault.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Gaslight District"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-6xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">Gaslight District</h4>
+        <p class="text-zinc-500 text-sm mt-1">Single &bull; 2025</p>
+      </div>
+    </div>
+
+    <div id="videografia" class="mt-24 pt-16 border-t border-white/5" style="display: block !important;">
+      <div class="flex items-center gap-4 mb-10">
+        <span class="h-px w-10 bg-dance-accent/40"></span>
+        <span class="text-zinc-500 font-headline tracking-[0.3em] text-[10px] uppercase font-bold">Obras & Videograf&iacute;a</span>
+      </div>
+      <div id="obras-gallery" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8">
+        <!-- Hydrated from config -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="official-video" class="py-24 md:py-32 bg-surface">
+  <div class="max-w-7xl mx-auto px-6 md:px-12">
+    <div class="flex items-center gap-4 mb-4">
+      <span class="h-px w-12 bg-dance-accent"></span>
+      <span class="text-dance-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Video Oficial</span>
+    </div>
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <h2 class="font-headline text-4xl md:text-5xl font-bold">Cinem&aacute;tico</h2>
+        <a href="https://www.youtube.com/@JohnAcevedoViolist?sub_confirmation=1" target="_blank" class="flex items-center gap-2 bg-[#ff0000] text-white px-5 py-2 rounded-full font-headline font-bold text-xs uppercase tracking-widest hover:scale-105 transition-transform duration-300 shadow-lg shadow-red-600/20">
+            <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">notifications</span>
+            Suscribirse
+        </a>
+    </div>
+
+    <div class="relative rounded-3xl overflow-hidden group cursor-pointer scarlet-glow bg-black/40" style="aspect-ratio: 16/9;">
+      <!-- Main Poster/Thumbnail -->
+      <img alt="John Acevedo — Danza Etude No.3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 opacity-90" src="/artists/Arcoiris/gallery/astopiazoola%20solo%20.png"/>
+      
+      <!-- Video Overlay Layer -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-[#131313]/20 to-transparent"></div>
+      
+      <!-- Play Trigger Overlay (Opens Modal or Replaces with Iframe) -->
+      <div class="absolute inset-0 flex items-center justify-center z-20 group-hover:bg-black/20 transition-all duration-500" onclick="this.parentElement.innerHTML = '<iframe class=\'w-full h-full\' src=\'https://www.youtube.com/embed/aN5xoSQ5S3c?autoplay=1&start=13\' frameborder=\'0\' allow=\'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\' allowfullscreen></iframe>'">
+        <div class="w-28 h-28 rounded-full border-2 border-white/20 flex items-center justify-center backdrop-blur-xl group-hover:border-dance-accent group-hover:scale-110 transition-all duration-500 bg-dance-accent/5">
+          <div class="w-20 h-20 rounded-full bg-dance-accent flex items-center justify-center shadow-2xl shadow-dance-accent/40">
+            <span class="material-symbols-outlined text-4xl text-white" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Meta Description -->
+      <div class="absolute bottom-8 left-8 md:bottom-12 md:left-12 z-10 pointer-events-none">
+        <div class="text-[10px] uppercase tracking-[0.4em] font-bold text-dance-accent mb-3 flex items-center gap-2">
+            <span class="w-8 h-[2px] bg-dance-accent"></span>
+            Astor Piazzolla Solo
+        </div>
+        <div class="text-2xl md:text-3xl font-headline font-bold text-white max-w-xl leading-tight">
+            Danza Etude No.3 <br/>
+            <span class="text-zinc-500 font-light text-base md:text-xl">Arr. by John Acevedo</span>
+        </div>
+        <div class="flex flex-col gap-1 mt-4">
+            <div class="text-zinc-400 text-[11px] md:text-xs uppercase tracking-widest font-medium">
+                <span class="text-dance-accent">Violist:</span> John Acevedo
+            </div>
+            <div class="text-zinc-500 text-[10px] md:text-[11px] uppercase tracking-widest leading-loose">
+                Eng: Laszlo Mezo &bull; Wardrobe: Mia Mezo
+            </div>
+        </div>
+      </div>
+
+      <!-- Duration badge -->
+      <div class="absolute top-8 right-8 glass-panel px-4 py-2 rounded-lg border border-white/10 flex items-center gap-2 backdrop-blur-md">
+        <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+        <span class="text-white text-[11px] font-headline font-bold uppercase tracking-widest">4:05</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 5B. PHOTO GALLERY                             -->
+<!-- ============================================ -->
+<section class="py-24 md:py-32 bg-surface-container-lowest relative overflow-hidden">
+  <div class="absolute inset-0 data-grid-texture"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+    <div class="flex items-center gap-4 mb-4">
+      <span class="h-px w-12 bg-dance-accent"></span>
+      <span class="text-dance-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Galer&iacute;a</span>
+    </div>
+    <h2 class="font-headline text-4xl md:text-5xl font-bold mb-12">Danza Contemporánea<br/><span class="text-gradient-scarlet">de la M&uacute;sica</span></h2>
+
+    <!-- Masonry-style grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[200px] md:auto-rows-[280px]">
+      <!-- Large hero pair — spans 2 rows -->
+      <div class="row-span-2 col-span-2 relative group rounded-xl overflow-hidden dance-border-glow">
+        <img src="/artists/Arcoiris/gallery/_73A17961.jpg" alt="Arcoiris — pose dram&aacute;tica de tango contempor&aacute;neo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      </div>
+      <!-- Portrait — John solo -->
+      <div class="row-span-2 relative group rounded-xl overflow-hidden dance-border-glow">
+        <img src="/artists/Arcoiris/gallery/_73A1923.JPG" alt="John Acevedo — retrato" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      </div>
+      <!-- Portrait — Alisson -->
+      <div class="row-span-2 relative group rounded-xl overflow-hidden dance-border-glow">
+        <img src="/artists/Arcoiris/gallery/_73A1927.jpg" alt="Alisson Trigos — retrato" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      </div>
+      <!-- Embrace shot -->
+      <div class="relative group rounded-xl overflow-hidden dance-border-glow">
+        <img src="/artists/Arcoiris/gallery/_73A1664.JPG" alt="Arcoiris — movimiento contemporáneo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      </div>
+      <!-- Studio shot -->
+      <div class="relative group rounded-xl overflow-hidden dance-border-glow">
+        <img src="/artists/Arcoiris/gallery/_73A1903.JPG" alt="Arcoiris — sesi&oacute;n de estudio" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      </div>
+      <!-- Wide dramatic lunge — spans 2 cols -->
+      <div class="col-span-2 relative group rounded-xl overflow-hidden dance-border-glow">
+        <img src="/artists/Arcoiris/gallery/_73A1900_2.JPG" alt="Arcoiris — lunge dram&aacute;tico" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 6. DIGITAL HUB / SMART LINKS                 -->
+<!-- ============================================ -->
+<section class="py-24 md:py-32 bg-surface-container-low relative overflow-hidden">
+  <div class="absolute right-0 top-0 w-96 h-96 bg-dance-accent/5 rounded-full blur-3xl"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+      <!-- Smart Links -->
+      <div>
+        <div class="flex items-center gap-4 mb-4">
+          <span class="h-px w-12 bg-dance-accent"></span>
+          <span class="text-dance-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Digital Hub</span>
+        </div>
+        <h2 class="font-headline text-4xl font-bold mb-10">Escuch&aacute; en<br/><span class="text-gradient-scarlet">Todas las Plataformas</span></h2>
+
+        <div class="space-y-3">
+          <a href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-5 rounded-xl bg-surface-container-highest/60 hover:bg-dance-accent/10 border border-white/5 hover:border-dance-accent/30 transition-all duration-300 group/link">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#1DB954]/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-[#1DB954]">brand_awareness</span>
+              </div>
+              <div>
+                <span class="font-bold text-on-surface">Spotify</span>
+                <p class="text-xs text-zinc-500">Perfil Oficial del Artista</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-zinc-600 group-hover/link:text-dance-accent transition-colors">arrow_outward</span>
+          </a>
+
+          <a href="https://music.apple.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-5 rounded-xl bg-surface-container-highest/60 hover:bg-dance-accent/10 border border-white/5 hover:border-dance-accent/30 transition-all duration-300 group/link">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#fc3c44]/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-[#fc3c44]">podcasts</span>
+              </div>
+              <div>
+                <span class="font-bold text-on-surface">Apple Music</span>
+                <p class="text-xs text-zinc-500">Discograf&iacute;a Completa</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-zinc-600 group-hover/link:text-dance-accent transition-colors">arrow_outward</span>
+          </a>
+
+          <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-5 rounded-xl bg-surface-container-highest/60 hover:bg-dance-accent/10 border border-white/5 hover:border-dance-accent/30 transition-all duration-300 group/link">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#ff0000]/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-[#ff0000]">video_library</span>
+              </div>
+              <div>
+                <span class="font-bold text-on-surface">YouTube</span>
+                <p class="text-xs text-zinc-500">Canal Oficial</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-zinc-600 group-hover/link:text-dance-accent transition-colors">arrow_outward</span>
+          </a>
+
+          <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-5 rounded-xl bg-surface-container-highest/60 hover:bg-dance-accent/10 border border-white/5 hover:border-dance-accent/30 transition-all duration-300 group/link">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                <span class="material-symbols-outlined text-white">music_note</span>
+              </div>
+              <div>
+                <span class="font-bold text-on-surface">TikTok</span>
+                <p class="text-xs text-zinc-500">@alissontrigosart</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-zinc-600 group-hover/link:text-dance-accent transition-colors">arrow_outward</span>
+          </a>
+
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-5 rounded-xl bg-surface-container-highest/60 hover:bg-dance-accent/10 border border-white/5 hover:border-dance-accent/30 transition-all duration-300 group/link">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-[#E1306C]/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-[#E1306C]">photo_camera</span>
+              </div>
+              <div>
+                <span class="font-bold text-on-surface">Instagram</span>
+                <p class="text-xs text-zinc-500">@arcoiris.oficial</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-zinc-600 group-hover/link:text-dance-accent transition-colors">arrow_outward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Fan Signup + QR -->
+      <div id="signup">
+        <div class="flex items-center gap-4 mb-4">
+          <span class="h-px w-12 bg-dance-accent"></span>
+          <span class="text-dance-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Comunidad</span>
+        </div>
+        <h2 class="font-headline text-4xl font-bold mb-4">&Uacute;nete al Universo<br/><span class="text-gradient-scarlet">de Alisson</span></h2>
+        <p class="text-zinc-400 mb-10">Acceso anticipado a lanzamientos, contenido exclusivo y entradas preferenciales.</p>
+
+        <!-- Email Capture Form -->
+        <form class="mb-12" onsubmit="event.preventDefault();">
+          <div class="flex flex-col sm:flex-row gap-3">
+            <input type="email" placeholder="tu@email.com" class="flex-1 px-6 py-4 rounded-xl bg-surface-container-highest/80 border border-white/10 text-on-surface placeholder:text-zinc-600 focus:outline-none focus:border-dance-accent/50 focus:ring-1 focus:ring-dance-accent/30 transition-all font-body" required/>
+            <button type="submit" class="px-8 py-4 bg-gradient-scarlet text-white font-headline font-bold rounded-xl hover:scale-105 transition-transform duration-300 whitespace-nowrap shadow-lg shadow-dance-accent/20">
+              <span class="flex items-center gap-2">
+                <span class="material-symbols-outlined">mail</span> Suscribirme
+              </span>
+            </button>
+          </div>
+          <p class="text-[10px] text-zinc-600 mt-3 tracking-wider">Sin spam. Solo m&uacute;sica, pasi&oacute;n y datos.</p>
+        </form>
+
+        <!-- Real QR Code -->
+        <div class="glass-panel rounded-2xl p-8 border border-white/10 dance-border-glow flex items-center gap-8">
+          <div class="w-36 h-36 bg-white rounded-xl flex items-center justify-center flex-shrink-0 p-2 shadow-inner">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://apexmusiclatino.com/genre/dance/alissontrigos?qr=1" class="w-full h-full object-contain" alt="EPK QR Code"/>
+          </div>
+          <div>
+            <h4 class="font-headline font-bold text-on-surface text-lg mb-2">Escane&aacute; para contenido exclusivo</h4>
+            <p class="text-zinc-500 text-sm leading-relaxed">Accede a remixes in&eacute;ditos, detr&aacute;s de c&aacute;maras, y material del artista que no encontrar&aacute;s en ninguna plataforma.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 8. MERCH SECTION                             -->
+<!-- ============================================ -->
+<section class="py-24 md:py-32 bg-surface relative">
+  <div class="max-w-7xl mx-auto px-6 md:px-12">
+    <div class="flex items-center gap-4 mb-4">
+      <span class="h-px w-12 bg-dance-accent"></span>
+      <span class="text-dance-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Merch Oficial</span>
+    </div>
+    <h2 class="font-headline text-4xl md:text-5xl font-bold mb-16">Tienda</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Product 1 -->
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl dance-border-glow">
+          <div class="w-full h-full bg-gradient-to-br from-surface-container-highest to-surface-container flex items-center justify-center">
+            <div class="text-center">
+              <span class="material-symbols-outlined text-dance-accent text-7xl mb-2 group-hover:scale-110 transition-transform duration-500" style="font-variation-settings: 'FILL' 1;">album</span>
+              <p class="text-zinc-500 text-xs tracking-widest uppercase">Vinyl LP</p>
+            </div>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+            <span class="text-white font-bold">Ver Detalles</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">Vinyl Noches de Fuego</h4>
+        <p class="text-zinc-500 text-sm mt-1">Edici&oacute;n limitada en vinilo rojo 180g</p>
+        <p class="text-dance-accent font-headline font-bold text-xl mt-3">$39.99</p>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl dance-border-glow">
+          <div class="w-full h-full bg-gradient-to-br from-surface-container-highest to-surface-container flex items-center justify-center">
+            <div class="text-center">
+              <span class="material-symbols-outlined text-dance-accent text-7xl mb-2 group-hover:scale-110 transition-transform duration-500">checkroom</span>
+              <p class="text-zinc-500 text-xs tracking-widest uppercase">Apparel</p>
+            </div>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+            <span class="text-white font-bold">Ver Detalles</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">Camiseta Arcoiris Tour</h4>
+        <p class="text-zinc-500 text-sm mt-1">Algod&oacute;n org&aacute;nico, dise&ntilde;o exclusivo 2026</p>
+        <p class="text-dance-accent font-headline font-bold text-xl mt-3">$44.99</p>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl dance-border-glow">
+          <div class="w-full h-full bg-gradient-to-br from-surface-container-highest to-surface-container flex items-center justify-center">
+            <div class="text-center">
+              <span class="material-symbols-outlined text-dance-accent text-7xl mb-2 group-hover:scale-110 transition-transform duration-500">image</span>
+              <p class="text-zinc-500 text-xs tracking-widest uppercase">Art Print</p>
+            </div>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+            <span class="text-white font-bold">Ver Detalles</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">Poster Edici&oacute;n Limitada</h4>
+        <p class="text-zinc-500 text-sm mt-1">60x90cm, papel de alta calidad, numerado</p>
+        <p class="text-dance-accent font-headline font-bold text-xl mt-3">$19.99</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- ARTISTAS EN ESCENA - Image Carousel          -->
+<!-- ============================================ -->
+<style>
+  .carousel-section { background: linear-gradient(180deg, #131313 0%, #1a0505 50%, #131313 100%); }
+  .carousel-track {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 1rem 0;
+  }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-card {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: rgba(53, 53, 52, 0.4);
+    border: 1px solid rgba(230, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .carousel-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 40px rgba(230, 0, 0, 0.15);
+  }
+  .carousel-card img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    display: block;
+  }
+  .carousel-card .caption {
+    padding: 1rem 1.25rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.875rem;
+    color: #a1a1aa;
+    font-weight: 500;
+  }
+  @media (min-width: 768px) {
+    .carousel-card { flex: 0 0 calc(33.333% - 0.85rem); }
+  }
+  .carousel-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(19, 19, 19, 0.8);
+    border: 1px solid rgba(230, 0, 0, 0.3);
+    color: #e60000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s ease;
+  }
+  .carousel-nav-btn:hover {
+    background: rgba(230, 0, 0, 0.2);
+    border-color: rgba(230, 0, 0, 0.6);
+    color: #fff;
+  }
+  .carousel-nav-btn.prev { left: 0.75rem; }
+  .carousel-nav-btn.next { right: 0.75rem; }
+  @media (max-width: 767px) {
+    .carousel-nav-btn { width: 36px; height: 36px; }
+  }
+</style>
+
+<section class="carousel-section py-24 md:py-32 relative overflow-hidden">
+  <div class="data-grid-texture absolute inset-0"></div>
+  <div class="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-dance-accent/5 rounded-full blur-3xl"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+    <!-- Section Header -->
+    <div class="flex items-center gap-4 mb-4">
+      <span class="h-px w-12 bg-dance-accent"></span>
+      <span class="text-dance-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">Recuerdos / Memories</span>
+    </div>
+    <h2 class="font-headline text-4xl md:text-5xl font-bold mb-3 leading-tight">
+      Highlights Bucaramanga 2026 <span class="text-gradient-scarlet">&middot;</span> Marzo 25
+    </h2>
+    <p class="text-zinc-500 font-headline text-lg md:text-xl mb-12 tracking-wide">
+      Momentos destacados del show en la Casa del Libro Total
+    </p>
+
+    <!-- Carousel Container -->
+    <div class="relative">
+      <!-- Navigation Arrows -->
+      <button class="carousel-nav-btn prev" id="carousel-prev" aria-label="Anterior">
+        <span class="material-symbols-outlined">chevron_left</span>
+      </button>
+      <button class="carousel-nav-btn next" id="carousel-next" aria-label="Siguiente">
+        <span class="material-symbols-outlined">chevron_right</span>
+      </button>
+      <div class="carousel-track" id="carousel-track">
+        <!-- 1. Main Highlights -->
+        <div class="carousel-card">
+          <img src="/artists/Arcoiris/gallery/gavito_festival.jpeg" alt="Festival Gavito 2026" loading="lazy"/>
+          <div class="caption">Festival Gavito &mdash; Highlights</div>
+        </div>
+        <!-- 2. Artistas en Escena -->
+        <div class="carousel-card">
+          <img src="/artists/Arcoiris/gallery/aroris_tango_radio_station.jpeg" alt="Entrevista Radio 2026" loading="lazy"/>
+          <div class="caption">Promoci&oacute;n Radio &mdash; Bucaramanga</div>
+        </div>
+        <!-- 3. John Acevedo -->
+        <div class="carousel-card">
+          <img src="/artists/Arcoiris/gallery/John_Acevedo_Tango.jpeg" alt="John Acevedo en vivo" loading="lazy"/>
+          <div class="caption">Mtro. John Acevedo &mdash; Solo Viola</div>
+        </div>
+        <!-- 4. Trio Performance -->
+        <div class="carousel-card">
+          <img src="/artists/Arcoiris/gallery/practicin.jpeg" alt="Ensayo Artistas" loading="lazy"/>
+          <div class="caption">Backstage &mdash; Ensayos</div>
+        </div>
+        <!-- 5. Scene -->
+        <div class="carousel-card">
+          <img src="/artists/Arcoiris/gallery/dinin_room.jpeg" alt="Performance Cena" loading="lazy"/>
+          <div class="caption">Escena Intima &mdash; Tango</div>
+        </div>
+        <!-- 6. Original Flyer (Legacy) -->
+        <div class="carousel-card opacity-60">
+          <img src="/assetts/c003eb2d-ab8a-4c82-ad71-017894ab41f3.jpeg" alt="Flyer original" loading="lazy"/>
+          <div class="caption">Flyer Original &mdash; Archivo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var track = document.getElementById('carousel-track');
+  var prevBtn = document.getElementById('carousel-prev');
+  var nextBtn = document.getElementById('carousel-next');
+  if (!track || !prevBtn || !nextBtn) return;
+
+  function getScrollAmount() {
+    var card = track.querySelector('.carousel-card');
+    if (!card) return 300;
+    return card.offsetWidth + 20; // card width + gap
+  }
+
+  prevBtn.addEventListener('click', function() {
+    track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+  });
+  nextBtn.addEventListener('click', function() {
+    track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+  });
+
+  // Auto-play: advance every 5 seconds
+  var autoplayInterval = setInterval(function() {
+    var maxScroll = track.scrollWidth - track.clientWidth;
+    if (track.scrollLeft >= maxScroll - 10) {
+      track.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+    }
+  }, 5000);
+
+  // Pause auto-play on hover or touch
+  track.addEventListener('mouseenter', function() { clearInterval(autoplayInterval); });
+  track.addEventListener('touchstart', function() { clearInterval(autoplayInterval); }, { passive: true });
+})();
+</script>
+
+<!-- ============================================ -->
+<!-- 9. LIVE SHOWS / BOOKING                      -->
+<!-- ============================================ -->
+<section id="contacto" class="py-24 md:py-32 bg-surface-container-low relative overflow-hidden">
+  <div class="data-grid-texture absolute inset-0"></div>
+  <div class="absolute left-1/2 top-0 -translate-x-1/2 w-[600px] h-[600px] bg-dance-accent/5 rounded-full blur-3xl"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <!-- Shows -->
+      <div>
+        <div class="flex items-center gap-4 mb-4">
+          <span class="h-px w-12 bg-dance-accent"></span>
+          <span class="text-dance-accent font-headline tracking-[0.3em] text-xs uppercase font-bold">En Vivo</span>
+        </div>
+        <h2 class="font-headline text-4xl md:text-5xl font-bold mb-12">Pr&oacute;ximos Shows</h2>
+
+        <div id="shows-list" class="space-y-4">
+          <!-- Fallback Content -->
+          <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-dance-accent/30 transition-all duration-300 group">
+            <div class="text-center flex-shrink-0 w-16">
+              <div class="text-dance-accent font-headline text-3xl font-bold leading-none">05</div>
+              <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mt-1">MAY</div>
+              <div class="text-[9px] text-zinc-600 font-bold mt-0.5">2026</div>
+            </div>
+            <div class="h-12 w-px bg-white/10"></div>
+            <div class="flex-1">
+              <h4 class="font-headline font-bold text-on-surface">Buenos Aires &middot; Teatro Col&oacute;n</h4>
+              <p class="text-zinc-500 text-sm italic">Teatro Col&oacute;n &middot; Buenos Aires</p>
+            </div>
+            <a href="#" class="px-5 py-2 rounded-lg border border-white/10 text-zinc-400 text-xs font-bold hover:bg-dance-accent hover:text-white hover:border-dance-accent transition-all duration-300 whitespace-nowrap">
+              Entradas
+            </a>
+          </div>
+          <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-dance-accent/30 transition-all duration-300 group">
+            <div class="text-center flex-shrink-0 w-16">
+              <div class="text-dance-accent font-headline text-3xl font-bold leading-none">21</div>
+              <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mt-1">JUN</div>
+              <div class="text-[9px] text-zinc-600 font-bold mt-0.5">2026</div>
+            </div>
+            <div class="h-12 w-px bg-white/10"></div>
+            <div class="flex-1">
+              <h4 class="font-headline font-bold text-on-surface">Medell&iacute;n &middot; Festival de Danza</h4>
+              <p class="text-zinc-500 text-sm italic">Festival de Danza &middot; Medell&iacute;n</p>
+            </div>
+            <a href="#" class="px-5 py-2 rounded-lg border border-white/10 text-zinc-400 text-xs font-bold hover:bg-dance-accent hover:text-white hover:border-dance-accent transition-all duration-300 whitespace-nowrap">
+              Entradas
+            </a>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 mt-16 mb-4">
+          <span class="h-px w-12 bg-zinc-700"></span>
+          <span class="text-zinc-500 font-headline tracking-[0.3em] text-xs uppercase font-bold">Eventos Recientes</span>
+        </div>
+        <div id="past-shows-list" class="space-y-4 opacity-70">
+          <!-- Show: Bucaramanga (Past) -->
+          <div class="rounded-xl bg-surface-container-highest/20 border border-white/5 p-6">
+            <div class="flex items-center gap-6">
+              <div class="text-center flex-shrink-0 w-16 grayscale">
+                <div class="text-zinc-500 font-headline text-3xl font-bold leading-none">25</div>
+                <div class="text-[10px] text-zinc-600 uppercase tracking-widest font-bold">MAR</div>
+              </div>
+              <div class="flex-1">
+                <h4 class="font-headline font-bold text-zinc-400 line-through">Mi Coraz&oacute;n es una Llama Errante</h4>
+                <p class="text-zinc-600 text-xs mt-1 uppercase tracking-widest">Bucaramanga &middot; &Eacute;XITO TOTAL</p>
+              </div>
+              <span class="px-4 py-1 rounded bg-zinc-800 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">Finalizado</span>
+            </div>
+          </div>
+          <!-- Show: Buenos Aires (Past) -->
+          <div class="rounded-xl bg-surface-container-highest/20 border border-white/5 p-6">
+            <div class="flex items-center gap-6">
+              <div class="text-center flex-shrink-0 w-16 grayscale">
+                <div class="text-zinc-500 font-headline text-3xl font-bold leading-none">18</div>
+                <div class="text-[10px] text-zinc-600 uppercase tracking-widest font-bold">ABR</div>
+              </div>
+              <div class="flex-1">
+                <h4 class="font-headline font-bold text-zinc-400 line-through">Teatro Col&oacute;n</h4>
+                <p class="text-zinc-600 text-xs mt-1 uppercase tracking-widest">Buenos Aires &middot; SOLD OUT</p>
+              </div>
+              <span class="px-4 py-1 rounded bg-zinc-800 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">Finalizado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking CTA -->
+      <div class="flex items-center">
+        <div class="glass-panel rounded-2xl p-10 md:p-12 border border-white/10 dance-border-glow scarlet-glow w-full text-center">
+          <span class="material-symbols-outlined text-dance-accent text-6xl mb-6" style="font-variation-settings: 'FILL' 1;">event_available</span>
+          <h3 class="font-headline text-3xl md:text-4xl font-bold mb-4">Contrataciones</h3>
+          <p class="text-zinc-400 leading-relaxed mb-8 max-w-md mx-auto">
+            Para booking, colaboraciones, y oportunidades comerciales. Alisson Trigos es representada exclusivamente por Apex.
+          </p>
+          <a href="#" onclick="openBookingModal(event)" class="inline-flex items-center gap-3 px-10 py-5 bg-gradient-scarlet text-white font-headline font-bold rounded-xl hover:scale-105 transition-transform duration-300 shadow-lg shadow-dance-accent/30 text-lg">
+            <span class="material-symbols-outlined">mail</span> booking@apexmusiclatino.com
+          </a>
+          <div class="mt-8 flex justify-center gap-6">
+            <div class="text-center">
+              <div class="text-zinc-400 text-sm">Manager</div>
+              <div class="text-on-surface font-bold text-base">Ariel Hanasi</div>
+            </div>
+            <div class="h-10 w-px bg-white/10"></div>
+            <div class="text-center">
+              <div class="text-zinc-400 text-sm">Prensa</div>
+              <div class="text-on-surface font-bold text-base">press@apexmusiclatino.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="booking-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500">
+  <div class="bg-[#1a1a1a] w-full max-w-lg mx-6 rounded-3xl overflow-hidden border border-white/10 shadow-2xl transform scale-95 transition-all duration-500 group">
+    <div class="p-8 border-b border-white/5 bg-gradient-to-r from-dance-accent/10 to-transparent flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <img src="/Branding /aml_favicon.svg" class="w-10 h-10 invert transition-all duration-500" alt="AML Logo">
+        <div>
+          <h3 class="font-headline text-2xl font-bold">Booking & Inquiries</h3>
+          <p class="text-zinc-500 text-[10px] mt-0.5 uppercase tracking-widest font-bold">Represented by Ariel Hanasi</p>
+        </div>
+      </div>
+      <button onclick="closeBookingModal()" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-dance-accent hover:text-white transition-all">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    
+    <form id="booking-form" class="p-8 space-y-6" onsubmit="submitBookingForm(event)">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-1">Your Name</label>
+          <input type="text" id="booking-name" required placeholder="Full Name" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-dance-accent outline-none transition-all"/>
+        </div>
+        <div class="space-y-2">
+          <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-1">Email</label>
+          <input type="email" id="booking-email" required placeholder="email@address.com" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-dance-accent outline-none transition-all"/>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-1">Phone</label>
+          <input type="tel" id="booking-phone" placeholder="+57 300 000 0000" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-dance-accent outline-none transition-all"/>
+        </div>
+        <div class="space-y-2">
+          <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-1">Organization / Venue</label>
+          <input type="text" id="booking-org" placeholder="Company or Venue name" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-dance-accent outline-none transition-all"/>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-1">Event Type / Inquiry</label>
+        <select id="booking-type" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-dance-accent outline-none transition-all appearance-none text-zinc-400">
+          <option>Live Performance</option>
+          <option>Private Event</option>
+          <option>Corporate Event</option>
+          <option>Commercial Collaboration</option>
+          <option>Interview / Press</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="space-y-2">
+        <label class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold ml-1">Message</label>
+        <textarea id="booking-message" rows="4" required placeholder="Tell us about the project or event..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-dance-accent outline-none transition-all resize-none"></textarea>
+      </div>
+      <div id="booking-status" style="display:none;" class="text-sm text-center py-3 px-4 rounded-xl"></div>
+      <button type="submit" id="booking-submit-btn" class="w-full py-4 bg-dance-accent text-white font-headline font-bold uppercase tracking-widest text-sm rounded-xl hover:shadow-lg hover:shadow-dance-accent/30 transition-all duration-300 transform active:scale-[0.98]">
+        Submit Inquiry
+      </button>
+    </form>
+    <script>
+    async function submitBookingForm(e) {
+      e.preventDefault();
+      var btn = document.getElementById('booking-submit-btn');
+      var status = document.getElementById('booking-status');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      status.style.display = 'none';
+
+      var data = {
+        name: document.getElementById('booking-name').value.trim(),
+        email: document.getElementById('booking-email').value.trim(),
+        phone: document.getElementById('booking-phone').value.trim(),
+        organization: document.getElementById('booking-org').value.trim(),
+        event_type: document.getElementById('booking-type').value,
+        message: document.getElementById('booking-message').value.trim(),
+        artist: 'Alisson Trigos',
+        source: 'epk_booking_form',
+        timestamp: new Date().toISOString()
+      };
+
+      try {
+        // Save to Supabase + send notification via dedicated booking endpoint
+        await fetch('/api/send-booking-notification', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            organization: data.organization,
+            event_type: data.event_type,
+            message: data.message,
+            artist: 'Alisson Trigos',
+            timestamp: data.timestamp
+          })
+        });
+
+        status.style.display = 'block';
+        status.style.background = 'rgba(34,197,94,0.1)';
+        status.style.border = '1px solid rgba(34,197,94,0.3)';
+        status.style.color = '#22c55e';
+        status.textContent = '✓ Inquiry sent! We will contact you within 24 hours.';
+        document.getElementById('booking-form').reset();
+      } catch(err) {
+        status.style.display = 'block';
+        status.style.background = 'rgba(239,68,68,0.1)';
+        status.style.border = '1px solid rgba(239,68,68,0.3)';
+        status.style.color = '#ef4444';
+        status.textContent = 'Error sending. Please email booking@apexmusiclatino.com directly.';
+      }
+      btn.disabled = false;
+      btn.textContent = 'Submit Inquiry';
+    }
+    </script>
+  </div>
+</div>
+
+<script>
+  function openBookingModal(e) {
+    if (e) e.preventDefault();
+    const modal = document.getElementById('booking-modal');
+    modal.classList.remove('opacity-0', 'pointer-events-none');
+    modal.querySelector('.transform').classList.remove('scale-95');
+  }
+  function closeBookingModal() {
+    const modal = document.getElementById('booking-modal');
+    modal.classList.add('opacity-0', 'pointer-events-none');
+    modal.querySelector('.transform').classList.add('scale-95');
+  }
+</script>
+
+<!-- ============================================ -->
+<!-- 9. AGENT PRESENCE - The Pack                -->
+<!-- ============================================ -->
+<section id="agents-presence" class="py-24 bg-surface-container-low border-y border-white/5 relative overflow-hidden">
+  <div class="data-grid-texture absolute inset-0"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+      <div class="max-w-xl">
+        <p class="text-dance-accent font-bold tracking-[0.3em] uppercase text-[10px] mb-4">The Pack Intelligence</p>
+        <h2 class="font-headline text-4xl font-bold tracking-tight">Active Management Team</h2>
+      </div>
+      <div class="flex items-center gap-4 text-zinc-500">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+        <span class="text-[10px] font-bold uppercase tracking-widest">CUBO Engine Online</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <!-- Roxy -->
+      <div class="glass-panel p-6 rounded-2xl border border-white/5 hover:border-dance-accent/30 transition-all group">
+        <div class="flex justify-between items-start mb-4">
+          <span class="material-symbols-outlined text-dance-accent" style="font-variation-settings: 'FILL' 1;">movie</span>
+          <span class="text-[9px] font-bold text-zinc-500 uppercase">PR & Image</span>
+        </div>
+        <p class="font-headline font-bold text-white mb-2">Roxy 🎬</p>
+        <p class="text-xs text-zinc-500 leading-relaxed">Handling Alisson's press distribution, EPK generation, and brand narrative.</p>
+      </div>
+      <!-- Scout -->
+      <div class="glass-panel p-6 rounded-2xl border border-white/5 hover:border-dance-accent/30 transition-all group">
+        <div class="flex justify-between items-start mb-4">
+          <span class="material-symbols-outlined text-zinc-400" style="font-variation-settings: 'FILL' 1;">search</span>
+          <span class="text-[9px] font-bold text-zinc-500 uppercase">A&R Scout</span>
+        </div>
+        <p class="font-headline font-bold text-white mb-2">Scout 🔍</p>
+        <p class="text-xs text-zinc-500 leading-relaxed">Monitoring dance trends and movement signals for artistic growth.</p>
+      </div>
+      <!-- Kujo -->
+      <div class="glass-panel p-6 rounded-2xl border border-white/5 hover:border-dance-accent/30 transition-all group opacity-50 grayscale">
+        <div class="flex justify-between items-start mb-4">
+          <span class="material-symbols-outlined text-zinc-400" style="font-variation-settings: 'FILL' 1;">pets</span>
+          <span class="text-[9px] font-bold text-zinc-500 uppercase">The Closer</span>
+        </div>
+        <p class="font-headline font-bold text-white mb-2">Kujo 🐾</p>
+        <p class="text-xs text-zinc-500 leading-relaxed">Negotiating contracts and venue deals. Currently on standby.</p>
+      </div>
+      <!-- Nextel -->
+      <div class="glass-panel p-6 rounded-2xl border border-dance-accent/20 bg-dance-accent/5 transition-all group">
+        <div class="flex justify-between items-start mb-4">
+          <span class="material-symbols-outlined text-dance-accent" style="font-variation-settings: 'FILL' 1;">sensors</span>
+          <span class="text-[9px] font-bold text-dance-accent uppercase">Live Feed</span>
+        </div>
+        <p class="font-headline font-bold text-white mb-2">Nextel 📡</p>
+        <p class="text-xs text-zinc-500 leading-relaxed">Active chirp link between the Pack and Alisson's management.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="py-20 px-6 md:px-12 bg-surface-container-lowest border-t border-white/5">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div class="col-span-1 md:col-span-2">
+        <div class="text-2xl font-bold tracking-tighter text-dance-accent uppercase mb-4 font-headline">Apex</div>
+        <p class="text-zinc-500 max-w-sm mb-6 leading-relaxed text-sm">La plataforma integral para la evoluci&oacute;n de la m&uacute;sica latina. Impulsada por datos, inspirada por la pasi&oacute;n, construida para el futuro.</p>
+        <div class="flex gap-3">
+          <a href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-zinc-500 hover:text-dance-accent hover:border-dance-accent/30 transition-all">
+            <span class="material-symbols-outlined text-lg">brand_awareness</span>
+          </a>
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-zinc-500 hover:text-dance-accent hover:border-dance-accent/30 transition-all">
+            <span class="material-symbols-outlined text-lg">photo_camera</span>
+          </a>
+          <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-zinc-500 hover:text-dance-accent hover:border-dance-accent/30 transition-all">
+            <span class="material-symbols-outlined text-lg">video_library</span>
+          </a>
+          <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-zinc-500 hover:text-dance-accent hover:border-dance-accent/30 transition-all">
+            <span class="material-symbols-outlined text-lg">music_note</span>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h5 class="font-headline font-bold text-on-surface mb-6 text-sm">Navegaci&oacute;n</h5>
+        <ul class="space-y-3 text-zinc-500 text-sm">
+          <li><a class="hover:text-dance-accent transition-colors" href="/">Inicio</a></li>
+          <li><a class="hover:text-dance-accent transition-colors" href="/genre/tango/">Tango</a></li>
+          <li><a class="hover:text-dance-accent transition-colors" href="/marketplace/">Marketplace</a></li>
+          <li><a class="hover:text-dance-accent transition-colors" href="/dashboard/">Artist OS</a></li>
+          <li><a class="hover:text-dance-accent transition-colors" href="/academy/">Academy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-headline font-bold text-on-surface mb-6 text-sm">Legal</h5>
+        <ul class="space-y-3 text-zinc-500 text-sm">
+          <li><a class="hover:text-dance-accent transition-colors" href="#">Pol&iacute;tica de Privacidad</a></li>
+          <li><a class="hover:text-dance-accent transition-colors" href="#">T&eacute;rminos de Servicio</a></li>
+          <li><a class="hover:text-dance-accent transition-colors" href="#">Contacto</a></li>
+          <li><a class="hover:text-dance-accent transition-colors" href="/academy/">Documentaci&oacute;n</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-16 pt-8 border-t border-white/5 text-zinc-600 text-[10px] tracking-[0.2em] uppercase flex flex-col md:flex-row justify-between gap-4">
+      <div>&copy; 2026 Apex. Todos los derechos reservados.</div>
+      <div>Arcoiris EPK &bull; Representado por Apex &bull; Powered by CUBO Data Engine</div>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/i18n.js"></script>
+    <script src="/js/nav.js"></script>
+<script>
+  // ================================================================
+  // APEX DYNAMIC ENGINE (Live Content Sync)
+  // ================================================================
+  const SB_URL = 'https://iaycaynevtumrqoknemk.supabase.co';
+  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk3ODE0MCwiZXhwIjoyMDg5NTU0MTQwfQ.-V6swXvqL2X6kAH9UCeRXq59q-R4KcojANvVXRyxKuM';
+  const ARTIST_SLUG = 'arcoiris';
+
+  async function loadLiveConfig() {
+    let config = { 
+      visibility: { stats:true, bio:true, music:true, videography:true, merch:true, shows:true },
+      stats: {}, shows: [], music: [], videography: [], bio: { es: "" }
+    };
+    
+    try {
+      const res = await fetch(`${SB_URL}/rest/v1/artists_config?slug=eq.${ARTIST_SLUG}&select=*`, {
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+      });
+      const data = await res.json();
+      if (data && data.length > 0) {
+        config = { ...config, ...data[0].config };
+      }
+    } catch(e) { 
+      console.warn('[Apex Engine] Using fallback content:', e); 
+    }
+
+    const { visibility: vis } = config;
+    // Safety: Ensure all keys exist in visibility
+    ['stats','bio','music','videography','merch','shows'].forEach(k => { if (vis[k] === undefined) vis[k] = true; });
+    
+    // Force Arcoiris visibility
+    if (ARTIST_SLUG === 'arcoiris') {
+      vis.music = true;
+      vis.videography = true;
+    }
+
+    // Section Visibility Handling
+    const toggleSection = (id, show) => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = show ? 'block' : 'none';
+    };
+
+    toggleSection('musica', vis.music);
+    toggleSection('biografia', vis.bio);
+    toggleSection('shows', vis.shows);
+    toggleSection('metrics-bar', vis.stats); 
+    toggleSection('videografia', vis.videography);
+
+    // Call Render Functions
+    if (config.stats && Object.keys(config.stats).length > 0) renderLiveStats(config.stats);
+    if (config.shows && config.shows.length > 0) renderLiveShows(config.shows);
+    if (config.music && config.music.length > 0) renderLiveMusic(config.music);
+    
+    if (vis.videography && config.videography && config.videography.length > 0) {
+      renderLiveVideos(config.videography);
+    }
+
+    if (vis.bio && config.bio) {
+      const bioEl = document.querySelector('#biografia p');
+      if (bioEl) bioEl.textContent = config.bio.es || bioEl.textContent;
+    }
+  }
+
+  function renderLiveStats(stats) {
+    const container = document.querySelector('#metrics-bar .max-w-7xl');
+    if (!container) return;
+    container.innerHTML = `
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+        <div class="text-center md:text-left border-l-2 border-dance-accent/30 pl-6">
+          <div class="text-dance-accent font-headline text-4xl md:text-5xl font-bold">${stats.fan_count || '0'}</div>
+          <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Fans</div>
+        </div>
+        <div class="text-center md:text-left border-l-2 border-dance-accent/30 pl-6">
+          <div class="text-dance-accent font-headline text-4xl md:text-5xl font-bold">${stats.stream_count || '0'}</div>
+          <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Streams</div>
+        </div>
+        <div class="text-center md:text-left border-l-2 border-dance-accent/30 pl-6">
+          <div class="text-on-surface font-headline text-4xl md:text-5xl font-bold">${stats.top_territory || '--'}</div>
+          <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Top Territory</div>
+        </div>
+        <div class="text-center md:text-left border-l-2 border-dance-accent/30 pl-6">
+          <div class="text-dance-accent font-headline text-4xl md:text-5xl font-bold">${stats.engagement_rate || '0%'}</div>
+          <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mt-2 font-bold">Engagement Rate</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderLiveShows(shows) {
+    const defaultShows = [
+      { title: 'Buenos Aires · Teatro Colón', date: '2026-05-05T19:30:00', venue: 'Teatro Colón', city: 'Buenos Aires', ticket_url: '#', status: 'Upcoming' },
+      { title: 'Medellín · Festival de Danza', date: '2026-06-21T21:00:00', venue: 'Festival de Danza', city: 'Medellín', ticket_url: '#', status: 'Upcoming' },
+      { title: 'Mi Corazón es una Llama Errante', date: '2026-03-25T20:00:00', venue: 'Gavito Festival', city: 'Bucaramanga', ticket_url: '#', status: 'Past', label: 'ÉXITO TOTAL' },
+      { title: 'Teatro Gran Rex', date: '2026-04-18T20:00:00', venue: 'Teatro Gran Rex', city: 'Buenos Aires', ticket_url: '#', status: 'Past', label: 'SOLD OUT' }
+    ];
+    
+    const list = (shows && shows.length > 0) ? shows : defaultShows;
+    
+    const upcomingContainer = document.getElementById('shows-list');
+    const pastContainer = document.getElementById('past-shows-list');
+    
+    if (upcomingContainer) {
+      const upcoming = list.filter(s => s.status !== 'Past');
+      upcomingContainer.innerHTML = upcoming.map(s => {
+        const d = new Date(s.date);
+        const day = d.getDate();
+        const month = d.toLocaleString('es-ES', { month: 'short' }).toUpperCase().replace('.','');
+        const year = d.getFullYear();
+        return `
+          <div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-highest/40 border border-white/5 hover:border-dance-accent/30 transition-all duration-300 group">
+            <div class="text-center flex-shrink-0 w-16">
+              <div class="text-dance-accent font-headline text-3xl font-bold leading-none">${day}</div>
+              <div class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mt-1">${month}</div>
+              <div class="text-[9px] text-zinc-600 font-bold mt-0.5">${year}</div>
+            </div>
+            <div class="h-12 w-px bg-white/10"></div>
+            <div class="flex-1">
+              <h4 class="font-headline font-bold text-on-surface">${s.title}</h4>
+              <p class="text-zinc-500 text-sm italic">${s.venue} &middot; ${s.city}</p>
+            </div>
+            <a href="${s.ticket_url || '#'}" class="px-5 py-2 rounded-lg border border-white/10 text-zinc-400 text-xs font-bold hover:bg-dance-accent hover:text-white hover:border-dance-accent transition-all duration-300 whitespace-nowrap">
+              Entradas
+            </a>
+          </div>
+        `;
+      }).join('');
+    }
+
+    if (pastContainer) {
+      const past = list.filter(s => s.status === 'Past');
+      pastContainer.innerHTML = past.map(s => {
+        const d = new Date(s.date);
+        const day = d.getDate();
+        const month = d.toLocaleString('es-ES', { month: 'short' }).toUpperCase().replace('.','');
+        return `
+          <div class="rounded-xl bg-surface-container-highest/20 border border-white/5 p-6">
+            <div class="flex items-center gap-6">
+              <div class="text-center flex-shrink-0 w-16 grayscale">
+                <div class="text-zinc-500 font-headline text-3xl font-bold leading-none">${day}</div>
+                <div class="text-[10px] text-zinc-600 uppercase tracking-widest font-bold">${month}</div>
+              </div>
+              <div class="flex-1">
+                <h4 class="font-headline font-bold text-zinc-400 line-through">${s.title}</h4>
+                <p class="text-zinc-600 text-xs mt-1 uppercase tracking-widest">${s.city} &middot; ${s.label || 'Finalizado'}</p>
+              </div>
+              <span class="px-4 py-1 rounded bg-zinc-800 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">Finalizado</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  function renderLiveMusic(music) {
+    const list = (music && music.length > 0) ? music : [
+      { id: 'm1', title: 'Red Ochre Woman', type: 'Single', year: '2026', artwork_url: 'https://img.youtube.com/vi/smyZ11kvowg/hqdefault.jpg' },
+      { id: 'm2', title: 'Gaslight District', type: 'Single', year: '2025', artwork_url: 'https://img.youtube.com/vi/BgAGAJpMPZM/hqdefault.jpg' },
+      { id: 'm3', title: 'The Spirit Solitude', type: 'Single', year: '2025', artwork_url: 'https://img.youtube.com/vi/PreY4iVXNVg/hqdefault.jpg' },
+      { id: 'm4', title: 'Henri Vieuxtemps Capriccio', type: 'Album', year: '2024', artwork_url: 'https://img.youtube.com/vi/3DWwqq0EpHU/hqdefault.jpg' },
+      { id: 'm5', title: 'Traumerei', type: 'EP', year: '2024', artwork_url: 'https://img.youtube.com/vi/UacP7EdG2bs/hqdefault.jpg' }
+    ];
+    const container = document.getElementById('discografia-list');
+    if (!container) return;
+    container.innerHTML = list.map(m => `
+      <div class="group cursor-pointer">
+        <div class="aspect-square bg-surface-container-high relative overflow-hidden mb-5 rounded-xl dance-border-glow">
+          <img src="${m.artwork_url || 'https://img.youtube.com/vi/aN5xoSQ5S3c/hqdefault.jpg'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="${m.title}" onerror="this.src='https://img.youtube.com/vi/aN5xoSQ5S3c/hqdefault.jpg'"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-6xl" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+          </div>
+        </div>
+        <h4 class="font-headline font-bold text-on-surface text-lg">${m.title}</h4>
+        <p class="text-zinc-500 text-sm mt-1">${m.type} &bull; ${m.year}</p>
+      </div>
+    `).join('');
+  }
+
+  function renderLiveVideos(videos) {
+    const list = (videos && videos.length > 0) ? videos : [
+      { url: 'smyZ11kvowg', title: 'Red Ochre Woman', credits: 'Christina Linhardt & John Acevedo', description: 'A tribute to Isadora Duncan. Obra coreográfica y musical.' },
+      { url: 'BgAGAJpMPZM', title: 'Gaslight District', credits: 'Poem by Christina Linhardt', description: 'Music: Tango to No. 3 by Astor Piazzolla. Arranged for viola and performed by John Acevedo. Film editing by John Di Bona. Sound Editing: Laszlo Mezo.' },
+      { url: 'UacP7EdG2bs', title: 'Traumerei', credits: 'Schumann / Acevedo / Lissantheia', description: 'Viola solo with sacred dance and poem. Violist: John Acevedo. Dancer/Poet: Aimee Delphyne Lissantheia.' },
+      { url: '3DWwqq0EpHU', title: 'Henri Vieuxtemps', credits: 'Capriccio for solo viola', description: 'John Acevedo - violist. Virtuoso viola solo music. Recorded and Film editing by Ron Parker. Sound engineering by Laszlo Mezo.' },
+      { url: 'PreY4iVXNVg', title: 'The Spirit Solitude', credits: 'Christina Linhardt & Astor Piazzolla', description: 'The Spirit Solitude by Christina Linhardt. Danza Etude No. 4 by Astor Piazzolla. Arranged and performed by John Acevedo.' }
+    ];
+    const container = document.getElementById('obras-gallery');
+    if (!container) return;
+    container.innerHTML = list.filter(v => v.title && v.url).map(v => {
+      let vidId = '';
+      const url = v.url || v.id || '';
+      if (url.includes('v=')) vidId = url.split('v=')[1].split('&')[0];
+      else if (url.includes('youtu.be/')) vidId = url.split('youtu.be/')[1].split('?')[0];
+      else vidId = url;
+
+      if (vidId === 'aN5xoSQ5S3c') return ''; // Skip official video
+
+      return `
+        <div class="group">
+          <div class="relative aspect-video bg-black rounded-xl overflow-hidden scarlet-glow-sm dance-border-glow mb-6 cursor-pointer" 
+               onclick="this.innerHTML = '<iframe class=\\'w-full h-full\\' src=\\'https://www.youtube.com/embed/${vidId}?autoplay=1\\' frameborder=\\'0\\' allow=\\'autoplay; encrypted-media\\' allowfullscreen></iframe>'">
+            <img src="https://img.youtube.com/vi/${vidId}/hqdefault.jpg" class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" alt="${v.title}" onerror="this.src='/artists/Arcoiris/gallery/astopiazoola%20solo%20.png'"/>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-16 h-16 rounded-full bg-dance-accent/90 flex items-center justify-center scale-90 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 shadow-2xl shadow-dance-accent/50">
+                <span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+              </div>
+            </div>
+          </div>
+          <h4 class="font-headline font-bold text-white text-xl mb-2">${v.title}</h4>
+          <p class="text-dance-accent text-[10px] uppercase tracking-widest font-bold mb-3">${v.credits || ''}</p>
+          <p class="text-zinc-500 text-xs leading-relaxed opacity-80">${v.description || ''}</p>
+        </div>
+      `;
+    }).join('');
+  }
+
+  loadLiveConfig();
+})();
+</script>
+
+<!-- Nextel Chirp Feed Container -->
+<div id="nextel-chirp-feed" class="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3 pointer-events-none"></div>
+
+<script>
+(function() {
+  const container = document.getElementById('nextel-chirp-feed');
+  const artistName = 'Alisson Trigos';
+  const SUPABASE_URL = 'https://iaycaynevtumrqoknemk.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k';
+  
+  let seenIds = new Set();
+  let isFirstFetch = true;
+
+  async function fetchLatestLeads() {
+    try {
+      // Query leads_capture for this artist
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/leads_capture?artist_name=eq.${encodeURIComponent(artistName)}&order=created_at.desc&limit=5`, {
+        headers: {
+          'apikey': SUPABASE_ANON,
+          'Authorization': `Bearer ${SUPABASE_ANON}`
+        }
+      });
+      
+      if (!response.ok) return;
+      const data = await response.json();
+      
+      // If it's the first fetch, we just populate seenIds without showing chirps (to avoid spamming old leads)
+      // Unless the user wants to see the recent ones. I'll show the most recent one if it's first fetch.
+      
+      const leads = data.reverse(); // Show in chronological order
+      
+      leads.forEach((lead, index) => {
+        if (!seenIds.has(lead.id)) {
+          if (!isFirstFetch || (isFirstFetch && index === leads.length - 1)) {
+            addChirp(lead);
+          }
+          seenIds.add(lead.id);
+        }
+      });
+      
+      isFirstFetch = false;
+    } catch (e) {
+      console.warn('Chirp fetch failed:', e);
+    }
+  }
+
+  function addChirp(lead) {
+    const chirp = document.createElement('div');
+    chirp.className = 'chirp-item p-4';
+    
+    // Extract info from payload
+    // The payload structure from your gate:
+    // { artist_name, email, genre, mood_preference: { name, phone, city, fan_id, ... }, ... }
+    const mood = lead.mood_preference || {};
+    const fanId = mood.fan_id || 'AML-DN-ALT-???';
+    const city = mood.city || 'Colombia';
+    const name = mood.name || 'Anonymous Fan';
+    
+    // Format timestamp
+    const time = new Date(lead.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    chirp.innerHTML = `
+      <div class="flex items-start gap-3">
+        <div class="mt-1">
+          <div class="chirp-pulse"></div>
+        </div>
+        <div class="flex-1">
+          <div class="flex justify-between items-center mb-1">
+            <span class="chirp-type-badge">Nextel Chirp</span>
+            <span class="text-[9px] text-zinc-500 font-medium">${time}</span>
+          </div>
+          <p class="text-[11px] leading-tight text-white font-bold mb-0.5">
+            <span class="text-dance-accent">HOT LEAD:</span> ${name}
+          </p>
+          <p class="text-[10px] text-zinc-400">
+            Fan <span class="text-zinc-300 font-mono">${fanId}</span> connected from ${city}.
+          </p>
+        </div>
+      </div>
+    `;
+
+    // Add to container
+    container.appendChild(chirp);
+
+    // Remove after 10 seconds with animation
+    setTimeout(() => {
+      chirp.style.opacity = '0';
+      chirp.style.transform = 'translateX(20px) scale(0.95)';
+      setTimeout(() => chirp.remove(), 600);
+    }, 10000);
+  }
+
+  // Initial fetch after a small delay
+  setTimeout(fetchLatestLeads, 2000);
+  
+  // Poll every 30 seconds
+  setInterval(fetchLatestLeads, 30000);
+
+})();
+</script>
+</body></html>
