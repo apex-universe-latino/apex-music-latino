@@ -80,6 +80,25 @@ CREATE INDEX IF NOT EXISTS idx_mc_ingest_visitor ON public.mc_ingest_events(visi
 CREATE INDEX IF NOT EXISTS idx_mc_ingest_time    ON public.mc_ingest_events(received_at DESC);
 
 -- ============================================
+-- 3b. BLOG POSTS
+-- ============================================
+CREATE TABLE IF NOT EXISTS public.mc_posts (
+    id           UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    slug         TEXT UNIQUE NOT NULL,
+    title        TEXT NOT NULL,
+    excerpt      TEXT,
+    body         TEXT,                 -- markdown or HTML
+    cover_url    TEXT,
+    author       TEXT DEFAULT 'Carolina',
+    tags         JSONB DEFAULT '[]'::jsonb,
+    status       TEXT DEFAULT 'draft' CHECK (status IN ('draft','published')),
+    published_at TIMESTAMPTZ,
+    created_at   TIMESTAMPTZ DEFAULT NOW(),
+    updated_at   TIMESTAMPTZ DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_mc_posts_status ON public.mc_posts(status, published_at DESC);
+
+-- ============================================
 -- 4. ROW LEVEL SECURITY
 -- All writes go through serverless functions using the SERVICE_ROLE key,
 -- so anon needs no direct access. Service role bypasses RLS.
@@ -87,6 +106,7 @@ CREATE INDEX IF NOT EXISTS idx_mc_ingest_time    ON public.mc_ingest_events(rece
 ALTER TABLE public.mc_content       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.mc_leads         ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.mc_ingest_events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.mc_posts         ENABLE ROW LEVEL SECURITY;
 
 -- Public site needs to READ published content:
 CREATE POLICY "Public read mc_content" ON public.mc_content
@@ -97,6 +117,8 @@ CREATE POLICY "Service role all mc_content" ON public.mc_content
 CREATE POLICY "Service role all mc_leads" ON public.mc_leads
     FOR ALL TO service_role USING (true) WITH CHECK (true);
 CREATE POLICY "Service role all mc_ingest_events" ON public.mc_ingest_events
+    FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role all mc_posts" ON public.mc_posts
     FOR ALL TO service_role USING (true) WITH CHECK (true);
 
 -- ============================================

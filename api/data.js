@@ -33,8 +33,11 @@ export default async function handler(req, res) {
   if (action === 'lead') return handleLead(req, res);
   if (action === 'ingest') return handleIngest(req, res);
   if (action === 'content') return handleContent(req, res);
+  if (action === 'posts') return handlePosts(req, res);
+  if (action === 'sitemap') return handleSitemap(req, res);
+  if (action === 'robots') return handleRobots(req, res);
   res.setHeader('Access-Control-Allow-Origin', '*');
-  return res.status(400).json({ error: 'Unknown or missing action. Use proxy | lead | ingest | content.' });
+  return res.status(400).json({ error: 'Unknown or missing action.' });
 }
 
 // ============================================================
@@ -336,4 +339,130 @@ async function handleContent(req, res) {
   }
 
   return res.status(405).json({ error: 'Method not allowed' });
+}
+
+// ============================================================
+// action=posts  — Blog (Apex MODELOS Latino)
+//   GET  ?action=posts                 → list published posts
+//   GET  ?action=posts&slug=xxx        → single post (published)
+//   GET  ?action=posts&status=all&admin_key=...  → all (admin, incl. drafts)
+//   POST ?action=posts  { admin_key, post:{slug,title,...} }  → upsert
+// ============================================================
+async function handlePosts(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+
+  const SUPABASE_URL = modelosUrl();
+  const SERVICE_KEY = process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY;
+  if (!SUPABASE_URL || !SERVICE_KEY) return res.status(500).json({ error: 'Modelos Latino Supabase not configured.' });
+  const sb = { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json' };
+
+  if (req.method === 'GET') {
+    const slug = req.query.slug ? `&slug=eq.${encodeURIComponent(req.query.slug)}` : '';
+    const wantAll = req.query.status === 'all' && req.query.admin_key === process.env.MC_ADMIN_KEY;
+    const pub = wantAll ? '' : '&status=eq.published';
+    const sel = 'select=slug,title,excerpt,body,cover_url,author,tags,status,published_at,updated_at';
+    const url = `${SUPABASE_URL}/rest/v1/mc_posts?${sel}${slug}${pub}&order=published_at.desc.nullslast`;
+    try {
+      const r = await fetch(url, { headers: sb });
+      const rows = await r.json();
+      if (r.status >= 400) return res.status(r.status).json({ error: 'Read failed', details: rows });
+      if (req.query.slug) return res.status(200).json(Array.isArray(rows) ? rows[0] || null : null);
+      return res.status(200).json(rows);
+    } catch (e) {
+      return res.status(503).json({ error: 'Supabase unreachable', details: e.message });
+    }
+  }
+
+  if (req.method === 'POST') {
+    const adminKey = process.env.MC_ADMIN_KEY;
+    const b = req.body || {};
+    if (!adminKey) return res.status(500).json({ error: 'MC_ADMIN_KEY not configured' });
+    if (b.admin_key !== adminKey) return res.status(401).json({ error: 'Invalid admin_key' });
+    const p = b.post || b;
+    if (!p.slug || !p.title) return res.status(400).json({ error: 'post needs at least { slug, title }' });
+    const row = {
+      slug: String(p.slug).toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, ''),
+      title: p.title,
+      excerpt: p.excerpt ?? null,
+      body: p.body ?? null,
+      cover_url: p.cover_url ?? null,
+      author: p.author ?? 'Carolina',
+      tags: Array.isArray(p.tags) ? p.tags : [],
+      status: p.status === 'published' ? 'published' : 'draft',
+      published_at: p.status === 'published' ? (p.published_at || new Date().toISOString()) : null,
+      updated_at: new Date().toISOString(),
+    };
+    try {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/mc_posts?on_conflict=slug`, {
+        method: 'POST',
+        headers: { ...sb, Prefer: 'resolution=merge-duplicates,return=representation' },
+        body: JSON.stringify(row),
+      });
+      const data = await r.json();
+      if (r.status >= 400) return res.status(r.status).json({ error: 'Upsert failed', details: data });
+      return res.status(200).json({ ok: true, post: Array.isArray(data) ? data[0] : data });
+    } catch (e) {
+      return res.status(503).json({ error: 'Supabase unreachable', details: e.message });
+    }
+  }
+
+  return res.status(405).json({ error: 'Method not allowed' });
+}
+
+// ============================================================
+// action=robots / action=sitemap  — host-aware (served at /robots.txt, /sitemap.xml)
+// ============================================================
+function isMindsetHost(req) {
+  return (req.headers.host || '').toLowerCase().includes('mindsetcaro');
+}
+
+function handleRobots(req, res) {
+  const mindset = isMindsetHost(req);
+  const base = mindset ? 'https://mindsetcaro.com' : 'https://apexmusiclatino.com';
+  let body = 'User-agent: *\nAllow: /\n';
+  if (mindset) body += 'Disallow: /cms\n';
+  body += `Sitemap: ${base}/sitemap.xml\n`;
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  return res.status(200).send(body);
+}
+
+const APEX_SITEMAP = [
+  ['/', '1.0'], ['/artists/', '0.9'], ['/marketplace/', '0.9'], ['/academy/', '0.9'],
+  ['/dashboard/', '0.8'], ['/studio/', '0.8'], ['/onboarding/', '0.8'],
+  ['/genre/reggaeton/', '0.8'], ['/genre/tango/', '0.8'], ['/genre/rap/', '0.8'],
+  ['/genre/rock/', '0.7'], ['/genre/electronic/', '0.7'], ['/genre/afro-latin/', '0.7'],
+  ['/genre/rap/joey-b/', '0.7'], ['/genre/tango/arcoiris/', '0.7'], ['/blog/', '0.8'],
+];
+
+async function handleSitemap(req, res) {
+  res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+  let urls = [];
+  if (isMindsetHost(req)) {
+    const B = 'https://mindsetcaro.com';
+    urls.push({ loc: `${B}/`, priority: '1.0' });
+    urls.push({ loc: `${B}/blog`, priority: '0.7' });
+    const SUPABASE_URL = modelosUrl();
+    const KEY = process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY;
+    if (SUPABASE_URL && KEY) {
+      try {
+        const r = await fetch(`${SUPABASE_URL}/rest/v1/mc_posts?select=slug,updated_at&status=eq.published&order=published_at.desc`, {
+          headers: { apikey: KEY, Authorization: `Bearer ${KEY}` },
+        });
+        if (r.ok) {
+          const posts = await r.json();
+          for (const p of posts) urls.push({ loc: `${B}/blog/${p.slug}`, priority: '0.6', lastmod: (p.updated_at || '').slice(0, 10) });
+        }
+      } catch { /* posts optional */ }
+    }
+  } else {
+    urls = APEX_SITEMAP.map(([path, priority]) => ({ loc: `https://apexmusiclatino.com${path}`, priority }));
+  }
+  const xml =
+    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    urls.map((u) => `  <url><loc>${u.loc}</loc>${u.lastmod ? `<lastmod>${u.lastmod}</lastmod>` : ''}<priority>${u.priority}</priority></url>`).join('\n') +
+    '\n</urlset>\n';
+  return res.status(200).send(xml);
 }

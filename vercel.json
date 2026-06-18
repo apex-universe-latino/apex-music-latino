@@ -12,6 +12,9 @@
         { "source": "/api/lead", "destination": "/api/data?action=lead" },
         { "source": "/api/ingest", "destination": "/api/data?action=ingest" },
         { "source": "/api/mc-content", "destination": "/api/data?action=content" },
+        { "source": "/api/posts", "destination": "/api/data?action=posts" },
+        { "source": "/sitemap.xml", "destination": "/api/data?action=sitemap" },
+        { "source": "/robots.txt", "destination": "/api/data?action=robots" },
 
         { "source": "/influencer/mindsetcaro/:path*", "destination": "/mindset-caro/:path*" },
 
