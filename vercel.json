@@ -1,7 +1,9 @@
 {
     "redirects": [
         { "source": "/admin", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/cms", "permanent": false },
-        { "source": "/admin/", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/cms", "permanent": false }
+        { "source": "/admin/", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/cms", "permanent": false },
+        { "source": "/admin", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/cms", "permanent": false },
+        { "source": "/admin/", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/cms", "permanent": false }
     ],
     "headers": [
         { "source": "/mindset-caro/:path*", "has": [{ "type": "host", "value": "apexmusiclatino.com" }], "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] },
@@ -20,9 +22,13 @@
 
         { "source": "/cms", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/admin/index.html" },
         { "source": "/cms/:path*", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/admin/index.html" },
+        { "source": "/cms", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/mindset-caro/admin/index.html" },
+        { "source": "/cms/:path*", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/mindset-caro/admin/index.html" },
 
         { "source": "/", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/index.html" },
         { "source": "/:path*", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/index.html" },
+        { "source": "/", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/mindset-caro/index.html" },
+        { "source": "/:path*", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/mindset-caro/index.html" },
 
         { "source": "/blog/posts/es/:slug*/", "destination": "/blog/posts/es/index.html" },
         { "source": "/blog/posts/es/:slug*", "destination": "/blog/posts/es/index.html" },
