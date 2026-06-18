@@ -1,9 +1,27 @@
 {
+    "redirects": [
+        { "source": "/admin", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/cms", "permanent": false },
+        { "source": "/admin/", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/cms", "permanent": false }
+    ],
+    "headers": [
+        { "source": "/mindset-caro/:path*", "has": [{ "type": "host", "value": "apexmusiclatino.com" }], "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] },
+        { "source": "/public/mindset-caro/:path*", "has": [{ "type": "host", "value": "apexmusiclatino.com" }], "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] },
+        { "source": "/influencer/mindsetcaro/:path*", "has": [{ "type": "host", "value": "apexmusiclatino.com" }], "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] }
+    ],
     "rewrites": [
         { "source": "/api/supabase-proxy", "destination": "/api/data?action=proxy" },
         { "source": "/api/lead", "destination": "/api/data?action=lead" },
         { "source": "/api/ingest", "destination": "/api/data?action=ingest" },
         { "source": "/api/mc-content", "destination": "/api/data?action=content" },
+
+        { "source": "/influencer/mindsetcaro/:path*", "destination": "/public/mindset-caro/:path*" },
+
+        { "source": "/cms", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/admin/index.html" },
+        { "source": "/cms/:path*", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/admin/index.html" },
+
+        { "source": "/", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/public/mindset-caro/index.html" },
+        { "source": "/:path*", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/public/mindset-caro/index.html" },
+
         { "source": "/blog/posts/es/:slug*/", "destination": "/blog/posts/es/index.html" },
         { "source": "/blog/posts/es/:slug*", "destination": "/blog/posts/es/index.html" },
         { "source": "/blog/posts/:slug*/", "destination": "/blog/posts/index.html" },
