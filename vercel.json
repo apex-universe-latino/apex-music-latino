@@ -25,6 +25,9 @@
         { "source": "/cms", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/mindset-caro/admin/index.html" },
         { "source": "/cms/:path*", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/mindset-caro/admin/index.html" },
 
+        { "source": "/assets/:path*", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/assets/:path*" },
+        { "source": "/assets/:path*", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/mindset-caro/assets/:path*" },
+
         { "source": "/", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/index.html" },
         { "source": "/:path*", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/index.html" },
         { "source": "/", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/mindset-caro/index.html" },
