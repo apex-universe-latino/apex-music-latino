@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+  ::selection{background:#e60000;color:#fff;}
+  input::placeholder{color:var(--faint);}
+  [data-theme="dark"]{--bg:#0b0b0b;--surface:#141414;--panel:#0f0f0f;--text:#ffffff;--dim:#b5b5b5;--faint:#8a8a8a;--border:rgba(255,255,255,.1);--hair:rgba(255,255,255,.08);--inputbg:rgba(255,255,255,.05);--cover:repeating-linear-gradient(45deg,#151515,#151515 13px,#1d1414 13px,#1d1414 26px);}
+  [data-theme="light"]{--bg:#f3f1ec;--surface:#ffffff;--panel:#ebe8e1;--text:#101010;--dim:#4a4a4a;--faint:#7a766e;--border:rgba(0,0,0,.13);--hair:rgba(0,0,0,.08);--inputbg:rgba(0,0,0,.035);--cover:repeating-linear-gradient(45deg,#e7e4dc,#e7e4dc 13px,#efe6e4 13px,#efe6e4 26px);}
+  [data-style="neon"]{--r:18px;--accent:#e60000;--accent2:#ff5252;--glow:0 0 28px rgba(230,0,0,.45);--btnglow:0 0 30px rgba(230,0,0,.5);--soft:rgba(230,0,0,.15);--halo:radial-gradient(circle,rgba(230,0,0,.3),transparent 65%);--bw:1px;}
+  [data-style="chrome"]{--r:26px;--accent:#e60000;--accent2:#8fb0ff;--glow:0 14px 50px rgba(120,150,255,.22);--btnglow:0 12px 34px rgba(230,0,0,.4);--soft:rgba(130,150,255,.16);--halo:radial-gradient(circle,rgba(120,150,255,.32),transparent 65%);--bw:1px;}
+  [data-style="editorial"]{--r:3px;--accent:#e60000;--accent2:#e60000;--glow:none;--btnglow:none;--soft:rgba(230,0,0,.08);--halo:none;--bw:2px;}
+  @keyframes glowpulse{0%,100%{box-shadow:var(--btnglow);}50%{box-shadow:0 0 12px rgba(230,0,0,.25);}}
+  @keyframes riseIn{from{transform:translateY(14px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+  @keyframes drift{from{transform:translate(-4%,-2%) scale(1.06);}to{transform:translate(4%,3%) scale(1.16);}}
+  [data-edit="1"] [data-cms-field]{position:relative;outline:1px dashed rgba(230,0,0,.85);outline-offset:3px;border-radius:2px;}
+  [data-edit="1"] [data-cms-field]::after{content:attr(data-cms-field);position:absolute;top:-7px;left:0;transform:translateY(-100%);font:700 9px/1 'Space Mono',monospace;background:#e60000;color:#fff;padding:2px 5px;border-radius:3px;white-space:nowrap;z-index:40;pointer-events:none;}
+</style>
+</helmet>
+
+<div data-screen-label="Diagnostico" data-theme="{{ theme }}" data-style="{{ styleVar }}" data-edit="{{ editAttr }}" style="background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;">
+
+  <!-- NAV -->
+  <div style="position:sticky;top:0;z-index:100;background:color-mix(in srgb, var(--bg) 82%, transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--hair);">
+    <div style="max-width:1120px;margin:0 auto;padding:16px 40px;display:flex;align-items:center;gap:26px;">
+      <a href="Mindset Caro Landing.dc.html" style="font-weight:900;font-size:20px;letter-spacing:-.5px;text-decoration:none;color:var(--text);">MINDSET<span style="color:var(--accent);">CARO</span></a>
+      <div style="flex:1;"></div>
+      <button onClick="{{ toggleTheme }}" style="display:flex;align-items:center;gap:7px;background:var(--inputbg);border:1px solid var(--border);color:var(--text);border-radius:30px;padding:8px 13px;cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;">{{ themeIcon }} {{ themeLabel }}</button>
+      <a href="Mindset Caro Landing.dc.html" style="font-size:13px;color:var(--dim);text-decoration:none;">← Volver al sitio</a>
+    </div>
+  </div>
+
+  <!-- HERO / 101 PITCH -->
+  <div style="position:relative;overflow:hidden;border-bottom:1px solid var(--hair);">
+    <!-- video background layer (day/night) -->
+    <div style="position:absolute;inset:0;z-index:0;overflow:hidden;">
+      <sc-if value="{{ hasVideo }}" hint-placeholder-val="{{ false }}">
+        <video src="{{ activeVideo }}" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+      </sc-if>
+      <sc-if value="{{ noVideo }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;background:var(--cover);"></div>
+        <div style="position:absolute;inset:0;background:var(--halo);animation:drift 9s ease-in-out infinite alternate;"></div>
+        <div data-cms-field="hero.videoBg" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font:700 10px/1 'Space Mono',monospace;color:var(--faint);letter-spacing:1px;white-space:nowrap;">[ FONDO VIDEO · cambia con día/noche — pega tu URL en Tweaks ]</div>
+      </sc-if>
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg, color-mix(in srgb,var(--bg) 35%,transparent), color-mix(in srgb,var(--bg) 82%,transparent));"></div>
+    </div>
+    <div style="position:absolute;top:-160px;left:50%;transform:translateX(-50%);width:680px;height:520px;background:var(--halo);filter:blur(30px);z-index:0;"></div>
+    <div style="position:relative;z-index:1;max-width:840px;margin:0 auto;padding:80px 40px 70px;text-align:center;">
+      <div data-cms-field="pitch.eyebrow" style="display:inline-block;font:700 12px/1 'Space Mono',monospace;letter-spacing:3px;color:var(--accent2);border:1px solid var(--soft);padding:8px 14px;border-radius:30px;">DIAGNÓSTICO GRATUITO · 60 SEGUNDOS</div>
+      <h1 data-cms-field="pitch.title" style="font-size:58px;line-height:1.03;font-weight:900;letter-spacing:-1.6px;margin-top:24px;">Descubre tu plan para <span style="color:var(--accent);">blindar tu futuro.</span></h1>
+      <p data-cms-field="pitch.subtitle" style="font-size:18px;line-height:1.6;color:var(--dim);margin-top:20px;max-width:580px;margin-left:auto;margin-right:auto;">Sin llamadas incómodas ni formularios eternos. Gira, calcula y recibe el recurso exacto para tu momento — al instante.</p>
+      <a href="#jugar" data-cms-field="pitch.cta" style="display:inline-block;margin-top:32px;background:var(--accent);color:#fff;font-weight:700;font-size:17px;padding:16px 32px;border-radius:var(--r);text-decoration:none;animation:glowpulse 2.4s infinite;">Empezar ahora ↓</a>
+
+      <!-- 101 steps -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:60px;text-align:left;">
+        <sc-for list="{{ steps101 }}" as="s" hint-placeholder-count="3">
+          <div style="background:var(--surface);border:var(--bw) solid var(--border);border-radius:var(--r);padding:24px;">
+            <div style="font-size:34px;font-weight:900;color:var(--accent);letter-spacing:-1px;">{{ s.n }}</div>
+            <div data-cms-field="{{ s.field }}" style="font-size:17px;font-weight:700;margin-top:10px;">{{ s.title }}</div>
+            <p style="font-size:13px;line-height:1.55;color:var(--dim);margin-top:7px;">{{ s.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROULETTE -->
+  <div id="jugar" style="position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-140px;right:-120px;width:480px;height:480px;background:var(--halo);filter:blur(28px);"></div>
+    <div style="position:relative;max-width:1120px;margin:0 auto;padding:84px 40px;">
+      <div style="text-align:center;">
+        <div style="font:700 12px/1 'Space Mono',monospace;letter-spacing:3px;color:var(--accent2);">PASO 1 · GIRA Y GANA</div>
+        <h2 style="font-size:42px;font-weight:900;letter-spacing:-1.2px;margin-top:14px;">Tu regalo, al azar</h2>
+      </div>
+      <div style="margin-top:46px;display:grid;grid-template-columns:340px 1fr;gap:50px;align-items:center;">
+        <div style="position:relative;width:300px;height:300px;justify-self:center;">
+          <div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);z-index:5;width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-top:26px solid var(--accent);filter:drop-shadow(0 2px 4px rgba(0,0,0,.45));"></div>
+          {{ wheelDisc }}
+          <button onClick="{{ spin }}" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:86px;height:86px;border-radius:50%;border:5px solid #fff;background:var(--accent);color:#fff;font-family:'Inter',sans-serif;font-weight:900;font-size:15px;cursor:pointer;box-shadow:var(--btnglow);z-index:6;">GIRAR</button>
+        </div>
+        <div style="width:100%;max-width:440px;">
+          <sc-if value="{{ noPrize }}" hint-placeholder-val="{{ true }}">
+          <div>
+            <div style="font-size:24px;font-weight:800;letter-spacing:-.5px;">6 regalos. Uno es tuyo.</div>
+            <p style="font-size:14px;color:var(--dim);margin-top:8px;">Pulsa <strong>GIRAR</strong> y mira qué te toca.</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px;">
+              <sc-for list="{{ prizeLegend }}" as="p" hint-placeholder-count="6">
+                <div style="display:flex;align-items:center;gap:10px;background:var(--surface);border:var(--bw) solid var(--border);border-radius:calc(var(--r) - 8px);padding:11px 13px;">
+                  <span style="flex:none;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font:900 12px/1 'Inter',sans-serif;">{{ p.n }}</span>
+                  <span style="font-size:13px;color:var(--text);">{{ p.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          </sc-if>
+          <sc-if value="{{ hasPrize }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:riseIn .4s ease;background:var(--surface);border:var(--bw) solid var(--accent);border-radius:var(--r);padding:28px;box-shadow:var(--glow);">
+            <div style="font:700 11px/1 'Space Mono',monospace;letter-spacing:2px;color:var(--accent2);">¡FELICIDADES! GANASTE</div>
+            <div style="font-size:28px;font-weight:900;letter-spacing:-.6px;margin-top:8px;color:var(--accent);">{{ prize }}</div>
+            <p style="font-size:13px;color:var(--dim);margin-top:8px;">Déjanos tus datos y te lo enviamos ahora mismo.</p>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px;">
+              <input placeholder="Nombre" style="background:var(--inputbg);border:var(--bw) solid var(--border);border-radius:calc(var(--r) - 6px);padding:14px 16px;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;outline:none;" />
+              <input placeholder="Email" style="background:var(--inputbg);border:var(--bw) solid var(--border);border-radius:calc(var(--r) - 6px);padding:14px 16px;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;outline:none;" />
+              <input placeholder="WhatsApp" style="background:var(--inputbg);border:var(--bw) solid var(--border);border-radius:calc(var(--r) - 6px);padding:14px 16px;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;outline:none;" />
+            </div>
+            <button onClick="{{ claimWheel }}" style="margin-top:16px;width:100%;background:var(--accent);color:#fff;font-weight:700;font-size:16px;padding:16px;border:none;border-radius:var(--r);cursor:pointer;font-family:'Inter',sans-serif;box-shadow:var(--btnglow);">Reclamar mi regalo</button>
+            <div style="font:500 10px/1.5 'Space Mono',monospace;color:var(--faint);margin-top:12px;text-align:center;">⚙ submit → Cubo CDP / CMS (Claude Code)</div>
+          </div>
+          </sc-if>
+          <sc-if value="{{ wheelDone }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:riseIn .4s ease;text-align:center;background:var(--surface);border:var(--bw) solid var(--border);border-radius:var(--r);padding:34px;">
+            <div style="width:60px;height:60px;margin:0 auto;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:var(--btnglow);">✓</div>
+            <div style="font-size:22px;font-weight:800;margin-top:16px;">¡Regalo reclamado!</div>
+            <p style="font-size:14px;color:var(--dim);margin-top:8px;">Ahora calcula tu protección abajo ↓</p>
+            <button onClick="{{ resetWheel }}" style="margin-top:18px;background:var(--inputbg);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:10px 18px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;">Girar otra vez</button>
+          </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALCULATOR -->
+  <div style="background:var(--panel);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);">
+    <div style="max-width:1120px;margin:0 auto;padding:84px 40px;">
+      <div style="text-align:center;">
+        <div style="font:700 12px/1 'Space Mono',monospace;letter-spacing:3px;color:var(--accent2);">PASO 2 · CALCULADORA</div>
+        <h2 style="font-size:42px;font-weight:800;letter-spacing:-1px;margin-top:14px;">¿Cuánto necesitas para blindar tu futuro?</h2>
+      </div>
+      <div style="margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:0;border:var(--bw) solid var(--border);border-radius:calc(var(--r) + 6px);overflow:hidden;background:var(--surface);box-shadow:var(--glow);">
+        <div style="padding:38px;border-right:1px solid var(--hair);">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;">
+            <span style="font-size:14px;font-weight:600;">Ingreso mensual</span>
+            <span style="font:700 16px/1 'Space Mono',monospace;color:var(--accent);">{{ ingresoStr }}</span>
+          </div>
+          <input type="range" min="2" max="30" value="{{ ingreso }}" onChange="{{ setIngreso }}" style="width:100%;accent-color:var(--accent);height:6px;cursor:pointer;margin-top:14px;" />
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:30px;">
+            <span style="font-size:14px;font-weight:600;">Tu edad</span>
+            <span style="font:700 16px/1 'Space Mono',monospace;color:var(--accent);">{{ age }} años</span>
+          </div>
+          <input type="range" min="25" max="65" value="{{ age }}" onChange="{{ setAge }}" style="width:100%;accent-color:var(--accent);height:6px;cursor:pointer;margin-top:14px;" />
+          <div style="font-size:14px;font-weight:600;margin-top:30px;">Personas que dependen de ti</div>
+          <div style="display:flex;gap:10px;margin-top:14px;">
+            <sc-for list="{{ deps }}" as="d" hint-placeholder-count="5">
+              <button onClick="{{ d.pick }}" style="{{ d.style }}">{{ d.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="padding:38px;background:var(--panel);display:flex;flex-direction:column;justify-content:center;">
+          <sc-if value="{{ calcDone }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:riseIn .4s ease;text-align:center;">
+            <div style="width:60px;height:60px;margin:0 auto;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:var(--btnglow);">✓</div>
+            <div style="font-size:24px;font-weight:800;margin-top:16px;">Tu plan va en camino</div>
+            <p style="font-size:14px;color:var(--dim);margin-top:8px;">Carolina te contactará para personalizarlo.</p>
+          </div>
+          </sc-if>
+          <sc-if value="{{ notCalcDone }}" hint-placeholder-val="{{ true }}">
+          <div>
+            <div style="font:700 11px/1 'Space Mono',monospace;letter-spacing:1px;color:var(--faint);">COBERTURA SUGERIDA</div>
+            <div style="font-size:40px;font-weight:900;letter-spacing:-1.5px;margin-top:6px;color:var(--accent);">{{ coverageStr }}</div>
+            <div style="font:700 11px/1 'Space Mono',monospace;letter-spacing:1px;color:var(--faint);margin-top:20px;">ESTIMADO MENSUAL</div>
+            <div style="font-size:26px;font-weight:800;margin-top:4px;">{{ monthlyStr }} <span style="font-size:14px;color:var(--dim);font-weight:500;">/ mes</span></div>
+            <div style="font:500 11px/1.5 'Space Mono',monospace;color:var(--faint);margin-top:10px;">⚠ estimación referencial — el plan real se ajusta en tu asesoría</div>
+            <input placeholder="Email para recibir tu plan detallado" style="margin-top:22px;width:100%;background:var(--inputbg);border:var(--bw) solid var(--border);border-radius:calc(var(--r) - 6px);padding:14px 16px;color:var(--text);font-family:'Inter',sans-serif;font-size:15px;outline:none;" />
+            <button onClick="{{ sendCalc }}" data-cms-field="calc.cta" style="margin-top:12px;width:100%;background:var(--accent);color:#fff;font-weight:700;font-size:16px;padding:16px;border:none;border-radius:var(--r);cursor:pointer;font-family:'Inter',sans-serif;box-shadow:var(--btnglow);">Recibir mi plan detallado</button>
+          </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="background:var(--panel);">
+    <div style="max-width:1120px;margin:0 auto;padding:38px 40px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;">
+      <div style="font-weight:900;font-size:18px;">MINDSET<span style="color:var(--accent);">CARO</span> <span style="font-weight:400;font-size:12px;color:var(--faint);margin-left:8px;">· Apex Modelos Latino</span></div>
+      <div data-cms-field="footer.links" style="display:flex;gap:22px;font:500 13px/1 'Space Mono',monospace;color:var(--faint);">Instagram · YouTube · Podcast · WhatsApp</div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;editMode&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark'|'light'&quot;},&quot;style&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;neon&quot;,&quot;chrome&quot;,&quot;editorial&quot;],&quot;default&quot;:&quot;neon&quot;,&quot;tsType&quot;:&quot;'neon'|'chrome'|'editorial'&quot;},&quot;heroVideoDay&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;heroVideoNight&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { theme: null, wheelDeg: 0, spinning: false, prize: null, wheelSent: false, age: 38, dep: 1, ingreso: 8, calcSent: false };
+
+  prizes = ['Guía: Blinda tu Futuro', '20% en tu 1ª póliza', 'Sesión 1:1 gratis', 'Playbook de Ventas', 'Audio Mindset', 'Masterclass gratis'];
+
+  toggleTheme(){ const c = this.state.theme || this.props.theme || 'dark'; this.setState({ theme: c === 'dark' ? 'light' : 'dark' }); }
+  spin(){
+    if(this.state.spinning) return;
+    const idx = Math.floor(Math.random() * this.prizes.length);
+    const seg = 360 / this.prizes.length;
+    const base = this.state.wheelDeg;
+    const finalDeg = base - (base % 360) + 360 * 5 + (360 - (idx * seg + seg / 2));
+    this.setState({ spinning: true, prize: null, wheelSent: false, wheelDeg: finalDeg });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ spinning: false, prize: this.prizes[idx] }), 4300);
+  }
+  claimWheel(){ this.setState({ wheelSent: true }); }
+  resetWheel(){ this.setState({ prize: null, wheelSent: false }); }
+  setAge(e){ this.setState({ age: +e.target.value }); }
+  setIngreso(e){ this.setState({ ingreso: +e.target.value }); }
+  setDep(n){ this.setState({ dep: n }); }
+  sendCalc(){ this.setState({ calcSent: true }); }
+
+  renderVals(){
+    const React = this.constructor.React || window.React;
+    const mk = React.createElement;
+    const editMode = this.props.editMode ?? true;
+    const theme = this.state.theme || this.props.theme || 'dark';
+    const styleVar = this.props.style || 'neon';
+    const activeVideo = (theme === 'dark' ? this.props.heroVideoNight : this.props.heroVideoDay) || '';
+    const seg = 360 / this.prizes.length;
+    const fmtCOP = (n) => '$' + Math.round(n).toLocaleString('es-CO');
+    const ingresoCOP = this.state.ingreso * 1e6;
+    const coverageCOP = ingresoCOP * 120 * (1 + this.state.dep * 0.15);
+    const monthlyCOP = coverageCOP * 0.005 * (1 + (this.state.age - 30) * 0.03) / 12;
+    const wheelDisc = mk('div', { style: { width:'300px', height:'300px', borderRadius:'50%', border:'7px solid #fff', background:'conic-gradient(#e60000 0 60deg,#7a0000 60deg 120deg,#e60000 120deg 180deg,#7a0000 180deg 240deg,#e60000 240deg 300deg,#7a0000 300deg 360deg)', transform:'rotate(' + this.state.wheelDeg + 'deg)', transition:'transform 4.2s cubic-bezier(.16,.84,.2,1)', position:'relative', boxShadow:'var(--glow)' } },
+      this.prizes.map((p, i) => mk('div', { key:i, style:{ position:'absolute', inset:0, transform:'rotate(' + (i * seg + seg / 2) + 'deg)' } },
+        mk('span', { style:{ position:'absolute', top:'18px', left:'50%', transform:'translateX(-50%)', color:'#fff', fontWeight:900, fontSize:'19px', textShadow:'0 1px 4px rgba(0,0,0,.55)' } }, String(i + 1))
+      ))
+    );
+    const depBase = { width:'52px', height:'46px', borderRadius:'calc(var(--r) - 8px)', border:'var(--bw) solid var(--border)', background:'var(--inputbg)', color:'var(--text)', fontFamily:"'Inter',sans-serif", fontWeight:700, fontSize:'16px', cursor:'pointer' };
+    const depOn = Object.assign({}, depBase, { background:'var(--accent)', color:'#fff', borderColor:'var(--accent)', boxShadow:'var(--glow)' });
+
+    return {
+      editMode, editAttr: editMode ? '1' : '0', theme, styleVar,
+      themeIcon: theme === 'dark' ? '☀' : '☾',
+      themeLabel: theme === 'dark' ? 'Claro' : 'Oscuro',
+      toggleTheme: () => this.toggleTheme(),
+      activeVideo, hasVideo: !!activeVideo, noVideo: !activeVideo,
+      steps101: [
+        { n:'1', field:'step.1', title:'Gira la ruleta', body:'Descubre al instante qué recurso gratuito te toca.' },
+        { n:'2', field:'step.2', title:'Calcula tu protección', body:'Una estimación clara de cuánto necesitas para blindar tu futuro.' },
+        { n:'3', field:'step.3', title:'Recibe tu plan', body:'Carolina te contacta con el siguiente paso, sin compromiso.' }
+      ],
+      wheelDisc,
+      spin: () => this.spin(),
+      noPrize: !this.state.prize && !this.state.wheelSent,
+      hasPrize: !!this.state.prize && !this.state.wheelSent,
+      wheelDone: this.state.wheelSent,
+      prize: this.state.prize,
+      claimWheel: () => this.claimWheel(),
+      resetWheel: () => this.resetWheel(),
+      prizeLegend: this.prizes.map((p, i) => ({ n: i + 1, label: p })),
+      age: this.state.age,
+      ingreso: this.state.ingreso,
+      ingresoStr: fmtCOP(ingresoCOP),
+      coverageStr: fmtCOP(coverageCOP),
+      monthlyStr: fmtCOP(monthlyCOP),
+      setAge: (e) => this.setAge(e),
+      setIngreso: (e) => this.setIngreso(e),
+      deps: [0, 1, 2, 3, 4].map(n => ({ n, label: String(n), pick: () => this.setDep(n), style: this.state.dep === n ? depOn : depBase })),
+      calcDone: this.state.calcSent,
+      notCalcDone: !this.state.calcSent,
+      sendCalc: () => this.sendCalc()
+    };
+  }
+}
+</script>
+</body>
+</html>
