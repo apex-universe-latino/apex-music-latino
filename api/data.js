@@ -1,0 +1,339 @@
+// api/data.js — Unified Supabase data gateway
+//
+// One serverless function that handles four logical endpoints, dispatched by ?action=.
+// The original paths are preserved via vercel.json rewrites, so callers are unchanged:
+//   /api/supabase-proxy  → /api/data?action=proxy    (Apex MUSIC Latino proxy)
+//   /api/lead            → /api/data?action=lead     (Apex MODELOS Latino — Mindset Caro)
+//   /api/ingest          → /api/data?action=ingest   (Apex MODELOS Latino — open door)
+//   /api/mc-content      → /api/data?action=content  (Apex MODELOS Latino — CMS)
+//
+// This consolidation keeps the deployment under the Vercel Hobby 12-function cap.
+// Music and Modelos data stay fully separate — each branch targets its own project/keys.
+
+// ---------- shared helpers ----------
+function modelosUrl() {
+  if (process.env.MODELOS_SUPABASE_URL) return process.env.MODELOS_SUPABASE_URL.replace(/\/$/, '');
+  if (process.env.MODELOS_SUPABASE_PROJECT_ID) return `https://${process.env.MODELOS_SUPABASE_PROJECT_ID}.supabase.co`;
+  return null;
+}
+function clientIp(req) {
+  const xf = req.headers['x-forwarded-for'];
+  return (Array.isArray(xf) ? xf[0] : (xf || '')).split(',')[0].trim() || null;
+}
+const toInt = (v) => {
+  if (v === undefined || v === null || v === '') return null;
+  const n = parseInt(String(v).replace(/[^0-9-]/g, ''), 10);
+  return Number.isNaN(n) ? null : n;
+};
+
+// ---------- dispatcher ----------
+export default async function handler(req, res) {
+  const action = req.query.action;
+  if (action === 'proxy') return handleProxy(req, res);
+  if (action === 'lead') return handleLead(req, res);
+  if (action === 'ingest') return handleIngest(req, res);
+  if (action === 'content') return handleContent(req, res);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  return res.status(400).json({ error: 'Unknown or missing action. Use proxy | lead | ingest | content.' });
+}
+
+// ============================================================
+// action=proxy  — Apex MUSIC Latino Supabase proxy (unchanged behavior)
+// ============================================================
+const VALID_ARTISTS = ['arcoiris', 'joey-b', 'andrade', 'onboarding'];
+const ALLOWED_PATHS = [
+  '/rest/v1/leads_capture',
+  '/rest/v1/fan_leads',
+  '/rest/v1/artists_config',
+  '/rest/v1/email_campaigns',
+  '/rest/v1/scheduled_emails',
+  '/rest/v1/venue_leads',
+  '/rest/v1/email_events',
+  '/rest/v1/unsubscribes',
+];
+
+async function handleProxy(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', 'https://apexmusiclatino.com');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed. Use POST.' });
+
+  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'iaycaynevtumrqoknemk'}.supabase.co`;
+  const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!SERVICE_KEY) return res.status(500).json({ error: 'SUPABASE_SERVICE_ROLE_KEY not configured' });
+
+  const { path, method, body, artist_slug, prefer } = req.body || {};
+  if (!path || !method) return res.status(400).json({ error: 'Missing required fields: path, method' });
+  if (!artist_slug || !VALID_ARTISTS.includes(artist_slug)) {
+    return res.status(401).json({ error: 'Invalid or missing artist_slug. Access denied.' });
+  }
+  if (!ALLOWED_PATHS.some((prefix) => path.startsWith(prefix))) {
+    return res.status(403).json({ error: 'Path not allowed: ' + path.split('?')[0] });
+  }
+  if (!['GET', 'POST', 'PATCH', 'DELETE'].includes(method.toUpperCase())) {
+    return res.status(400).json({ error: 'Invalid method: ' + method });
+  }
+
+  try {
+    const fetchOptions = {
+      method: method.toUpperCase(),
+      headers: {
+        apikey: SERVICE_KEY,
+        Authorization: `Bearer ${SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+      },
+    };
+    if (prefer) fetchOptions.headers['Prefer'] = prefer;
+    if (body && ['POST', 'PATCH'].includes(method.toUpperCase())) fetchOptions.body = JSON.stringify(body);
+
+    try {
+      const response = await fetch(`${SUPABASE_URL}${path}`, fetchOptions);
+      if (response.status === 503 || response.status === 504) {
+        return res.status(503).json({
+          error: 'Supabase project is paused or starting up.',
+          message: 'Please visit the Supabase dashboard to unpause the project (iaycaynevtumrqoknemk).',
+          code: 'PROJECT_PAUSED',
+        });
+      }
+      const contentType = response.headers.get('content-type') || '';
+      const data = contentType.includes('application/json') ? await response.json() : await response.text();
+      return res.status(response.status).json(data);
+    } catch (fetchErr) {
+      return res.status(503).json({
+        error: 'Supabase project is unreachable.',
+        message: 'This usually happens if the project is paused. Please check the Supabase dashboard.',
+        details: fetchErr.message,
+        code: 'PROJECT_UNREACHABLE',
+      });
+    }
+  } catch (err) {
+    console.error('[data:proxy] Critical Proxy Error:', err);
+    return res.status(500).json({ error: 'Proxy infrastructure error: ' + err.message });
+  }
+}
+
+// ============================================================
+// action=lead  — Mindset Caro lead capture (Apex MODELOS Latino)
+// ============================================================
+async function handleLead(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed. Use POST.' });
+
+  const SUPABASE_URL = modelosUrl();
+  const SERVICE_KEY = process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY;
+  if (!SUPABASE_URL || !SERVICE_KEY) {
+    return res.status(500).json({ error: 'Modelos Latino Supabase not configured. Set MODELOS_SUPABASE_URL (or MODELOS_SUPABASE_PROJECT_ID) and MODELOS_SUPABASE_SERVICE_ROLE_KEY.' });
+  }
+
+  const b = req.body || {};
+  if (!['flip-form', 'roulette', 'calculator'].includes(b.source)) {
+    return res.status(400).json({ error: "Invalid 'source'. Expected flip-form | roulette | calculator." });
+  }
+
+  const utm = (typeof b.utm === 'object' && b.utm) || {};
+  const row = {
+    source: b.source,
+    objective: b.objective || null,
+    prize: b.prize || null,
+    nombre: b.nombre || null,
+    email: b.email || null,
+    whatsapp: b.whatsapp || null,
+    ingreso: toInt(b.ingreso),
+    age: toInt(b.age),
+    dependientes: toInt(b.dependientes),
+    coverage_cop: toInt(b.coverageCOP ?? b.coverage_cop),
+    monthly_cop: toInt(b.monthlyCOP ?? b.monthly_cop),
+    visitor_id: b.visitor_id || null,
+    utm_source: utm.source || b.utm_source || null,
+    utm_medium: utm.medium || b.utm_medium || null,
+    utm_campaign: utm.campaign || b.utm_campaign || null,
+    referrer: b.referrer || req.headers['referer'] || null,
+    ip_address: clientIp(req),
+    user_agent: req.headers['user-agent'] || null,
+  };
+
+  try {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/mc_leads`, {
+      method: 'POST',
+      headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+      body: JSON.stringify(row),
+    });
+    if (r.status === 503 || r.status === 504) return res.status(503).json({ error: 'Supabase project is paused or starting up.', code: 'PROJECT_PAUSED' });
+    const data = await r.json();
+    if (r.status >= 400) return res.status(r.status).json({ error: 'Insert failed', details: data });
+
+    // Mirror into the ingest stream so leads also show up in the incoming-data tracker.
+    fetch(`${SUPABASE_URL}/rest/v1/mc_ingest_events`, {
+      method: 'POST',
+      headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        source_app: 'mindset-caro-site',
+        event: `lead.${b.source}`,
+        visitor_id: row.visitor_id,
+        payload: row,
+        url: row.referrer,
+        utm,
+        ip_address: row.ip_address,
+        user_agent: row.user_agent,
+      }),
+    }).catch(() => {});
+
+    const saved = Array.isArray(data) ? data[0] : data;
+    return res.status(200).json({ ok: true, id: saved?.id });
+  } catch (e) {
+    return res.status(503).json({ error: 'Supabase unreachable', details: e.message });
+  }
+}
+
+// ============================================================
+// action=ingest  — the "open door" (Apex MODELOS Latino)
+// ============================================================
+async function handleIngest(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-ingest-key');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+
+  const SUPABASE_URL = modelosUrl();
+  const SERVICE_KEY = process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY;
+  if (!SUPABASE_URL || !SERVICE_KEY) {
+    return res.status(500).json({ error: 'Modelos Latino Supabase not configured. Set MODELOS_SUPABASE_URL (or MODELOS_SUPABASE_PROJECT_ID) and MODELOS_SUPABASE_SERVICE_ROLE_KEY.' });
+  }
+  const sbHeaders = { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json' };
+
+  // READ (dashboard / tracker)
+  if (req.method === 'GET') {
+    const adminKey = process.env.INGEST_ADMIN_KEY || process.env.MC_ADMIN_KEY;
+    if (adminKey && req.query.admin_key !== adminKey) return res.status(401).json({ error: 'Invalid admin_key' });
+    const limit = Math.min(parseInt(req.query.limit, 10) || 50, 500);
+    const source = req.query.source_app ? `&source_app=eq.${encodeURIComponent(req.query.source_app)}` : '';
+    const url = `${SUPABASE_URL}/rest/v1/mc_ingest_events?select=*${source}&order=received_at.desc&limit=${limit}`;
+    try {
+      const r = await fetch(url, { headers: sbHeaders });
+      const data = await r.json();
+      return res.status(r.status).json(data);
+    } catch (e) {
+      return res.status(503).json({ error: 'Supabase unreachable', details: e.message });
+    }
+  }
+
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed. Use POST or GET.' });
+
+  const requiredKey = process.env.INGEST_PUBLIC_KEY;
+  if (requiredKey && req.headers['x-ingest-key'] !== requiredKey) {
+    return res.status(401).json({ error: 'Invalid or missing x-ingest-key' });
+  }
+
+  const b = req.body || {};
+  const source_app = (b.source_app || '').toString().slice(0, 120);
+  const event = (b.event || '').toString().slice(0, 120);
+  if (!source_app || !event) return res.status(400).json({ error: 'Missing required fields: source_app, event' });
+
+  const visitor_id = b.visitor_id || `v_${Math.random().toString(36).slice(2, 12)}`;
+  const row = {
+    source_app,
+    event,
+    visitor_id,
+    session_id: b.session_id || null,
+    payload: typeof b.payload === 'object' && b.payload !== null ? b.payload : {},
+    url: b.url || req.headers['referer'] || null,
+    referrer: b.referrer || null,
+    utm: typeof b.utm === 'object' && b.utm !== null ? b.utm : {},
+    ip_address: clientIp(req),
+    user_agent: req.headers['user-agent'] || null,
+  };
+
+  try {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/mc_ingest_events`, {
+      method: 'POST',
+      headers: { ...sbHeaders, Prefer: 'return=representation' },
+      body: JSON.stringify(row),
+    });
+    if (r.status === 503 || r.status === 504) return res.status(503).json({ error: 'Supabase project is paused or starting up.', code: 'PROJECT_PAUSED' });
+    const data = await r.json();
+    if (r.status >= 400) return res.status(r.status).json({ error: 'Insert failed', details: data });
+
+    const fwd = process.env.INGEST_FORWARD_URL;
+    if (fwd) fetch(fwd, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(row) }).catch(() => {});
+
+    const saved = Array.isArray(data) ? data[0] : data;
+    return res.status(200).json({ ok: true, id: saved?.id, visitor_id });
+  } catch (e) {
+    return res.status(503).json({ error: 'Supabase unreachable', details: e.message });
+  }
+}
+
+// ============================================================
+// action=content  — CMS read (public) / write (admin) (Apex MODELOS Latino)
+// ============================================================
+async function handleContent(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+
+  const SUPABASE_URL = modelosUrl();
+  const SERVICE_KEY = process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY;
+  if (!SUPABASE_URL || !SERVICE_KEY) {
+    return res.status(500).json({ error: 'Modelos Latino Supabase not configured. Set MODELOS_SUPABASE_URL (or MODELOS_SUPABASE_PROJECT_ID) and MODELOS_SUPABASE_SERVICE_ROLE_KEY.' });
+  }
+  const sbHeaders = { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json' };
+
+  if (req.method === 'GET') {
+    const site = (req.query.site || 'landing').toString();
+    const raw = req.query.raw === '1';
+    const url = `${SUPABASE_URL}/rest/v1/mc_content?select=*&site=eq.${encodeURIComponent(site)}&order=field.asc`;
+    try {
+      const r = await fetch(url, { headers: sbHeaders });
+      const rows = await r.json();
+      if (r.status >= 400) return res.status(r.status).json({ error: 'Read failed', details: rows });
+      if (raw) return res.status(200).json(rows);
+      const map = {};
+      for (const row of rows) map[row.field] = row.value_json ?? row.asset_url ?? row.value_text ?? null;
+      return res.status(200).json({ site, content: map });
+    } catch (e) {
+      return res.status(503).json({ error: 'Supabase unreachable', details: e.message });
+    }
+  }
+
+  if (req.method === 'POST') {
+    const adminKey = process.env.MC_ADMIN_KEY;
+    const b = req.body || {};
+    if (!adminKey) return res.status(500).json({ error: 'MC_ADMIN_KEY not configured' });
+    if (b.admin_key !== adminKey) return res.status(401).json({ error: 'Invalid admin_key' });
+
+    const fields = Array.isArray(b.fields) ? b.fields : (b.field ? [b] : null);
+    if (!fields || !fields.length) return res.status(400).json({ error: 'Provide fields: [{ site, field, ... }]' });
+
+    const rows = fields.map((f) => ({
+      site: f.site || 'landing',
+      field: f.field,
+      grp: f.grp ?? (f.field ? String(f.field).split('.')[0] : null),
+      value_text: f.value_text ?? null,
+      value_json: f.value_json ?? null,
+      asset_url: f.asset_url ?? null,
+      updated_at: new Date().toISOString(),
+    }));
+    if (rows.some((r) => !r.field)) return res.status(400).json({ error: 'Every field row needs a "field" name' });
+
+    try {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/mc_content?on_conflict=site,field`, {
+        method: 'POST',
+        headers: { ...sbHeaders, Prefer: 'resolution=merge-duplicates,return=representation' },
+        body: JSON.stringify(rows),
+      });
+      const data = await r.json();
+      if (r.status >= 400) return res.status(r.status).json({ error: 'Upsert failed', details: data });
+      return res.status(200).json({ ok: true, saved: Array.isArray(data) ? data.length : 1 });
+    } catch (e) {
+      return res.status(503).json({ error: 'Supabase unreachable', details: e.message });
+    }
+  }
+
+  return res.status(405).json({ error: 'Method not allowed' });
+}
