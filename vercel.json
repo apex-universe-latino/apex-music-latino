@@ -5,7 +5,6 @@
     ],
     "headers": [
         { "source": "/mindset-caro/:path*", "has": [{ "type": "host", "value": "apexmusiclatino.com" }], "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] },
-        { "source": "/public/mindset-caro/:path*", "has": [{ "type": "host", "value": "apexmusiclatino.com" }], "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] },
         { "source": "/influencer/mindsetcaro/:path*", "has": [{ "type": "host", "value": "apexmusiclatino.com" }], "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] }
     ],
     "rewrites": [
@@ -14,13 +13,13 @@
         { "source": "/api/ingest", "destination": "/api/data?action=ingest" },
         { "source": "/api/mc-content", "destination": "/api/data?action=content" },
 
-        { "source": "/influencer/mindsetcaro/:path*", "destination": "/public/mindset-caro/:path*" },
+        { "source": "/influencer/mindsetcaro/:path*", "destination": "/mindset-caro/:path*" },
 
         { "source": "/cms", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/admin/index.html" },
         { "source": "/cms/:path*", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/admin/index.html" },
 
-        { "source": "/", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/public/mindset-caro/index.html" },
-        { "source": "/:path*", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/public/mindset-caro/index.html" },
+        { "source": "/", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/index.html" },
+        { "source": "/:path*", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/index.html" },
 
         { "source": "/blog/posts/es/:slug*/", "destination": "/blog/posts/es/index.html" },
         { "source": "/blog/posts/es/:slug*", "destination": "/blog/posts/es/index.html" },
