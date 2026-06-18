@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e7e5df;font-family:'Space Mono',monospace;color:#2b2b2b;}
+  @keyframes wfpulse{0%,100%{box-shadow:3px 3px 0 #2b2b2b;}50%{box-shadow:3px 3px 0 #e60000;}}
+  ::-webkit-scrollbar{height:8px;width:8px;}
+  ::-webkit-scrollbar-thumb{background:#c4c1b8;border-radius:8px;}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#e7e5df;padding-bottom:80px;">
+
+  <!-- ============ TOOLBAR ============ -->
+  <div style="position:sticky;top:0;z-index:50;background:#f6f4ee;border-bottom:2px solid #2b2b2b;padding:14px 28px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+    <div style="font-family:'Architects Daughter',cursive;font-size:24px;line-height:1;">MINDSET&nbsp;<span style="color:#e60000;">CARO</span></div>
+    <div style="font-size:11px;color:#8a8780;border-left:2px solid #d6d3ca;padding-left:18px;">WIREFRAMES · EXPLORACIÓN DE LAYOUT<br>Sitio de una página · 3 enfoques</div>
+    <div style="flex:1;"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button style="{{ tabA }}" onClick="{{ setA }}">A · Streaming-First</button>
+      <button style="{{ tabB }}" onClick="{{ setB }}">B · Diagnóstico-First</button>
+      <button style="{{ tabC }}" onClick="{{ setC }}">C · Editorial</button>
+    </div>
+  </div>
+
+  <!-- legend -->
+  <div style="max-width:1120px;margin:18px auto 0;padding:0 20px;display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-size:11px;color:#6b6b6b;">
+    <div style="display:flex;align-items:center;gap:7px;"><span style="width:22px;height:14px;background:repeating-linear-gradient(45deg,#e3e0d8,#e3e0d8 5px,#ece9e1 5px,#ece9e1 10px);border:1.5px solid #2b2b2b;border-radius:3px;display:inline-block;"></span>Placeholder de imagen / video</div>
+    <div style="display:flex;align-items:center;gap:7px;"><span style="width:22px;height:14px;background:repeating-linear-gradient(45deg,#2b2b2b,#2b2b2b 5px,#3a3a3a 5px,#3a3a3a 10px);border:1.5px solid #2b2b2b;border-radius:3px;display:inline-block;"></span>Sección dark mode (final)</div>
+    <div style="display:flex;align-items:center;gap:7px;"><span style="width:22px;height:14px;background:#e60000;border:1.5px solid #2b2b2b;border-radius:3px;display:inline-block;"></span>Acento crimson / CTA</div>
+    <div style="display:flex;align-items:center;gap:7px;"><span style="color:#e60000;">✱</span> Nota de intención</div>
+  </div>
+
+  <!-- ============ PAGE FRAME ============ -->
+  <div style="max-width:1120px;margin:18px auto 0;background:#f6f4ee;border:2px solid #2b2b2b;border-radius:10px;box-shadow:6px 6px 0 rgba(43,43,43,0.12);overflow:hidden;">
+
+    <!-- fake browser bar -->
+    <div style="background:#ece9e1;border-bottom:2px solid #2b2b2b;padding:9px 16px;display:flex;align-items:center;gap:10px;">
+      <span style="width:11px;height:11px;border-radius:50%;border:1.5px solid #2b2b2b;display:inline-block;"></span>
+      <span style="width:11px;height:11px;border-radius:50%;border:1.5px solid #2b2b2b;display:inline-block;"></span>
+      <span style="width:11px;height:11px;border-radius:50%;border:1.5px solid #2b2b2b;display:inline-block;"></span>
+      <span style="flex:1;text-align:center;font-size:11px;color:#8a8780;">mindsetcaro.com</span>
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- LAYOUT A — STREAMING-FIRST -->
+    <!-- ====================================================== -->
+    <sc-if value="{{ isA }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <div style="background:#fff;padding:10px 22px;font-size:11px;color:#6b6b6b;border-bottom:1px dashed #cbc8bf;">TESIS — <strong style="color:#2b2b2b;">Carolina es una personalidad de medios.</strong> El sitio se siente como una plataforma de streaming premium (tipo Netflix/Spotify); el contenido genera la autoridad y el diagnóstico cierra.</div>
+
+      <!-- nav -->
+      <div style="display:flex;align-items:center;gap:22px;padding:18px 36px;border-bottom:1px solid #e2dfd6;">
+        <div style="font-family:'Architects Daughter',cursive;font-size:20px;">MINDSET <span style="color:#e60000;">CARO</span></div>
+        <div style="flex:1;display:flex;gap:20px;font-size:12px;color:#6b6b6b;">
+          <span>Contenido</span><span>Pilares</span><span>Podcast</span><span>Comunidad</span>
+        </div>
+        <div style="background:#e60000;color:#fff;font-family:'Architects Daughter',cursive;font-size:15px;padding:8px 16px;border-radius:7px;border:2px solid #2b2b2b;">Diagnóstico</div>
+      </div>
+
+      <!-- HERO cinematic -->
+      <div style="position:relative;height:420px;background:repeating-linear-gradient(45deg,#262626,#262626 12px,#323232 12px,#323232 24px);border-bottom:2px solid #2b2b2b;display:flex;align-items:flex-end;padding:46px;">
+        <div style="position:absolute;top:18px;right:22px;font-size:11px;color:#bdb9b0;font-family:'Space Mono',monospace;">[ VIDEO HERO — Carolina, cinematográfico, loop ]</div>
+        <div style="max-width:620px;">
+          <div style="font-family:'Architects Daughter',cursive;font-size:50px;line-height:1.05;color:#fff;">El Mindset Correcto para Blindar tu Futuro.</div>
+          <div style="font-size:15px;color:#d8d5cc;margin-top:16px;">Finanzas, Seguros y Ventas con propósito.</div>
+          <div style="margin-top:26px;display:inline-block;background:#e60000;color:#fff;font-family:'Architects Daughter',cursive;font-size:20px;padding:13px 26px;border-radius:9px;border:2px solid #fff;box-shadow:3px 3px 0 #000;animation:wfpulse 1.8s infinite;">▶ Inicia tu Diagnóstico Gratuito</div>
+        </div>
+      </div>
+
+      <!-- MEDIA SHOWCASE (the star) -->
+      <div style="padding:40px 36px 14px;">
+        <div style="display:flex;align-items:baseline;gap:12px;">
+          <div style="font-family:'Architects Daughter',cursive;font-size:30px;">Reels &amp; Clips</div>
+          <span style="font-size:11px;color:#9a968d;">desliza →</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;overflow-x:auto;padding:0 36px 28px;">
+        <sc-for list="{{ reels }}" as="r" hint-placeholder-count="6">
+          <div style="flex:none;width:150px;">
+            <div style="height:230px;border-radius:8px;border:2px solid #2b2b2b;background:repeating-linear-gradient(45deg,#2b2b2b,#2b2b2b 10px,#383838 10px,#383838 20px);display:flex;align-items:center;justify-content:center;position:relative;">
+              <span style="width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,0.92);border:2px solid #2b2b2b;display:flex;align-items:center;justify-content:center;color:#e60000;font-size:16px;">▶</span>
+              <span style="position:absolute;bottom:8px;left:8px;font-size:9px;color:#cfccc3;">REEL {{ r.n }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="padding:14px 36px 14px;font-family:'Architects Daughter',cursive;font-size:30px;">Podcast</div>
+      <div style="display:flex;gap:16px;overflow-x:auto;padding:0 36px 28px;">
+        <sc-for list="{{ episodes }}" as="e" hint-placeholder-count="4">
+          <div style="flex:none;width:280px;border:2px solid #2b2b2b;border-radius:8px;overflow:hidden;background:#fff;">
+            <div style="height:140px;background:repeating-linear-gradient(45deg,#e3e0d8,#e3e0d8 10px,#ece9e1 10px,#ece9e1 20px);display:flex;align-items:center;justify-content:center;color:#8a8780;font-size:11px;">[ COVER {{ e.n }} ]</div>
+            <div style="padding:12px 14px;">
+              <div style="font-size:11px;color:#e60000;font-weight:700;">{{ e.n }}</div>
+              <div style="font-size:13px;margin-top:4px;color:#2b2b2b;">{{ e.title }}</div>
+              <div style="margin-top:10px;height:8px;width:60%;background:#ddd9d0;border-radius:4px;"></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="padding:14px 36px 14px;font-family:'Architects Daughter',cursive;font-size:30px;">En los Medios</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;padding:0 36px 30px;">
+        <sc-for list="{{ logos }}" as="l" hint-placeholder-count="5">
+          <div style="width:150px;height:64px;border:1.5px dashed #b6b2a8;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#a09c93;font-size:10px;">[ LOGO MEDIO ]</div>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}">
+      <div style="margin:0 36px 26px;font-size:11px;color:#e60000;border:1.5px dashed #e60000;border-radius:8px;padding:10px 13px;background:#fff;">✱ Las filas tipo streaming son lo PRIMERO tras el hero — construyen autoridad antes de pedir datos. Hover en cada card revela duración + botón "Ver".</div>
+      </sc-if>
+
+      <!-- 3 VERTICALS -->
+      <div style="padding:8px 36px 0;font-family:'Architects Daughter',cursive;font-size:30px;">Los 3 Pilares</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;padding:18px 36px 34px;">
+        <sc-for list="{{ verticals }}" as="v" hint-placeholder-count="3">
+          <div style="border:2px solid #2b2b2b;border-radius:10px;background:#fff;padding:20px;box-shadow:4px 4px 0 rgba(43,43,43,0.1);">
+            <div style="font-family:'Architects Daughter',cursive;font-size:32px;color:#e60000;">{{ v.n }}</div>
+            <div style="font-size:16px;font-weight:700;margin-top:6px;">{{ v.title }}</div>
+            <div style="font-size:12px;color:#8a8780;margin-top:4px;">{{ v.sub }}</div>
+            <div style="margin-top:14px;height:9px;background:#ddd9d0;border-radius:5px;"></div>
+            <div style="margin-top:7px;height:9px;width:75%;background:#ddd9d0;border-radius:5px;"></div>
+            <div style="margin-top:18px;display:inline-block;border:2px solid #2b2b2b;border-radius:6px;padding:7px 14px;font-family:'Architects Daughter',cursive;font-size:14px;">Saber Más →</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- ASSESSMENT (glass stepped card on dark) -->
+      <div style="background:repeating-linear-gradient(45deg,#222,#222 14px,#2c2c2c 14px,#2c2c2c 28px);border-top:2px solid #2b2b2b;border-bottom:2px solid #2b2b2b;padding:46px 36px;">
+        <div style="text-align:center;font-family:'Architects Daughter',cursive;font-size:32px;color:#fff;">Diagnóstico Gratuito</div>
+        <div style="text-align:center;font-size:12px;color:#cfccc3;margin-top:6px;">3 pasos · Progressive Profiling → Cubo CDP</div>
+        <div style="max-width:560px;margin:26px auto 0;background:rgba(255,255,255,0.1);backdrop-filter:blur(4px);border:2px solid rgba(255,255,255,0.55);border-radius:14px;padding:26px;">
+          <div style="display:flex;gap:6px;margin-bottom:18px;">
+            <div style="flex:1;height:6px;background:#e60000;border-radius:3px;"></div>
+            <div style="flex:1;height:6px;background:rgba(255,255,255,0.35);border-radius:3px;"></div>
+            <div style="flex:1;height:6px;background:rgba(255,255,255,0.35);border-radius:3px;"></div>
+          </div>
+          <div style="font-size:11px;color:#e8a;color:#ffb3b3;">PASO 1 / 3</div>
+          <div style="font-family:'Architects Daughter',cursive;font-size:24px;color:#fff;margin-top:4px;">¿Cuál es tu objetivo principal?</div>
+          <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;">
+            <sc-for list="{{ objectives }}" as="o" hint-placeholder-count="3">
+              <div style="flex:1;min-width:130px;text-align:center;border:2px solid rgba(255,255,255,0.6);border-radius:9px;padding:16px 10px;color:#fff;font-family:'Architects Daughter',cursive;font-size:17px;">{{ o }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:22px;font-size:10px;color:#bdb9b0;">PASOS SIGUIENTES — Nombre · Email · WhatsApp → CTA</div>
+          <div style="margin-top:12px;display:block;text-align:center;background:#e60000;color:#fff;font-family:'Architects Daughter',cursive;font-size:18px;padding:13px;border-radius:9px;border:2px solid #fff;">Desbloquear mi Lead Magnet</div>
+        </div>
+      </div>
+
+      <!-- COMMUNITY -->
+      <div style="margin:30px 36px;border:2px solid #2b2b2b;border-radius:12px;background:repeating-linear-gradient(45deg,#2b2b2b,#2b2b2b 14px,#343434 14px,#343434 28px);padding:30px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="width:54px;height:54px;border-radius:12px;background:#e60000;border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;">◓</div>
+        <div style="flex:1;min-width:220px;">
+          <div style="font-family:'Architects Daughter',cursive;font-size:24px;color:#fff;">Únete a la comunidad en Discord</div>
+          <div style="font-size:12px;color:#cfccc3;margin-top:4px;">Tips diarios, networking y Q&amp;A en vivo.</div>
+        </div>
+        <div style="background:#fff;color:#2b2b2b;font-family:'Architects Daughter',cursive;font-size:17px;padding:12px 22px;border-radius:9px;border:2px solid #fff;">Entrar gratis</div>
+      </div>
+
+      <div style="border-top:1px solid #e2dfd6;padding:24px 36px;display:flex;justify-content:space-between;font-size:11px;color:#9a968d;flex-wrap:wrap;gap:10px;">
+        <span>MINDSET CARO · Apex Modelos Latino</span><span>Instagram · YouTube · Podcast · WhatsApp</span>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ====================================================== -->
+    <!-- LAYOUT B — DIAGNÓSTICO-FIRST -->
+    <!-- ====================================================== -->
+    <sc-if value="{{ isB }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div style="background:#fff;padding:10px 22px;font-size:11px;color:#6b6b6b;border-bottom:1px dashed #cbc8bf;">TESIS — <strong style="color:#2b2b2b;">Capturar el lead en el primer scroll.</strong> El diagnóstico vive DENTRO del hero (split). Todo lo demás es prueba que refuerza la decisión de empezar.</div>
+
+      <!-- nav -->
+      <div style="display:flex;align-items:center;gap:22px;padding:18px 36px;border-bottom:1px solid #e2dfd6;">
+        <div style="font-family:'Architects Daughter',cursive;font-size:20px;">MINDSET <span style="color:#e60000;">CARO</span></div>
+        <div style="flex:1;display:flex;gap:20px;font-size:12px;color:#6b6b6b;"><span>Pilares</span><span>Contenido</span><span>Comunidad</span></div>
+        <div style="border:2px solid #2b2b2b;font-size:12px;padding:8px 14px;border-radius:7px;">WhatsApp</div>
+      </div>
+
+      <!-- HERO SPLIT -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:2px solid #2b2b2b;">
+        <!-- left -->
+        <div style="padding:48px 40px;display:flex;flex-direction:column;justify-content:center;">
+          <div style="font-family:'Architects Daughter',cursive;font-size:46px;line-height:1.05;">El Mindset Correcto para Blindar tu Futuro.</div>
+          <div style="font-size:14px;color:#6b6b6b;margin-top:14px;">Finanzas, Seguros y Ventas con propósito.</div>
+          <div style="display:flex;gap:18px;margin-top:24px;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:#6b6b6b;"><span style="color:#e60000;">★</span> +50k seguidores</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:#6b6b6b;"><span style="color:#e60000;">★</span> Asesora certificada</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:#6b6b6b;"><span style="color:#e60000;">★</span> En medios</div>
+          </div>
+          <div style="margin-top:26px;height:9px;background:#ddd9d0;border-radius:5px;width:80%;"></div>
+          <div style="margin-top:8px;height:9px;background:#ddd9d0;border-radius:5px;width:65%;"></div>
+        </div>
+        <!-- right: embedded quiz -->
+        <div style="background:repeating-linear-gradient(45deg,#222,#222 14px,#2c2c2c 14px,#2c2c2c 28px);padding:40px;border-left:2px solid #2b2b2b;">
+          <div style="background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.55);border-radius:14px;padding:24px;">
+            <div style="display:flex;gap:6px;margin-bottom:16px;">
+              <div style="flex:1;height:6px;background:#e60000;border-radius:3px;"></div>
+              <div style="flex:1;height:6px;background:rgba(255,255,255,0.35);border-radius:3px;"></div>
+              <div style="flex:1;height:6px;background:rgba(255,255,255,0.35);border-radius:3px;"></div>
+            </div>
+            <div style="font-size:11px;color:#ffb3b3;">DIAGNÓSTICO · PASO 1 / 3</div>
+            <div style="font-family:'Architects Daughter',cursive;font-size:23px;color:#fff;margin-top:4px;">¿Cuál es tu objetivo principal?</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px;">
+              <sc-for list="{{ objectives }}" as="o" hint-placeholder-count="3">
+                <div style="border:2px solid rgba(255,255,255,0.6);border-radius:9px;padding:13px 16px;color:#fff;font-family:'Architects Daughter',cursive;font-size:17px;display:flex;justify-content:space-between;align-items:center;">{{ o }} <span style="color:#ffb3b3;">→</span></div>
+              </sc-for>
+            </div>
+            <div style="margin-top:18px;border-top:1px dashed rgba(255,255,255,0.3);padding-top:14px;font-size:10px;color:#bdb9b0;">LUEGO: Nombre · Email · WhatsApp</div>
+            <div style="margin-top:12px;text-align:center;background:#e60000;color:#fff;font-family:'Architects Daughter',cursive;font-size:18px;padding:13px;border-radius:9px;border:2px solid #fff;animation:wfpulse 1.8s infinite;">Desbloquear mi Lead Magnet</div>
+          </div>
+        </div>
+      </div>
+
+      <sc-if value="{{ showNotes }}" hint-placeholder-val="{{ false }}">
+      <div style="margin:22px 36px 0;font-size:11px;color:#e60000;border:1.5px dashed #e60000;border-radius:8px;padding:10px 13px;background:#fff;">✱ El quiz arranca en el paso 1 sin pedir datos — el usuario se compromete eligiendo objetivo, y los campos aparecen DESPUÉS (menor fricción, mayor conversión a Cubo CDP).</div>
+      </sc-if>
+
+      <!-- 3 VERTICALS compact -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;padding:30px 36px;">
+        <sc-for list="{{ verticals }}" as="v" hint-placeholder-count="3">
+          <div style="border:2px solid #2b2b2b;border-radius:10px;padding:18px;display:flex;gap:14px;align-items:flex-start;background:#fff;">
+            <div style="width:40px;height:40px;border-radius:8px;background:#e60000;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Architects Daughter',cursive;font-size:18px;border:2px solid #2b2b2b;flex:none;">{{ v.n }}</div>
+            <div><div style="font-size:14px;font-weight:700;">{{ v.title }}</div><div style="font-size:11px;color:#8a8780;margin-top:3px;">{{ v.sub }}</div></div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- MEDIA proof strip -->
+      <div style="padding:6px 36px 10px;font-family:'Architects Daughter',cursive;font-size:26px;">Mira el contenido</div>
+      <div style="display:flex;gap:14px;overflow-x:auto;padding:0 36px 28px;">
+        <sc-for list="{{ reels }}" as="r" hint-placeholder-count="6">
+          <div style="flex:none;width:120px;height:180px;border-radius:8px;border:2px solid #2b2b2b;background:repeating-linear-gradient(45deg,#2b2b2b,#2b2b2b 10px,#383838 10px,#383838 20px);display:flex;align-items:center;justify-content:center;"><span style="width:36px;height:36px;border-radius:50%;background:#fff;border:2px solid #2b2b2b;display:flex;align-items:center;justify-content:center;color:#e60000;">▶</span></div>
+        </sc-for>
+      </div>
+
+      <!-- COMMUNITY -->
+      <div style="margin:8px 36px 30px;border:2px solid #2b2b2b;border-radius:12px;background:repeating-linear-gradient(45deg,#2b2b2b,#2b2b2b 14px,#343434 14px,#343434 28px);padding:26px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;">
+        <div style="width:48px;height:48px;border-radius:11px;background:#e60000;border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;">◓</div>
+        <div style="flex:1;min-width:200px;"><div style="font-family:'Architects Daughter',cursive;font-size:22px;color:#fff;">Comunidad en Discord</div><div style="font-size:11px;color:#cfccc3;margin-top:3px;">Tips diarios y networking.</div></div>
+        <div style="background:#fff;font-family:'Architects Daughter',cursive;font-size:16px;padding:11px 20px;border-radius:9px;border:2px solid #fff;">Entrar</div>
+      </div>
+
+      <div style="border-top:1px solid #e2dfd6;padding:24px 36px;display:flex;justify-content:space-between;font-size:11px;color:#9a968d;flex-wrap:wrap;gap:10px;">
+        <span>MINDSET CARO · Apex Modelos Latino</span><span>Instagram · YouTube · Podcast · WhatsApp</span>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ====================================================== -->
+    <!-- LAYOUT C — EDITORIAL AUTHORITY -->
+    <!-- ====================================================== -->
+    <sc-if value="{{ isC }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div style="background:#fff;padding:10px 22px;font-size:11px;color:#6b6b6b;border-bottom:1px dashed #cbc8bf;">TESIS — <strong style="color:#2b2b2b;">Autoridad editorial.</strong> Tipografía enorme y manifiesto. La marca personal manda; el diagnóstico es una "terminal" full-bleed más abajo.</div>
+
+      <!-- nav centered -->
+      <div style="text-align:center;padding:20px;border-bottom:1px solid #e2dfd6;">
+        <div style="font-family:'Architects Daughter',cursive;font-size:22px;">MINDSET <span style="color:#e60000;">CARO</span></div>
+        <div style="display:flex;gap:24px;justify-content:center;font-size:12px;color:#6b6b6b;margin-top:8px;"><span>Manifiesto</span><span>Pilares</span><span>Podcast</span><span>Diagnóstico</span></div>
+      </div>
+
+      <!-- HERO editorial -->
+      <div style="padding:54px 40px;display:grid;grid-template-columns:1.6fr 1fr;gap:36px;align-items:center;border-bottom:2px solid #2b2b2b;">
+        <div>
+          <div style="font-size:11px;color:#e60000;letter-spacing:2px;">FINANZAS · SEGUROS · VENTAS</div>
+          <div style="font-family:'Architects Daughter',cursive;font-size:64px;line-height:0.98;margin-top:12px;">El Mindset Correcto para Blindar tu Futuro.</div>
+          <div style="font-size:15px;color:#6b6b6b;margin-top:18px;max-width:460px;">No es un broker de seguros más. Es una mentalidad — y una estrategia — para construir libertad financiera con propósito.</div>
+          <div style="margin-top:26px;display:inline-block;background:#e60000;color:#fff;font-family:'Architects Daughter',cursive;font-size:19px;padding:13px 26px;border-radius:9px;border:2px solid #2b2b2b;box-shadow:3px 3px 0 #2b2b2b;">Inicia tu Diagnóstico →</div>
+        </div>
+        <div style="height:340px;border-radius:12px;border:2px solid #2b2b2b;background:repeating-linear-gradient(45deg,#e3e0d8,#e3e0d8 12px,#ece9e1 12px,#ece9e1 24px);display:flex;align-items:center;justify-content:center;color:#8a8780;font-size:11px;text-align:center;">[ RETRATO EDITORIAL<br>Carolina ]</div>
+      </div>
+
+      <sc-if value="{{ showNotes }}" hint-placeholder-val="{{ false }}">
+      <div style="margin:22px 40px 0;font-size:11px;color:#e60000;border:1.5px dashed #e60000;border-radius:8px;padding:10px 13px;background:#fff;">✱ Tipografía de display gigante = autoridad de influencer. El retrato reemplaza al video; menos "tech", más "revista / marca personal".</div>
+      </sc-if>
+
+      <!-- VERTICALS triptych -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-top:2px solid #2b2b2b;border-bottom:2px solid #2b2b2b;margin-top:26px;">
+        <sc-for list="{{ verticals }}" as="v" hint-placeholder-count="3">
+          <div style="padding:34px 28px;border-right:1px solid #e2dfd6;">
+            <div style="font-family:'Architects Daughter',cursive;font-size:54px;color:#e60000;line-height:1;">{{ v.n }}</div>
+            <div style="font-size:18px;font-weight:700;margin-top:10px;">{{ v.title }}</div>
+            <div style="font-size:12px;color:#8a8780;margin-top:6px;">{{ v.sub }}</div>
+            <div style="margin-top:16px;height:9px;background:#ddd9d0;border-radius:5px;"></div>
+            <div style="margin-top:7px;height:9px;width:70%;background:#ddd9d0;border-radius:5px;"></div>
+            <div style="margin-top:18px;font-family:'Architects Daughter',cursive;font-size:14px;color:#e60000;">Saber Más →</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- MEDIA: marquee + featured -->
+      <div style="background:#2b2b2b;color:#fff;padding:11px 0;overflow:hidden;white-space:nowrap;font-family:'Architects Daughter',cursive;font-size:16px;">
+        <span style="margin:0 22px;">EN LOS MEDIOS</span><span style="color:#e60000;">●</span><span style="margin:0 22px;">PODCAST TOP FINANZAS</span><span style="color:#e60000;">●</span><span style="margin:0 22px;">+1M REPRODUCCIONES</span><span style="color:#e60000;">●</span><span style="margin:0 22px;">ENTREVISTAS</span><span style="color:#e60000;">●</span><span style="margin:0 22px;">REELS VIRALES</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:24px;padding:36px 40px;">
+        <div style="height:260px;border:2px solid #2b2b2b;border-radius:12px;background:repeating-linear-gradient(45deg,#2b2b2b,#2b2b2b 12px,#363636 12px,#363636 24px);display:flex;align-items:flex-end;padding:24px;">
+          <div><div style="font-size:11px;color:#ffb3b3;">EPISODIO DESTACADO</div><div style="font-family:'Architects Daughter',cursive;font-size:26px;color:#fff;margin-top:4px;">Rompiendo Mitos del Dinero</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <sc-for list="{{ episodes }}" as="e" hint-placeholder-count="3">
+            <div style="border:2px solid #2b2b2b;border-radius:9px;padding:13px 16px;display:flex;gap:12px;align-items:center;background:#fff;">
+              <span style="width:30px;height:30px;border-radius:50%;border:2px solid #2b2b2b;display:flex;align-items:center;justify-content:center;color:#e60000;flex:none;">▶</span>
+              <div><div style="font-size:11px;color:#e60000;font-weight:700;">{{ e.n }}</div><div style="font-size:13px;">{{ e.title }}</div></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- ASSESSMENT terminal full-bleed -->
+      <div style="background:#111;padding:48px 40px;border-top:2px solid #2b2b2b;">
+        <div style="max-width:680px;margin:0 auto;border:2px solid #3a3a3a;border-radius:10px;background:#161616;overflow:hidden;">
+          <div style="background:#222;padding:9px 14px;display:flex;gap:8px;align-items:center;border-bottom:1px solid #3a3a3a;">
+            <span style="width:10px;height:10px;border-radius:50%;background:#e60000;display:inline-block;"></span>
+            <span style="width:10px;height:10px;border-radius:50%;background:#444;display:inline-block;"></span>
+            <span style="width:10px;height:10px;border-radius:50%;background:#444;display:inline-block;"></span>
+            <span style="flex:1;text-align:center;font-size:10px;color:#777;">diagnostico — cubo cdp</span>
+          </div>
+          <div style="padding:26px;font-family:'Space Mono',monospace;">
+            <div style="font-size:12px;color:#5fae5f;">&gt; iniciar_diagnostico()</div>
+            <div style="font-size:12px;color:#888;margin-top:6px;">&gt; pregunta_01:</div>
+            <div style="font-family:'Architects Daughter',cursive;font-size:24px;color:#fff;margin-top:6px;">¿Cuál es tu objetivo principal?</div>
+            <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
+              <sc-for list="{{ objectives }}" as="o" hint-placeholder-count="3">
+                <div style="flex:1;min-width:120px;text-align:center;border:1px solid #3a3a3a;border-radius:7px;padding:14px;color:#fff;font-family:'Architects Daughter',cursive;font-size:16px;background:#1d1d1d;">[ {{ o }} ]</div>
+              </sc-for>
+            </div>
+            <div style="margin-top:18px;font-size:11px;color:#666;">&gt; capturar: nombre_ &nbsp; email_ &nbsp; whatsapp_</div>
+            <div style="margin-top:16px;display:inline-block;background:#e60000;color:#fff;font-family:'Architects Daughter',cursive;font-size:17px;padding:11px 22px;border-radius:7px;">Desbloquear mi Lead Magnet ▮</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMMUNITY -->
+      <div style="margin:30px 40px;border:2px solid #2b2b2b;border-radius:12px;padding:28px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;background:#fff;">
+        <div style="width:50px;height:50px;border-radius:11px;background:#e60000;border:2px solid #2b2b2b;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;">◓</div>
+        <div style="flex:1;min-width:200px;"><div style="font-family:'Architects Daughter',cursive;font-size:23px;">Comunidad exclusiva en Discord</div><div style="font-size:12px;color:#8a8780;margin-top:3px;">Tips diarios, networking y Q&amp;A en vivo.</div></div>
+        <div style="background:#2b2b2b;color:#fff;font-family:'Architects Daughter',cursive;font-size:16px;padding:11px 22px;border-radius:9px;">Entrar gratis</div>
+      </div>
+
+      <div style="border-top:1px solid #e2dfd6;padding:24px 40px;text-align:center;font-size:11px;color:#9a968d;">MINDSET CARO · Apex Modelos Latino · Instagram · YouTube · Podcast · WhatsApp</div>
+    </div>
+    </sc-if>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:900},&quot;startLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;],&quot;default&quot;:&quot;A&quot;,&quot;tsType&quot;:&quot;'A'|'B'|'C'&quot;},&quot;showAnnotations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { active: null };
+
+  setActive(k){ this.setState({ active: k }); }
+
+  renderVals(){
+    const active = this.state.active || this.props.startLayout || 'A';
+    const tabBase = {
+      fontFamily:"'Space Mono',monospace", fontSize:'12px', padding:'8px 14px',
+      borderRadius:'6px', border:'2px solid #2b2b2b', cursor:'pointer', letterSpacing:'0.3px'
+    };
+    const on = { background:'#2b2b2b', color:'#fff' };
+    const off = { background:'#fff', color:'#2b2b2b' };
+    const tab = (k) => ({ ...tabBase, ...(active===k?on:off) });
+
+    return {
+      isA: active==='A', isB: active==='B', isC: active==='C',
+      tabA: tab('A'), tabB: tab('B'), tabC: tab('C'),
+      setA: () => this.setActive('A'),
+      setB: () => this.setActive('B'),
+      setC: () => this.setActive('C'),
+      showNotes: this.props.showAnnotations ?? true,
+      verticals: [
+        { n:'01', title:'Protección y Seguros', sub:'Blindaje familiar' },
+        { n:'02', title:'Ventas y Negocios', sub:'Estrategia de cierre' },
+        { n:'03', title:'Mindset & Lifestyle', sub:'Mentalidad de abundancia' }
+      ],
+      objectives: ['Seguros','Ventas','Mindset'],
+      reels: [{n:'01'},{n:'02'},{n:'03'},{n:'04'},{n:'05'},{n:'06'}],
+      episodes: [
+        { n:'EP 12', title:'Rompiendo mitos del dinero' },
+        { n:'EP 11', title:'La regla del 50/30/20' },
+        { n:'EP 10', title:'Cómo blindar a tu familia' }
+      ],
+      logos: [{},{},{},{},{}]
+    };
+  }
+}
+</script>
+</body>
+</html>
