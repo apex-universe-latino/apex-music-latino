@@ -19,7 +19,7 @@ export default async function handler(req, res) {
   }
 
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
-  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'iaycaynevtumrqoknemk'}.supabase.co`;
+  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'xtfmwtzjbudqmenfmhim'}.supabase.co`;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!RESEND_API_KEY) {

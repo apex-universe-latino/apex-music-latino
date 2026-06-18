@@ -52,17 +52,25 @@
         const existingNav = document.querySelector('nav');
         if (!existingNav) return;
 
-        // On index.html, we don't want to replace the custom-styled nav block if it already has the exact styling we gave it.
-        // We can just rely on the hardcoded nav in index.html for perfection, or we inject this global one everywhere.
-        // Given we want the exact updated styling, we'll build it here.
+        const isDance = document.documentElement.getAttribute('data-genre') === 'dance';
         const nav = document.createElement('nav');
-        nav.className = 'fixed top-0 w-full z-50 bg-neutral-950/80 backdrop-blur-xl h-20 flex justify-between items-center px-8 border-b border-white/5 shadow-2xl';
+        
+        if (isDance) {
+            nav.className = 'fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl h-20 flex justify-between items-center px-8 border-b border-black/5 shadow-[0_8px_32px_rgba(0,0,0,0.05)]';
+        } else {
+            nav.className = 'fixed top-0 w-full z-50 bg-neutral-950/80 backdrop-blur-xl h-20 flex justify-between items-center px-8 border-b border-white/5 shadow-2xl';
+        }
+        
         nav.id = 'apex-nav';
+        
+        const textColor = isDance ? 'text-black' : 'text-white';
+        const mutedColor = isDance ? 'text-zinc-500' : 'text-neutral-500';
+        const logoInvert = isDance ? '' : 'invert';
         nav.innerHTML = `
             <div class="flex items-center gap-12">
                 <a href="/" class="flex items-center gap-2 group">
-                    <img src="/Branding /aml_favicon.svg" alt="Apex" class="h-8 w-8 invert group-hover:rotate-12 transition-transform" onerror="this.src='Branding /aml_favicon.svg'"/>
-                    <span class="text-xl font-bold tracking-tighter uppercase" style="font-family: 'Space Grotesk', sans-serif;">Apex Music Latino</span>
+                    <img src="/Branding /aml_favicon.svg" alt="Apex" class="h-8 w-8 ${logoInvert} group-hover:rotate-12 transition-transform" onerror="this.src='Branding /aml_favicon.svg'"/>
+                    <span class="text-xl font-bold tracking-tighter uppercase ${textColor}" style="font-family: 'Space Grotesk', sans-serif;">Apex Music Latino</span>
                 </a>
                 <div class="hidden lg:flex items-center gap-6 overflow-x-auto py-2" style="scrollbar-width: none;">
                     <a href="/#ai-clone" class="text-[10px] uppercase tracking-widest font-bold text-[#00ff41] hover:scale-105 transition-transform flex items-center gap-1">
@@ -70,16 +78,16 @@
                     </a>
                     ${GENRES.map(g => {
                         const isActive = currentGenre === g.id;
-                        return `<a href="${g.path}" class="text-[10px] uppercase tracking-widest font-medium ${isActive ? 'text-[#00ff41]' : 'text-neutral-500 hover:text-white'} transition-colors">${g.label}</a>`;
+                        return `<a href="${g.path}" class="text-[10px] uppercase tracking-widest font-medium ${isActive ? 'text-[#00ff41]' : mutedColor + ' hover:text-white'} transition-colors">${g.label}</a>`;
                     }).join('')}
                 </div>
             </div>
             <div class="flex items-center gap-8">
-                <div class="hidden xl:flex gap-6 tracking-tight text-sm font-medium" style="font-family: 'Space Grotesk', sans-serif;">
+                <div class="hidden xl:flex gap-6 tracking-tight text-sm font-medium ${textColor}" style="font-family: 'Space Grotesk', sans-serif;">
                     ${navLinksHTML()}
                 </div>
                 <div class="flex items-center gap-4">
-                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="xl:hidden material-symbols-outlined text-zinc-400 hover:text-white">menu</button>
+                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="xl:hidden material-symbols-outlined ${mutedColor} hover:text-white">menu</button>
                     <a href="/onboarding/" class="px-6 py-2 font-bold rounded-lg text-xs bg-[#00ff41] text-black hover:scale-105 transition-transform shadow-[0_0_15px_rgba(0,255,65,0.3)]">Join Apex</a>
                 </div>
             </div>

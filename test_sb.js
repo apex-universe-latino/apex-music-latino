@@ -1,4 +1,4 @@
-const url = 'https://iaycaynevtumrqoknemk.supabase.co/rest/v1/leads_capture';
+const url = 'https://xtfmwtzjbudqmenfmhim.supabase.co/rest/v1/leads_capture';
 const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k';
 
 fetch(url, {
