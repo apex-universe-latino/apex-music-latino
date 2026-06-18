@@ -1,5 +1,9 @@
 {
     "rewrites": [
+        { "source": "/api/supabase-proxy", "destination": "/api/data?action=proxy" },
+        { "source": "/api/lead", "destination": "/api/data?action=lead" },
+        { "source": "/api/ingest", "destination": "/api/data?action=ingest" },
+        { "source": "/api/mc-content", "destination": "/api/data?action=content" },
         { "source": "/blog/posts/es/:slug*/", "destination": "/blog/posts/es/index.html" },
         { "source": "/blog/posts/es/:slug*", "destination": "/blog/posts/es/index.html" },
         { "source": "/blog/posts/:slug*/", "destination": "/blog/posts/index.html" },
