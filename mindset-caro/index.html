@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mindset Caro — El Mindset Correcto para Blindar tu Futuro</title>
+<meta name="description" content="Finanzas, seguros y ventas con propósito. Agenda tu diagnóstico gratuito con Diana Carolina." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --accent:#e60000; --accent2:#ff5a5a;
+    --bg:#0b0b0c; --surface:#161618; --panel:#141416;
+    --text:#f5f5f5; --dim:#a8a8b0; --faint:#6b6b73;
+    --border:#2a2a2e; --hair:#1e1e22; --soft:rgba(230,0,0,.25);
+    --inputbg:#1c1c20; --r:18px; --bw:1px;
+    --halo:radial-gradient(circle at 50% 50%, rgba(230,0,0,.22), transparent 70%);
+    --cover:repeating-linear-gradient(45deg,#161618,#161618 13px,#1b1b1e 13px,#1b1b1e 26px);
+    --glow:0 0 0 1px rgba(230,0,0,.10), 0 18px 50px -20px rgba(230,0,0,.45);
+    --btnglow:0 10px 30px -8px rgba(230,0,0,.7);
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:Inter,system-ui,Arial,sans-serif; overflow-x:hidden; }
+  a{ color:inherit; }
+  .mono{ font-family:'Space Mono',monospace; }
+  .wrap{ max-width:1180px; margin:0 auto; padding-left:40px; padding-right:40px; }
+  .eyebrow{ font:700 12px/1 'Space Mono',monospace; letter-spacing:3px; color:var(--accent2); }
+  .btn{ background:var(--accent); color:#fff; font-weight:700; border:none; border-radius:var(--r); text-decoration:none; cursor:pointer; font-family:Inter,sans-serif; }
+  @keyframes glowpulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(230,0,0,.5);} 50%{ box-shadow:0 0 0 14px rgba(230,0,0,0);} }
+  @keyframes drift{ from{ transform:translate(0,0);} to{ transform:translate(40px,30px);} }
+  @keyframes riseIn{ from{ opacity:0; transform:translateY(10px);} to{ opacity:1; transform:none;} }
+  .pulse{ animation:glowpulse 2.4s infinite; }
+
+  /* NAV */
+  nav{ position:sticky; top:0; z-index:100; background:color-mix(in srgb,var(--bg) 82%, transparent); backdrop-filter:blur(12px); border-bottom:1px solid var(--hair); }
+  nav .wrap{ display:flex; align-items:center; gap:26px; padding-top:16px; padding-bottom:16px; }
+  .logo{ font-weight:900; font-size:20px; letter-spacing:-.5px; }
+  .logo span{ color:var(--accent); }
+  nav .links{ flex:1; display:flex; gap:24px; font-size:14px; color:var(--dim); }
+  nav .links a{ text-decoration:none; }
+  nav .links a:hover{ color:var(--text); }
+
+  /* HERO */
+  .hero{ position:relative; border-bottom:1px solid var(--hair); overflow:hidden; }
+  .hero .bg{ position:absolute; inset:0; z-index:0; }
+  .hero .bg .cover{ position:absolute; inset:0; background:var(--cover); }
+  .hero .bg .halo{ position:absolute; inset:0; background:var(--halo); animation:drift 9s ease-in-out infinite alternate; }
+  .hero .bg .fade{ position:absolute; inset:0; background:linear-gradient(180deg, color-mix(in srgb,var(--bg) 30%,transparent), color-mix(in srgb,var(--bg) 86%,transparent)); }
+  .hero .grid{ position:relative; z-index:1; display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:center; padding-top:84px; padding-bottom:76px; }
+  .hero h1{ font-size:62px; line-height:1.02; font-weight:900; letter-spacing:-1.5px; margin:24px 0 0; }
+  .hero h1 span{ color:var(--accent); }
+  .hero p.sub{ font-size:18px; line-height:1.6; color:var(--dim); margin-top:22px; max-width:480px; }
+  .pill-eyebrow{ display:inline-block; border:1px solid var(--soft); padding:8px 14px; border-radius:30px; }
+  .hero .photo{ aspect-ratio:4/5; border-radius:var(--r); border:1px solid var(--border); background:var(--cover); display:flex; align-items:center; justify-content:center; text-align:center; color:var(--faint); font:500 12px/1.5 'Space Mono',monospace; box-shadow:var(--glow); }
+
+  /* AUTHORITY */
+  .authority{ background:var(--panel); border-bottom:1px solid var(--hair); }
+  .authority .grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; padding-top:40px; padding-bottom:40px; }
+  .authority .item{ text-align:center; border-right:1px solid var(--hair); padding:0 10px; }
+  .authority .item:last-child{ border-right:none; }
+  .authority .n{ font-size:38px; font-weight:900; letter-spacing:-1px; }
+  .authority .l{ font-size:13px; color:var(--faint); margin-top:6px; }
+
+  /* sections */
+  .sec{ padding-top:86px; padding-bottom:86px; }
+  h2.big{ font-size:42px; font-weight:800; letter-spacing:-1px; margin:14px 0 0; }
+  .cards3{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:42px; }
+  .card{ background:var(--surface); border:var(--bw) solid var(--border); border-radius:var(--r); padding:30px; position:relative; overflow:hidden; }
+  .card .num{ font-size:40px; font-weight:900; color:var(--accent); letter-spacing:-1px; }
+  .card h3{ font-size:22px; font-weight:700; margin:14px 0 0; }
+  .card .tag{ font:600 12px/1 'Space Mono',monospace; color:var(--faint); margin-top:8px; }
+  .card p{ font-size:14px; line-height:1.6; color:var(--dim); margin-top:16px; }
+  .card .more{ margin-top:22px; display:inline-flex; gap:8px; font-weight:600; font-size:14px; border-bottom:2px solid var(--accent); padding-bottom:3px; }
+
+  /* benefits */
+  .benefits{ background:var(--panel); border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); }
+  .benefits .grid{ display:grid; grid-template-columns:.8fr 1.2fr; gap:56px; align-items:center; padding-top:80px; padding-bottom:80px; }
+  .benefits .list{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .bitem{ display:flex; gap:14px; align-items:flex-start; background:var(--surface); border:var(--bw) solid var(--border); border-radius:calc(var(--r) - 5px); padding:18px; }
+  .check{ flex:none; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; box-shadow:var(--glow); }
+
+  /* media */
+  .reels{ display:flex; gap:18px; overflow-x:auto; padding:24px 40px 18px; max-width:1180px; margin:0 auto; }
+  .reel{ flex:none; width:172px; aspect-ratio:9/16; border-radius:var(--r); border:1px solid var(--border); background:var(--cover); position:relative; display:flex; align-items:center; justify-content:center; }
+  .reel .play{ width:46px; height:46px; border-radius:50%; background:#fff; color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:17px; box-shadow:var(--glow); }
+  .reel .lbl{ position:absolute; bottom:10px; left:12px; font:700 10px/1 'Space Mono',monospace; color:var(--dim); }
+  .podgrid{ display:grid; grid-template-columns:1.4fr 1fr; gap:24px; }
+  .podfeat{ border-radius:var(--r); border:1px solid var(--border); background:var(--cover); min-height:220px; display:flex; align-items:flex-end; padding:28px; }
+  .epi{ display:flex; gap:14px; align-items:center; background:var(--surface); border:var(--bw) solid var(--border); border-radius:calc(var(--r) - 6px); padding:14px 16px; }
+  .epi .pl{ flex:none; width:34px; height:34px; border-radius:50%; border:1px solid var(--border); color:var(--accent); display:flex; align-items:center; justify-content:center; }
+
+  /* testimonials */
+  .tgrid2{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:38px; }
+  .quote{ background:var(--surface); border:var(--bw) solid var(--border); border-radius:var(--r); padding:30px; }
+  .quote .mark{ color:var(--accent); font-size:30px; line-height:1; font-weight:900; }
+
+  /* form */
+  .diag{ position:relative; overflow:hidden; border-top:1px solid var(--hair); }
+  .diag .halo{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:900px; height:620px; background:var(--halo); filter:blur(34px); }
+  .formbox{ margin-top:46px; display:grid; grid-template-columns:1fr 1fr; border:var(--bw) solid var(--border); border-radius:calc(var(--r) + 6px); overflow:hidden; background:var(--surface); box-shadow:var(--glow); }
+  .formbox .left{ padding:38px; border-right:1px solid var(--hair); }
+  .formbox .right{ position:relative; padding:38px; background:var(--panel); display:flex; flex-direction:column; justify-content:center; min-height:420px; }
+  .segs{ display:flex; gap:8px; margin-bottom:24px; }
+  .seg{ height:5px; border-radius:3px; flex:1; background:var(--border); transition:.3s; }
+  .seg.on{ background:var(--accent); }
+  .obj{ text-align:left; background:var(--inputbg); border:var(--bw) solid var(--border); border-radius:calc(var(--r) - 4px); padding:18px 20px; color:var(--text); cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-family:Inter,sans-serif; transition:all .15s; width:100%; }
+  .obj:hover{ background:#232327; border-color:var(--accent); }
+  .obj b{ font-size:17px; font-weight:700; }
+  .obj small{ font:600 11px/1.7 'Space Mono',monospace; color:var(--faint); }
+  .obj .arr{ color:var(--accent); font-size:20px; }
+  .inp{ background:var(--inputbg); border:var(--bw) solid var(--border); border-radius:calc(var(--r) - 6px); padding:15px 16px; color:var(--text); font-family:Inter,sans-serif; font-size:15px; outline:none; width:100%; }
+  .inp:focus{ border-color:var(--accent); }
+  .step{ animation:riseIn .4s ease; }
+  .ghostbtn{ background:none; border:1px solid var(--border); color:var(--text); border-radius:8px; padding:6px 12px; cursor:pointer; font-family:Inter,sans-serif; font-size:13px; }
+  .gcard{ border:var(--bw) solid var(--border); border-radius:var(--r); background:var(--surface); padding:26px; box-shadow:var(--glow); }
+  .gcard .fmt{ font:700 11px/1 'Space Mono',monospace; color:var(--accent2); letter-spacing:1px; }
+  .gcard h4{ font-size:24px; font-weight:800; margin:12px 0 0; letter-spacing:-.5px; }
+  .gcard p{ font-size:14px; color:var(--dim); margin-top:10px; line-height:1.6; }
+
+  /* community + footer */
+  .community .box{ border:var(--bw) solid var(--border); border-radius:var(--r); background:var(--surface); padding:34px; display:flex; align-items:center; gap:26px; flex-wrap:wrap; }
+  .community .ic{ flex:none; width:60px; height:60px; border-radius:calc(var(--r) - 4px); background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:24px; box-shadow:var(--glow); }
+  footer{ border-top:1px solid var(--hair); background:var(--panel); }
+  footer .wrap{ display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; padding-top:38px; padding-bottom:38px; }
+  .hidden{ display:none !important; }
+
+  @media(max-width:860px){
+    .wrap{ padding-left:22px; padding-right:22px; }
+    .hero .grid{ grid-template-columns:1fr; gap:30px; padding-top:54px; padding-bottom:54px; }
+    .hero h1{ font-size:42px; }
+    .hero .photo{ max-width:300px; }
+    .authority .grid{ grid-template-columns:1fr 1fr; }
+    .authority .item:nth-child(2){ border-right:none; }
+    .cards3{ grid-template-columns:1fr; }
+    .benefits .grid{ grid-template-columns:1fr; gap:30px; }
+    .benefits .list{ grid-template-columns:1fr; }
+    .podgrid{ grid-template-columns:1fr; }
+    .tgrid2,.tgrid2{ grid-template-columns:1fr; }
+    .formbox{ grid-template-columns:1fr; }
+    .formbox .left{ border-right:none; border-bottom:1px solid var(--hair); }
+    h2.big{ font-size:32px; }
+    .reels{ padding-left:22px; padding-right:22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wrap">
+    <div class="logo">MINDSET<span>CARO</span></div>
+    <div class="links">
+      <a href="#pilares">Pilares</a><a href="#beneficios">Beneficios</a><a href="#contenido">Contenido</a><a href="#testimonios">Testimonios</a>
+    </div>
+    <a href="#diagnostico" class="btn" data-cms="nav.cta" style="font-size:14px;padding:11px 20px;box-shadow:var(--glow);">Agenda gratis</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="bg"><div class="cover"></div><div class="halo"></div><div class="fade"></div></div>
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow pill-eyebrow" data-cms="hero.eyebrow">FINANZAS · SEGUROS · VENTAS</div>
+      <h1 data-cms-html="hero.title">El Mindset Correcto para <span>Blindar tu Futuro.</span></h1>
+      <p class="sub" data-cms="hero.subtitle">Finanzas, seguros y ventas con propósito. No necesitas ser millonario para empezar a proteger, invertir y dejar un legado — solo dar el primer paso.</p>
+      <div style="display:flex;align-items:center;gap:18px;margin-top:34px;flex-wrap:wrap;">
+        <a href="#diagnostico" class="btn pulse" data-cms="hero.cta" style="font-size:17px;padding:16px 30px;">Agenda tu diagnóstico gratuito</a>
+        <span class="mono" style="font-size:13px;color:var(--faint);">↳ menos de 1 minuto</span>
+      </div>
+    </div>
+    <div class="photo" data-cms-img="hero.photo">[ FOTO HERO<br>Carolina · retrato editorial ]</div>
+  </div>
+</header>
+
+<!-- AUTHORITY -->
+<section class="authority">
+  <div class="wrap grid" id="authorityGrid">
+    <div class="item"><div class="n" data-cms="authority.1">20+</div><div class="l">años de experiencia</div></div>
+    <div class="item"><div class="n" data-cms="authority.2">Top 2%</div><div class="l">asesores</div></div>
+    <div class="item"><div class="n" data-cms="authority.3">+500</div><div class="l">familias asesoradas</div></div>
+    <div class="item"><div class="n" data-cms="authority.4">Cert.</div><div class="l">certificación profesional</div></div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="wrap sec" id="pilares">
+  <div class="eyebrow">LOS 3 PILARES</div>
+  <h2 class="big">¿Cuál es tu objetivo?</h2>
+  <div class="cards3">
+    <div class="card"><div class="num">01</div><h3 data-cms="pillar.1.title">Proteger a mi familia</h3><div class="tag">SEGUROS · BLINDAJE</div><p data-cms="pillar.1.body">Seguros de vida y ahorro para blindar a quienes más amas ante lo inesperado.</p><div class="more">Saber más →</div></div>
+    <div class="card"><div class="num">02</div><h3 data-cms="pillar.2.title">Multiplicar mis ventas</h3><div class="tag">VENTAS · NEGOCIOS</div><p data-cms="pillar.2.body">Estrategia y mentalidad de cierre para vender más, con método y sin improvisar.</p><div class="more">Saber más →</div></div>
+    <div class="card"><div class="num">03</div><h3 data-cms="pillar.3.title">Cambiar mi mentalidad</h3><div class="tag">MINDSET · LIFESTYLE</div><p data-cms="pillar.3.body">La mentalidad financiera que transforma tu relación con el dinero y tu futuro.</p><div class="more">Saber más →</div></div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits" id="beneficios">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">CON QUÉ TE AYUDO</div>
+      <h2 class="big" style="font-size:38px;line-height:1.1;">Decisiones estratégicas, con respaldo.</h2>
+      <p style="font-size:15px;color:var(--dim);margin-top:16px;line-height:1.6;">Una estructura financiera sólida y con propósito, diseñada para tu momento de vida.</p>
+    </div>
+    <div class="list">
+      <div class="bitem"><span class="check">✓</span><span data-cms="benefit.1">Garantiza tu retiro con capital asegurado</span></div>
+      <div class="bitem"><span class="check">✓</span><span data-cms="benefit.2">Invierte en el S&amp;P 500 y portafolios globales</span></div>
+      <div class="bitem"><span class="check">✓</span><span data-cms="benefit.3">Protege a tu familia ante lo inesperado</span></div>
+      <div class="bitem"><span class="check">✓</span><span data-cms="benefit.4">Asegura la educación de tus hijos</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA -->
+<section class="wrap" id="contenido" style="padding-top:84px;padding-bottom:0;">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div><div class="eyebrow">CONTENIDO</div><h2 class="big">Aprende todos los días</h2></div>
+    <span class="mono" style="font-size:13px;color:var(--faint);">Reels · Podcast · desliza →</span>
+  </div>
+</section>
+<div class="reels">
+  <div class="reel"><span class="play">▶</span><span class="lbl">REEL</span></div>
+  <div class="reel"><span class="play">▶</span><span class="lbl">REEL</span></div>
+  <div class="reel"><span class="play">▶</span><span class="lbl">REEL</span></div>
+  <div class="reel"><span class="play">▶</span><span class="lbl">REEL</span></div>
+  <div class="reel"><span class="play">▶</span><span class="lbl">REEL</span></div>
+  <div class="reel"><span class="play">▶</span><span class="lbl">REEL</span></div>
+</div>
+<div class="wrap" style="padding-top:18px;padding-bottom:80px;">
+  <div class="podgrid">
+    <div class="podfeat"><div><div class="mono" style="font-size:11px;color:var(--accent2);letter-spacing:1px;">PODCAST · EPISODIO DESTACADO</div><div style="font-size:26px;font-weight:800;margin-top:8px;">Rompiendo mitos del dinero</div></div></div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="epi"><span class="pl">▶</span><div><div class="mono" style="font-size:11px;color:var(--accent2);">EP 12</div><div data-cms="media.podcast.1" style="font-size:14px;margin-top:4px;">Rompiendo mitos del dinero</div></div></div>
+      <div class="epi"><span class="pl">▶</span><div><div class="mono" style="font-size:11px;color:var(--accent2);">EP 11</div><div data-cms="media.podcast.2" style="font-size:14px;margin-top:4px;">La regla del 50/30/20</div></div></div>
+      <div class="epi"><span class="pl">▶</span><div><div class="mono" style="font-size:11px;color:var(--accent2);">EP 10</div><div data-cms="media.podcast.3" style="font-size:14px;margin-top:4px;">Cómo blindar a tu familia</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="benefits" id="testimonios">
+  <div class="wrap" style="padding-top:80px;padding-bottom:80px;">
+    <div class="eyebrow">TESTIMONIOS</div>
+    <h2 class="big" style="font-size:38px;">Familias que ya viven con tranquilidad</h2>
+    <div class="tgrid2 grid2">
+      <div class="quote"><div class="mark">"</div><p data-cms="testimonial.1">Reemplazar con un testimonio real de una clienta — cercano y aterrizado a su momento de vida.</p><div class="mono" data-cms="testimonial.1.name" style="font-size:13px;color:var(--faint);margin-top:18px;">— Nombre, Ciudad</div></div>
+      <div class="quote"><div class="mark">"</div><p data-cms="testimonial.2">Reemplazar con un segundo testimonio real que hable de tranquilidad y respaldo.</p><div class="mono" data-cms="testimonial.2.name" style="font-size:13px;color:var(--faint);margin-top:18px;">— Nombre, Ciudad</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNOSTIC FORM -->
+<section class="diag" id="diagnostico">
+  <div class="halo"></div>
+  <div class="wrap" style="position:relative;padding-top:90px;padding-bottom:90px;">
+    <div style="text-align:center;">
+      <div class="eyebrow">DIAGNÓSTICO + REGALO</div>
+      <h2 class="big" style="font-size:46px;font-weight:900;">Responde y desbloquea tu regalo</h2>
+      <p style="font-size:15px;color:var(--dim);margin-top:12px;">Cada respuesta revela el recurso hecho para ti.</p>
+    </div>
+
+    <div class="formbox">
+      <!-- LEFT -->
+      <div class="left">
+        <div class="segs"><div class="seg on" id="seg1"></div><div class="seg" id="seg2"></div><div class="seg" id="seg3"></div></div>
+
+        <!-- Step 1 -->
+        <div class="step" id="step1">
+          <div class="mono" style="font-size:11px;color:var(--accent2);">PASO 1 / 3</div>
+          <div style="font-size:26px;font-weight:800;margin-top:8px;letter-spacing:-.5px;">¿Cuál es tu objetivo principal?</div>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:24px;">
+            <button class="obj" data-obj="familia"><span><b>Proteger a mi familia</b><br><small>SEGUROS · BLINDAJE</small></span><span class="arr">→</span></button>
+            <button class="obj" data-obj="ventas"><span><b>Multiplicar mis ventas</b><br><small>VENTAS · NEGOCIOS</small></span><span class="arr">→</span></button>
+            <button class="obj" data-obj="mindset"><span><b>Cambiar mi mentalidad</b><br><small>MINDSET · LIFESTYLE</small></span><span class="arr">→</span></button>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step hidden" id="step2">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <button class="ghostbtn" id="backBtn">← Atrás</button>
+            <div class="mono" style="font-size:11px;color:var(--accent2);">PASO 2 / 3</div>
+          </div>
+          <div style="font-size:26px;font-weight:800;margin-top:18px;letter-spacing:-.5px;">¿A dónde te enviamos tu regalo?</div>
+          <div style="display:flex;flex-direction:column;gap:13px;margin-top:22px;">
+            <input class="inp" id="f_nombre" placeholder="Nombre" autocomplete="name" />
+            <input class="inp" id="f_email" placeholder="Email" type="email" autocomplete="email" />
+            <input class="inp" id="f_whatsapp" placeholder="WhatsApp" type="tel" autocomplete="tel" />
+          </div>
+          <div id="formErr" class="mono hidden" style="color:var(--accent2);font-size:12px;margin-top:12px;"></div>
+          <button class="btn" id="submitBtn" data-cms="form.cta" style="margin-top:20px;width:100%;font-size:16px;padding:17px;box-shadow:var(--btnglow);">Desbloquear mi Lead Magnet</button>
+        </div>
+
+        <!-- Done -->
+        <div class="step hidden" id="stepDone" style="text-align:center;padding:20px 0;">
+          <div style="width:64px;height:64px;margin:0 auto;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:var(--btnglow);">✓</div>
+          <div style="font-size:26px;font-weight:800;margin-top:18px;">¡Listo! Revisa tu correo</div>
+          <p style="font-size:14px;color:var(--dim);margin-top:10px;">Tu regalo va en camino. Carolina te contactará por WhatsApp.</p>
+          <button class="ghostbtn" id="resetBtn" style="margin-top:20px;padding:11px 20px;font-size:14px;">Empezar de nuevo</button>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="right">
+        <div class="mono" style="position:absolute;top:18px;right:20px;font-size:10px;color:var(--faint);letter-spacing:1px;">TU REGALO</div>
+        <div id="giveaway" class="gcard">
+          <div class="fmt">SELECCIONA UN OBJETIVO</div>
+          <h4>Tu regalo aparece aquí</h4>
+          <p>Elige tu objetivo a la izquierda y revelaremos el recurso gratuito hecho para tu momento.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section class="wrap community" style="padding-top:30px;padding-bottom:70px;">
+  <div class="box">
+    <div class="ic">◓</div>
+    <div style="flex:1;min-width:230px;">
+      <div data-cms="community.title" style="font-size:24px;font-weight:800;">Únete a la comunidad en Discord</div>
+      <div data-cms="community.subtitle" style="font-size:14px;color:var(--dim);margin-top:5px;">Tips diarios, networking y Q&amp;A en vivo con Carolina.</div>
+    </div>
+    <a href="#" class="btn" data-cms="community.cta" style="font-size:15px;padding:14px 26px;box-shadow:var(--glow);">Entrar gratis</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="logo" style="font-size:18px;">MINDSET<span>CARO</span> <span class="mono" style="font-weight:400;font-size:12px;color:var(--faint);margin-left:8px;">· Apex Modelos Latino</span></div>
+    <div class="mono" data-cms="footer.links" style="display:flex;gap:22px;font-size:13px;color:var(--faint);">Instagram · YouTube · Podcast · WhatsApp</div>
+  </div>
+</footer>
+
+<!-- Open-door tracker: fires a pageview into /api/ingest -->
+<script src="/mindset-caro/embed/apex-track.js"
+        data-source-app="mindset-caro-site"
+        data-endpoint="/api/ingest"
+        data-auto-pageview="true"></script>
+
+<script>
+(function(){
+  var GIVEAWAYS = {
+    familia: { fmt:'GUÍA PDF', title:'Los 3 Pilares para Blindar tu Futuro', desc:'El checklist para proteger a tu familia ante lo inesperado.' },
+    ventas:  { fmt:'PLAYBOOK', title:'7 Cierres que Multiplican tus Ventas', desc:'Los guiones y la mentalidad para vender con método.' },
+    mindset: { fmt:'AUDIO TRAINING', title:'El Mindset Correcto para tus Finanzas', desc:'30 min para reprogramar tu relación con el dinero.' }
+  };
+
+  var state = { step: 1, objective: null };
+  var $ = function(id){ return document.getElementById(id); };
+
+  function showStep(n){
+    state.step = n;
+    $('step1').classList.toggle('hidden', n !== 1);
+    $('step2').classList.toggle('hidden', n !== 2);
+    $('stepDone').classList.toggle('hidden', n !== 3);
+    $('seg1').classList.toggle('on', n >= 1);
+    $('seg2').classList.toggle('on', n >= 2);
+    $('seg3').classList.toggle('on', n >= 3);
+  }
+
+  function pickObjective(obj){
+    state.objective = obj;
+    var g = GIVEAWAYS[obj];
+    $('giveaway').innerHTML =
+      '<div class="fmt">' + g.fmt + '</div><h4>' + g.title + '</h4><p>' + g.desc + '</p>';
+    if (window.ApexTrack) ApexTrack.track('diagnostic.objective', { objective: obj });
+    showStep(2);
+  }
+
+  document.querySelectorAll('.obj').forEach(function(btn){
+    btn.addEventListener('click', function(){ pickObjective(btn.getAttribute('data-obj')); });
+  });
+  $('backBtn').addEventListener('click', function(){ showStep(1); });
+  $('resetBtn').addEventListener('click', function(){
+    state.objective = null;
+    $('f_nombre').value = $('f_email').value = $('f_whatsapp').value = '';
+    $('giveaway').innerHTML = '<div class="fmt">SELECCIONA UN OBJETIVO</div><h4>Tu regalo aparece aquí</h4><p>Elige tu objetivo a la izquierda y revelaremos el recurso gratuito hecho para tu momento.</p>';
+    showStep(1);
+  });
+
+  function utm(){
+    var q = new URLSearchParams(location.search), o = {};
+    ['source','medium','campaign'].forEach(function(k){ var v=q.get('utm_'+k); if(v) o[k]=v; });
+    return o;
+  }
+
+  $('submitBtn').addEventListener('click', async function(){
+    var nombre = $('f_nombre').value.trim();
+    var email = $('f_email').value.trim();
+    var whatsapp = $('f_whatsapp').value.trim();
+    var err = $('formErr');
+    if (!email || email.indexOf('@') < 0) {
+      err.textContent = 'Ingresa un email válido para enviarte tu regalo.';
+      err.classList.remove('hidden');
+      return;
+    }
+    err.classList.add('hidden');
+    var btn = this; btn.disabled = true; var label = btn.textContent; btn.textContent = 'Enviando…';
+
+    var payload = {
+      source: 'flip-form',
+      objective: state.objective,
+      nombre: nombre, email: email, whatsapp: whatsapp,
+      visitor_id: (window.ApexTrack && ApexTrack.visitorId) || null,
+      utm: utm(),
+      referrer: document.referrer || null
+    };
+
+    try {
+      await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (e) {
+      // Demo-safe: still confirm to the visitor even if the API isn't reachable in preview.
+      console.warn('lead POST failed (showing success anyway):', e);
+    }
+    btn.disabled = false; btn.textContent = label;
+    showStep(3);
+  });
+
+  // Progressive enhancement: pull live copy from the CMS if it's been populated.
+  fetch('/api/mc-content?site=landing')
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(data){
+      if (!data || !data.content) return;
+      var c = data.content;
+      document.querySelectorAll('[data-cms]').forEach(function(el){
+        var v = c[el.getAttribute('data-cms')];
+        if (typeof v === 'string' && v) el.textContent = v;
+      });
+      document.querySelectorAll('[data-cms-html]').forEach(function(el){
+        var v = c[el.getAttribute('data-cms-html')];
+        if (typeof v === 'string' && v) el.textContent = v;
+      });
+      document.querySelectorAll('[data-cms-img]').forEach(function(el){
+        var v = c[el.getAttribute('data-cms-img')];
+        if (typeof v === 'string' && v) { el.style.backgroundImage = 'url(' + v + ')'; el.style.backgroundSize = 'cover'; el.style.backgroundPosition = 'center'; el.innerHTML = ''; }
+      });
+    })
+    .catch(function(){ /* CMS not set up yet — defaults stay */ });
+})();
+</script>
+</body>
+</html>

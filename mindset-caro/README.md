@@ -73,8 +73,19 @@ track('signup', { email });
 
 Everything it sends lands in `mc_ingest_events` and shows up in the admin tracker.
 
-## Next step (not in this commit)
+## Live page
 
-Port the `design/*.dc.html` files to a real React/Vite app (the `.dc.html` runtime is
-proprietary). Markup → JSX, `renderVals()` → component state. The backend above is
-already ready for it.
+`mindset-caro/index.html` is the deployable landing — served at
+**`/mindset-caro/`** on the existing Apex domain (e.g.
+`https://apexmusiclatino.com/mindset-caro/`). No domain setup needed to preview/show.
+
+- Self-contained (Inter + inline CSS, dark/crimson). Works out of the box.
+- The 3-step diagnostic form POSTs to `/api/lead`.
+- Fires a pageview into `/api/ingest` via `embed/apex-track.js`.
+- Pulls live copy from `/api/mc-content?site=landing` if the CMS has been populated;
+  otherwise the built-in defaults render.
+
+### Still to do
+- Port the **Diagnostico** funnel page (roulette + calculator) from
+  `design/Diagnostico Landing.dc.html` to a real page (next build step).
+- Drop in real assets (hero portrait, reel covers) + real credentials/testimonials.
