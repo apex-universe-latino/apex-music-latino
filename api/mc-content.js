@@ -4,8 +4,15 @@
 //
 // POST body: { admin_key, fields: [ { site, field, grp?, value_text?, value_json?, asset_url? }, ... ] }
 // Protect writes with MC_ADMIN_KEY env var.
+//
+// DB: the Apex Modelos Latino Supabase project (separate from Apex Music Latino).
+//   Set MODELOS_SUPABASE_URL (or MODELOS_SUPABASE_PROJECT_ID) + MODELOS_SUPABASE_SERVICE_ROLE_KEY.
 
-const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'iaycaynevtumrqoknemk'}.supabase.co`;
+function supabaseUrl() {
+  if (process.env.MODELOS_SUPABASE_URL) return process.env.MODELOS_SUPABASE_URL.replace(/\/$/, '');
+  if (process.env.MODELOS_SUPABASE_PROJECT_ID) return `https://${process.env.MODELOS_SUPABASE_PROJECT_ID}.supabase.co`;
+  return null;
+}
 
 function cors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -17,8 +24,11 @@ export default async function handler(req, res) {
   cors(res);
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!SERVICE_KEY) return res.status(500).json({ error: 'SUPABASE_SERVICE_ROLE_KEY not configured' });
+  const SUPABASE_URL = supabaseUrl();
+  const SERVICE_KEY = process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY;
+  if (!SUPABASE_URL || !SERVICE_KEY) {
+    return res.status(500).json({ error: 'Modelos Latino Supabase not configured. Set MODELOS_SUPABASE_URL (or MODELOS_SUPABASE_PROJECT_ID) and MODELOS_SUPABASE_SERVICE_ROLE_KEY.' });
+  }
 
   const sbHeaders = {
     apikey: SERVICE_KEY,

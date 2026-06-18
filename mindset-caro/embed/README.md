@@ -77,8 +77,8 @@ Or open the visual tracker: **`/mindset-caro/admin/`** → "Datos entrantes" tab
 
 | Var | Purpose | Required |
 |-----|---------|----------|
-| `SUPABASE_SERVICE_ROLE_KEY` | server-side DB writes | ✅ |
-| `SUPABASE_PROJECT_ID` | defaults to `iaycaynevtumrqoknemk` | optional |
+| `MODELOS_SUPABASE_URL` | Apex Modelos Latino project URL | ✅ |
+| `MODELOS_SUPABASE_SERVICE_ROLE_KEY` | server-side DB writes | ✅ |
 | `INGEST_PUBLIC_KEY` | if set, callers must send header `x-ingest-key` | optional |
 | `INGEST_ADMIN_KEY` | gate `GET /api/ingest` reads | recommended |
 | `INGEST_FORWARD_URL` | also POST every event to Cubo CDP / Zoho / a webhook | optional |

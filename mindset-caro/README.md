@@ -33,15 +33,21 @@ architecture/
    `architecture/mindset-caro-schema.sql` → Run. Creates `mc_content`, `mc_leads`,
    `mc_ingest_events` (+ RLS and seed content).
 
-2. **Set env vars** on Vercel (same project as the rest of the site):
+2. **Set env vars** on Vercel (the apexmusiclatino project — site/API hosted alongside
+   music; only the DB is separate):
 
    | Var | Purpose |
    |-----|---------|
-   | `SUPABASE_SERVICE_ROLE_KEY` | required — server-side DB access |
+   | `MODELOS_SUPABASE_URL` | required — Apex Modelos Latino project URL (`https://xxxx.supabase.co`) |
+   | `MODELOS_SUPABASE_SERVICE_ROLE_KEY` | required — service role key of that project |
    | `MC_ADMIN_KEY` | gate CMS writes + admin panel |
    | `INGEST_ADMIN_KEY` | gate reading incoming data |
    | `INGEST_PUBLIC_KEY` | *(optional)* require `x-ingest-key` from senders |
    | `INGEST_FORWARD_URL` | *(optional)* fan out each event to Cubo CDP / Zoho / webhook |
+
+   > These point at the **Apex Modelos Latino** Supabase project, separate from the
+   > Apex Music Latino database. You may use `MODELOS_SUPABASE_PROJECT_ID` instead of
+   > `MODELOS_SUPABASE_URL`.
 
 3. **Open the panel:** `/mindset-caro/admin/` → enter your admin key.
    - **Contenido (CMS)** tab → edit & save copy/assets/prizes/calculator constants.

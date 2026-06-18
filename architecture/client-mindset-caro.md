@@ -34,10 +34,18 @@ AML-FIN-CARO-{SEQ}-{SALT}
 > Generator code is the same routine used in `genre/tango/arcoiris/index.html`
 > (`generateFanId()`), with `VERTICAL_CODE='FIN'` and `CLIENT_CODE='CARO'`.
 
-## Platform registration (done in this commit)
-- `api/supabase-proxy.js` → `VALID_ARTISTS` now includes `mindset-caro`, and the
-  path allowlist includes `mc_content`, `mc_leads`, `mc_ingest_events`. So the
-  client's frontend talks to Supabase through the same secured proxy as Arcoiris.
+## Where the data lives
+Carolina is **Apex Modelos Latino** (the influencer world), so her data lives in a
+**separate Supabase project** from Apex Music Latino — not the music DB. The site and
+API functions are still hosted on the same Vercel/domain as the rest of Apex; only the
+database is separate, selected via env vars:
+
+- `MODELOS_SUPABASE_URL` (or `MODELOS_SUPABASE_PROJECT_ID`)
+- `MODELOS_SUPABASE_SERVICE_ROLE_KEY`
+
+Her dedicated endpoints (`/api/lead`, `/api/ingest`, `/api/mc-content`) read those vars,
+so she does **not** use the music `supabase-proxy.js`. (Single-tenant for now — just
+Carolina; the schema can be generalized to a `modelos_*` multi-influencer set later.)
 
 ## Data model (same capabilities as Arcoiris, namespaced per client)
 | Capability | Arcoiris | Mindset Caro |

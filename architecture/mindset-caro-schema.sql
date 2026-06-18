@@ -1,6 +1,7 @@
 -- Mindset Caro — Supabase Schema
--- Brand: Mindset Caro (Diana Carolina) · part of the Apex ecosystem
--- Run this in: Supabase Dashboard → SQL Editor → New Query
+-- Brand: Mindset Caro (Diana Carolina) · Apex MODELOS Latino (influencer world)
+-- ⚠ Run this in the dedicated APEX MODELOS LATINO Supabase project — NOT the music one.
+--    Supabase Dashboard (Modelos project) → SQL Editor → New Query → paste → Run
 --
 -- Creates three tables:
 --   1. mc_content        → the CMS (every data-cms-field from the design files)

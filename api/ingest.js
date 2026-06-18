@@ -18,8 +18,15 @@
 // CORS is open (*) on purpose — this is a public collector, like an analytics beacon.
 // Optional hard auth: set INGEST_PUBLIC_KEY and send it as header `x-ingest-key`.
 // Optional fan-out: set INGEST_FORWARD_URL to also POST each event to e.g. Cubo CDP / a webhook.
+//
+// DB: the Apex Modelos Latino Supabase project (separate from Apex Music Latino).
+//   Set MODELOS_SUPABASE_URL (or MODELOS_SUPABASE_PROJECT_ID) + MODELOS_SUPABASE_SERVICE_ROLE_KEY.
 
-const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'iaycaynevtumrqoknemk'}.supabase.co`;
+function supabaseUrl() {
+  if (process.env.MODELOS_SUPABASE_URL) return process.env.MODELOS_SUPABASE_URL.replace(/\/$/, '');
+  if (process.env.MODELOS_SUPABASE_PROJECT_ID) return `https://${process.env.MODELOS_SUPABASE_PROJECT_ID}.supabase.co`;
+  return null;
+}
 
 function cors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -36,8 +43,11 @@ export default async function handler(req, res) {
   cors(res);
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!SERVICE_KEY) return res.status(500).json({ error: 'SUPABASE_SERVICE_ROLE_KEY not configured' });
+  const SUPABASE_URL = supabaseUrl();
+  const SERVICE_KEY = process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY;
+  if (!SUPABASE_URL || !SERVICE_KEY) {
+    return res.status(500).json({ error: 'Modelos Latino Supabase not configured. Set MODELOS_SUPABASE_URL (or MODELOS_SUPABASE_PROJECT_ID) and MODELOS_SUPABASE_SERVICE_ROLE_KEY.' });
+  }
 
   const sbHeaders = {
     apikey: SERVICE_KEY,
