@@ -6,7 +6,7 @@
 // The frontend sends requests here instead of directly to Supabase with the service key.
 // Auth: the request must include an artist_slug that matches a valid ARTISTS config entry.
 
-const VALID_ARTISTS = ['arcoiris', 'joey-b', 'andrade', 'onboarding'];
+const VALID_ARTISTS = ['arcoiris', 'joey-b', 'andrade', 'onboarding', 'mindset-caro'];
 
 // Allowlist of path prefixes that the proxy can access
 const ALLOWED_PATHS = [
@@ -18,6 +18,10 @@ const ALLOWED_PATHS = [
   '/rest/v1/venue_leads',
   '/rest/v1/email_events',
   '/rest/v1/unsubscribes',
+  // Mindset Caro client tables
+  '/rest/v1/mc_content',
+  '/rest/v1/mc_leads',
+  '/rest/v1/mc_ingest_events',
 ];
 
 export default async function handler(req, res) {
