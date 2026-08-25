@@ -10,7 +10,7 @@ def verify_supabase():
     try:
         # Note: In the agent environment, we might not have a running local server at 3000
         # But we can simulate the fetch logic if needed or just check the env vars.
-        project_id = "xtfmwtzjbudqmenfmhim"
+        project_id = "cyxghqoxsygexrpeldcf"
         url = f"https://{project_id}.supabase.co/rest/v1/artists?select=count"
         # We need the key though...
         print(f"Direct check for Project ID: {project_id}")

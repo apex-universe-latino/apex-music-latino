@@ -188,7 +188,7 @@ export default async function handler(req, res) {
 </html>`;
 
   // Check unsubscribe list
-  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'xtfmwtzjbudqmenfmhim'}.supabase.co`;
+  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'cyxghqoxsygexrpeldcf'}.supabase.co`;
   const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (SUPABASE_KEY) {
     const unsubscribed = await getUnsubscribedEmails(SUPABASE_URL, SUPABASE_KEY);
@@ -336,7 +336,7 @@ async function handleOnboardingEmail(req, res, { name, email, genre, platforms, 
 </body></html>`;
 
   // Check unsubscribe
-  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'xtfmwtzjbudqmenfmhim'}.supabase.co`;
+  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'cyxghqoxsygexrpeldcf'}.supabase.co`;
   const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (SUPABASE_KEY) {
     const unsubs = await getUnsubscribedEmails(SUPABASE_URL, SUPABASE_KEY);

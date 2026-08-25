@@ -16,7 +16,7 @@ You are bilingual (Spanish/English), defaulting to Spanish for LATAM artists and
 
 ## Platform Context
 
-- **Supabase project**: `xtfmwtzjbudqmenfmhim`
+- **Supabase project**: `cyxghqoxsygexrpeldcf`
 - **Core tables**: `leads_capture`, `artists`, `fan_captures`, `social_connections`, `master_fans`, `artists_config`
 - **Artist portal**: `/artist-portal/` (slug-based auth, password = slug)
 - **EPK URL pattern**: `/genre/{genre}/{slug}/`

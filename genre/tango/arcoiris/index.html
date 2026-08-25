@@ -542,8 +542,8 @@
     var deviceData = collectDeviceData();
 
     // Send to Supabase (with geo attempt)
-    var SUPABASE_URL = 'https://xtfmwtzjbudqmenfmhim.supabase.co';
-    var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k';
+    var SUPABASE_URL = 'https://cyxghqoxsygexrpeldcf.supabase.co';
+    var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5eGdocW94c3lnZXhycGVsZGNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyMTQ1MTIsImV4cCI6MjA5MTc5MDUxMn0.D2kpaTKVe9XeVVaMX4wYM6_ZOxqrWffIWlzo-jfx5tk';
 
     function sendPayload(geoData) {
       var payload = {
@@ -1592,10 +1592,10 @@ document.addEventListener('mousemove', function(e) {
   // ================================================================
   // APEX DYNAMIC ENGINE (Live Content Sync)
   // ================================================================
-  const SB_URL = 'https://xtfmwtzjbudqmenfmhim.supabase.co';
+  const SB_URL = 'https://cyxghqoxsygexrpeldcf.supabase.co';
   // SECURITY: was a service_role key (full DB admin) exposed in client HTML — replaced with the public anon key.
   // service_role must NEVER be client-side. Reads are gated by RLS; writes must go through an edge function.
-  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k';
+  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5eGdocW94c3lnZXhycGVsZGNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyMTQ1MTIsImV4cCI6MjA5MTc5MDUxMn0.D2kpaTKVe9XeVVaMX4wYM6_ZOxqrWffIWlzo-jfx5tk';
   const ARTIST_SLUG = 'arcoiris';
 
   async function loadLiveConfig() {

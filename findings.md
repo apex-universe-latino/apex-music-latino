@@ -41,7 +41,7 @@
 - Team: apex-universe-latinos-projects
 
 ### Supabase
-- Project ID: xtfmwtzjbudqmenfmhim
+- Project ID: cyxghqoxsygexrpeldcf
 - Has `leads_capture` table active
 - Anon key exposed in client JS (acceptable for RLS-protected tables)
 - Service role key in .env (must NEVER be client-side)

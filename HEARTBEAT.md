@@ -7,7 +7,7 @@
 ## ⚡ Current Sprint (Week of 2026-04-28)
 
 ### 🔴 CRITICAL / Unblocked
-- [x] Supabase project `xtfmwtzjbudqmenfmhim` restored (was paused)
+- [x] Supabase project `cyxghqoxsygexrpeldcf` restored (was paused)
 - [x] Proxy hardened to detect paused state + surface UI error
 - [x] Artist Portal restructured to VS Code 3-column layout
 - [x] Asset History engine built (localStorage-backed per artist)
@@ -30,7 +30,7 @@
 
 | System | Status | Last Checked |
 |--------|--------|--------------|
-| Supabase `xtfmwtzjbudqmenfmhim` | ✅ Active | 2026-04-28 |
+| Supabase `cyxghqoxsygexrpeldcf` | ✅ Active | 2026-04-28 |
 | Vercel Deployment | ✅ Active | 2026-04-28 |
 | Supabase Proxy (`/api/supabase-proxy`) | ✅ Active | 2026-04-28 |
 | GitHub Sync | ✅ Active | 2026-04-28 |

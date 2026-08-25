@@ -1,6 +1,6 @@
 -- ============================================================
 -- EMAIL CAMPAIGN ENGINE — Supabase Schema
--- Run this in Supabase SQL Editor for project xtfmwtzjbudqmenfmhim
+-- Run this in Supabase SQL Editor for project cyxghqoxsygexrpeldcf
 -- ============================================================
 
 -- 1. EMAIL CAMPAIGNS (blast, sequence, show_reminder, venue_outreach)
