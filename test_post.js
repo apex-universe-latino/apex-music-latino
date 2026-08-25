@@ -1,5 +1,5 @@
-const PROJECT_ID = 'cyxghqoxsygexrpeldcf';
-const SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5eGdocW94c3lnZXhycGVsZGNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyMTQ1MTIsImV4cCI6MjA5MTc5MDUxMn0.D2kpaTKVe9XeVVaMX4wYM6_ZOxqrWffIWlzo-jfx5tk';
+const PROJECT_ID = 'xtfmwtzjbudqmenfmhim';
+const SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k';
 
 async function test() {
   const url = 'https://' + PROJECT_ID + '.supabase.co/rest/v1/artists_config';

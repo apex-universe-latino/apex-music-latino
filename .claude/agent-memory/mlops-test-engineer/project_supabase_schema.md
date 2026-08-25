@@ -1,6 +1,6 @@
 ---
 name: Supabase schema — actual tables confirmed live
-description: Definitive list of tables that exist in Supabase project cyxghqoxsygexrpeldcf as of March 2026
+description: Definitive list of tables that exist in Supabase project xtfmwtzjbudqmenfmhim as of March 2026
 type: project
 ---
 

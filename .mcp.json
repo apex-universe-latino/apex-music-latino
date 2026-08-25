@@ -2,7 +2,7 @@
   "mcpServers": {
     "supabase-apex": {
       "type": "http",
-      "url": "https://mcp.supabase.com/mcp?project_ref=cyxghqoxsygexrpeldcf&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching%2Cstorage"
+      "url": "https://mcp.supabase.com/mcp?project_ref=xtfmwtzjbudqmenfmhim&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching%2Cstorage"
     }
   }
 }

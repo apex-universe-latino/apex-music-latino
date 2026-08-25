@@ -1,6 +1,7 @@
 -- ============================================================
 -- Apex Music Latino — Canonical Supabase Project Setup
--- Project: cyxghqoxsygexrpeldcf
+-- Project: RUN IN THE CANONICAL APEX MUSIC PROJECT (still to be chosen — see PRD §0.3).
+-- NOTE: cyxghqoxsygexrpeldcf is the Six1Trey book project. Do NOT use it for Apex.
 -- Run this in the Supabase SQL Editor of the NEW project,
 -- then run architecture/supabase-schema.sql (artists / fan_captures /
 -- social_connections / master_fans).

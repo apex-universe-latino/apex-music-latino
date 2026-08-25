@@ -63,7 +63,7 @@ async function handleProxy(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed. Use POST.' });
 
-  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'cyxghqoxsygexrpeldcf'}.supabase.co`;
+  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'iaycaynevtumrqoknemk'}.supabase.co`;
   const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!SERVICE_KEY) return res.status(500).json({ error: 'SUPABASE_SERVICE_ROLE_KEY not configured' });
 
@@ -96,7 +96,7 @@ async function handleProxy(req, res) {
       if (response.status === 503 || response.status === 504) {
         return res.status(503).json({
           error: 'Supabase project is paused or starting up.',
-          message: 'Please visit the Supabase dashboard to unpause the project (cyxghqoxsygexrpeldcf).',
+          message: 'Please visit the Supabase dashboard to unpause the project (iaycaynevtumrqoknemk).',
           code: 'PROJECT_PAUSED',
         });
       }

@@ -4,7 +4,7 @@
 Automate the process of converting a lead capture prospect into a registered Apex Music Latino artist.
 
 ## Prerequisites
-- Supabase Project ID: `cyxghqoxsygexrpeldcf`
+- Supabase Project ID: `xtfmwtzjbudqmenfmhim`
 - Trello Board: `XIpGmZUV`
 - Admin Access to `/admin/index.html`
 

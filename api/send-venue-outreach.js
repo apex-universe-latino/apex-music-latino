@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   if (!step) return res.status(400).json({ error: 'Missing step param (1-12 or test)' });
 
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
-  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'cyxghqoxsygexrpeldcf'}.supabase.co`;
+  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'xtfmwtzjbudqmenfmhim'}.supabase.co`;
   const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!RESEND_API_KEY || !SUPABASE_KEY) {

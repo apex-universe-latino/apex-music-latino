@@ -135,7 +135,7 @@
 | Layer | Technology | Purpose |
 |-------|-----------|---------|
 | Frontend | Static HTML + Tailwind CSS (CDN) + Vanilla JS | Site pages |
-| Data | Supabase (cyxghqoxsygexrpeldcf) | Lead capture, artist profiles, fan data |
+| Data | Supabase (xtfmwtzjbudqmenfmhim) | Lead capture, artist profiles, fan data |
 | Hosting | Vercel (team: apex-universe-latinos-projects) | Deployment |
 | Source | GitHub (apex-universe-latino/apex-music-latino) | Version control |
 | Design | Space Grotesk + Inter + Material Symbols | Typography & icons |

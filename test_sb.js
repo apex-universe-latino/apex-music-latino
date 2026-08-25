@@ -1,5 +1,5 @@
-const url = 'https://cyxghqoxsygexrpeldcf.supabase.co/rest/v1/leads_capture';
-const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5eGdocW94c3lnZXhycGVsZGNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyMTQ1MTIsImV4cCI6MjA5MTc5MDUxMn0.D2kpaTKVe9XeVVaMX4wYM6_ZOxqrWffIWlzo-jfx5tk';
+const url = 'https://xtfmwtzjbudqmenfmhim.supabase.co/rest/v1/leads_capture';
+const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k';
 
 fetch(url, {
   method: 'POST',

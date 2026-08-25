@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('--- Apex Music Latino | Master Engine Initialized ---');
 
     // 1. CONFIGURATION (From .env)
-    const SUPABASE_URL = 'https://cyxghqoxsygexrpeldcf.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5eGdocW94c3lnZXhycGVsZGNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyMTQ1MTIsImV4cCI6MjA5MTc5MDUxMn0.D2kpaTKVe9XeVVaMX4wYM6_ZOxqrWffIWlzo-jfx5tk';
+    const SUPABASE_URL = 'https://xtfmwtzjbudqmenfmhim.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlheWNheW5ldnR1bXJxb2tuZW1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzgxNDAsImV4cCI6MjA4OTU1NDE0MH0.RdJ_FZlhB4DxGCv27yqMyhYxpjd5pXOeMYN45XVbW0k';
     
     // 2. DETECT GENRE
     const currentGenre = window.location.pathname.includes('/genre/reggaeton') ? 'reggaeton' : 

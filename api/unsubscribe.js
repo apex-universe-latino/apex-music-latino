@@ -37,7 +37,7 @@ export default async function handler(req, res) {
     return res.status(400).send(renderPage('Error', 'Token does not match email.'));
   }
 
-  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'cyxghqoxsygexrpeldcf'}.supabase.co`;
+  const SUPABASE_URL = `https://${process.env.SUPABASE_PROJECT_ID || 'xtfmwtzjbudqmenfmhim'}.supabase.co`;
   const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!SUPABASE_KEY) {

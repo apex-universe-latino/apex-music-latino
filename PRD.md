@@ -17,27 +17,24 @@
 ### 0.2 NOT Connected / Blockers
 | Connection | Status | Action Needed |
 |------------|--------|---------------|
-| Supabase MCP (`supabase-apex`) | NOT AUTHENTICATED + NETWORK-BLOCKED | The cloud session's network policy denies `mcp.supabase.com` and `*.supabase.co` (403 at proxy). Fix: Claude Code on the web → environment settings → network policy → allow those domains (or "All"), then authorize the connector |
+| Supabase MCP (`supabase-apex`) | NOT AUTHENTICATED | Authorize via claude.ai connector settings or `/mcp` in an interactive session — migrations cannot run until then |
 | Analytics (GA4 / Vercel Analytics) | NOT INSTALLED | No tracking script on the main site. Only a stray GA-like ID fragment in `alissontrigos/Instagram.html`. Decide: GA4 vs Vercel Analytics, then add site-wide snippet |
 | Quo (MCP) | NOT AUTHENTICATED | Authorize if phone/SMS workflows are needed |
 
-### 0.3 RESOLVED (2026-08-25): Canonical Supabase project = `cyxghqoxsygexrpeldcf`
-The codebase previously mixed refs from three projects (`xtfmwtzjbudqmenfmhim`, `laykneyclcirdionugxt`, `iaycaynevtumrqoknemk`) — including URL/key pairs that didn't match, so client requests were failing with 401. All Apex MUSIC Latino references (client pages, api/* fallbacks, `.mcp.json`, artist-portal bundle, docs) now point to `https://cyxghqoxsygexrpeldcf.supabase.co` with its anon key. Apex MODELOS Latino (Mindset Caro) is untouched — it uses `MODELOS_*` env vars only.
+### 0.3 CRITICAL: Supabase project ref mismatch
+Four different Supabase project refs exist across the ecosystem — these must be reconciled before any backend work:
 
-**⚠️ SECURITY — action required**: a `service_role` key for the old project `iaycaynevtumrqoknemk` was hard-coded in public HTML pages (arcoiristango/*, alissontrigos EPK) in this public repo. It has been removed from current code but lives in git history. **Rotate the JWT secret / service_role key for `iaycaynevtumrqoknemk` in the Supabase dashboard** (or delete the project if retired).
+| Ref | Where it appears |
+|-----|------------------|
+| `xtfmwtzjbudqmenfmhim` | 17 references in live site JS (leads capture, artist portal) — the de facto production DB |
+| `laykneyclcirdionugxt` | 1 stray reference in site code |
+| `iaycaynevtumrqoknemk` | `.mcp.json` (the project the Supabase MCP server points at) |
+| `kkumwjwvirccvmlgvowi` | Six1Trey book blueprint (separate project, separate repo) |
+| `cyxghqoxsygexrpeldcf` | **Six1Trey book project (confirmed 2026-08-25) — NOT for Apex.** A cutover to it was applied and reverted in PR #7 |
 
-**Remaining cutover steps**:
-1. Run `architecture/setup-canonical-project.sql` in the new project's SQL editor (creates `leads_capture` + operational tables), then `architecture/supabase-schema.sql` (artists/fans/golden records).
-2. Set Vercel env vars: `SUPABASE_PROJECT_ID=cyxghqoxsygexrpeldcf`, `SUPABASE_SERVICE_ROLE_KEY=<new project's service key>` (server-side only — never in code).
-3. Migrate existing rows (e.g. `leads_capture`) from the old project if that data is still wanted.
+**Decision needed**: which project is canonical for Apex Music Latino, then align `.mcp.json` and site JS to it. Note the code's URL/key pairs are currently MISMATCHED (e.g. `xtfm…` URLs signed with `iayc…` keys → 401s), so lead capture is silently falling back to localStorage.
 
-| Ref | Status |
-|-----|--------|
-| `cyxghqoxsygexrpeldcf` | **CANONICAL** — all Music code points here |
-| `xtfmwtzjbudqmenfmhim` | retired (was in 17 client refs) |
-| `laykneyclcirdionugxt` | retired (was in artist-portal bundle) |
-| `iaycaynevtumrqoknemk` | retired — **rotate its leaked service key** |
-| `kkumwjwvirccvmlgvowi` | Six1Trey book project (separate repo — unrelated) |
+**⚠️ SECURITY — action required**: a `service_role` key (full admin) for `iaycaynevtumrqoknemk` was hard-coded in public HTML (arcoiristango/*, alissontrigos EPK) in this public repo. It has been replaced with the anon key in current code, but it remains in git history — **rotate that project's JWT secret / service_role key in the Supabase dashboard**, and set the key only as a Vercel env var (`SUPABASE_SERVICE_ROLE_KEY`).
 
 ### 0.4 Repos visible to this GitHub connection
 `apex-music-latino` (this one), `apex-p2p-portal`, `i-luv-medallo`, `i-luv-santa-rosa`, `gringhos`.
