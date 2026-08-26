@@ -186,6 +186,44 @@ async function handleLead(req, res) {
       }),
     }).catch(() => {});
 
+    // Notify Carolina — send a copy of every lead to her inbox (best-effort, via Resend).
+    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+    const notifyTo = process.env.LEAD_NOTIFY_EMAIL || 'info@mindsetcaro.com';
+    if (RESEND_API_KEY) {
+      const label = { 'flip-form': 'Diagnóstico', roulette: 'Ruleta', calculator: 'Calculadora' }[b.source] || b.source;
+      const rows = [
+        ['Fuente', label],
+        ['Nombre', row.nombre],
+        ['Email', row.email],
+        ['WhatsApp', row.whatsapp],
+        ['Objetivo', row.objective],
+        ['Premio', row.prize],
+        ['Ingreso', row.ingreso],
+        ['Edad', row.age],
+        ['Dependientes', row.dependientes],
+        ['Cobertura sugerida (COP)', row.coverage_cop],
+        ['Estimado mensual (COP)', row.monthly_cop],
+      ].filter(([, v]) => v !== null && v !== undefined && v !== '')
+       .map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#888">${k}</td><td style="padding:4px 0"><b>${v}</b></td></tr>`)
+       .join('');
+      fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: 'Mindset Caro <noreply@apexmusiclatino.com>',
+          to: [notifyTo],
+          reply_to: row.email || undefined,
+          subject: `🔔 Nuevo lead (${label})${row.nombre ? ' — ' + row.nombre : ''}`,
+          html: `<div style="font-family:Inter,Arial,sans-serif;max-width:520px">
+            <h2 style="color:#e60000;margin:0 0 4px">Nuevo lead — Mindset Caro</h2>
+            <p style="color:#666;margin:0 0 16px">Capturado en mindsetcaro.com</p>
+            <table style="border-collapse:collapse;font-size:14px">${rows}</table>
+            <p style="color:#999;font-size:12px;margin-top:18px">Este lead también quedó guardado en tu FRM (Supabase).</p>
+          </div>`,
+        }),
+      }).catch(() => {});
+    }
+
     const saved = Array.isArray(data) ? data[0] : data;
     return res.status(200).json({ ok: true, id: saved?.id });
   } catch (e) {
