@@ -15,13 +15,17 @@ const DEFAULT_MODELOS_URL = 'https://xtfmwtzjbudqmenfmhim.supabase.co';
 const DEFAULT_MODELOS_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0Zm13dHpqYnVkcW1lbmZtaGltIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MzMwNjc2MiwiZXhwIjoyMDY4ODgyNzYyfQ.QFtWGtJr5PUzD8BKpk_YB78hf4AQOftUT-Onbodo4IA';
 
 function modelosUrl() {
-  if (process.env.MODELOS_SUPABASE_URL) return process.env.MODELOS_SUPABASE_URL.replace(/\/$/, '');
-  if (process.env.MODELOS_SUPABASE_PROJECT_ID) return `https://${process.env.MODELOS_SUPABASE_PROJECT_ID}.supabase.co`;
+  if (process.env.MODELOS_SUPABASE_URL && process.env.MODELOS_SUPABASE_URL.includes('xtfmwtzjbudqmenfmhim')) {
+    return process.env.MODELOS_SUPABASE_URL.replace(/\/$/, '');
+  }
   return DEFAULT_MODELOS_URL;
 }
 
 function modelosServiceKey() {
-  return process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY || DEFAULT_MODELOS_KEY;
+  if (process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY && process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY.includes('xtfmwtzjbudqmenfmhim')) {
+    return process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY;
+  }
+  return DEFAULT_MODELOS_KEY;
 }
 function clientIp(req) {
   const xf = req.headers['x-forwarded-for'];
