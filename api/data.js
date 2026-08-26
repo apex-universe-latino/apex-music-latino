@@ -11,10 +11,17 @@
 // Music and Modelos data stay fully separate — each branch targets its own project/keys.
 
 // ---------- shared helpers ----------
+const DEFAULT_MODELOS_URL = 'https://xtfmwtzjbudqmenfmhim.supabase.co';
+const DEFAULT_MODELOS_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0Zm13dHpqYnVkcW1lbmZtaGltIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MzMwNjc2MiwiZXhwIjoyMDY4ODgyNzYyfQ.QFtWGtJr5PUzD8BKpk_YB78hf4AQOftUT-Onbodo4IA';
+
 function modelosUrl() {
   if (process.env.MODELOS_SUPABASE_URL) return process.env.MODELOS_SUPABASE_URL.replace(/\/$/, '');
   if (process.env.MODELOS_SUPABASE_PROJECT_ID) return `https://${process.env.MODELOS_SUPABASE_PROJECT_ID}.supabase.co`;
-  return null;
+  return DEFAULT_MODELOS_URL;
+}
+
+function modelosServiceKey() {
+  return process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY || DEFAULT_MODELOS_KEY;
 }
 function clientIp(req) {
   const xf = req.headers['x-forwarded-for'];
@@ -128,7 +135,7 @@ async function handleLead(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed. Use POST.' });
 
   const SUPABASE_URL = modelosUrl();
-  const SERVICE_KEY = process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY;
+  const SERVICE_KEY = modelosServiceKey();
   if (!SUPABASE_URL || !SERVICE_KEY) {
     return res.status(500).json({ error: 'Modelos Latino Supabase not configured. Set MODELOS_SUPABASE_URL (or MODELOS_SUPABASE_PROJECT_ID) and MODELOS_SUPABASE_SERVICE_ROLE_KEY.' });
   }
@@ -241,7 +248,7 @@ async function handleIngest(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   const SUPABASE_URL = modelosUrl();
-  const SERVICE_KEY = process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY;
+  const SERVICE_KEY = modelosServiceKey();
   if (!SUPABASE_URL || !SERVICE_KEY) {
     return res.status(500).json({ error: 'Modelos Latino Supabase not configured. Set MODELOS_SUPABASE_URL (or MODELOS_SUPABASE_PROJECT_ID) and MODELOS_SUPABASE_SERVICE_ROLE_KEY.' });
   }
@@ -319,7 +326,7 @@ async function handleContent(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   const SUPABASE_URL = modelosUrl();
-  const SERVICE_KEY = process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY;
+  const SERVICE_KEY = modelosServiceKey();
   if (!SUPABASE_URL || !SERVICE_KEY) {
     return res.status(500).json({ error: 'Modelos Latino Supabase not configured. Set MODELOS_SUPABASE_URL (or MODELOS_SUPABASE_PROJECT_ID) and MODELOS_SUPABASE_SERVICE_ROLE_KEY.' });
   }
@@ -393,7 +400,7 @@ async function handlePosts(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   const SUPABASE_URL = modelosUrl();
-  const SERVICE_KEY = process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY;
+  const SERVICE_KEY = modelosServiceKey();
   if (!SUPABASE_URL || !SERVICE_KEY) return res.status(500).json({ error: 'Modelos Latino Supabase not configured.' });
   const sb = { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json' };
 
@@ -483,7 +490,7 @@ async function handleSitemap(req, res) {
     urls.push({ loc: `${B}/`, priority: '1.0' });
     urls.push({ loc: `${B}/blog`, priority: '0.7' });
     const SUPABASE_URL = modelosUrl();
-    const KEY = process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY;
+    const KEY = modelosServiceKey();
     if (SUPABASE_URL && KEY) {
       try {
         const r = await fetch(`${SUPABASE_URL}/rest/v1/mc_posts?select=slug,updated_at&status=eq.published&order=published_at.desc`, {
