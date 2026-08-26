@@ -95,6 +95,7 @@ The "Golden Record" for every fan:
 | 2026-04-28 | CUBO defined as platform heart, not agent name. | Brand clarity. Agents are the Pack. |
 | 2026-04-29 | Phase 3: CUBO FRM development started. | Official project kickoff for sovereign data engine. |
 | 2026-04-30 | CUBO OS Vision Alignment. | Formalized Sovereign Fan Data Engine as the core product (CUBO OS). |
+| 2026-08-26 | Mindset Caro Lead Gen Integration. | Integrated bilingual education selection, hero image asset, Supabase lead ingestion, and live Vercel deployment. |
 
 ---
 
