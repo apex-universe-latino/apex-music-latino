@@ -15,16 +15,10 @@ const DEFAULT_MODELOS_URL = 'https://xtfmwtzjbudqmenfmhim.supabase.co';
 const DEFAULT_MODELOS_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0Zm13dHpqYnVkcW1lbmZtaGltIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MzMwNjc2MiwiZXhwIjoyMDY4ODgyNzYyfQ.QFtWGtJr5PUzD8BKpk_YB78hf4AQOftUT-Onbodo4IA';
 
 function modelosUrl() {
-  if (process.env.MODELOS_SUPABASE_URL && process.env.MODELOS_SUPABASE_URL.includes('xtfmwtzjbudqmenfmhim')) {
-    return process.env.MODELOS_SUPABASE_URL.replace(/\/$/, '');
-  }
   return DEFAULT_MODELOS_URL;
 }
 
 function modelosServiceKey() {
-  if (process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY && process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY.includes('xtfmwtzjbudqmenfmhim')) {
-    return process.env.MODELOS_SUPABASE_SERVICE_ROLE_KEY;
-  }
   return DEFAULT_MODELOS_KEY;
 }
 function clientIp(req) {
