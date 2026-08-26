@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS public.mc_leads (
     nombre        TEXT,
     email         TEXT,
     whatsapp      TEXT,
+    education     TEXT,            -- nivel de educación
     ingreso       BIGINT,          -- calculator: monthly income (COP)
     age           INT,
     dependientes  INT,
@@ -51,6 +52,9 @@ CREATE TABLE IF NOT EXISTS public.mc_leads (
     user_agent    TEXT,
     created_at    TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Idempotent: add education to an already-created table
+ALTER TABLE public.mc_leads ADD COLUMN IF NOT EXISTS education TEXT;
 
 CREATE INDEX IF NOT EXISTS idx_mc_leads_email   ON public.mc_leads(email);
 CREATE INDEX IF NOT EXISTS idx_mc_leads_created ON public.mc_leads(created_at DESC);
