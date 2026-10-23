@@ -1,6 +1,44 @@
 # Apex Music Latino — Product Requirements Document (PRD)
-> Last updated: 2026-03-23
+> Last updated: 2026-08-25
 > Status: Phase 1 MVP (Live) → Phase 2 (In Progress)
+
+---
+
+## 0. Infrastructure & Connection Status (2026-08-25 audit)
+
+### 0.1 Connected / Working
+| Connection | Status | Notes |
+|------------|--------|-------|
+| GitHub (`apex-universe-latino/apex-music-latino`) | CONNECTED | Working branch: `claude/hopeful-clarke-a83is8`; push access confirmed |
+| Vercel hosting | LIVE | Auto-deploy on push to `main` |
+| Zoho CRM / Mail / Bookings (MCP) | CONNECTED | Available for CRM automation |
+| Gmail (MCP) | CONNECTED | Available for email flows |
+
+### 0.2 NOT Connected / Blockers
+| Connection | Status | Action Needed |
+|------------|--------|---------------|
+| Supabase MCP (`supabase-apex`) | NOT AUTHENTICATED | Authorize via claude.ai connector settings or `/mcp` in an interactive session — migrations cannot run until then |
+| Analytics (GA4 / Vercel Analytics) | NOT INSTALLED | No tracking script on the main site. Only a stray GA-like ID fragment in `alissontrigos/Instagram.html`. Decide: GA4 vs Vercel Analytics, then add site-wide snippet |
+| Quo (MCP) | NOT AUTHENTICATED | Authorize if phone/SMS workflows are needed |
+
+### 0.3 CRITICAL: Supabase project ref mismatch
+Four different Supabase project refs exist across the ecosystem — these must be reconciled before any backend work:
+
+| Ref | Where it appears |
+|-----|------------------|
+| `xtfmwtzjbudqmenfmhim` | 17 references in live site JS (leads capture, artist portal) — the de facto production DB |
+| `laykneyclcirdionugxt` | 1 stray reference in site code |
+| `iaycaynevtumrqoknemk` | `.mcp.json` (the project the Supabase MCP server points at) |
+| `kkumwjwvirccvmlgvowi` | Six1Trey book blueprint (separate project, separate repo) |
+| `cyxghqoxsygexrpeldcf` | **Six1Trey book project (confirmed 2026-08-25) — NOT for Apex.** A cutover to it was applied and reverted in PR #7 |
+
+**Decision needed**: which project is canonical for Apex Music Latino, then align `.mcp.json` and site JS to it. Note the code's URL/key pairs are currently MISMATCHED (e.g. `xtfm…` URLs signed with `iayc…` keys → 401s), so lead capture is silently falling back to localStorage.
+
+**⚠️ SECURITY — action required**: a `service_role` key (full admin) for `iaycaynevtumrqoknemk` was hard-coded in public HTML (arcoiristango/*, alissontrigos EPK) in this public repo. It has been replaced with the anon key in current code, but it remains in git history — **rotate that project's JWT secret / service_role key in the Supabase dashboard**, and set the key only as a Vercel env var (`SUPABASE_SERVICE_ROLE_KEY`).
+
+### 0.4 Repos visible to this GitHub connection
+`apex-music-latino` (this one), `apex-p2p-portal`, `i-luv-medallo`, `i-luv-santa-rosa`, `gringhos`.
+**The Six1Trey book repo is NOT in this list** — to work on the book, grant the Claude GitHub app access to that repo (GitHub settings → Claude app → repository access), or confirm where the book code lives.
 
 ---
 
@@ -177,6 +215,17 @@
 - Edit text inline
 - Preview changes before publish
 - Community manager access (separate login)
+
+### 3.8 Review Center (concept — needs scoping)
+- GasBuddy-style structure/layout inspiration: clean card grid, prominent scores, icon-driven navigation
+- Aggregate public reviews per artist/venue from multiple sources (Google, Yelp, Angi) into one unified score
+- Fuzzy matching to join the same entity across sources; averaged/weighted composite score
+- Contact info gated — inquiries route through the Apex platform
+- **Compliance gate before build**: Google/Yelp/Angi ToS restrict scraping and republishing reviews. Prefer official APIs (Google Places API returns rating + up to 5 reviews legitimately; Yelp Fusion API similar). Scraping-based ingestion is a legal/ToS risk — decision needed before any cron job is built.
+
+### 3.9 Six1Trey Book Platform (separate repo — not in this codebase)
+- Chapter comments (guest + authenticated) and global audio player are specced for the Six1Trey React app, Supabase project `kkumwjwvirccvmlgvowi`
+- Blocked here: that repo is not accessible to this GitHub connection (see §0.4)
 
 ---
 
