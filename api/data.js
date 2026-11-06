@@ -177,6 +177,12 @@ function leadResult(b) {
   return Object.values(out).some((v) => v !== null) ? out : null;
 }
 
+// The Modelos project can be paused or gone (2026-11: the old project stopped resolving).
+// Every Modelos call gets a short timeout so a dead project never hangs the function.
+function modelosFetch(url, opts = {}, ms = 3500) {
+  return withTimeout((signal) => fetch(url, { ...opts, signal }), ms);
+}
+
 async function withTimeout(promiseFn, ms) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), ms);
@@ -278,9 +284,6 @@ async function handleLead(req, res) {
 
   const SUPABASE_URL = modelosUrl();
   const SERVICE_KEY = modelosServiceKey();
-  if (!SUPABASE_URL || !SERVICE_KEY) {
-    return res.status(500).json({ error: 'Modelos Latino Supabase not configured. Set MODELOS_SUPABASE_URL (or MODELOS_SUPABASE_PROJECT_ID) and MODELOS_SUPABASE_SERVICE_ROLE_KEY.' });
-  }
 
   const b = req.body || {};
   const source = typeof b.source === 'string' ? b.source.trim().toLowerCase() : '';
@@ -316,106 +319,122 @@ async function handleLead(req, res) {
   const isTest = TEST_EMAIL_RE.test(String(row.email || '').trim());
   const sbHeaders = { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json' };
 
-  try {
-    const insert = (r) => fetch(`${SUPABASE_URL}/rest/v1/mc_leads`, {
-      method: 'POST', headers: { ...sbHeaders, Prefer: 'return=representation' }, body: JSON.stringify(r),
-    });
-    let r = await insert(row);
-    if (r.status === 503 || r.status === 504) return res.status(503).json({ error: 'Supabase project is paused or starting up.', code: 'PROJECT_PAUSED' });
-    let data = await r.json();
-    // mc_leads.source has CHECK (flip-form|roulette|calculator). Until that
-    // constraint is widened, file new sources as the diagnostic ('flip-form');
-    // the real source is kept in mc_ingest_events and in CUBO.
-    if (r.status >= 400 && data?.code === '23514' && !LEGACY_LEAD_SOURCES.includes(source)) {
-      r = await insert({ ...row, source: 'flip-form' });
-      data = await r.json();
+  // Sinks, each best-effort: Modelos mc_leads (if configured + reachable), Carolina's email,
+  // CUBO FRM. The lead counts as delivered when at least one sink took it, so a paused or
+  // deleted Modelos project no longer loses leads.
+  const tasks = [];
+  let saved = null;
+  let modelos = 'not_configured';
+  if (SUPABASE_URL && SERVICE_KEY) {
+    try {
+      const insert = (r) => modelosFetch(`${SUPABASE_URL}/rest/v1/mc_leads`, {
+        method: 'POST', headers: { ...sbHeaders, Prefer: 'return=representation' }, body: JSON.stringify(r),
+      });
+      let r = await insert(row);
+      let data = await r.json().catch(() => null);
+      // mc_leads.source has CHECK (flip-form|roulette|calculator). Until that
+      // constraint is widened, file new sources as the diagnostic ('flip-form');
+      // the real source is kept in mc_ingest_events and in CUBO.
+      if (r.status >= 400 && data?.code === '23514' && !LEGACY_LEAD_SOURCES.includes(source)) {
+        r = await insert({ ...row, source: 'flip-form' });
+        data = await r.json().catch(() => null);
+      }
+      if (r.ok) {
+        modelos = 'ok';
+        saved = Array.isArray(data) ? data[0] : data;
+        // Mirror into the ingest stream so leads also show up in the incoming-data tracker.
+        tasks.push(modelosFetch(`${SUPABASE_URL}/rest/v1/mc_ingest_events`, {
+          method: 'POST',
+          headers: sbHeaders,
+          body: JSON.stringify({
+            source_app: 'mindset-caro-site',
+            event: `lead.${source}`,
+            visitor_id: row.visitor_id,
+            payload: { ...row, mc_lead_id: saved?.id || null, answers, result, consent, test: isTest || undefined },
+            url: row.referrer,
+            utm,
+            ip_address: row.ip_address,
+            user_agent: row.user_agent,
+          }),
+        }));
+      } else {
+        modelos = `error_${r.status}`;
+        console.error('[mindset-caro] mc_leads insert failed:', r.status, JSON.stringify(data).slice(0, 300));
+      }
+    } catch (e) {
+      modelos = 'unreachable';
+      console.error('[mindset-caro] Modelos unreachable:', e.message);
     }
-    if (r.status >= 400) return res.status(r.status).json({ error: 'Insert failed', details: data });
-    const saved = Array.isArray(data) ? data[0] : data;
-
-    const tasks = [];
-
-    // Mirror into the ingest stream so leads also show up in the incoming-data tracker.
-    tasks.push(fetch(`${SUPABASE_URL}/rest/v1/mc_ingest_events`, {
-      method: 'POST',
-      headers: sbHeaders,
-      body: JSON.stringify({
-        source_app: 'mindset-caro-site',
-        event: `lead.${source}`,
-        visitor_id: row.visitor_id,
-        payload: { ...row, mc_lead_id: saved?.id || null, answers, result, consent, test: isTest || undefined },
-        url: row.referrer,
-        utm,
-        ip_address: row.ip_address,
-        user_agent: row.user_agent,
-      }),
-    }));
-
-    // Notify Carolina — a copy of every lead to her inbox (best-effort, via Resend).
-    // Test leads (@gsd500bpo.com) never reach her.
-    const RESEND_API_KEY = process.env.RESEND_API_KEY;
-    const notifyTo = process.env.LEAD_NOTIFY_EMAIL || 'info@mindsetcaro.com';
-    if (RESEND_API_KEY && !isTest) {
-      const label = {
-        'flip-form': 'Diagnóstico', roulette: 'Ruleta', calculator: 'Calculadora',
-        'blindaje-diagnostico': 'Diagnóstico Blindaje Patrimonial', bot: 'Caro IA (bot)', 'whatsapp-cta': 'Botón WhatsApp',
-      }[source] || source;
-      const esc = (v) => String(v).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-      const rows = [
-        ['Fuente', label],
-        ['Nombre', row.nombre],
-        ['Email', row.email],
-        ['WhatsApp', row.whatsapp],
-        ['Educación', row.education],
-        ['Objetivo', row.objective],
-        ['Premio', row.prize],
-        ['Ingreso', row.ingreso],
-        ['Edad', row.age],
-        ['Dependientes', row.dependientes],
-        ['Cobertura sugerida (COP)', row.coverage_cop],
-        ['Estimado mensual (COP)', row.monthly_cop],
-        ...Object.entries(answers).filter(([k]) => k !== 'meta_blindaje' && k !== 'dependientes').map(([k, v]) => [k.replace(/_/g, ' '), v]),
-        ['Puntaje blindaje', result?.score],
-        ['Brecha de protección (COP)', result?.gap_cop],
-        ['Proyección 10 años (COP, ilustrativa)', result?.projection_cop],
-        ['Acepta marketing', consent.marketing === true ? 'Sí' : consent.marketing === false ? 'No' : null],
-      ].filter(([, v]) => v !== null && v !== undefined && v !== '')
-       .map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#888">${esc(k)}</td><td style="padding:4px 0"><b>${esc(v)}</b></td></tr>`)
-       .join('');
-      tasks.push(fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          from: 'Mindset Caro <noreply@apexmusiclatino.com>',
-          to: [notifyTo],
-          reply_to: row.email || undefined,
-          subject: `🔔 Nuevo lead (${label})${row.nombre ? ' — ' + row.nombre : ''}`,
-          html: `<div style="font-family:Inter,Arial,sans-serif;max-width:520px">
-            <h2 style="color:#e60000;margin:0 0 4px">Nuevo lead — Mindset Caro</h2>
-            <p style="color:#666;margin:0 0 16px">Capturado en mindsetcaro.com</p>
-            <table style="border-collapse:collapse;font-size:14px">${rows}</table>
-            <p style="color:#999;font-size:12px;margin-top:18px">Este lead también quedó guardado en tu FRM (Supabase).</p>
-          </div>`,
-        }),
-      }));
-    }
-
-    // CUBO FRM: the lead + answers land in Carolina's Rolodex.
-    const cuboTask = forwardLeadToCubo({
-      source, nombre: row.nombre, email: row.email, whatsapp: row.whatsapp,
-      answers, result, consent, utm, userAgent: row.user_agent,
-    }).catch((e) => ({ status: 'error', error: e.message }));
-    tasks.push(cuboTask);
-
-    // Serverless: finish the side effects before answering, or they may be cut off.
-    await Promise.allSettled(tasks);
-    const cubo = await cuboTask;
-    if (cubo.status === 'error') console.error('[mindset-caro] CUBO forward failed:', cubo.error);
-
-    return res.status(200).json({ ok: true, id: saved?.id, cubo: cubo.status });
-  } catch (e) {
-    return res.status(503).json({ error: 'Supabase unreachable', details: e.message });
   }
+
+  // Notify Carolina — a copy of every lead to her inbox (best-effort, via Resend).
+  // Test leads (@gsd500bpo.com) never reach her.
+  let emailTask = Promise.resolve(isTest ? 'skipped_test' : 'not_configured');
+  const RESEND_API_KEY = process.env.RESEND_API_KEY;
+  const notifyTo = process.env.LEAD_NOTIFY_EMAIL || 'info@mindsetcaro.com';
+  if (RESEND_API_KEY && !isTest) {
+    const label = {
+      'flip-form': 'Diagnóstico', roulette: 'Ruleta', calculator: 'Calculadora',
+      'blindaje-diagnostico': 'Diagnóstico Blindaje Patrimonial', bot: 'Caro IA (bot)', 'whatsapp-cta': 'Botón WhatsApp',
+    }[source] || source;
+    const esc = (v) => String(v).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const rows = [
+      ['Fuente', label],
+      ['Nombre', row.nombre],
+      ['Email', row.email],
+      ['WhatsApp', row.whatsapp],
+      ['Educación', row.education],
+      ['Objetivo', row.objective],
+      ['Premio', row.prize],
+      ['Ingreso', row.ingreso],
+      ['Edad', row.age],
+      ['Dependientes', row.dependientes],
+      ['Cobertura sugerida (COP)', row.coverage_cop],
+      ['Estimado mensual (COP)', row.monthly_cop],
+      ...Object.entries(answers).filter(([k]) => k !== 'meta_blindaje' && k !== 'dependientes').map(([k, v]) => [k.replace(/_/g, ' '), v]),
+      ['Puntaje blindaje', result?.score],
+      ['Brecha de protección (COP)', result?.gap_cop],
+      ['Proyección 10 años (COP, ilustrativa)', result?.projection_cop],
+      ['Acepta marketing', consent.marketing === true ? 'Sí' : consent.marketing === false ? 'No' : null],
+    ].filter(([, v]) => v !== null && v !== undefined && v !== '')
+     .map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#888">${esc(k)}</td><td style="padding:4px 0"><b>${esc(v)}</b></td></tr>`)
+     .join('');
+    emailTask = fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: 'Mindset Caro <noreply@apexmusiclatino.com>',
+        to: [notifyTo],
+        reply_to: row.email || undefined,
+        subject: `🔔 Nuevo lead (${label})${row.nombre ? ' — ' + row.nombre : ''}`,
+        html: `<div style="font-family:Inter,Arial,sans-serif;max-width:520px">
+          <h2 style="color:#e60000;margin:0 0 4px">Nuevo lead — Mindset Caro</h2>
+          <p style="color:#666;margin:0 0 16px">Capturado en mindsetcaro.com</p>
+          <table style="border-collapse:collapse;font-size:14px">${rows}</table>
+          <p style="color:#999;font-size:12px;margin-top:18px">Este lead también quedó guardado en tu CUBO FRM.</p>
+        </div>`,
+      }),
+    }).then((r) => (r.ok ? 'ok' : `error_${r.status}`)).catch((e) => `error: ${e.message}`);
+    tasks.push(emailTask);
+  }
+
+  // CUBO FRM: the lead + answers land in Carolina's Rolodex.
+  const cuboTask = forwardLeadToCubo({
+    source, nombre: row.nombre, email: row.email, whatsapp: row.whatsapp,
+    answers, result, consent, utm, userAgent: row.user_agent,
+  }).catch((e) => ({ status: 'error', error: e.message }));
+  tasks.push(cuboTask);
+
+  // Serverless: finish the side effects before answering, or they may be cut off.
+  await Promise.allSettled(tasks);
+  const cubo = await cuboTask;
+  const email = await emailTask;
+  if (cubo.status === 'error') console.error('[mindset-caro] CUBO forward failed:', cubo.error);
+
+  const delivered = modelos === 'ok' || email === 'ok' || /^(ok|ingested)/.test(cubo.status);
+  const sinks = { modelos, email, cubo: cubo.status };
+  if (!delivered) return res.status(503).json({ ok: false, error: 'No lead sink available', sinks });
+  return res.status(200).json({ ok: true, id: saved?.id, cubo: cubo.status, sinks });
 }
 
 export const __test = { leadAnswers, leadResult, forwardLeadToCubo, cuboPlatform };
@@ -509,26 +528,43 @@ async function handleContent(req, res) {
 
   const SUPABASE_URL = modelosUrl();
   const SERVICE_KEY = modelosServiceKey();
-  if (!SUPABASE_URL || !SERVICE_KEY) {
-    return res.status(500).json({ error: 'Modelos Latino Supabase not configured. Set MODELOS_SUPABASE_URL (or MODELOS_SUPABASE_PROJECT_ID) and MODELOS_SUPABASE_SERVICE_ROLE_KEY.' });
-  }
   const sbHeaders = { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json' };
 
   if (req.method === 'GET') {
     const site = (req.query.site || 'landing').toString();
     const raw = req.query.raw === '1';
+    // The public site renders fully from in-code defaults; the CMS only overrides. When the
+    // store is missing or down, answer 200 with empty content (degraded) instead of a 5xx.
+    const degraded = (reason) => {
+      res.setHeader('Cache-Control', 'public, max-age=60');
+      return res.status(200).json(raw ? [] : { site, content: {}, degraded: reason });
+    };
+    if (!SUPABASE_URL || !SERVICE_KEY) return degraded('not_configured');
     const url = `${SUPABASE_URL}/rest/v1/mc_content?select=*&site=eq.${encodeURIComponent(site)}&order=field.asc`;
     try {
-      const r = await fetch(url, { headers: sbHeaders });
-      const rows = await r.json();
-      if (r.status >= 400) return res.status(r.status).json({ error: 'Read failed', details: rows });
+      const r = await modelosFetch(url, { headers: sbHeaders });
+      const rows = await r.json().catch(() => null);
+      if (!r.ok || !Array.isArray(rows)) {
+        console.error('[mindset-caro] mc_content read failed:', r.status);
+        return degraded(`error_${r.status}`);
+      }
       if (raw) return res.status(200).json(rows);
       const map = {};
-      for (const row of rows) map[row.field] = row.value_json ?? row.asset_url ?? row.value_text ?? null;
+      for (const row of rows) {
+        const v = row.value_json ?? row.asset_url ?? row.value_text ?? null;
+        // Never hand out assets from the retired Apex Music project (paused, DNS gone).
+        if (typeof v === 'string' && v.includes('iaycaynevtumrqoknemk')) continue;
+        map[row.field] = v;
+      }
       return res.status(200).json({ site, content: map });
     } catch (e) {
-      return res.status(503).json({ error: 'Supabase unreachable', details: e.message });
+      console.error('[mindset-caro] mc_content unreachable:', e.message);
+      return degraded('unreachable');
     }
+  }
+
+  if (!SUPABASE_URL || !SERVICE_KEY) {
+    return res.status(503).json({ error: 'CMS store not configured. Set MODELOS_SUPABASE_URL (or MODELOS_SUPABASE_PROJECT_ID) and MODELOS_SUPABASE_SERVICE_ROLE_KEY.' });
   }
 
   if (req.method === 'POST') {
@@ -583,7 +619,9 @@ async function handlePosts(req, res) {
 
   const SUPABASE_URL = modelosUrl();
   const SERVICE_KEY = modelosServiceKey();
-  if (!SUPABASE_URL || !SERVICE_KEY) return res.status(500).json({ error: 'Modelos Latino Supabase not configured.' });
+  const emptyRead = () => res.status(200).json(req.query.slug ? null : []);
+  if (req.method === 'GET' && (!SUPABASE_URL || !SERVICE_KEY)) return emptyRead();
+  if (!SUPABASE_URL || !SERVICE_KEY) return res.status(503).json({ error: 'Modelos Latino Supabase not configured.' });
   const sb = { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json' };
 
   if (req.method === 'GET') {
@@ -593,13 +631,13 @@ async function handlePosts(req, res) {
     const sel = 'select=slug,title,excerpt,body,cover_url,author,tags,status,published_at,updated_at';
     const url = `${SUPABASE_URL}/rest/v1/mc_posts?${sel}${slug}${pub}&order=published_at.desc.nullslast`;
     try {
-      const r = await fetch(url, { headers: sb });
-      const rows = await r.json();
-      if (r.status >= 400) return res.status(r.status).json({ error: 'Read failed', details: rows });
-      if (req.query.slug) return res.status(200).json(Array.isArray(rows) ? rows[0] || null : null);
+      const r = await modelosFetch(url, { headers: sb });
+      const rows = await r.json().catch(() => null);
+      if (!r.ok || !Array.isArray(rows)) return emptyRead();
+      if (req.query.slug) return res.status(200).json(rows[0] || null);
       return res.status(200).json(rows);
-    } catch (e) {
-      return res.status(503).json({ error: 'Supabase unreachable', details: e.message });
+    } catch {
+      return emptyRead();
     }
   }
 
@@ -675,7 +713,7 @@ async function handleSitemap(req, res) {
     const KEY = modelosServiceKey();
     if (SUPABASE_URL && KEY) {
       try {
-        const r = await fetch(`${SUPABASE_URL}/rest/v1/mc_posts?select=slug,updated_at&status=eq.published&order=published_at.desc`, {
+        const r = await modelosFetch(`${SUPABASE_URL}/rest/v1/mc_posts?select=slug,updated_at&status=eq.published&order=published_at.desc`, {
           headers: { apikey: KEY, Authorization: `Bearer ${KEY}` },
         });
         if (r.ok) {
