@@ -124,6 +124,151 @@ async function handleProxy(req, res) {
 // ============================================================
 // action=lead  — Mindset Caro lead capture (Apex MODELOS Latino)
 // ============================================================
+// Payload (new front end, 2026-11 "Blindaje Patrimonial"):
+//   { source: 'blindaje-diagnostico'|'bot'|'whatsapp-cta'|..., nombre, whatsapp, email?,
+//     answers: { <question_key>: <value>, ... },
+//     result?: { score, gap_cop, projection_cop }, utm?: {...},
+//     consent: { datos: true, mayor_edad: true, marketing: boolean, ts } }
+// Legacy fields (objective, educacion/education, ingreso, age, dependientes,
+// coverageCOP, monthlyCOP, prize) are still accepted.
+//
+// Every lead goes to: mc_leads (+ mc_ingest_events mirror) in the Modelos
+// project, an email to Carolina (skipped for @gsd500bpo.com test leads), and
+// CUBO FRM prod (artist mindset-caro) through the same public RPCs the fan app
+// uses: ingest_lead -> fan_access_redeem -> record_profiling_answers_by_key.
+const LEGACY_LEAD_SOURCES = ['flip-form', 'roulette', 'calculator'];
+const LEAD_SOURCE_RE = /^[a-z0-9][a-z0-9_-]{1,39}$/;
+const TEST_EMAIL_RE = /@gsd500bpo\.com$/i;
+
+function leadAnswers(b) {
+  const out = {};
+  const src = (b.answers && typeof b.answers === 'object' && !Array.isArray(b.answers)) ? b.answers : {};
+  for (const [k, v] of Object.entries(src)) {
+    if (!/^[a-z][a-z0-9_]{1,39}$/.test(k)) continue;
+    if (typeof v === 'number' || typeof v === 'boolean') out[k] = v;
+    else if (typeof v === 'string' && v.trim() && v.length <= 200) out[k] = v.trim();
+  }
+  // Legacy fields -> ladder keys, only when the new payload did not say it.
+  if (out.meta_blindaje === undefined && b.objective === 'familia') out.meta_blindaje = 'Mi familia';
+  const dep = toInt(b.dependientes);
+  if (out.dependientes === undefined && dep !== null) out.dependientes = dep;
+  const age = toInt(b.age);
+  if (out.rango_edad === undefined && age !== null && age >= 18) {
+    out.rango_edad = age < 25 ? '18 a 24' : age < 35 ? '25 a 34' : age < 45 ? '35 a 44' : age < 55 ? '45 a 54' : '55 o más';
+  }
+  const ing = toInt(b.ingreso);
+  if (out.ingreso_mensual === undefined && ing !== null && ing > 0) {
+    const m = ing / 1e6;
+    out.ingreso_mensual = m < 3 ? 'Menos de 3 millones' : m < 6 ? '3 – 6 millones' : m < 12 ? '6 – 12 millones'
+      : m < 25 ? '12 – 25 millones' : 'Más de 25 millones';
+  }
+  // CUBO option for dependientes is "0" | "1" | "2" | "3+".
+  if (out.dependientes !== undefined) {
+    const n = toInt(out.dependientes);
+    if (n !== null) out.dependientes = n >= 3 ? '3+' : String(Math.max(0, n));
+  }
+  return out;
+}
+
+function leadResult(b) {
+  const r = (b.result && typeof b.result === 'object') ? b.result : {};
+  const num = (v) => (typeof v === 'number' && Number.isFinite(v) ? v : (toInt(v)));
+  const out = { score: num(r.score), gap_cop: num(r.gap_cop), projection_cop: num(r.projection_cop) };
+  return Object.values(out).some((v) => v !== null) ? out : null;
+}
+
+async function withTimeout(promiseFn, ms) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), ms);
+  try { return await promiseFn(ctrl.signal); } finally { clearTimeout(t); }
+}
+
+// ---------- CUBO FRM forward (server side, public anon RPCs only) ----------
+let cuboArtistIdCache = null;
+
+async function cuboRpc(fn, args) {
+  const url = (process.env.CUBO_SUPABASE_URL || 'https://laykneyclcirdionugxt.supabase.co').replace(/\/$/, '');
+  const key = process.env.CUBO_SUPABASE_ANON_KEY;
+  const r = await withTimeout((signal) => fetch(`${url}/rest/v1/rpc/${fn}`, {
+    method: 'POST',
+    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(args),
+    signal,
+  }), 6000);
+  const text = await r.text();
+  let data = null;
+  try { data = text ? JSON.parse(text) : null; } catch { data = text; }
+  if (!r.ok) {
+    const err = new Error(`${fn} ${r.status}: ${(data && data.message) || text}`.slice(0, 300));
+    err.status = r.status;
+    throw err;
+  }
+  return data;
+}
+
+function cuboPlatform(source, utm) {
+  if (source === 'whatsapp-cta') return 'wa';
+  const s = String(utm.source || '').toLowerCase();
+  if (/^(fb|facebook|meta)/.test(s)) return 'fb';
+  if (/^(ig|instagram)/.test(s)) return 'ig';
+  if (/^(tt|tiktok)/.test(s)) return 'tt';
+  if (/^(yt|youtube)/.test(s)) return 'yt';
+  return 'email';   // the FRM app's own label for a plain web visit
+}
+
+async function forwardLeadToCubo({ source, nombre, email, whatsapp, answers, result, consent, utm, userAgent }) {
+  if (!process.env.CUBO_SUPABASE_ANON_KEY) return { status: 'not_configured' };
+  if (process.env.CUBO_FORWARD_DISABLED === '1') return { status: 'disabled' };
+  // CUBO stores evidence, not a flag: data-processing AND age 18+ must both be true.
+  const adult = consent.mayor_edad === true || consent.age_18_plus === true;
+  if (consent.datos !== true || !adult) return { status: 'skipped_consent' };
+  if (!email && !whatsapp) return { status: 'skipped_no_contact' };
+
+  if (!cuboArtistIdCache) {
+    cuboArtistIdCache = process.env.CUBO_ARTIST_ID
+      || (await cuboRpc('artist_by_slug', { p_slug: process.env.CUBO_ARTIST_SLUG || 'mindset-caro' }))?.id
+      || null;
+  }
+  if (!cuboArtistIdCache) return { status: 'artist_not_found' };
+
+  const ts = typeof consent.ts === 'string' || typeof consent.ts === 'number'
+    ? new Date(consent.ts).toISOString() : new Date().toISOString();
+  const reply = await cuboRpc('ingest_lead', {
+    p_artist_id: cuboArtistIdCache,
+    p_name: nombre || null,
+    p_email: email || null,
+    p_phone: whatsapp || null,
+    p_city: typeof answers.ciudad === 'string' ? answers.ciudad.slice(0, 120) : null,
+    p_platform: cuboPlatform(source, utm),
+    p_external_id: null,
+    p_raw: {
+      creator_slug: process.env.CUBO_ARTIST_SLUG || 'mindset-caro',
+      attribution: { surface: 'mindsetcaro.com', partner: source, campaign: utm.campaign || null },
+      consent: {
+        version: 'mindsetcaro-2026-11',
+        granted_at: ts,
+        age_18_plus: { granted: true, text: 'Soy mayor de 18 años' },
+        data_processing: { granted: true, text: 'Autorizo el tratamiento de mis datos personales (mindsetcaro.com)' },
+        marketing_whatsapp: { granted: consent.marketing === true, text: 'Acepto recibir información de Mindset Caro por WhatsApp y email' },
+      },
+      device: { channel: 'web', via: 'mindsetcaro-api-lead', ua: (userAgent || '').slice(0, 160) },
+    },
+  });
+
+  const ticket = reply?.verify?.ticket;
+  if (!ticket) return { status: 'ingested_no_ticket' };
+  const access = await cuboRpc('fan_access_redeem', { p_ticket: ticket });
+  // A returning contact gets a challenge: answers wait until she verifies (by design, 055).
+  if (access?.status !== 'ok' || !access.fan_id) return { status: 'ingested_returning' };
+  if (!Object.keys(answers).length && !result) return { status: 'ok', answers: {} };
+  const saved = await cuboRpc('record_profiling_answers_by_key', {
+    p_fan_id: access.fan_id,
+    p_answers: answers,
+    p_result: result ? { ...result, source } : null,
+  });
+  return { status: 'ok', answers: saved?.answers || {} };
+}
+
 async function handleLead(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -138,14 +283,18 @@ async function handleLead(req, res) {
   }
 
   const b = req.body || {};
-  if (!['flip-form', 'roulette', 'calculator'].includes(b.source)) {
-    return res.status(400).json({ error: "Invalid 'source'. Expected flip-form | roulette | calculator." });
+  const source = typeof b.source === 'string' ? b.source.trim().toLowerCase() : '';
+  if (!LEGACY_LEAD_SOURCES.includes(source) && !LEAD_SOURCE_RE.test(source)) {
+    return res.status(400).json({ error: "Invalid 'source'. Expected flip-form | roulette | calculator | blindaje-diagnostico | bot | whatsapp-cta | <slug>." });
   }
 
   const utm = (typeof b.utm === 'object' && b.utm) || {};
+  const answers = leadAnswers(b);
+  const result = leadResult(b);
+  const consent = (typeof b.consent === 'object' && b.consent) || {};
   const row = {
-    source: b.source,
-    objective: b.objective || null,
+    source,
+    objective: b.objective || (typeof answers.meta_blindaje === 'string' ? answers.meta_blindaje : null),
     prize: b.prize || null,
     nombre: b.nombre || null,
     email: b.email || null,
@@ -153,8 +302,8 @@ async function handleLead(req, res) {
     education: b.education || b.educacion || null,
     ingreso: toInt(b.ingreso),
     age: toInt(b.age),
-    dependientes: toInt(b.dependientes),
-    coverage_cop: toInt(b.coverageCOP ?? b.coverage_cop),
+    dependientes: toInt(b.dependientes ?? answers.dependientes),
+    coverage_cop: toInt(b.coverageCOP ?? b.coverage_cop ?? result?.gap_cop),
     monthly_cop: toInt(b.monthlyCOP ?? b.monthly_cop),
     visitor_id: b.visitor_id || null,
     utm_source: utm.source || b.utm_source || null,
@@ -164,38 +313,54 @@ async function handleLead(req, res) {
     ip_address: clientIp(req),
     user_agent: req.headers['user-agent'] || null,
   };
+  const isTest = TEST_EMAIL_RE.test(String(row.email || '').trim());
+  const sbHeaders = { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json' };
 
   try {
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/mc_leads`, {
-      method: 'POST',
-      headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=representation' },
-      body: JSON.stringify(row),
+    const insert = (r) => fetch(`${SUPABASE_URL}/rest/v1/mc_leads`, {
+      method: 'POST', headers: { ...sbHeaders, Prefer: 'return=representation' }, body: JSON.stringify(r),
     });
+    let r = await insert(row);
     if (r.status === 503 || r.status === 504) return res.status(503).json({ error: 'Supabase project is paused or starting up.', code: 'PROJECT_PAUSED' });
-    const data = await r.json();
+    let data = await r.json();
+    // mc_leads.source has CHECK (flip-form|roulette|calculator). Until that
+    // constraint is widened, file new sources as the diagnostic ('flip-form');
+    // the real source is kept in mc_ingest_events and in CUBO.
+    if (r.status >= 400 && data?.code === '23514' && !LEGACY_LEAD_SOURCES.includes(source)) {
+      r = await insert({ ...row, source: 'flip-form' });
+      data = await r.json();
+    }
     if (r.status >= 400) return res.status(r.status).json({ error: 'Insert failed', details: data });
+    const saved = Array.isArray(data) ? data[0] : data;
+
+    const tasks = [];
 
     // Mirror into the ingest stream so leads also show up in the incoming-data tracker.
-    fetch(`${SUPABASE_URL}/rest/v1/mc_ingest_events`, {
+    tasks.push(fetch(`${SUPABASE_URL}/rest/v1/mc_ingest_events`, {
       method: 'POST',
-      headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json' },
+      headers: sbHeaders,
       body: JSON.stringify({
         source_app: 'mindset-caro-site',
-        event: `lead.${b.source}`,
+        event: `lead.${source}`,
         visitor_id: row.visitor_id,
-        payload: row,
+        payload: { ...row, mc_lead_id: saved?.id || null, answers, result, consent, test: isTest || undefined },
         url: row.referrer,
         utm,
         ip_address: row.ip_address,
         user_agent: row.user_agent,
       }),
-    }).catch(() => {});
+    }));
 
-    // Notify Carolina — send a copy of every lead to her inbox (best-effort, via Resend).
+    // Notify Carolina — a copy of every lead to her inbox (best-effort, via Resend).
+    // Test leads (@gsd500bpo.com) never reach her.
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
     const notifyTo = process.env.LEAD_NOTIFY_EMAIL || 'info@mindsetcaro.com';
-    if (RESEND_API_KEY) {
-      const label = { 'flip-form': 'Diagnóstico', roulette: 'Ruleta', calculator: 'Calculadora' }[b.source] || b.source;
+    if (RESEND_API_KEY && !isTest) {
+      const label = {
+        'flip-form': 'Diagnóstico', roulette: 'Ruleta', calculator: 'Calculadora',
+        'blindaje-diagnostico': 'Diagnóstico Blindaje Patrimonial', bot: 'Caro IA (bot)', 'whatsapp-cta': 'Botón WhatsApp',
+      }[source] || source;
+      const esc = (v) => String(v).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
       const rows = [
         ['Fuente', label],
         ['Nombre', row.nombre],
@@ -209,10 +374,15 @@ async function handleLead(req, res) {
         ['Dependientes', row.dependientes],
         ['Cobertura sugerida (COP)', row.coverage_cop],
         ['Estimado mensual (COP)', row.monthly_cop],
+        ...Object.entries(answers).filter(([k]) => k !== 'meta_blindaje' && k !== 'dependientes').map(([k, v]) => [k.replace(/_/g, ' '), v]),
+        ['Puntaje blindaje', result?.score],
+        ['Brecha de protección (COP)', result?.gap_cop],
+        ['Proyección 10 años (COP, ilustrativa)', result?.projection_cop],
+        ['Acepta marketing', consent.marketing === true ? 'Sí' : consent.marketing === false ? 'No' : null],
       ].filter(([, v]) => v !== null && v !== undefined && v !== '')
-       .map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#888">${k}</td><td style="padding:4px 0"><b>${v}</b></td></tr>`)
+       .map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#888">${esc(k)}</td><td style="padding:4px 0"><b>${esc(v)}</b></td></tr>`)
        .join('');
-      fetch('https://api.resend.com/emails', {
+      tasks.push(fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -227,15 +397,28 @@ async function handleLead(req, res) {
             <p style="color:#999;font-size:12px;margin-top:18px">Este lead también quedó guardado en tu FRM (Supabase).</p>
           </div>`,
         }),
-      }).catch(() => {});
+      }));
     }
 
-    const saved = Array.isArray(data) ? data[0] : data;
-    return res.status(200).json({ ok: true, id: saved?.id });
+    // CUBO FRM: the lead + answers land in Carolina's Rolodex.
+    const cuboTask = forwardLeadToCubo({
+      source, nombre: row.nombre, email: row.email, whatsapp: row.whatsapp,
+      answers, result, consent, utm, userAgent: row.user_agent,
+    }).catch((e) => ({ status: 'error', error: e.message }));
+    tasks.push(cuboTask);
+
+    // Serverless: finish the side effects before answering, or they may be cut off.
+    await Promise.allSettled(tasks);
+    const cubo = await cuboTask;
+    if (cubo.status === 'error') console.error('[mindset-caro] CUBO forward failed:', cubo.error);
+
+    return res.status(200).json({ ok: true, id: saved?.id, cubo: cubo.status });
   } catch (e) {
     return res.status(503).json({ error: 'Supabase unreachable', details: e.message });
   }
 }
+
+export const __test = { leadAnswers, leadResult, forwardLeadToCubo, cuboPlatform };
 
 // ============================================================
 // action=ingest  — the "open door" (Apex MODELOS Latino)
