@@ -3,7 +3,74 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-dark text-white font-sans antialiased;
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { @apply bg-dark text-white font-sans antialiased; }
+  ::selection { background: #e60000; color: #fff; }
+  :focus-visible { outline: 2px solid #ff1a1a; outline-offset: 3px; }
+}
+
+@layer components {
+  .eyebrow { @apply font-mono text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] text-crimson-glow; }
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-xl bg-crimson px-6 py-4 text-base font-extrabold text-white
+           shadow-[0_10px_30px_-10px_rgba(230,0,0,.8)] transition-transform duration-200 hover:bg-crimson-glow active:scale-[.98] min-h-[52px];
   }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 px-6 py-4 text-base font-bold text-white
+           transition-colors hover:border-white/60 min-h-[52px];
+  }
+  .btn-dark { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-dark px-6 py-4 text-base font-extrabold text-white min-h-[52px] hover:bg-black; }
+  .section { @apply px-4 sm:px-6 py-20 sm:py-28; }
+  .wrap { @apply mx-auto max-w-6xl; }
+  .h2 { @apply text-[2.1rem] leading-[1.05] sm:text-5xl font-black tracking-[-0.03em]; }
+  .num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+}
+
+/* ---------- Motion (ported from the HyperFrames kit) ---------- */
+/* Kinetic headline: per-word blur-in. Starts at opacity .01 (not 0) so the headline still
+   counts as the LCP element immediately. */
+.kin-w { display: inline-block; opacity: .01; filter: blur(10px); transform: translateY(.35em) scale(1.04);
+  animation: kin-in .7s cubic-bezier(.2,.8,.2,1) forwards; animation-delay: calc(var(--i, 0) * 90ms); }
+@keyframes kin-in { to { opacity: 1; filter: blur(0); transform: none; } }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1);
+  transition-delay: calc(var(--i, 0) * 90ms); }
+.reveal.is-in, .is-in .reveal { opacity: 1; transform: none; }
+
+/* SVG stroke draw-on: set pathLength="1" on the path */
+.draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.is-in .draw { animation: draw 1.8s cubic-bezier(.65,0,.35,1) forwards; animation-delay: var(--d, 0s); }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+/* Landing pulse after a count-up */
+.land { animation: land .45s ease-out; }
+@keyframes land { 0% { transform: scale(1.08); } 100% { transform: scale(1); } }
+
+/* Shield halves sliding together */
+.shield-l { transform: translateX(-28px); opacity: 0; animation: shield-in .9s .25s cubic-bezier(.2,.8,.2,1) forwards; }
+.shield-r { transform: translateX(28px); opacity: 0; animation: shield-in .9s .25s cubic-bezier(.2,.8,.2,1) forwards; }
+@keyframes shield-in { to { transform: none; opacity: 1; } }
+.seam { opacity: 0; animation: seam 1.6s 1.05s ease-out forwards; }
+@keyframes seam { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: .55; } }
+.bar-grow { transform: scaleY(0); transform-origin: bottom; transform-box: fill-box; animation: bar 0.8s cubic-bezier(.2,.8,.2,1) forwards; animation-delay: var(--d, 1s); }
+@keyframes bar { to { transform: scaleY(1); } }
+
+.glow-node { box-shadow: 0 0 0 1px rgba(230,0,0,.6), 0 0 34px rgba(230,0,0,.45), inset 0 0 22px rgba(230,0,0,.18); }
+.meter-fill { transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.2s cubic-bezier(.2,.8,.2,1); transition-delay: calc(var(--i, 0) * 120ms + 200ms); }
+.is-in .meter-fill { transform: scaleX(var(--v, 1)); }
+
+.ticker { animation: ticker 28s linear infinite; }
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+.step-in { animation: step-in .35s cubic-bezier(.2,.8,.2,1); }
+@keyframes step-in { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-delay: 0s !important; transition-duration: .001ms !important; transition-delay: 0s !important; scroll-behavior: auto !important; }
+  .kin-w, .reveal, .shield-l, .shield-r, .seam { opacity: 1 !important; filter: none !important; transform: none !important; }
+  .draw { stroke-dashoffset: 0 !important; }
+  .bar-grow { transform: none !important; }
+  .meter-fill { transform: scaleX(var(--v, 1)) !important; }
+  .ticker { animation: none !important; }
 }

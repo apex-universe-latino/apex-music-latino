@@ -12,6 +12,10 @@ const defaultTestimonials = [
 ];
 
 export default function Testimonials({ cmsData }: { cmsData?: any }) {
+  // The defaults are placeholders, not real clients: the section only shows once Carolina
+  // adds real testimonials in the CMS (testimonial.1 / testimonial.2). Never invent them.
+  if (!cmsData?.['testimonial.1']) return null;
+
   const testimonials = [
     {
       quote: cmsData?.['testimonial.1'] || defaultTestimonials[0].quote,

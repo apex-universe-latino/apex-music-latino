@@ -1,36 +1,20 @@
 /** @type {import('tailwindcss').Config} */
+// Mindset Caro brand (hers, not GSD's): crimson + deep red + near-black + warm off-white,
+// Inter for everything (800–900 headlines) + Space Mono for numbers and labels.
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        crimson: {
-          DEFAULT: '#e60000',
-          dark: '#b30000',
-          glow: '#ff1a1a',
-        },
-        dark: {
-          DEFAULT: '#111111',
-          light: '#1a1a1a',
-          lighter: '#222222',
-        }
+        crimson: { DEFAULT: '#e60000', dark: '#b30000', glow: '#ff1a1a', deep: '#7a0000' },
+        dark: { DEFAULT: '#111111', light: '#151515', lighter: '#1d1414' },
+        bone: { DEFAULT: '#f3f1ec', warm: '#efe6e4' },
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+        mono: ['"Space Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
-      animation: {
-        'glow-pulse': 'glow-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-      },
-      keyframes: {
-        'glow-pulse': {
-          '0%, 100%': { opacity: '1', boxShadow: '0 0 15px 0px rgba(230, 0, 0, 0.4)' },
-          '50%': { opacity: '.8', boxShadow: '0 0 5px 0px rgba(230, 0, 0, 0.2)' },
-        }
-      }
     },
   },
   plugins: [],
-}
+};
