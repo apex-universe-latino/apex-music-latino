@@ -15,7 +15,7 @@ export default function Privacidad() {
         </p>
 
         <h2>1. Responsable del tratamiento</h2>
-        <p>Diana Carolina Cepeda (Carolina Veci), marca Mindset Caro. Correo de contacto para temas de datos personales: <a className="text-white underline" href={`mailto:${CONTACT}`}>{CONTACT}</a>.</p>
+        <p>Diana Carolina Cepeda Acevedo, marca Mindset Caro. Correo de contacto para temas de datos personales: <a className="text-white underline" href={`mailto:${CONTACT}`}>{CONTACT}</a>.</p>
 
         <h2>2. Datos que recogemos</h2>
         <p>

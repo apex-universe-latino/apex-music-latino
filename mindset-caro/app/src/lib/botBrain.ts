@@ -20,7 +20,7 @@ if (typeof window !== 'undefined') {
 }
 
 export const GREETING =
-  'Hola, soy Caro IA, la asistente virtual de Carolina Veci. Te explico cómo funciona el Blindaje Patrimonial ' +
+  'Hola, soy Caro IA, la asistente virtual de Mindset Caro. Te explico cómo funciona el Blindaje Patrimonial ' +
   'o te ayudo a saber qué tan blindado estás. ¿Por dónde empezamos?';
 
 export const FAQ_CHIPS: Chip[] = [

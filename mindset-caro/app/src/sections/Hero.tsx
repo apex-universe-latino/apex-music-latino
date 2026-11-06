@@ -16,7 +16,7 @@ export default function Hero() {
       <div aria-hidden className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-crimson/20 blur-[120px]" />
       <div className="wrap relative grid items-center gap-10 md:grid-cols-[1.15fr_.85fr]">
         <div>
-          <p className="eyebrow mb-5">Mindset Caro · Carolina Veci</p>
+          <p className="eyebrow mb-5">Mindset Caro</p>
           <h1 className="text-[3.3rem] font-black leading-[.92] tracking-[-0.045em] sm:text-7xl lg:text-[5.6rem]">
             <span className="kin-w" style={{ ['--i' as string]: 0 }}>Blindaje</span>{' '}
             <span className="kin-w bg-gradient-to-r from-crimson to-crimson-glow bg-clip-text text-transparent" style={{ ['--i' as string]: 1 }}>
@@ -39,7 +39,7 @@ export default function Hero() {
         <div className="relative mx-auto w-full max-w-[300px] sm:max-w-[360px]">
           {photo ? (
             <div className="relative overflow-hidden rounded-3xl border border-white/10">
-              <img src={photo} alt="Carolina Veci, asesora de Blindaje Patrimonial" className="aspect-[4/5] w-full object-cover"
+              <img src={photo} alt="Mindset Caro, Blindaje Patrimonial" className="aspect-[4/5] w-full object-cover"
                 width={720} height={900} fetchPriority="high" />
               <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-dark to-transparent" />
               <Shield className="absolute -bottom-6 -right-6 w-32 drop-shadow-2xl" />

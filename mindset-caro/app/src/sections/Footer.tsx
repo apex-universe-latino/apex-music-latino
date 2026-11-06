@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
           <div>
             <p className="text-xl font-black tracking-tighter">MINDSET<span className="text-crimson">CARO</span></p>
-            <p className="mt-1 text-sm text-white/55">Blindaje Patrimonial · Carolina Veci, asesora en protección y ahorro.</p>
+            <p className="mt-1 text-sm text-white/55">Blindaje Patrimonial · Conoce cómo funcionan los seguros de vida con ahorro e inversión a largo plazo.</p>
           </div>
           <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-white/70">
             <Link to="/" className="hover:text-white">Inicio</Link>
