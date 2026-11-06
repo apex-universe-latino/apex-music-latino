@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronLeft, X, MessageCircle, CalendarClock, Lock } from 'lucide-react';
 import {
-  loadProfile, saveProfile, saveAnswer, planQuestions, labelFor,
+  loadProfile, saveProfile, saveAnswer, planQuestions,
   type Profile, type Question,
 } from '../lib/profile';
 import { computeResult, scoreLabel, formatCOP, RATE_CONSERVATIVE, RATE_MODERATE, YEARS, type ResultDetail } from '../lib/blindaje';
@@ -199,7 +199,13 @@ function ResultScreen({ profile, sendFailed }: { profile: Profile; sendFailed: b
   const s = useCountUp(r.score, true, 1400);
   const label = scoreLabel(r.score);
   const first = profile.contact?.nombre?.split(' ')[0];
-  const meta = profile.answers.meta_blindaje ? labelFor('meta_blindaje', profile.answers.meta_blindaje).toLowerCase() : 'tu meta';
+  const META_PHRASE: Record<string, string> = {
+    'Mi familia': 'proteger a tu familia',
+    'Mi jubilación': 'tu jubilación',
+    'Educación': 'la educación de tus hijos',
+    'Invertir / hacer crecer mi dinero': 'hacer crecer tu dinero',
+  };
+  const meta = META_PHRASE[profile.answers.meta_blindaje ?? ''] ?? 'tu meta';
   const wa = caroWhatsappLink(`Hola Caro, soy ${profile.contact?.nombre || ''}. Hice el diagnóstico de Blindaje Patrimonial (puntaje ${r.score}/100) y quiero mi Mapa de Blindaje.`);
   const waCall = caroWhatsappLink(`Hola Caro, soy ${profile.contact?.nombre || ''}. Quiero agendar la llamada gratis de 20 minutos.`);
   const booking = bookingUrl() || waCall;
