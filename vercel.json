@@ -28,6 +28,13 @@
         { "source": "/assets/:path*", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/assets/:path*" },
         { "source": "/assets/:path*", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/mindset-caro/assets/:path*" },
 
+        { "source": "/privacidad", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/legal/privacidad.html" },
+        { "source": "/terminos", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/legal/terminos.html" },
+        { "source": "/eliminacion-datos", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/legal/eliminacion-datos.html" },
+        { "source": "/privacidad", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/mindset-caro/legal/privacidad.html" },
+        { "source": "/terminos", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/mindset-caro/legal/terminos.html" },
+        { "source": "/eliminacion-datos", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/mindset-caro/legal/eliminacion-datos.html" },
+
         { "source": "/", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/index.html" },
         { "source": "/:path*", "has": [{ "type": "host", "value": "mindsetcaro.com" }], "destination": "/mindset-caro/index.html" },
         { "source": "/", "has": [{ "type": "host", "value": "www.mindsetcaro.com" }], "destination": "/mindset-caro/index.html" },
