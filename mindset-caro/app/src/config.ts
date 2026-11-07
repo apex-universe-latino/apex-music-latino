@@ -56,17 +56,17 @@ export const CASOS: Caso[] = [
   {
     id: 'paola', name: 'Paola', age: 38, who: 'Empleada · mamá de dos',
     need: 'Quiere que su familia quede protegida si algo le pasa y asegurar la universidad de sus hijos.',
-    goals: ['Protección familiar', 'Educación de los hijos'], poster: FRAMES.liquidezFamilia, src: '',
+    goals: ['Protección familiar', 'Educación de los hijos'], poster: media('media/casos/paola-poster.webp'), src: media('media/casos/paola.mp4'),
   },
   {
     id: 'andres', name: 'Andrés', age: 45, who: 'Independiente · tiene su propio negocio',
     need: 'No cotiza a pensión. Busca construir su jubilación y que su familia tenga liquidez si algo pasa.',
-    goals: ['Jubilación', 'Liquidez'], poster: FRAMES.plan10, src: '',
+    goals: ['Jubilación', 'Liquidez'], poster: media('media/casos/andres-poster.webp'), src: media('media/casos/andres.mp4'),
   },
   {
     id: 'camilo', name: 'Camilo', age: 32, who: 'Profesional',
     need: 'Quiere ahorrar en dólares y tener exposición a las empresas del S&P 500, con disciplina de largo plazo.',
-    goals: ['Invertir en dólares', 'S&P 500'], poster: FRAMES.dosMotores, src: '',
+    goals: ['Invertir en dólares', 'S&P 500'], poster: media('media/casos/camilo-poster.webp'), src: media('media/casos/camilo.mp4'),
   },
 ];
 
