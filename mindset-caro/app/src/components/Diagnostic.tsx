@@ -69,12 +69,26 @@ export default function Diagnostic({ variant, onClose }: { variant: 'modal' | 'p
     setI((n) => n + 1);
   }
 
+  // The lead failed (network / no sink): the result still shows; this re-sends what we stored.
+  async function retrySend() {
+    const p = loadProfile();
+    if (!p.contact) return;
+    setSending(true);
+    const ok = await postLead({
+      source: 'blindaje-diagnostico', ...p.contact, answers: p.answers, result: p.result ?? null, utm: captureUtm(),
+      consent: { datos: true, mayor_edad: true, marketing: Boolean(p.marketing), ts: new Date().toISOString() },
+    });
+    if (ok) saveProfile({ ...p, submitted_at: new Date().toISOString() });
+    setSendFailed(!ok);
+    setSending(false);
+  }
+
   const frame = variant === 'modal'
-    ? 'relative rounded-3xl border border-white/10 bg-dark-light p-5 shadow-[0_0_80px_-20px_rgba(230,0,0,.35)] sm:p-8'
-    : 'relative rounded-3xl border border-white/10 bg-dark-light p-5 sm:p-8';
+    ? 'bezel relative rounded-3xl bg-dark-light p-5 shadow-[0_0_80px_-20px_rgba(230,0,0,.35)] sm:p-8'
+    : 'bezel relative rounded-3xl bg-dark-light p-5 sm:p-8';
 
   return (
-    <div className={frame}>
+    <div className={frame} style={{ ['--bezel-o' as string]: 0.5 }}>
       <div className="mb-6 flex items-center gap-3">
         {i > 0 && step.kind !== 'result' ? (
           <button type="button" onClick={() => setI((n) => n - 1)} className="-ml-2 rounded-lg p-2 text-white/60 hover:text-white" aria-label="Atrás">
@@ -110,7 +124,7 @@ export default function Diagnostic({ variant, onClose }: { variant: 'modal' | 'p
         )}
         {step.kind === 'q' && <QuestionScreen q={step.q} value={profile.answers[step.q.key]} onAnswer={answer} />}
         {step.kind === 'contact' && <ContactScreen sending={sending} initial={profile.contact} onSubmit={submitContact} />}
-        {step.kind === 'result' && <ResultScreen profile={profile} sendFailed={sendFailed} />}
+        {step.kind === 'result' && <ResultScreen profile={profile} sendFailed={sendFailed} retrying={sending} onRetry={retrySend} />}
       </div>
     </div>
   );
@@ -194,7 +208,7 @@ function ContactScreen({ sending, initial, onSubmit }: {
   );
 }
 
-function ResultScreen({ profile, sendFailed }: { profile: Profile; sendFailed: boolean }) {
+function ResultScreen({ profile, sendFailed, retrying, onRetry }: { profile: Profile; sendFailed: boolean; retrying: boolean; onRetry: () => void }) {
   const r: ResultDetail = useMemo(() => computeResult(profile), [profile]);
   const s = useCountUp(r.score, true, 1400);
   const label = scoreLabel(r.score);
@@ -252,15 +266,21 @@ function ResultScreen({ profile, sendFailed }: { profile: Profile; sendFailed: b
         Supuestos ilustrativos basados en rangos, no es una cotización ni asesoría personalizada. {DISCLAIMER}
       </p>
       {sendFailed && (
-        <p className="mt-3 rounded-xl border border-white/15 p-3 text-sm text-white/70">No pudimos enviar tus datos a Caro en este momento. Escríbele directamente y te ayuda.</p>
+        <div role="status" className="mt-4 rounded-xl border border-white/15 p-4 text-sm text-white/70">
+          <p>Tu resultado está listo, pero no pudimos enviarle tus datos a Caro en este momento.{wa ? ' Escríbele directamente y te ayuda.' : ''}</p>
+          <button type="button" onClick={onRetry} disabled={retrying}
+            className="mt-3 rounded-lg border border-white/25 px-3 py-2 font-semibold text-white hover:border-white/60 disabled:opacity-50">
+            {retrying ? 'Enviando…' : 'Reintentar envío'}
+          </button>
+        </div>
       )}
 
       <div className="mt-6 grid gap-3">
         {wa ? (
           <a href={wa} target="_blank" rel="noopener" className="btn-primary"><MessageCircle className="h-5 w-5" /> Recibe tu Mapa por WhatsApp</a>
-        ) : (
+        ) : !sendFailed ? (
           <p className="rounded-xl bg-crimson/15 p-4 text-center font-semibold">Caro te escribirá por WhatsApp con tu Mapa de Blindaje.</p>
-        )}
+        ) : null}
         {booking && (
           <a href={booking} target="_blank" rel="noopener" className="btn-ghost"><CalendarClock className="h-5 w-5" /> Agenda tu llamada gratis de 20 min</a>
         )}

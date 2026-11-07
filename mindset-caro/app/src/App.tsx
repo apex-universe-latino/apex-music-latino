@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react';
-import { Routes, Route, Link, useParams, useLocation } from 'react-router-dom';
+import { Routes, Route, useParams, useLocation } from 'react-router-dom';
 import BlogList from './components/BlogList';
 import BlogPost from './components/BlogPost';
 import Landing from './pages/Landing';
@@ -7,6 +7,8 @@ import Privacidad from './pages/Privacidad';
 import Footer from './sections/Footer';
 import BotBubble from './components/BotBubble';
 import StickyCta from './components/StickyCta';
+import SiteHeader from './components/SiteHeader';
+import { RETIRED_ASSET_RE } from './config';
 import { UiContext, type BotIntent, type Cms } from './ui';
 import { bumpVisit } from './lib/profile';
 import { captureUtm, setContactOverrides, track } from './lib/lead';
@@ -41,21 +43,30 @@ export default function App() {
   useEffect(() => {
     captureUtm();
     bumpVisit();
-    // Optional CMS overrides (Carolina edits these at /cms). The page never waits on it.
-    fetch('/api/mc-content?site=landing')
+    // Optional CMS overrides (Carolina edits these at /cms). The page never waits on it and
+    // renders fully from in-code defaults when the CMS is slow, empty or down.
+    const ctrl = new AbortController();
+    const timer = window.setTimeout(() => ctrl.abort(), 4000);
+    fetch('/api/mc-content?site=landing', { signal: ctrl.signal })
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
-        if (!d?.content) return;
-        setContactOverrides({ whatsapp: d.content['contact.whatsapp'], booking: d.content['contact.booking_url'] });
-        setCms(d.content);
+        const raw = d?.content;
+        if (!raw || typeof raw !== 'object') return;
+        // Drop any value that still points at the retired Apex Music project (assets gone).
+        const content = Object.fromEntries(Object.entries(raw as Record<string, unknown>)
+          .filter(([, v]) => !(typeof v === 'string' && RETIRED_ASSET_RE.test(v))));
+        if (!Object.keys(content).length) return;
+        setContactOverrides({ whatsapp: content['contact.whatsapp'] as string, booking: content['contact.booking_url'] as string });
+        setCms(content);
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => window.clearTimeout(timer));
     // Warm the diagnostic chunk once the page is idle so the first tap opens instantly.
     const idle = (window as unknown as { requestIdleCallback?: (cb: () => void) => void }).requestIdleCallback;
     if (idle) idle(() => preloadDiagnostic()); else setTimeout(preloadDiagnostic, 2500);
   }, []);
 
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  useEffect(() => { if (!window.location.hash) window.scrollTo(0, 0); }, [pathname]);
 
   const openDiagnostic = useCallback(() => {
     track('ViewContent', { content_name: 'diagnostico' });
@@ -71,25 +82,9 @@ export default function App() {
   return (
     <UiContext.Provider value={ui}>
       <div className="min-h-screen bg-dark text-white">
-        <nav className="fixed top-0 z-40 w-full border-b border-white/10 bg-dark/85 backdrop-blur-md">
-          <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-            <Link to="/" className="text-xl font-black tracking-tighter" aria-label="Mindset Caro — inicio">
-              MINDSET<span className="text-crimson">CARO</span>
-            </Link>
-            <div className="flex items-center gap-4 sm:gap-6">
-              {pathname === '/' && (
-                <a href="#como-funciona" className="hidden text-sm font-semibold text-white/70 hover:text-white md:inline">¿Cómo funciona?</a>
-              )}
-              <Link to="/blog" className="hidden text-sm font-semibold text-white/70 hover:text-white min-[400px]:inline">Blog</Link>
-              <button onClick={openDiagnostic} onMouseEnter={preloadDiagnostic}
-                className="whitespace-nowrap rounded-full bg-crimson px-4 py-2 text-sm font-extrabold text-white hover:bg-crimson-glow">
-                Diagnóstico<span className="hidden sm:inline"> gratis</span>
-              </button>
-            </div>
-          </div>
-        </nav>
+        <SiteHeader />
 
-        <main className="pt-16">
+        <main className="pt-[65px]">
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/diagnostico" element={<DiagnosticoPage />} />

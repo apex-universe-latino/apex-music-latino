@@ -10,7 +10,7 @@ const PAINS = [
 
 export default function Pains() {
   return (
-    <section className="section border-t border-white/10 bg-dark-light">
+    <section className="section bg-dark-light">
       <div className="wrap">
         <Reveal>
           <p className="eyebrow">¿Te suena?</p>
@@ -18,7 +18,7 @@ export default function Pains() {
         </Reveal>
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
           {PAINS.map((p, i) => (
-            <Reveal key={p.t} i={i} className="rounded-2xl border border-white/10 bg-dark p-6">
+            <Reveal key={p.t} i={i} className="bezel bezel-hover rounded-2xl border border-white/[.07] bg-dark p-6">
               <p.icon className="h-7 w-7 text-crimson" aria-hidden />
               <h3 className="mt-4 text-xl font-extrabold tracking-tight">{p.t}</h3>
               <p className="mt-2 leading-relaxed text-white/65">{p.d}</p>

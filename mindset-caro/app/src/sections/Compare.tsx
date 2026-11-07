@@ -11,11 +11,11 @@ const ROWS = [
 
 export default function Compare() {
   return (
-    <section className="section border-t border-white/10 bg-dark-light">
+    <section id="liquidez" className="section bg-dark-light">
       <div className="wrap">
         <Reveal>
-          <p className="eyebrow">¿Qué pasa si mañana…?</p>
-          <h2 className="h2 mt-3 max-w-3xl">Diferencia vs una inversión normal: liquidez inmediata para tu familia.</h2>
+          <p className="eyebrow">Liquidez para tu familia</p>
+          <h2 className="h2 mt-3 max-w-3xl">Diferencia vs una inversión normal: liquidez para tu familia cuando más la necesita.</h2>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/70">
             Si mañana te pasa algo, ¿qué tan rápido le llega el dinero a tu familia? Esa es la pregunta que casi nadie se hace.
           </p>

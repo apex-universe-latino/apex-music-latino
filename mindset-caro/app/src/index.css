@@ -2,8 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Apex "bezel" rainbow — same stops as the Apex hero compose (hgrad RAIN). Used ONLY as thin
+   accents: hairlines, frame edges, CTA edge glow. No hot pink anywhere. */
+:root {
+  --rainbow: linear-gradient(90deg, #e63946, #f4a261, #ffd166, #06d6a0, #118ab2, #7b2d8b, #e63946);
+}
+
 @layer base {
-  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+  section[id], div[id] { scroll-margin-top: 84px; }
   body { @apply bg-dark text-white font-sans antialiased; }
   ::selection { background: #e60000; color: #fff; }
   :focus-visible { outline: 2px solid #ff1a1a; outline-offset: 3px; }
@@ -12,11 +19,11 @@
 @layer components {
   .eyebrow { @apply font-mono text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] text-crimson-glow; }
   .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-xl bg-crimson px-6 py-4 text-base font-extrabold text-white
+    @apply relative isolate inline-flex items-center justify-center gap-2 rounded-xl bg-crimson px-6 py-4 text-base font-extrabold text-white
            shadow-[0_10px_30px_-10px_rgba(230,0,0,.8)] transition-transform duration-200 hover:bg-crimson-glow active:scale-[.98] min-h-[52px];
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 px-6 py-4 text-base font-bold text-white
+    @apply relative inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 px-6 py-4 text-base font-bold text-white
            transition-colors hover:border-white/60 min-h-[52px];
   }
   .btn-dark { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-dark px-6 py-4 text-base font-extrabold text-white min-h-[52px] hover:bg-black; }
@@ -25,6 +32,24 @@
   .h2 { @apply text-[2.1rem] leading-[1.05] sm:text-5xl font-black tracking-[-0.03em]; }
   .num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
 }
+
+/* ---------- Rainbow flow accents ---------- */
+@keyframes flow { to { background-position: 200% 0; } }
+.rainbow-line { height: 1px; background: var(--rainbow); background-size: 200% 100%; animation: flow 14s linear infinite; }
+.rainbow-divider { height: 1px; background: var(--rainbow); background-size: 200% 100%; animation: flow 18s linear infinite;
+  opacity: .55; -webkit-mask: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent); mask: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent); }
+/* Thin animated rainbow edge on any rounded box (works on any background). */
+.bezel { position: relative; }
+.bezel::before { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: var(--bezel-w, 1px);
+  background: var(--rainbow); background-size: 200% 100%; animation: flow 16s linear infinite; opacity: var(--bezel-o, .75);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); pointer-events: none; z-index: 2; }
+.bezel-hover::before { opacity: 0; transition: opacity .35s ease; }
+.bezel-hover:hover::before, .bezel-hover:focus-visible::before, .bezel-hover[aria-current='true']::before { opacity: .8; }
+/* CTA edge glow: a soft rainbow halo just outside the crimson button. */
+.btn-primary::after { content: ''; position: absolute; inset: -1px; border-radius: inherit; z-index: -1; background: var(--rainbow);
+  background-size: 200% 100%; animation: flow 10s linear infinite; filter: blur(9px); opacity: .28; transition: opacity .3s ease; }
+.btn-primary:hover::after, .btn-primary:focus-visible::after { opacity: .6; }
 
 /* ---------- Motion (ported from the HyperFrames kit) ---------- */
 /* Kinetic headline: per-word blur-in. Starts at opacity .01 (not 0) so the headline still
@@ -73,4 +98,5 @@
   .bar-grow { transform: none !important; }
   .meter-fill { transform: scaleX(var(--v, 1)) !important; }
   .ticker { animation: none !important; }
+  .rainbow-line, .rainbow-divider, .bezel::before, .btn-primary::after { animation: none !important; }
 }
