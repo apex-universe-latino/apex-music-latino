@@ -17,13 +17,17 @@ export const CARO_WHATSAPP: string = (import.meta.env.VITE_CARO_WHATSAPP as stri
  *  Empty = the "Agenda tu llamada" button asks for the call over WhatsApp instead. */
 export const BOOKING_URL: string = (import.meta.env.VITE_CARO_BOOKING_URL as string | undefined) || '';
 
-/** Her CUBO FRM community page (sign-up to her community). */
-export const COMMUNITY_URL = 'https://frm.apexmodeloslatino.com/mindset-caro';
+/** Joining her community = the diagnostic sign-up, which lands in her CUBO FRM. Kept on her own
+ *  domain: the CUBO-hosted fan page is still Apex-branded until the FRM is white-labeled. */
+export const COMMUNITY_URL = '/diagnostico';
 
 /** Vertical videos (9:16) for the "Caro te lo explica" slot. CMS: `blindaje.videos`
  *  (JSON array of {src, poster?, title}). Empty = the section is not rendered. */
 export type VideoItem = { src: string; poster?: string; title: string };
-export const VIDEOS: VideoItem[] = [];
+export const VIDEOS: VideoItem[] = [
+  { src: media('media/videos/blindaje.mp4'), poster: media('media/videos/blindaje-poster.webp'), title: 'Blindaje Patrimonial en 30 segundos' },
+  { src: media('media/videos/liquidez.mp4'), poster: media('media/videos/liquidez-poster.webp'), title: '¿Tu familia tendría liquidez?' },
+];
 
 /** ── PHOTO SLOT ─────────────────────────────────────────────────────────────────────
  *  Carolina's REAL portrait for the hero (never stock, never an AI-made person).

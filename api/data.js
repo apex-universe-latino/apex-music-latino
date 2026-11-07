@@ -11,6 +11,10 @@
 // Music and Modelos data stay fully separate — each branch targets its own project/keys.
 
 // ---------- shared helpers ----------
+// Public anon key of CUBO FRM prod (laykneyclcirdionugxt). It is the same key the CUBO web app
+// ships to every browser; RLS + the capture RPCs gate what it can do. Env var still wins.
+const CUBO_PUBLIC_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxheWtuZXljbGNpcmRpb251Z3h0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NDQ1NjYsImV4cCI6MjA5NjAyMDU2Nn0.ysDxUEJ9Decl6P8-6PdEUBNJX0INdRGu60BOFVZNCdk';
+
 function modelosUrl() {
   if (process.env.MODELOS_SUPABASE_URL) return process.env.MODELOS_SUPABASE_URL.replace(/\/$/, '');
   if (process.env.MODELOS_SUPABASE_PROJECT_ID) return `https://${process.env.MODELOS_SUPABASE_PROJECT_ID}.supabase.co`;
@@ -194,7 +198,7 @@ let cuboArtistIdCache = null;
 
 async function cuboRpc(fn, args) {
   const url = (process.env.CUBO_SUPABASE_URL || 'https://laykneyclcirdionugxt.supabase.co').replace(/\/$/, '');
-  const key = process.env.CUBO_SUPABASE_ANON_KEY;
+  const key = process.env.CUBO_SUPABASE_ANON_KEY || CUBO_PUBLIC_ANON_KEY;
   const r = await withTimeout((signal) => fetch(`${url}/rest/v1/rpc/${fn}`, {
     method: 'POST',
     headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
@@ -223,7 +227,7 @@ function cuboPlatform(source, utm) {
 }
 
 async function forwardLeadToCubo({ source, nombre, email, whatsapp, answers, result, consent, utm, userAgent }) {
-  if (!process.env.CUBO_SUPABASE_ANON_KEY) return { status: 'not_configured' };
+  if (!(process.env.CUBO_SUPABASE_ANON_KEY || CUBO_PUBLIC_ANON_KEY)) return { status: 'not_configured' };
   if (process.env.CUBO_FORWARD_DISABLED === '1') return { status: 'disabled' };
   // CUBO stores evidence, not a flag: data-processing AND age 18+ must both be true.
   const adult = consent.mayor_edad === true || consent.age_18_plus === true;

@@ -124,7 +124,7 @@ export default function SiteHeader() {
               ))}
               <li><button type="button" onClick={() => go('casos')} onMouseEnter={hoverClose} className={navLink}>Casos</button></li>
               <li><Link to="/blog" onMouseEnter={hoverClose} className={navLink}>Blog</Link></li>
-              <li><a href={COMMUNITY_URL} target="_blank" rel="noopener" onMouseEnter={hoverClose} className={navLink}>Comunidad</a></li>
+              <li><a href={COMMUNITY_URL} onMouseEnter={hoverClose} className={navLink}>Comunidad</a></li>
             </ul>
           </nav>
 
@@ -183,7 +183,7 @@ function MegaPanel({ id, group, onGo, onDiag, onTalk, onRecruit }: { id: string;
             <ul className="space-y-1 text-sm font-semibold">
               <li><button type="button" onClick={() => onGo('casos')} className="flex items-center gap-2 py-1.5 text-white/75 hover:text-white"><PlayCircle className="h-4 w-4" aria-hidden /> Casos / Videos</button></li>
               <li><Link to="/blog" className="flex items-center gap-2 py-1.5 text-white/75 hover:text-white"><BookOpen className="h-4 w-4" aria-hidden /> Blog</Link></li>
-              <li><a href={COMMUNITY_URL} target="_blank" rel="noopener" className="flex items-center gap-2 py-1.5 text-white/75 hover:text-white"><Users className="h-4 w-4" aria-hidden /> Comunidad</a></li>
+              <li><a href={COMMUNITY_URL} className="flex items-center gap-2 py-1.5 text-white/75 hover:text-white"><Users className="h-4 w-4" aria-hidden /> Comunidad</a></li>
               <li><button type="button" onClick={onTalk} className="flex items-center gap-2 py-1.5 text-white/75 hover:text-white"><MessageCircle className="h-4 w-4" aria-hidden /> Habla con Caro</button></li>
               <li className="pt-2"><button type="button" onClick={onRecruit} className="flex items-center gap-2 py-1.5 text-white/45 hover:text-white"><Briefcase className="h-4 w-4" aria-hidden /> Trabaja con Caro</button></li>
             </ul>
@@ -259,7 +259,7 @@ function Drawer({ onClose, onGo, onDiag, onTalk, onRecruit }: { onClose: () => v
         <ul className="mt-4">
           <li><button type="button" onClick={() => onGo('casos')} className={row}><PlayCircle className="h-5 w-5 shrink-0 text-white/50" aria-hidden /> Casos / Videos</button></li>
           <li><Link to="/blog" onClick={onClose} className={row}><BookOpen className="h-5 w-5 shrink-0 text-white/50" aria-hidden /> Blog</Link></li>
-          <li><a href={COMMUNITY_URL} target="_blank" rel="noopener" className={row}><Users className="h-5 w-5 shrink-0 text-white/50" aria-hidden /> Comunidad</a></li>
+          <li><a href={COMMUNITY_URL} className={row}><Users className="h-5 w-5 shrink-0 text-white/50" aria-hidden /> Comunidad</a></li>
           <li><button type="button" onClick={onTalk} className={row}><MessageCircle className="h-5 w-5 shrink-0 text-white/50" aria-hidden /> Habla con Caro</button></li>
           <li><button type="button" onClick={onRecruit} className={`${row} !text-base !text-white/55`}><Briefcase className="h-5 w-5 shrink-0 text-white/40" aria-hidden /> Trabaja con Caro</button></li>
         </ul>

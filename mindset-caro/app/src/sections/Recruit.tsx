@@ -11,7 +11,7 @@ export default function Recruit() {
     <section id="trabaja" className="px-4 pb-20 pt-4 sm:px-6">
       <div className="wrap grid gap-4 md:grid-cols-2">
         <Reveal id="comunidad">
-          <a href={COMMUNITY_URL} target="_blank" rel="noopener"
+          <a href={COMMUNITY_URL}
             className="bezel bezel-hover group flex h-full items-start gap-5 rounded-3xl border border-white/[.07] bg-dark-light p-6 sm:p-8">
             <Users className="h-8 w-8 shrink-0 text-crimson" aria-hidden />
             <span className="flex-1">

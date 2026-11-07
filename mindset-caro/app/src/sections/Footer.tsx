@@ -38,7 +38,7 @@ export default function Footer() {
               <ul className="space-y-2">
                 <li><button type="button" onClick={() => go('casos')} className={link}>Casos</button></li>
                 <li><Link to="/blog" className={link}>Blog</Link></li>
-                <li><a href={COMMUNITY_URL} target="_blank" rel="noopener" className={link}>Comunidad</a></li>
+                <li><a href={COMMUNITY_URL} className={link}>Comunidad</a></li>
                 <li><Link to="/privacidad" className={link}>Política de privacidad</Link></li>
               </ul>
             </nav>

@@ -11,6 +11,7 @@ import Videos from '../sections/Videos';
 import DiagCta from '../sections/DiagCta';
 import Testimonials from '../components/Testimonials';
 import Recruit from '../sections/Recruit';
+import Pilares from '../sections/Pilares';
 import { useUi } from '../ui';
 
 export default function Landing() {
@@ -31,6 +32,7 @@ export default function Landing() {
       <Engines />
       <Compare />
       <Multi />
+      <Pilares />
       <Casos />
       <Videos />
       <DiagCta />
