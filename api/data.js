@@ -44,6 +44,8 @@ export default async function handler(req, res) {
   if (action === 'posts') return handlePosts(req, res);
   if (action === 'sitemap') return handleSitemap(req, res);
   if (action === 'robots') return handleRobots(req, res);
+  if (action === 'blogpage') return handleBlogPage(req, res);
+  if (action === 'notfound') return handleNotFound(req, res);
   res.setHeader('Access-Control-Allow-Origin', '*');
   return res.status(400).json({ error: 'Unknown or missing action.' });
 }
@@ -522,17 +524,109 @@ async function handleIngest(req, res) {
 }
 
 // ============================================================
-// action=content  — CMS read (public) / write (admin) (Apex MODELOS Latino)
+// Mindset Caro site store — CUBO FRM prod (migration 064), read with the public anon key.
+//   mc_content: site copy overrides (public read)
+//   mc_posts:   blog (anon sees status=published only — RLS)
+// Writes no longer go through this function: the /cms editor signs Carolina in with a
+// 6-digit email code and writes to Supabase as her (RLS: site_editors allow-list).
+// ============================================================
+function cuboRestUrl() {
+  return (process.env.CUBO_SUPABASE_URL || 'https://laykneyclcirdionugxt.supabase.co').replace(/\/$/, '');
+}
+function cuboRead(pathAndQuery, ms = 4000) {
+  const key = process.env.CUBO_SUPABASE_ANON_KEY || CUBO_PUBLIC_ANON_KEY;
+  return withTimeout((signal) => fetch(`${cuboRestUrl()}/rest/v1/${pathAndQuery}`, {
+    headers: { apikey: key, Authorization: `Bearer ${key}` },
+    signal,
+  }), ms);
+}
+
+const MC_SITE = 'https://www.mindsetcaro.com';
+const MC_POST_FIELDS = 'slug,title,excerpt,body,cover_url,cover_alt,seo_title,seo_description,author,tags,status,published_at,updated_at';
+
+// ---------- tiny Markdown renderer (same rules as the /cms preview) ----------
+// Headings (#–####), paragraphs, **bold**, *italic*, [links](url), ![img](url), lists,
+// > quotes, --- rules, `code`. All text is HTML-escaped first: raw HTML is not passed through.
+function mdEscape(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+function mdSafeUrl(u) {
+  const url = String(u || '').trim();
+  return /^(https?:\/\/|\/|#|mailto:)/i.test(url) ? url : '#';
+}
+function mdSlug(s) {
+  return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
+}
+function mdInline(text) {
+  let s = mdEscape(text);
+  s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+  s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (_, alt, u) => `<img src="${mdSafeUrl(u)}" alt="${alt}" loading="lazy">`);
+  s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, t, u) => {
+    const href = mdSafeUrl(u.replace(/&amp;/g, '&'));
+    const ext = /^https?:\/\//i.test(href) && !/mindsetcaro\.com/i.test(href);
+    return `<a href="${mdEscape(href)}"${ext ? ' target="_blank" rel="noopener"' : ''}>${t}</a>`;
+  });
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, '$1<em>$2</em>');
+  s = s.replace(/(^|[^_\w])_([^_\n]+)_(?!\w)/g, '$1<em>$2</em>');
+  return s;
+}
+function mdToHtml(md) {
+  const lines = String(md || '').replace(/\r\n?/g, '\n').split('\n');
+  const out = [];
+  let para = [];
+  let list = null; // { tag, items }
+  let quote = [];
+  const flushPara = () => { if (para.length) { out.push(`<p>${mdInline(para.join(' '))}</p>`); para = []; } };
+  const flushList = () => { if (list) { out.push(`<${list.tag}>${list.items.map((i) => `<li>${mdInline(i)}</li>`).join('')}</${list.tag}>`); list = null; } };
+  const flushQuote = () => { if (quote.length) { out.push(`<blockquote><p>${mdInline(quote.join(' '))}</p></blockquote>`); quote = []; } };
+  const flushAll = () => { flushPara(); flushList(); flushQuote(); };
+  for (const raw of lines) {
+    const line = raw.trimEnd();
+    if (!line.trim()) { flushAll(); continue; }
+    let m;
+    if ((m = line.match(/^(#{1,4})\s+(.*)$/))) {
+      flushAll();
+      const level = Math.min(4, Math.max(2, m[1].length));
+      out.push(`<h${level} id="${mdSlug(m[2])}">${mdInline(m[2])}</h${level}>`);
+    } else if (/^\s*(-{3,}|\*{3,})\s*$/.test(line)) {
+      flushAll(); out.push('<hr>');
+    } else if ((m = line.match(/^>\s?(.*)$/))) {
+      flushPara(); flushList(); quote.push(m[1]);
+    } else if ((m = line.match(/^\s*[-*•]\s+(.*)$/))) {
+      flushPara(); flushQuote();
+      if (!list || list.tag !== 'ul') { flushList(); list = { tag: 'ul', items: [] }; }
+      list.items.push(m[1]);
+    } else if ((m = line.match(/^\s*\d+[.)]\s+(.*)$/))) {
+      flushPara(); flushQuote();
+      if (!list || list.tag !== 'ol') { flushList(); list = { tag: 'ol', items: [] }; }
+      list.items.push(m[1]);
+    } else if (list && /^\s{2,}\S/.test(raw)) {
+      list.items[list.items.length - 1] += ' ' + line.trim();
+    } else {
+      flushList(); flushQuote(); para.push(line.trim());
+    }
+  }
+  flushAll();
+  return out.join('\n');
+}
+const looksLikeHtml = (s) => /^\s*<(p|h[1-6]|div|ul|ol|figure|section|article)[\s>]/i.test(String(s || ''));
+function postBodyHtml(body) {
+  return looksLikeHtml(body) ? String(body) : mdToHtml(body);
+}
+function withBodyHtml(p) {
+  return p ? { ...p, body_html: postBodyHtml(p.body) } : p;
+}
+
+// ============================================================
+// action=content  — CMS read (public). Writes happen in /cms, straight to Supabase.
 // ============================================================
 async function handleContent(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
-
-  const SUPABASE_URL = modelosUrl();
-  const SERVICE_KEY = modelosServiceKey();
-  const sbHeaders = { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json' };
 
   if (req.method === 'GET') {
     const site = (req.query.site || 'landing').toString();
@@ -543,19 +637,19 @@ async function handleContent(req, res) {
       res.setHeader('Cache-Control', 'public, max-age=60');
       return res.status(200).json(raw ? [] : { site, content: {}, degraded: reason });
     };
-    if (!SUPABASE_URL || !SERVICE_KEY) return degraded('not_configured');
-    const url = `${SUPABASE_URL}/rest/v1/mc_content?select=*&site=eq.${encodeURIComponent(site)}&order=field.asc`;
     try {
-      const r = await modelosFetch(url, { headers: sbHeaders });
+      const r = await cuboRead(`mc_content?select=site,field,grp,value_text,value_json,asset_url,updated_at&site=eq.${encodeURIComponent(site)}&order=field.asc`);
       const rows = await r.json().catch(() => null);
       if (!r.ok || !Array.isArray(rows)) {
         console.error('[mindset-caro] mc_content read failed:', r.status);
         return degraded(`error_${r.status}`);
       }
+      res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=300');
       if (raw) return res.status(200).json(rows);
       const map = {};
       for (const row of rows) {
         const v = row.value_json ?? row.asset_url ?? row.value_text ?? null;
+        if (v === null || v === '') continue;
         // Never hand out assets from the retired Apex Music project (paused, DNS gone).
         if (typeof v === 'string' && v.includes('iaycaynevtumrqoknemk')) continue;
         map[row.field] = v;
@@ -567,118 +661,175 @@ async function handleContent(req, res) {
     }
   }
 
-  if (!SUPABASE_URL || !SERVICE_KEY) {
-    return res.status(503).json({ error: 'CMS store not configured. Set MODELOS_SUPABASE_URL (or MODELOS_SUPABASE_PROJECT_ID) and MODELOS_SUPABASE_SERVICE_ROLE_KEY.' });
-  }
-
-  if (req.method === 'POST') {
-    const adminKey = process.env.MC_ADMIN_KEY;
-    const b = req.body || {};
-    if (!adminKey) return res.status(500).json({ error: 'MC_ADMIN_KEY not configured' });
-    if (b.admin_key !== adminKey) return res.status(401).json({ error: 'Invalid admin_key' });
-
-    const fields = Array.isArray(b.fields) ? b.fields : (b.field ? [b] : null);
-    if (!fields || !fields.length) return res.status(400).json({ error: 'Provide fields: [{ site, field, ... }]' });
-
-    const rows = fields.map((f) => ({
-      site: f.site || 'landing',
-      field: f.field,
-      grp: f.grp ?? (f.field ? String(f.field).split('.')[0] : null),
-      value_text: f.value_text ?? null,
-      value_json: f.value_json ?? null,
-      asset_url: f.asset_url ?? null,
-      updated_at: new Date().toISOString(),
-    }));
-    if (rows.some((r) => !r.field)) return res.status(400).json({ error: 'Every field row needs a "field" name' });
-
-    try {
-      const r = await fetch(`${SUPABASE_URL}/rest/v1/mc_content?on_conflict=site,field`, {
-        method: 'POST',
-        headers: { ...sbHeaders, Prefer: 'resolution=merge-duplicates,return=representation' },
-        body: JSON.stringify(rows),
-      });
-      const data = await r.json();
-      if (r.status >= 400) return res.status(r.status).json({ error: 'Upsert failed', details: data });
-      return res.status(200).json({ ok: true, saved: Array.isArray(data) ? data.length : 1 });
-    } catch (e) {
-      return res.status(503).json({ error: 'Supabase unreachable', details: e.message });
-    }
-  }
-
-  return res.status(405).json({ error: 'Method not allowed' });
+  return res.status(405).json({ error: 'Read-only. Edit the site copy at https://www.mindsetcaro.com/cms' });
 }
 
 // ============================================================
-// action=posts  — Blog (Apex MODELOS Latino)
-//   GET  ?action=posts                 → list published posts
-//   GET  ?action=posts&slug=xxx        → single post (published)
-//   GET  ?action=posts&status=all&admin_key=...  → all (admin, incl. drafts)
-//   POST ?action=posts  { admin_key, post:{slug,title,...} }  → upsert
+// action=posts  — Blog (published only; drafts are visible to editors inside /cms)
+//   GET  /api/posts              → list published posts (no body)
+//   GET  /api/posts?slug=xxx     → single published post (+ body_html)
 // ============================================================
+async function fetchPublishedPosts({ slug = null, withBody = false } = {}) {
+  const sel = withBody ? MC_POST_FIELDS : MC_POST_FIELDS.replace(',body,', ',');
+  const bySlug = slug ? `&slug=eq.${encodeURIComponent(slug)}` : '';
+  const r = await cuboRead(`mc_posts?select=${sel}${bySlug}&status=eq.published&order=published_at.desc.nullslast`);
+  const rows = await r.json().catch(() => null);
+  if (!r.ok || !Array.isArray(rows)) throw new Error(`mc_posts ${r.status}`);
+  return rows;
+}
+
 async function handlePosts(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'GET') return res.status(405).json({ error: 'Read-only. Write posts at https://www.mindsetcaro.com/cms' });
 
-  const SUPABASE_URL = modelosUrl();
-  const SERVICE_KEY = modelosServiceKey();
-  const emptyRead = () => res.status(200).json(req.query.slug ? null : []);
-  if (req.method === 'GET' && (!SUPABASE_URL || !SERVICE_KEY)) return emptyRead();
-  if (!SUPABASE_URL || !SERVICE_KEY) return res.status(503).json({ error: 'Modelos Latino Supabase not configured.' });
-  const sb = { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json' };
+  const slug = req.query.slug ? String(req.query.slug) : null;
+  try {
+    const rows = await fetchPublishedPosts({ slug, withBody: !!slug });
+    res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=300');
+    if (slug) return res.status(200).json(withBodyHtml(rows[0] || null));
+    return res.status(200).json(rows);
+  } catch (e) {
+    console.error('[mindset-caro] posts read failed:', e.message);
+    return res.status(200).json(slug ? null : []);
+  }
+}
 
-  if (req.method === 'GET') {
-    const slug = req.query.slug ? `&slug=eq.${encodeURIComponent(req.query.slug)}` : '';
-    const wantAll = req.query.status === 'all' && req.query.admin_key === process.env.MC_ADMIN_KEY;
-    const pub = wantAll ? '' : '&status=eq.published';
-    const sel = 'select=slug,title,excerpt,body,cover_url,author,tags,status,published_at,updated_at';
-    const url = `${SUPABASE_URL}/rest/v1/mc_posts?${sel}${slug}${pub}&order=published_at.desc.nullslast`;
-    try {
-      const r = await modelosFetch(url, { headers: sb });
-      const rows = await r.json().catch(() => null);
-      if (!r.ok || !Array.isArray(rows)) return emptyRead();
-      if (req.query.slug) return res.status(200).json(rows[0] || null);
-      return res.status(200).json(rows);
-    } catch {
-      return emptyRead();
-    }
+// ============================================================
+// action=blogpage  — server-rendered head + article for /blog and /blog/<slug> on
+// mindsetcaro.com. Takes the static SPA shell, swaps in per-post <title>, description,
+// canonical, OG/Twitter and JSON-LD, and pre-renders the article inside #root so crawlers
+// and link previews see the real text. React then mounts over it as usual.
+// ============================================================
+let mcShellCache = { html: null, at: 0 };
+async function mcShell(req) {
+  if (mcShellCache.html && Date.now() - mcShellCache.at < 5 * 60 * 1000) return mcShellCache.html;
+  const host = (req.headers['x-forwarded-host'] || req.headers.host || 'www.mindsetcaro.com').toString().split(',')[0].trim();
+  const r = await withTimeout((signal) => fetch(`https://${host}/mindset-caro/index.html`, { signal }), 4000);
+  if (!r.ok) throw new Error(`shell ${r.status}`);
+  const html = await r.text();
+  if (!html.includes('<div id="root">')) throw new Error('shell without #root');
+  mcShellCache = { html, at: Date.now() };
+  return html;
+}
+
+function setHead(html, { title, description, canonical, image, type = 'website', robots = null, jsonld = null }) {
+  const a = mdEscape;
+  let h = html;
+  const swapMeta = (attr, name, value) => {
+    const re = new RegExp(`<meta\\s+${attr}="${name}"\\s+content="[^"]*"\\s*/?>`, 'i');
+    const tag = `<meta ${attr}="${name}" content="${a(value)}" />`;
+    h = re.test(h) ? h.replace(re, () => tag) : h.replace('</head>', () => `    ${tag}\n  </head>`);
+  };
+  h = h.replace(/<title>[\s\S]*?<\/title>/i, () => `<title>${a(title)}</title>`);
+  swapMeta('name', 'description', description);
+  h = h.replace(/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i, () => `<link rel="canonical" href="${a(canonical)}" />`);
+  swapMeta('property', 'og:title', title);
+  swapMeta('property', 'og:description', description);
+  swapMeta('property', 'og:type', type);
+  swapMeta('property', 'og:url', canonical);
+  swapMeta('property', 'og:image', image);
+  swapMeta('name', 'twitter:title', title);
+  swapMeta('name', 'twitter:description', description);
+  swapMeta('name', 'twitter:image', image);
+  if (robots) swapMeta('name', 'robots', robots);
+  if (jsonld) h = h.replace('</head>', () => `  <script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, '\\u003c')}</script>\n  </head>`);
+  return h;
+}
+
+const absUrl = (u) => (!u ? `${MC_SITE}/mindset-caro/og-blindaje.png` : /^https?:\/\//i.test(u) ? u : `${MC_SITE}${u.startsWith('/') ? '' : '/'}${u}`);
+const fmtDate = (d) => { try { return new Date(d).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/Bogota' }); } catch { return ''; } };
+
+const notFoundHtml = (msg) => `<section class="mx-auto max-w-2xl px-6 py-24 text-center text-white">
+<p class="eyebrow">Error 404</p><h1 class="mt-3 text-4xl font-black tracking-tight">Página no encontrada</h1>
+<p class="mt-4 text-lg">${mdEscape(msg)}</p>
+<p class="mt-8"><a href="/blog" class="btn-primary">Ir al blog</a> <a href="/diagnostico">Haz tu diagnóstico gratis</a></p></section>`;
+
+// action=notfound — every mindsetcaro.com path that is not a real page (vercel.json sends the
+// host catch-all here). Real HTTP 404 + noindex instead of a soft 404, so old/lost URLs drop
+// out of Google. The SPA still mounts and shows its own NotFound page.
+async function handleNotFound(req, res) {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, s-maxage=300');
+  let shell;
+  try { shell = await mcShell(req); } catch {
+    return res.status(404).send('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>Página no encontrada | Mindset Caro</title><p>Página no encontrada. <a href="/blog">Blog</a> · <a href="/diagnostico">Diagnóstico</a></p>');
+  }
+  const html = setHead(shell, {
+    title: 'Página no encontrada | Mindset Caro', description: 'La página que buscas no existe o cambió de dirección.',
+    canonical: `${MC_SITE}/`, robots: 'noindex',
+  });
+  return res.status(404).send(html.replace('<div id="root"></div>', () => `<div id="root"><main class="pt-[65px]">${notFoundHtml('La página que buscas no existe o cambió de dirección.')}</main></div>`));
+}
+
+async function handleBlogPage(req, res) {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  let shell;
+  try { shell = await mcShell(req); } catch (e) {
+    console.error('[mindset-caro] blog shell failed:', e.message);
+    res.setHeader('Cache-Control', 'no-store');
+    return res.status(200).send('<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=/mindset-caro/blog/"><title>Blog | Mindset Caro</title>');
+  }
+  const slug = req.query.slug ? String(req.query.slug).replace(/\/+$/, '').toLowerCase() : '';
+  const fill = (h, inner) => h.replace('<div id="root"></div>', () => `<div id="root"><main class="pt-[65px]">${inner}</main></div>`);
+
+  if (!slug) {
+    let posts = [];
+    try { posts = await fetchPublishedPosts(); } catch { /* render an empty list */ }
+    const html = setHead(shell, {
+      title: 'Blog | Mindset Caro — Seguros de vida, ahorro e inversión en Colombia',
+      description: 'Artículos de Mindset Caro sobre blindaje patrimonial, seguros de vida con ahorro, el índice S&P 500, liquidez para la familia y ahorro de largo plazo en Colombia.',
+      canonical: `${MC_SITE}/blog`,
+      jsonld: {
+        '@context': 'https://schema.org', '@type': 'Blog', name: 'Blog de Mindset Caro', url: `${MC_SITE}/blog`, inLanguage: 'es-CO',
+        blogPost: posts.map((p) => ({ '@type': 'BlogPosting', headline: p.title, url: `${MC_SITE}/blog/${p.slug}`, datePublished: p.published_at })),
+      },
+    });
+    const items = posts.map((p) => `<li><a href="/blog/${mdEscape(p.slug)}"><h2>${mdEscape(p.title)}</h2></a>${p.excerpt ? `<p>${mdEscape(p.excerpt)}</p>` : ''}</li>`).join('');
+    res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=600');
+    return res.status(200).send(fill(html, `<section class="mx-auto max-w-5xl px-6 py-16 text-white"><h1 class="text-4xl font-extrabold">Aprende conmigo</h1><ul>${items}</ul></section>`));
   }
 
-  if (req.method === 'POST') {
-    const adminKey = process.env.MC_ADMIN_KEY;
-    const b = req.body || {};
-    if (!adminKey) return res.status(500).json({ error: 'MC_ADMIN_KEY not configured' });
-    if (b.admin_key !== adminKey) return res.status(401).json({ error: 'Invalid admin_key' });
-    const p = b.post || b;
-    if (!p.slug || !p.title) return res.status(400).json({ error: 'post needs at least { slug, title }' });
-    const row = {
-      slug: String(p.slug).toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, ''),
-      title: p.title,
-      excerpt: p.excerpt ?? null,
-      body: p.body ?? null,
-      cover_url: p.cover_url ?? null,
-      author: p.author ?? 'Carolina',
-      tags: Array.isArray(p.tags) ? p.tags : [],
-      status: p.status === 'published' ? 'published' : 'draft',
-      published_at: p.status === 'published' ? (p.published_at || new Date().toISOString()) : null,
-      updated_at: new Date().toISOString(),
-    };
-    try {
-      const r = await fetch(`${SUPABASE_URL}/rest/v1/mc_posts?on_conflict=slug`, {
-        method: 'POST',
-        headers: { ...sb, Prefer: 'resolution=merge-duplicates,return=representation' },
-        body: JSON.stringify(row),
-      });
-      const data = await r.json();
-      if (r.status >= 400) return res.status(r.status).json({ error: 'Upsert failed', details: data });
-      return res.status(200).json({ ok: true, post: Array.isArray(data) ? data[0] : data });
-    } catch (e) {
-      return res.status(503).json({ error: 'Supabase unreachable', details: e.message });
-    }
+  let post = null;
+  try { post = (await fetchPublishedPosts({ slug, withBody: true }))[0] || null; } catch (e) {
+    console.error('[mindset-caro] blog post read failed:', e.message);
+    res.setHeader('Cache-Control', 'no-store');
+    return res.status(200).send(shell); // store down: let the SPA try on its own
   }
-
-  return res.status(405).json({ error: 'Method not allowed' });
+  if (!post) {
+    res.setHeader('Cache-Control', 'public, s-maxage=30');
+    return res.status(404).send(fill(setHead(shell, {
+      title: 'Página no encontrada | Mindset Caro', description: 'Este artículo no existe o ya no está publicado.',
+      canonical: `${MC_SITE}/blog`, robots: 'noindex',
+    }), notFoundHtml('Este artículo no existe o ya no está publicado.')));
+  }
+  const canonical = `${MC_SITE}/blog/${post.slug}`;
+  const title = post.seo_title || `${post.title} | Mindset Caro`;
+  const description = (post.seo_description || post.excerpt || '').slice(0, 300);
+  // Social previews: brand covers ship a .jpg twin (WebP og:image is not read everywhere).
+  const image = absUrl(/^\/mindset-caro\/media\/blog\/[a-z0-9-]+\.webp$/.test(post.cover_url || '') ? post.cover_url.replace(/\.webp$/, '.jpg') : post.cover_url);
+  const html = setHead(shell, {
+    title, description, canonical, image, type: 'article',
+    jsonld: {
+      '@context': 'https://schema.org', '@type': 'BlogPosting', headline: post.title, description,
+      image, url: canonical, mainEntityOfPage: canonical, inLanguage: 'es-CO',
+      datePublished: post.published_at, dateModified: post.updated_at || post.published_at,
+      author: { '@type': 'Organization', name: post.author || 'Mindset Caro', url: MC_SITE },
+      publisher: { '@type': 'Organization', name: 'Mindset Caro', url: MC_SITE },
+    },
+  });
+  const article = `<article class="mx-auto max-w-2xl px-6 py-16 text-white">
+<a href="/blog">← Blog</a>
+<h1 class="mt-2 text-4xl font-extrabold leading-tight tracking-tight">${mdEscape(post.title)}</h1>
+<p>${mdEscape(post.author || 'Mindset Caro')}${post.published_at ? ` · ${fmtDate(post.published_at)}` : ''}</p>
+${post.cover_url ? `<img src="${mdEscape(absUrl(post.cover_url))}" alt="${mdEscape(post.cover_alt || post.title)}" class="mt-8 w-full rounded-2xl">` : ''}
+${post.excerpt ? `<p class="mt-8 text-lg">${mdEscape(post.excerpt)}</p>` : ''}
+<div class="mc-prose">${postBodyHtml(post.body)}</div>
+</article>`;
+  res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=600');
+  return res.status(200).send(fill(html, article));
 }
 
 // ============================================================
@@ -690,7 +841,7 @@ function isMindsetHost(req) {
 
 function handleRobots(req, res) {
   const mindset = isMindsetHost(req);
-  const base = mindset ? 'https://mindsetcaro.com' : 'https://apexmusiclatino.com';
+  const base = mindset ? 'https://www.mindsetcaro.com' : 'https://apexmusiclatino.com';
   let body = 'User-agent: *\nAllow: /\n';
   if (mindset) body += 'Disallow: /cms\n';
   body += `Sitemap: ${base}/sitemap.xml\n`;
@@ -716,19 +867,11 @@ async function handleSitemap(req, res) {
     urls.push({ loc: `${B}/blog`, priority: '0.7' });
     urls.push({ loc: `${B}/privacidad`, priority: '0.2' });
     urls.push({ loc: `${B}/terminos`, priority: '0.2' });
-    const SUPABASE_URL = modelosUrl();
-    const KEY = modelosServiceKey();
-    if (SUPABASE_URL && KEY) {
-      try {
-        const r = await modelosFetch(`${SUPABASE_URL}/rest/v1/mc_posts?select=slug,updated_at&status=eq.published&order=published_at.desc`, {
-          headers: { apikey: KEY, Authorization: `Bearer ${KEY}` },
-        });
-        if (r.ok) {
-          const posts = await r.json();
-          for (const p of posts) urls.push({ loc: `${B}/blog/${p.slug}`, priority: '0.6', lastmod: (p.updated_at || '').slice(0, 10) });
-        }
-      } catch { /* posts optional */ }
-    }
+    try {
+      for (const p of await fetchPublishedPosts()) {
+        urls.push({ loc: `${B}/blog/${p.slug}`, priority: '0.6', lastmod: (p.updated_at || p.published_at || '').slice(0, 10) });
+      }
+    } catch { /* posts optional */ }
   } else {
     urls = APEX_SITEMAP.map(([path, priority]) => ({ loc: `https://apexmusiclatino.com${path}`, priority }));
   }

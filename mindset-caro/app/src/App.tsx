@@ -4,6 +4,7 @@ import BlogList from './components/BlogList';
 import BlogPost from './components/BlogPost';
 import Landing from './pages/Landing';
 import Privacidad from './pages/Privacidad';
+import NotFound from './pages/NotFound';
 import Footer from './sections/Footer';
 import BotBubble from './components/BotBubble';
 import StickyCta from './components/StickyCta';
@@ -91,7 +92,7 @@ export default function App() {
             <Route path="/privacidad" element={<Privacidad />} />
             <Route path="/blog" element={<BlogList apiBase="" />} />
             <Route path="/blog/:slug" element={<BlogPostWrapper />} />
-            <Route path="*" element={<Landing />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
 

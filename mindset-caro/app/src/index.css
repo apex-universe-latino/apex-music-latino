@@ -100,3 +100,23 @@
   .ticker { animation: none !important; }
   .rainbow-line, .rainbow-divider, .bezel::before, .btn-primary::after { animation: none !important; }
 }
+
+/* Blog article body (Markdown → HTML from api/data.js; same look in the /cms preview) */
+.mc-prose { color: rgba(255,255,255,.82); font-size: 1.075rem; line-height: 1.8; }
+.mc-prose > * + * { margin-top: 1.15em; }
+.mc-prose h2 { margin-top: 2.2em; font-size: 1.6rem; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; color: #fff; }
+.mc-prose h3 { margin-top: 1.8em; font-size: 1.25rem; line-height: 1.3; font-weight: 800; color: #fff; }
+.mc-prose h4 { margin-top: 1.5em; font-weight: 700; color: #fff; }
+.mc-prose a { color: #ff1a1a; text-decoration: underline; text-underline-offset: 3px; }
+.mc-prose a:hover { color: #fff; }
+.mc-prose strong { color: #fff; font-weight: 700; }
+.mc-prose ul, .mc-prose ol { padding-left: 1.3em; }
+.mc-prose ul { list-style: disc; }
+.mc-prose ol { list-style: decimal; }
+.mc-prose li + li { margin-top: .45em; }
+.mc-prose li::marker { color: #e60000; }
+.mc-prose blockquote { border-left: 3px solid #e60000; padding: .2em 0 .2em 1.1em; color: #fff; font-weight: 600; }
+.mc-prose hr { border: 0; border-top: 1px solid rgba(255,255,255,.12); margin: 2.2em 0; }
+.mc-prose img { border-radius: 1rem; border: 1px solid rgba(255,255,255,.1); }
+.mc-prose code { font-family: "Space Mono", monospace; font-size: .9em; background: rgba(255,255,255,.07); padding: .1em .35em; border-radius: .3em; }
+.mc-prose p:last-child em:only-child, .mc-prose .disclaimer { font-size: .85rem; color: rgba(255,255,255,.5); }

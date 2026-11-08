@@ -1,236 +1,858 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CO">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex,nofollow" />
-<title>Mindset Caro — CMS & Datos</title>
+<title>Editor | Mindset Caro</title>
+<link rel="icon" type="image/svg+xml" href="/mindset-caro/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" />
+<!--
+  Mindset Caro editor (/cms). Source: mindset-caro/admin/index.html (copied to
+  public/mindset-caro/admin/ by app/scripts/postbuild.mjs).
+  Login = Supabase email code (CUBO FRM prod). Saves go straight to Supabase as the signed-in
+  user; RLS only lets emails on public.site_editors (site 'mindset-caro') write. See FRM
+  migration 064_mindset_caro_site_store.sql.
+-->
 <style>
-  :root{ --red:#e60000; --bg:#0c0c0d; --panel:#161618; --panel2:#1d1d20; --border:#2a2a2e; --text:#f5f5f5; --dim:#9a9aa2; }
+  :root{
+    --red:#e60000; --red-glow:#ff1a1a; --red-deep:#7a0000;
+    --bg:#111111; --panel:#151515; --panel2:#1d1414; --line:rgba(255,255,255,.1); --line2:rgba(255,255,255,.18);
+    --text:#f3f1ec; --dim:rgba(243,241,236,.62); --faint:rgba(243,241,236,.4);
+    --ok:#3ecf8e;
+  }
   *{ box-sizing:border-box; }
-  body{ margin:0; background:var(--bg); color:var(--text); font:14px/1.5 Inter,system-ui,Arial,sans-serif; }
-  header{ display:flex; align-items:center; gap:16px; padding:16px 22px; border-bottom:1px solid var(--border); background:var(--panel); position:sticky; top:0; z-index:5; }
-  header h1{ font-size:16px; margin:0; letter-spacing:.5px; }
-  header h1 b{ color:var(--red); }
-  .tabs{ display:flex; gap:6px; margin-left:auto; }
-  .tab{ background:transparent; color:var(--dim); border:1px solid var(--border); padding:8px 16px; border-radius:8px; cursor:pointer; font-weight:600; }
-  .tab.active{ background:var(--red); color:#fff; border-color:var(--red); }
-  main{ max-width:1100px; margin:0 auto; padding:24px; }
-  .bar{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:18px; }
-  select, input, textarea, button{ font:inherit; color:var(--text); }
-  select, input[type=text], input[type=password], textarea{ background:var(--panel2); border:1px solid var(--border); border-radius:8px; padding:9px 11px; width:100%; }
-  textarea{ min-height:60px; resize:vertical; font-family:ui-monospace,Menlo,monospace; font-size:12.5px; }
-  .btn{ background:var(--red); color:#fff; border:none; border-radius:8px; padding:9px 18px; font-weight:700; cursor:pointer; white-space:nowrap; }
-  .btn.ghost{ background:transparent; border:1px solid var(--border); color:var(--text); }
-  .group{ margin:0 0 14px; border:1px solid var(--border); border-radius:12px; overflow:hidden; }
-  .group > summary{ cursor:pointer; padding:12px 16px; background:var(--panel); font-weight:700; text-transform:uppercase; letter-spacing:.5px; font-size:12px; color:var(--red); }
-  .field{ display:grid; grid-template-columns:240px 1fr; gap:12px; padding:12px 16px; border-top:1px solid var(--border); align-items:start; }
-  .field label{ color:var(--dim); font-size:12px; word-break:break-all; padding-top:9px; }
-  .field .meta{ font-size:10px; color:#5a5a62; display:block; margin-top:3px; }
-  .muted{ color:var(--dim); }
-  table{ width:100%; border-collapse:collapse; font-size:12.5px; }
-  th,td{ text-align:left; padding:8px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
-  th{ color:var(--dim); font-weight:600; position:sticky; top:0; background:var(--panel); }
-  td.payload{ font-family:ui-monospace,monospace; font-size:11px; color:var(--dim); max-width:340px; word-break:break-word; }
-  .pill{ display:inline-block; background:var(--panel2); border:1px solid var(--border); border-radius:99px; padding:2px 9px; font-size:11px; }
-  .toast{ position:fixed; bottom:20px; right:20px; background:var(--panel2); border:1px solid var(--red); padding:12px 18px; border-radius:10px; opacity:0; transition:.2s; }
-  .toast.show{ opacity:1; }
-  .hidden{ display:none; }
-  .stats{ display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
-  .stat{ background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:14px 18px; min-width:120px; }
-  .stat b{ display:block; font-size:22px; color:var(--red); }
-  .stat span{ font-size:11px; color:var(--dim); text-transform:uppercase; letter-spacing:.5px; }
+  html,body{ margin:0; background:var(--bg); color:var(--text); }
+  body{ font:15px/1.55 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; -webkit-font-smoothing:antialiased; }
+  .mono{ font-family:"Space Mono",ui-monospace,monospace; }
+  a{ color:var(--red-glow); }
+  button,input,textarea,select{ font:inherit; color:inherit; }
+  .hidden{ display:none !important; }
+
+  header.top{ position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:14px; padding:12px 20px;
+    background:rgba(17,17,17,.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .brand{ font-weight:900; letter-spacing:-.02em; font-size:18px; white-space:nowrap; }
+  .brand b{ color:var(--red); }
+  .brand small{ display:block; font:700 10px/1 "Space Mono",monospace; letter-spacing:.2em; text-transform:uppercase; color:var(--faint); margin-top:3px; }
+  nav.tabs{ display:flex; gap:6px; margin-left:12px; }
+  .tab{ background:transparent; border:1px solid transparent; border-radius:999px; padding:7px 16px; color:var(--dim); font-weight:700; cursor:pointer; }
+  .tab:hover{ color:var(--text); }
+  .tab.active{ background:var(--red); color:#fff; }
+  .who{ margin-left:auto; display:flex; align-items:center; gap:10px; font-size:13px; color:var(--dim); }
+
+  main{ max-width:1180px; margin:0 auto; padding:28px 20px 80px; }
+  h1{ font-size:30px; font-weight:900; letter-spacing:-.03em; margin:0 0 6px; }
+  h2{ font-size:20px; font-weight:800; letter-spacing:-.02em; margin:0; }
+  .lead{ color:var(--dim); margin:0 0 22px; }
+  .eyebrow{ font:700 11px/1 "Space Mono",monospace; letter-spacing:.2em; text-transform:uppercase; color:var(--red-glow); }
+
+  .btn{ display:inline-flex; align-items:center; gap:8px; border:0; border-radius:12px; padding:11px 18px; font-weight:800; cursor:pointer;
+    background:var(--red); color:#fff; transition:background .15s, transform .1s; white-space:nowrap; text-decoration:none; }
+  .btn:hover{ background:var(--red-glow); }
+  .btn:active{ transform:translateY(1px); }
+  .btn:disabled{ opacity:.5; cursor:default; }
+  .btn.ghost{ background:transparent; border:1px solid var(--line2); color:var(--text); }
+  .btn.ghost:hover{ border-color:var(--red); }
+  .btn.small{ padding:7px 12px; font-size:13px; border-radius:10px; }
+  .btn.danger{ background:transparent; border:1px solid rgba(255,80,80,.35); color:#ff8a8a; }
+  .btn.danger:hover{ background:rgba(230,0,0,.12); }
+
+  label.f{ display:block; font-weight:700; font-size:13px; margin:0 0 6px; }
+  label.f span{ font-weight:500; color:var(--faint); }
+  input[type=text],input[type=email],input[type=url],textarea,select{
+    width:100%; background:#0c0c0c; border:1px solid var(--line2); border-radius:12px; padding:11px 13px; outline:none; transition:border-color .15s; }
+  input:focus,textarea:focus,select:focus{ border-color:var(--red); }
+  textarea{ resize:vertical; min-height:80px; }
+  .field{ margin-bottom:18px; }
+  .hint{ font-size:12.5px; color:var(--faint); margin-top:6px; }
+  .count{ float:right; font:400 11px "Space Mono",monospace; color:var(--faint); }
+  .count.warn{ color:#ffb020; }
+
+  .card{ background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:22px; }
+
+  /* login */
+  .login{ min-height:calc(100vh - 70px); display:grid; place-items:center; padding:20px; }
+  .login .card{ width:100%; max-width:420px; padding:30px; }
+  .login h1{ font-size:28px; }
+  .code-input{ font:700 28px/1 "Space Mono",monospace !important; letter-spacing:.45em; text-align:center; }
+  .msg{ font-size:14px; margin-top:12px; min-height:20px; }
+  .msg.err{ color:#ff8a8a; } .msg.ok{ color:var(--ok); }
+
+  /* post list */
+  .list-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:18px; }
+  .posts{ display:grid; gap:10px; }
+  .post-row{ display:grid; grid-template-columns:96px 1fr auto; gap:16px; align-items:center; background:var(--panel); border:1px solid var(--line);
+    border-radius:16px; padding:10px; cursor:pointer; transition:border-color .15s; }
+  .post-row:hover{ border-color:rgba(230,0,0,.6); }
+  .thumb{ width:96px; aspect-ratio:16/9; border-radius:10px; background:#222 center/cover no-repeat; }
+  .post-row h3{ margin:0; font-size:16px; font-weight:800; letter-spacing:-.01em; }
+  .post-row .meta{ font:400 12px "Space Mono",monospace; color:var(--faint); margin-top:4px; }
+  .pill{ display:inline-block; border-radius:999px; padding:4px 10px; font:700 10px/1.2 "Space Mono",monospace; letter-spacing:.12em; text-transform:uppercase; }
+  .pill.pub{ background:rgba(62,207,142,.12); color:var(--ok); border:1px solid rgba(62,207,142,.35); }
+  .pill.draft{ background:rgba(255,255,255,.06); color:var(--dim); border:1px solid var(--line2); }
+  .empty{ color:var(--dim); padding:40px; text-align:center; border:1px dashed var(--line2); border-radius:16px; }
+
+  /* post editor */
+  .ed-bar{ position:sticky; top:62px; z-index:10; display:flex; gap:10px; align-items:center; flex-wrap:wrap; padding:12px 0; margin-bottom:14px;
+    background:var(--bg); border-bottom:1px solid var(--line); }
+  .ed-bar .spacer{ flex:1; }
+  .ed-grid{ display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:22px; align-items:start; }
+  .side .card + .card{ margin-top:16px; }
+  .title-input{ font-size:24px !important; font-weight:800; letter-spacing:-.02em; }
+  .toolbar{ display:flex; flex-wrap:wrap; gap:6px; padding:8px; background:#0c0c0c; border:1px solid var(--line2); border-bottom:0; border-radius:12px 12px 0 0; }
+  .toolbar button{ background:transparent; border:1px solid transparent; border-radius:8px; padding:5px 10px; font-size:13px; font-weight:700; cursor:pointer; color:var(--dim); }
+  .toolbar button:hover{ color:var(--text); border-color:var(--line2); }
+  .toolbar .sep{ width:1px; background:var(--line2); margin:2px 4px; }
+  #body{ border-radius:0 0 12px 12px; min-height:520px; font:15px/1.7 "Space Mono",ui-monospace,monospace; font-size:14px; }
+  .cover-box{ aspect-ratio:16/9; border-radius:12px; background:#0c0c0c center/cover no-repeat; border:1px dashed var(--line2);
+    display:grid; place-items:center; color:var(--faint); font-size:13px; text-align:center; padding:10px; cursor:pointer; }
+  .cover-box.has{ border-style:solid; color:transparent; }
+  .frames{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:8px; }
+  .frames button{ aspect-ratio:16/9; border-radius:6px; border:1px solid var(--line2); background:#222 center/cover no-repeat; cursor:pointer; padding:0; }
+  .frames button:hover{ border-color:var(--red); }
+  .serp{ background:#fff; color:#202124; border-radius:12px; padding:14px 16px; font-family:Arial,sans-serif; }
+  .serp .u{ font-size:12px; color:#4d5156; }
+  .serp .t{ font-size:18px; color:#1a0dab; line-height:1.3; margin:4px 0; }
+  .serp .d{ font-size:13px; color:#4d5156; line-height:1.45; }
+
+  /* preview */
+  .preview-wrap{ position:fixed; inset:0; z-index:40; background:rgba(0,0,0,.75); display:flex; justify-content:center; overflow-y:auto; padding:30px 16px; }
+  .preview{ width:100%; max-width:760px; background:var(--bg); border:1px solid var(--line2); border-radius:20px; padding:36px 28px 50px; align-self:flex-start; }
+  .preview .close{ float:right; }
+  .preview h1.pt{ font-size:40px; line-height:1.05; letter-spacing:-.035em; font-weight:900; margin:14px 0 8px; }
+  .preview .pm{ font:400 12px "Space Mono",monospace; color:var(--faint); }
+  .preview img.cover{ width:100%; border-radius:16px; border:1px solid var(--line); margin-top:22px; }
+  .preview .ex{ font-size:18px; color:rgba(255,255,255,.78); margin-top:22px; }
+  .mc-prose{ color:rgba(255,255,255,.82); font-size:1.075rem; line-height:1.8; }
+  .mc-prose > * + *{ margin-top:1.15em; }
+  .mc-prose h2{ margin-top:2.2em; font-size:1.6rem; line-height:1.2; font-weight:800; letter-spacing:-.02em; color:#fff; }
+  .mc-prose h3{ margin-top:1.8em; font-size:1.25rem; line-height:1.3; font-weight:800; color:#fff; }
+  .mc-prose a{ color:#ff1a1a; text-underline-offset:3px; }
+  .mc-prose strong{ color:#fff; }
+  .mc-prose ul,.mc-prose ol{ padding-left:1.3em; }
+  .mc-prose li + li{ margin-top:.45em; }
+  .mc-prose li::marker{ color:#e60000; }
+  .mc-prose blockquote{ margin-left:0; border-left:3px solid #e60000; padding:.2em 0 .2em 1.1em; color:#fff; font-weight:600; }
+  .mc-prose hr{ border:0; border-top:1px solid rgba(255,255,255,.12); margin:2.2em 0; }
+  .mc-prose img{ max-width:100%; border-radius:1rem; }
+  .mc-prose p:last-child em:only-child{ font-size:.85rem; color:rgba(255,255,255,.5); }
+
+  /* site texts */
+  .copy-group{ margin-bottom:22px; }
+  .copy-group > h3{ font:700 11px/1 "Space Mono",monospace; letter-spacing:.2em; text-transform:uppercase; color:var(--red-glow); margin:0 0 10px; }
+  .copy-item{ background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:16px 18px; margin-bottom:10px; }
+  .copy-item .row{ display:flex; gap:10px; align-items:center; justify-content:space-between; margin-bottom:8px; }
+  .copy-item .def{ font-size:12.5px; color:var(--faint); margin-top:6px; }
+  .copy-item.changed{ border-color:rgba(230,0,0,.6); }
+  .tag-custom{ font:700 10px "Space Mono",monospace; color:var(--ok); letter-spacing:.1em; text-transform:uppercase; }
+
+  .toast{ position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(20px); opacity:0; pointer-events:none; z-index:60;
+    background:#1f1f1f; border:1px solid var(--line2); border-left:4px solid var(--ok); border-radius:12px; padding:12px 18px; font-weight:600; transition:.2s; max-width:90vw; }
+  .toast.show{ opacity:1; transform:translateX(-50%); }
+  .toast.err{ border-left-color:var(--red); }
+
+  footer.credit{ text-align:center; padding:24px 16px 32px; font-size:12px; color:var(--faint); }
+  footer.credit a{ color:var(--faint); text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
+  footer.credit a:hover{ color:var(--text); }
+  footer.credit img{ border-radius:3px; opacity:.8; }
+  @media (max-width: 900px){
+    .ed-grid{ grid-template-columns:1fr; }
+    nav.tabs{ margin-left:0; }
+    header.top{ flex-wrap:wrap; }
+    .who{ width:100%; margin-left:0; }
+    .ed-bar{ top:110px; }
+  }
+  @media (max-width: 560px){
+    .post-row{ grid-template-columns:72px 1fr; }
+    .post-row .thumb{ width:72px; }
+    .post-row .st{ grid-column:2; }
+    h1{ font-size:24px; }
+  }
 </style>
 </head>
 <body>
-<header>
-  <h1>Mindset <b>Caro</b> · Panel</h1>
-  <div class="tabs">
-    <button class="tab active" data-tab="cms">Contenido (CMS)</button>
-    <button class="tab" data-tab="data">Datos entrantes</button>
+
+<header class="top">
+  <div class="brand">Mindset <b>Caro</b><small>Editor del sitio</small></div>
+  <nav class="tabs hidden" id="tabs">
+    <button class="tab active" data-tab="blog">Blog</button>
+    <button class="tab" data-tab="copy">Textos del sitio</button>
+  </nav>
+  <div class="who hidden" id="who">
+    <span id="whoEmail"></span>
+    <a class="btn ghost small" href="/" target="_blank" rel="noopener">Ver sitio</a>
+    <button class="btn ghost small" id="logout">Salir</button>
   </div>
 </header>
 
-<main>
-  <!-- Admin key gate -->
-  <div class="bar" id="keyBar">
-    <input type="password" id="adminKey" placeholder="Admin key (MC_ADMIN_KEY / INGEST_ADMIN_KEY)" style="max-width:380px" />
-    <button class="btn" id="saveKey">Conectar</button>
-    <span class="muted">La clave se guarda solo en esta sesión del navegador.</span>
-  </div>
+<!-- ============ LOGIN ============ -->
+<section class="login hidden" id="loginView">
+  <div class="card">
+    <p class="eyebrow">Acceso privado</p>
+    <h1 style="margin-top:10px">Hola, Caro.</h1>
+    <p class="lead">Entra con tu correo. Te enviamos un código de 6 dígitos, sin contraseñas.</p>
 
-  <!-- ===================== CMS TAB ===================== -->
-  <section id="tab-cms">
-    <div class="bar">
-      <label class="muted">Página:</label>
-      <select id="site" style="max-width:200px">
-        <option value="landing">landing</option>
-        <option value="diagnostico">diagnostico</option>
-        <option value="global">global</option>
-      </select>
-      <button class="btn ghost" id="reload">Recargar</button>
-      <button class="btn" id="saveAll" style="margin-left:auto">Guardar cambios</button>
+    <form id="emailForm">
+      <div class="field">
+        <label class="f" for="email">Tu correo</label>
+        <input type="email" id="email" autocomplete="email" placeholder="tucorreo@gmail.com" required />
+      </div>
+      <button class="btn" type="submit" id="sendBtn" style="width:100%;justify-content:center">Enviarme el código</button>
+    </form>
+
+    <form id="codeForm" class="hidden">
+      <div class="field">
+        <label class="f" for="code">Código de 6 dígitos <span id="codeTo"></span></label>
+        <input type="text" id="code" class="code-input" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="······" required />
+        <p class="hint">Llega en un minuto con el asunto “Tu código de CUBO FRM”. Revisa también Spam o Promociones.</p>
+      </div>
+      <button class="btn" type="submit" id="verifyBtn" style="width:100%;justify-content:center">Entrar</button>
+      <p class="hint" style="text-align:center;margin-top:14px"><a href="#" id="backToEmail">Usar otro correo</a> · <a href="#" id="resend">Reenviar código</a></p>
+    </form>
+    <p class="msg" id="loginMsg"></p>
+  </div>
+</section>
+
+<!-- ============ APP ============ -->
+<main id="app" class="hidden">
+
+  <!-- BLOG: list -->
+  <section id="blogList">
+    <div class="list-head">
+      <div>
+        <h1>Tu blog</h1>
+        <p class="lead" style="margin:0">Escribe, guarda como borrador y publica cuando esté listo.</p>
+      </div>
+      <button class="btn" id="newPost">+ Nuevo artículo</button>
     </div>
-    <div id="cmsFields"><p class="muted">Conecta con tu admin key para cargar el contenido.</p></div>
+    <div class="posts" id="posts"><p class="empty">Cargando artículos…</p></div>
   </section>
 
-  <!-- ===================== DATA TAB ===================== -->
-  <section id="tab-data" class="hidden">
-    <div class="stats" id="stats"></div>
-    <div class="bar">
-      <input type="text" id="filterApp" placeholder="Filtrar por source_app (opcional)" style="max-width:260px" />
-      <button class="btn ghost" id="reloadData">Recargar</button>
-      <label class="muted" style="margin-left:auto"><input type="checkbox" id="autoRefresh" /> Auto-refrescar (10s)</label>
+  <!-- BLOG: editor -->
+  <section id="postEditor" class="hidden">
+    <div class="ed-bar">
+      <button class="btn ghost small" id="backToList">← Artículos</button>
+      <span id="edStatus"></span>
+      <span class="hint" id="edSaved" style="margin:0"></span>
+      <span class="spacer"></span>
+      <button class="btn ghost small" id="previewBtn">Vista previa</button>
+      <a class="btn ghost small hidden" id="viewLive" target="_blank" rel="noopener">Ver en el sitio</a>
+      <button class="btn ghost small" id="saveDraft">Guardar borrador</button>
+      <button class="btn small hidden" id="unpublish" style="background:transparent;border:1px solid var(--line2)">Despublicar</button>
+      <button class="btn small" id="publish">Publicar</button>
     </div>
-    <div style="overflow:auto; max-height:70vh; border:1px solid var(--border); border-radius:12px;">
-      <table id="eventsTable">
-        <thead><tr>
-          <th>Hora</th><th>source_app</th><th>event</th><th>visitor</th><th>payload</th><th>url / utm</th>
-        </tr></thead>
-        <tbody><tr><td colspan="6" class="muted">Sin datos cargados.</td></tr></tbody>
-      </table>
+
+    <div class="ed-grid">
+      <div>
+        <div class="field">
+          <label class="f" for="pTitle">Título <span>· una pregunta funciona muy bien</span></label>
+          <input type="text" id="pTitle" class="title-input" placeholder="¿Cuánto seguro de vida necesito?" />
+        </div>
+        <div class="field">
+          <label class="f" for="pExcerpt">Resumen <span>· 1 o 2 frases que invitan a leer</span><em class="count" id="cExcerpt"></em></label>
+          <textarea id="pExcerpt" rows="2" placeholder="De qué trata el artículo y qué se lleva quien lo lee."></textarea>
+        </div>
+        <div class="field">
+          <label class="f" for="body">Texto del artículo</label>
+          <div class="toolbar" id="toolbar">
+            <button type="button" data-md="h2" title="Subtítulo">Subtítulo</button>
+            <button type="button" data-md="h3" title="Subtítulo pequeño">Sub. pequeño</button>
+            <span class="sep"></span>
+            <button type="button" data-md="b" title="Negrita"><b>N</b></button>
+            <button type="button" data-md="i" title="Cursiva"><i>C</i></button>
+            <button type="button" data-md="link" title="Enlace">Enlace</button>
+            <span class="sep"></span>
+            <button type="button" data-md="ul" title="Lista">• Lista</button>
+            <button type="button" data-md="ol" title="Lista numerada">1. Lista</button>
+            <button type="button" data-md="quote" title="Frase destacada">“ Cita</button>
+            <span class="sep"></span>
+            <button type="button" data-md="diag" title="Enlace al diagnóstico">+ Diagnóstico</button>
+            <button type="button" data-md="disc" title="Aviso legal al final">+ Aviso legal</button>
+          </div>
+          <textarea id="body" spellcheck="true" placeholder="Escribe aquí. Deja una línea en blanco entre párrafos.&#10;&#10;## Así se escribe un subtítulo&#10;&#10;**Negrita** y *cursiva*. Un enlace: [haz tu diagnóstico](/diagnostico)"></textarea>
+          <p class="hint">Formato sencillo: <span class="mono">## Subtítulo</span> · <span class="mono">**negrita**</span> · <span class="mono">- lista</span> · <span class="mono">[texto](enlace)</span>. Los botones de arriba lo escriben por ti. <span id="words"></span></p>
+        </div>
+      </div>
+
+      <div class="side">
+        <div class="card">
+          <label class="f">Portada</label>
+          <div class="cover-box" id="coverBox" title="Subir imagen">Toca para subir una imagen<br>(JPG, PNG o WebP · horizontal)</div>
+          <input type="file" id="coverFile" accept="image/jpeg,image/png,image/webp" class="hidden" />
+          <p class="hint">O elige una de tus imágenes de marca:</p>
+          <div class="frames" id="frames"></div>
+          <div class="field" style="margin:12px 0 0">
+            <label class="f" for="pCoverAlt">Descripción de la imagen <span>· para Google y accesibilidad</span></label>
+            <input type="text" id="pCoverAlt" placeholder="Escudo rojo sobre fondo oscuro" />
+          </div>
+          <button type="button" class="btn ghost small hidden" id="removeCover" style="margin-top:10px">Quitar portada</button>
+        </div>
+
+        <div class="card">
+          <label class="f">Cómo se verá en Google</label>
+          <div class="serp"><div class="u" id="serpUrl">www.mindsetcaro.com › blog</div><div class="t" id="serpTitle">Título</div><div class="d" id="serpDesc">Descripción</div></div>
+          <div class="field" style="margin-top:14px">
+            <label class="f" for="pSeoTitle">Título para Google <em class="count" id="cSeoTitle"></em></label>
+            <input type="text" id="pSeoTitle" placeholder="Si lo dejas vacío, usamos el título" />
+          </div>
+          <div class="field">
+            <label class="f" for="pSeoDesc">Descripción para Google <em class="count" id="cSeoDesc"></em></label>
+            <textarea id="pSeoDesc" rows="3" placeholder="Si la dejas vacía, usamos el resumen"></textarea>
+          </div>
+          <div class="field">
+            <label class="f" for="pSlug">Dirección del artículo</label>
+            <input type="text" id="pSlug" class="mono" placeholder="cuanto-seguro-de-vida-necesito" />
+            <p class="hint" id="slugHint">mindsetcaro.com/blog/…</p>
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label class="f" for="pTags">Tema <span>· separa con comas</span></label>
+            <input type="text" id="pTags" placeholder="Seguros de vida, Ahorro" />
+          </div>
+        </div>
+
+        <div class="card">
+          <button type="button" class="btn danger small" id="deletePost">Eliminar artículo</button>
+          <p class="hint">Si solo quieres ocultarlo, usa “Despublicar”.</p>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <!-- SITE COPY -->
+  <section id="copyView" class="hidden">
+    <div class="list-head">
+      <div>
+        <h1>Textos del sitio</h1>
+        <p class="lead" style="margin:0">Cambia los textos de tu página principal. Si un campo queda vacío, se muestra el texto original.</p>
+      </div>
+      <button class="btn" id="saveCopy" disabled>Guardar cambios</button>
+    </div>
+    <div id="copyList"><p class="empty">Cargando…</p></div>
   </section>
 </main>
 
+<!-- preview -->
+<div class="preview-wrap hidden" id="previewWrap">
+  <div class="preview">
+    <button class="btn ghost small close" id="closePreview">Cerrar</button>
+    <p class="eyebrow" id="pvTags">Blog</p>
+    <h1 class="pt" id="pvTitle"></h1>
+    <p class="pm" id="pvMeta"></p>
+    <img class="cover hidden" id="pvCover" alt="" />
+    <p class="ex" id="pvExcerpt"></p>
+    <div class="mc-prose" id="pvBody"></div>
+  </div>
+</div>
+
+<footer class="credit">&copy; Mindset Caro · <a href="https://gsd500bpo.com"><img src="/mindset-caro/brand/gsd500bpo.webp" alt="GSD 500 BPO" width="16" height="16" />Desarrollado por GSD 500 BPO</a></footer>
+
 <div class="toast" id="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"
+        integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
 <script>
+(() => {
+'use strict';
+// Public anon key of CUBO FRM prod (same one the CUBO web app ships to every browser).
+// It can only read published posts and site copy; writes need a signed-in editor (RLS).
+const SB_URL = 'https://laykneyclcirdionugxt.supabase.co';
+const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxheWtuZXljbGNpcmRpb251Z3h0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NDQ1NjYsImV4cCI6MjA5NjAyMDU2Nn0.ysDxUEJ9Decl6P8-6PdEUBNJX0INdRGu60BOFVZNCdk';
+const SITE = 'mindset-caro';
+const BUCKET = 'site-media';
+const PUBLIC_SITE = 'https://www.mindsetcaro.com';
+const DISCLAIMER = '*Las rentabilidades pasadas no garantizan rentabilidades futuras. Proyecciones ilustrativas. Producto sujeto a las condiciones de la póliza y a aprobación de la aseguradora. Este contenido es educativo y no constituye una recomendación de inversión personalizada.*';
+// Horizontal brand covers that live in the site repo (app/public/media/…).
+const FRAMES = ['/mindset-caro/media/blog/generic-blindaje.webp', '/mindset-caro/media/blog/generic-mindset.webp',
+  '/mindset-caro/media/blog/generic-ahorro.webp', '/mindset-caro/media/frames/escudo.webp'];
+
+// Site copy the landing page reads (mindset-caro/app/src: Hero, Pilares, lib/lead).
+// Empty = the page shows the default written in the code.
+const COPY = [
+  { group: 'Portada', items: [
+    { field: 'blindaje.hero.subtitle', label: 'Frase principal (debajo de “Blindaje Patrimonial”)', def: 'Asegura tu capital desde el día uno.' },
+    { field: 'blindaje.hero.body', label: 'Texto de la portada', def: 'Un solo plan, dos motores: protección para tu familia desde el primer día y ahorro disciplinado invertido a largo plazo en el índice S&P 500.', long: true },
+    { field: 'blindaje.hero.photo', label: 'Foto de la portada (enlace a la imagen)', def: '/mindset-caro/media/caro/hero.webp', url: true },
+  ]},
+  { group: 'Tus 3 pilares', items: [
+    { field: 'pillars.p1.title', label: 'Pilar 1 · título', def: 'Blindaje Patrimonial' },
+    { field: 'pillars.p1.desc', label: 'Pilar 1 · texto', def: 'Protege lo que has construido y la tranquilidad de tu familia frente a lo inesperado, desde el primer día.', long: true },
+    { field: 'pillars.p2.title', label: 'Pilar 2 · título', def: 'Libertad Financiera' },
+    { field: 'pillars.p2.desc', label: 'Pilar 2 · texto', def: 'Ahorro disciplinado e interés compuesto a largo plazo, con metas claras para tu retiro y tus proyectos.', long: true },
+    { field: 'pillars.p3.title', label: 'Pilar 3 · título', def: 'Mindset y Ventas' },
+    { field: 'pillars.p3.desc', label: 'Pilar 3 · texto', def: 'La mentalidad correcta y las habilidades para vender, negociar y hacer crecer tus ingresos.', long: true },
+  ]},
+  { group: 'Contacto', items: [
+    { field: 'contact.whatsapp', label: 'Tu WhatsApp (con indicativo, solo números)', def: '573001234567', hint: 'Ejemplo: 573001234567. Activa todos los botones “Habla con Caro”.' },
+    { field: 'contact.booking_url', label: 'Enlace para agendar la llamada de 20 min', def: 'https://calendly.com/…', url: true, hint: 'Calendly, Zoho Bookings u otro. Vacío = la llamada se pide por WhatsApp.' },
+  ]},
+];
+
+const sb = supabase.createClient(SB_URL, SB_ANON, {
+  auth: { persistSession: true, autoRefreshToken: true, storageKey: 'mc-cms-auth', detectSessionInUrl: true },
+});
+
 const $ = (s) => document.querySelector(s);
-const API_CONTENT = '/api/mc-content';
-const API_INGEST  = '/api/ingest';
-let adminKey = sessionStorage.getItem('mc_admin_key') || '';
-let rows = [];          // raw content rows for current site
-let autoTimer = null;
+const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let toastTimer;
+function toast(msg, err = false) {
+  const t = $('#toast'); t.textContent = msg; t.classList.toggle('err', !!err); t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), err ? 5000 : 2600);
+}
+const friendly = (e) => {
+  const m = (e && (e.message || e.error_description || e.msg)) || String(e);
+  if (/duplicate key|23505/.test(m)) return 'Ya existe un artículo con esa dirección. Cambia la dirección del artículo.';
+  if (/row-level security|42501|permission/i.test(m)) return 'Tu sesión no tiene permiso para guardar. Sal y vuelve a entrar.';
+  if (/JWT|expired/i.test(m)) return 'Tu sesión venció. Vuelve a entrar con tu correo.';
+  if (/slug_check|check constraint/i.test(m)) return 'La dirección solo puede tener letras sin tilde, números y guiones.';
+  if (/Failed to fetch|NetworkError/i.test(m)) return 'Sin conexión. Revisa tu internet e intenta otra vez.';
+  return m;
+};
 
-if (adminKey) $('#adminKey').value = adminKey;
+// ───────────────────────── Markdown (same rules as api/data.js mdToHtml) ─────────────────────────
+function mdSafeUrl(u) { const url = String(u || '').trim(); return /^(https?:\/\/|\/|#|mailto:)/i.test(url) ? url : '#'; }
+function mdSlug(s) { return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60); }
+function mdInline(text) {
+  let s = esc(text);
+  s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+  s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (_, alt, u) => `<img src="${mdSafeUrl(u)}" alt="${alt}" loading="lazy">`);
+  s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, t, u) => {
+    const href = mdSafeUrl(u.replace(/&amp;/g, '&'));
+    const ext = /^https?:\/\//i.test(href) && !/mindsetcaro\.com/i.test(href);
+    return `<a href="${esc(href)}"${ext ? ' target="_blank" rel="noopener"' : ''}>${t}</a>`;
+  });
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, '$1<em>$2</em>');
+  s = s.replace(/(^|[^_\w])_([^_\n]+)_(?!\w)/g, '$1<em>$2</em>');
+  return s;
+}
+function mdToHtml(md) {
+  const lines = String(md || '').replace(/\r\n?/g, '\n').split('\n');
+  const out = []; let para = []; let list = null; let quote = [];
+  const flushPara = () => { if (para.length) { out.push(`<p>${mdInline(para.join(' '))}</p>`); para = []; } };
+  const flushList = () => { if (list) { out.push(`<${list.tag}>${list.items.map((i) => `<li>${mdInline(i)}</li>`).join('')}</${list.tag}>`); list = null; } };
+  const flushQuote = () => { if (quote.length) { out.push(`<blockquote><p>${mdInline(quote.join(' '))}</p></blockquote>`); quote = []; } };
+  const flushAll = () => { flushPara(); flushList(); flushQuote(); };
+  for (const raw of lines) {
+    const line = raw.trimEnd(); let m;
+    if (!line.trim()) { flushAll(); continue; }
+    if ((m = line.match(/^(#{1,4})\s+(.*)$/))) { flushAll(); const l = Math.min(4, Math.max(2, m[1].length)); out.push(`<h${l} id="${mdSlug(m[2])}">${mdInline(m[2])}</h${l}>`); }
+    else if (/^\s*(-{3,}|\*{3,})\s*$/.test(line)) { flushAll(); out.push('<hr>'); }
+    else if ((m = line.match(/^>\s?(.*)$/))) { flushPara(); flushList(); quote.push(m[1]); }
+    else if ((m = line.match(/^\s*[-*•]\s+(.*)$/))) { flushPara(); flushQuote(); if (!list || list.tag !== 'ul') { flushList(); list = { tag: 'ul', items: [] }; } list.items.push(m[1]); }
+    else if ((m = line.match(/^\s*\d+[.)]\s+(.*)$/))) { flushPara(); flushQuote(); if (!list || list.tag !== 'ol') { flushList(); list = { tag: 'ol', items: [] }; } list.items.push(m[1]); }
+    else if (list && /^\s{2,}\S/.test(raw)) { list.items[list.items.length - 1] += ' ' + line.trim(); }
+    else { flushList(); flushQuote(); para.push(line.trim()); }
+  }
+  flushAll();
+  return out.join('\n');
+}
 
-function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
+// ───────────────────────── Auth ─────────────────────────
+let me = null;
+let pendingEmail = '';
 
-// ---- Tabs ----
-document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => {
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  const tab = btn.dataset.tab;
-  $('#tab-cms').classList.toggle('hidden', tab!=='cms');
-  $('#tab-data').classList.toggle('hidden', tab!=='data');
-  if (tab==='data') loadEvents();
+function show(view) {
+  $('#loginView').classList.toggle('hidden', view !== 'login');
+  $('#app').classList.toggle('hidden', view !== 'app');
+  $('#tabs').classList.toggle('hidden', view !== 'app');
+  $('#who').classList.toggle('hidden', view !== 'app');
+}
+function loginMsg(text, kind = '') { const m = $('#loginMsg'); m.textContent = text; m.className = 'msg ' + kind; }
+
+async function enter(session) {
+  const { data: ok, error } = await sb.rpc('mc_is_editor', { p_site: SITE });
+  if (error || ok !== true) {
+    await sb.auth.signOut();
+    show('login'); $('#emailForm').classList.remove('hidden'); $('#codeForm').classList.add('hidden');
+    loginMsg(`El correo ${session.user.email} no tiene permiso para editar este sitio. Escríbele a Ari para que lo agregue.`, 'err');
+    return;
+  }
+  me = session.user;
+  $('#whoEmail').textContent = me.email;
+  show('app');
+  routeTo(location.hash);
+}
+
+$('#emailForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  pendingEmail = $('#email').value.trim().toLowerCase();
+  if (!pendingEmail) return;
+  $('#sendBtn').disabled = true; loginMsg('Enviando…');
+  const { error } = await sb.auth.signInWithOtp({ email: pendingEmail, options: { shouldCreateUser: false } });
+  $('#sendBtn').disabled = false;
+  if (error) {
+    const m = /signups not allowed|not found|Signups/i.test(error.message)
+      ? 'Ese correo no está registrado como editor. Usa el correo que te dio acceso.'
+      : /rate|seconds/i.test(error.message) ? 'Espera un minuto antes de pedir otro código.' : friendly(error);
+    return loginMsg(m, 'err');
+  }
+  $('#emailForm').classList.add('hidden'); $('#codeForm').classList.remove('hidden');
+  $('#codeTo').textContent = `· enviado a ${pendingEmail}`;
+  loginMsg('Te enviamos el código. Revisa tu correo.', 'ok');
+  $('#code').focus();
+});
+$('#codeForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const token = $('#code').value.replace(/\D/g, '');
+  if (token.length !== 6) return loginMsg('El código tiene 6 números.', 'err');
+  $('#verifyBtn').disabled = true; loginMsg('Verificando…');
+  const { data, error } = await sb.auth.verifyOtp({ email: pendingEmail, token, type: 'email' });
+  $('#verifyBtn').disabled = false;
+  if (error || !data.session) return loginMsg('Código incorrecto o vencido. Pide uno nuevo.', 'err');
+  loginMsg(''); $('#code').value = '';
+  enter(data.session);
+});
+$('#code').addEventListener('input', (e) => { const v = e.target.value.replace(/\D/g, '').slice(0, 6); e.target.value = v; if (v.length === 6) $('#codeForm').requestSubmit(); });
+$('#backToEmail').addEventListener('click', (e) => { e.preventDefault(); $('#codeForm').classList.add('hidden'); $('#emailForm').classList.remove('hidden'); loginMsg(''); });
+$('#resend').addEventListener('click', (e) => { e.preventDefault(); $('#emailForm').requestSubmit(); });
+$('#logout').addEventListener('click', async () => {
+  if (dirty && !confirm('Tienes cambios sin guardar. ¿Salir de todas formas?')) return;
+  dirty = false; await sb.auth.signOut(); me = null; location.hash = ''; show('login');
+  $('#emailForm').classList.remove('hidden'); $('#codeForm').classList.add('hidden'); loginMsg('Saliste. Hasta pronto.', 'ok');
+});
+
+// ───────────────────────── Tabs / routing ─────────────────────────
+document.querySelectorAll('.tab').forEach((b) => b.addEventListener('click', () => { location.hash = b.dataset.tab === 'copy' ? '#textos' : '#blog'; }));
+window.addEventListener('hashchange', () => me && routeTo(location.hash));
+window.addEventListener('beforeunload', (e) => { if (dirty || copyDirty()) { e.preventDefault(); e.returnValue = ''; } });
+
+function routeTo(hash) {
+  const h = hash || '#blog';
+  const isCopy = h === '#textos';
+  document.querySelectorAll('.tab').forEach((b) => b.classList.toggle('active', (b.dataset.tab === 'copy') === isCopy));
+  $('#copyView').classList.toggle('hidden', !isCopy);
+  $('#blogList').classList.add('hidden'); $('#postEditor').classList.add('hidden');
+  if (isCopy) return loadCopy();
+  const m = h.match(/^#post\/(.+)$/);
+  if (m) return openPost(decodeURIComponent(m[1]));
+  if (h === '#nuevo') return openPost(null);
+  $('#blogList').classList.remove('hidden');
+  loadPosts();
+}
+
+// ───────────────────────── Blog list ─────────────────────────
+let posts = [];
+async function loadPosts() {
+  const { data, error } = await sb.from('mc_posts')
+    .select('id,slug,title,status,cover_url,published_at,updated_at')
+    .order('updated_at', { ascending: false });
+  const el = $('#posts');
+  if (error) { el.innerHTML = `<p class="empty">No pude cargar los artículos: ${esc(friendly(error))}</p>`; return; }
+  posts = data || [];
+  if (!posts.length) { el.innerHTML = '<p class="empty">Aún no hay artículos. Crea el primero con “+ Nuevo artículo”.</p>'; return; }
+  el.innerHTML = posts.map((p) => `
+    <div class="post-row" data-id="${esc(p.id)}" role="button" tabindex="0">
+      <div class="thumb" style="${p.cover_url ? `background-image:url('${esc(p.cover_url)}')` : ''}"></div>
+      <div><h3>${esc(p.title)}</h3><div class="meta">/blog/${esc(p.slug)} · editado ${esc(new Date(p.updated_at).toLocaleDateString('es-CO'))}</div></div>
+      <div class="st">${p.status === 'published' ? '<span class="pill pub">Publicado</span>' : '<span class="pill draft">Borrador</span>'}</div>
+    </div>`).join('');
+  el.querySelectorAll('.post-row').forEach((r) => {
+    const go = () => { location.hash = '#post/' + encodeURIComponent(r.dataset.id); };
+    r.addEventListener('click', go); r.addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
+  });
+}
+$('#newPost').addEventListener('click', () => { location.hash = '#nuevo'; });
+
+// ───────────────────────── Post editor ─────────────────────────
+let cur = null;      // current post row (null fields for a new one)
+let dirty = false;
+let slugTouched = false;
+const F = { title: '#pTitle', excerpt: '#pExcerpt', body: '#body', cover_alt: '#pCoverAlt', seo_title: '#pSeoTitle', seo_description: '#pSeoDesc', slug: '#pSlug', tags: '#pTags' };
+
+async function openPost(id) {
+  if (dirty && cur && !confirm('Tienes cambios sin guardar. ¿Descartarlos?')) { history.back(); return; }
+  $('#postEditor').classList.remove('hidden');
+  if (id) {
+    const { data, error } = await sb.from('mc_posts').select('*').eq('id', id).maybeSingle();
+    if (error || !data) { toast(error ? friendly(error) : 'No encontré ese artículo.', true); location.hash = '#blog'; return; }
+    cur = data; slugTouched = true;
+  } else {
+    cur = { id: null, title: '', excerpt: '', body: '', cover_url: '', cover_alt: '', seo_title: '', seo_description: '', slug: '', tags: [], status: 'draft', author: 'Mindset Caro' };
+    slugTouched = false;
+  }
+  $(F.title).value = cur.title || '';
+  $(F.excerpt).value = cur.excerpt || '';
+  $(F.body).value = cur.body || '';
+  $(F.cover_alt).value = cur.cover_alt || '';
+  $(F.seo_title).value = cur.seo_title || '';
+  $(F.seo_description).value = cur.seo_description || '';
+  $(F.slug).value = cur.slug || '';
+  $(F.tags).value = (Array.isArray(cur.tags) ? cur.tags : []).join(', ');
+  setCover(cur.cover_url || '');
+  dirty = false;
+  refreshEditorChrome();
+  window.scrollTo(0, 0);
+  if (!id) $(F.title).focus();
+}
+
+function slugify(s) { return mdSlug(s).slice(0, 80).replace(/-+$/, ''); }
+function readForm() {
+  return {
+    title: $(F.title).value.trim(),
+    excerpt: $(F.excerpt).value.trim() || null,
+    body: $(F.body).value,
+    cover_url: cur.cover_url || null,
+    cover_alt: $(F.cover_alt).value.trim() || null,
+    seo_title: $(F.seo_title).value.trim() || null,
+    seo_description: $(F.seo_description).value.trim() || null,
+    slug: slugify($(F.slug).value || $(F.title).value),
+    tags: $(F.tags).value.split(',').map((t) => t.trim()).filter(Boolean),
+  };
+}
+
+function setCount(sel, n, max) { const c = $(sel); c.textContent = `${n}/${max}`; c.classList.toggle('warn', n > max); }
+function refreshEditorChrome() {
+  const f = readForm();
+  const pub = cur.status === 'published';
+  $('#edStatus').innerHTML = pub ? '<span class="pill pub">Publicado</span>' : '<span class="pill draft">Borrador</span>';
+  $('#publish').textContent = pub ? 'Guardar y actualizar' : 'Publicar';
+  $('#unpublish').classList.toggle('hidden', !pub);
+  $('#saveDraft').classList.toggle('hidden', pub);
+  $('#deletePost').closest('.card').classList.toggle('hidden', !cur.id);
+  const live = $('#viewLive');
+  live.classList.toggle('hidden', !(pub && cur.slug));
+  live.href = `/blog/${cur.slug || ''}`;
+  $('#edSaved').textContent = dirty ? 'Cambios sin guardar' : (cur.updated_at ? `Guardado ${new Date(cur.updated_at).toLocaleString('es-CO', { dateStyle: 'short', timeStyle: 'short' })}` : '');
+  $('#slugHint').textContent = `mindsetcaro.com/blog/${f.slug || '…'}` + (pub ? ' · ojo: cambiarla rompe los enlaces ya compartidos' : '');
+  const st = f.seo_title || (f.title ? `${f.title} | Mindset Caro` : 'Título del artículo');
+  const sd = f.seo_description || f.excerpt || 'La descripción que verá la gente en Google.';
+  $('#serpTitle').textContent = st.length > 62 ? st.slice(0, 60) + '…' : st;
+  $('#serpDesc').textContent = sd.length > 160 ? sd.slice(0, 158) + '…' : sd;
+  $('#serpUrl').textContent = `www.mindsetcaro.com › blog › ${f.slug || '…'}`;
+  setCount('#cSeoTitle', (f.seo_title || '').length, 60);
+  setCount('#cSeoDesc', (f.seo_description || '').length, 155);
+  setCount('#cExcerpt', (f.excerpt || '').length, 200);
+  const words = (f.body.match(/\S+/g) || []).length;
+  $('#words').textContent = words ? `· ${words.toLocaleString('es-CO')} palabras` : '';
+}
+Object.values(F).forEach((sel) => $(sel).addEventListener('input', () => {
+  if (sel === F.slug) slugTouched = true;
+  if (sel === F.title && !slugTouched && cur.status !== 'published') $(F.slug).value = slugify($(F.title).value);
+  dirty = true; refreshEditorChrome();
 }));
 
-$('#saveKey').addEventListener('click', () => {
-  adminKey = $('#adminKey').value.trim();
-  sessionStorage.setItem('mc_admin_key', adminKey);
-  toast('Clave guardada'); loadContent();
+async function savePost(status) {
+  const f = readForm();
+  if (!f.title) { toast('Ponle un título al artículo.', true); $(F.title).focus(); return false; }
+  if (!f.slug) { toast('Falta la dirección del artículo.', true); return false; }
+  if (status === 'published') {
+    if (!f.body.trim()) { toast('El artículo está vacío.', true); return false; }
+    if (!/\/diagnostico/.test(f.body)) {
+      if (!confirm('Este artículo no tiene enlace al diagnóstico. ¿Publicarlo así?')) return false;
+    }
+    if (!/rentabilidades pasadas no garantizan/i.test(f.body)) {
+      if (!confirm('Falta el aviso legal al final (botón “+ Aviso legal”). ¿Publicarlo así?')) return false;
+    }
+  }
+  const row = { ...f, status, author: cur.author || 'Mindset Caro' };
+  const btns = ['#publish', '#saveDraft', '#unpublish'].map((s) => $(s));
+  btns.forEach((b) => (b.disabled = true));
+  const q = cur.id ? sb.from('mc_posts').update(row).eq('id', cur.id) : sb.from('mc_posts').insert(row);
+  const { data, error } = await q.select('*').single();
+  btns.forEach((b) => (b.disabled = false));
+  if (error) { toast(friendly(error), true); return false; }
+  const wasNew = !cur.id;
+  cur = data; dirty = false; slugTouched = true;
+  $(F.slug).value = cur.slug;
+  refreshEditorChrome();
+  toast(status === 'published' ? 'Publicado. Ya está en tu blog.' : 'Borrador guardado.');
+  if (wasNew) history.replaceState(null, '', '#post/' + encodeURIComponent(cur.id));
+  return true;
+}
+$('#saveDraft').addEventListener('click', () => savePost('draft'));
+$('#publish').addEventListener('click', () => savePost('published'));
+$('#unpublish').addEventListener('click', async () => {
+  if (!confirm('El artículo dejará de verse en tu blog (no se borra). ¿Despublicar?')) return;
+  if (await savePost('draft')) toast('Despublicado. Quedó como borrador.');
+});
+$('#deletePost').addEventListener('click', async () => {
+  if (!cur.id || !confirm(`¿Eliminar “${cur.title}” para siempre? Esto no se puede deshacer.`)) return;
+  const { error } = await sb.from('mc_posts').delete().eq('id', cur.id);
+  if (error) return toast(friendly(error), true);
+  dirty = false; toast('Artículo eliminado.'); location.hash = '#blog';
+});
+$('#backToList').addEventListener('click', () => {
+  if (dirty && !confirm('Tienes cambios sin guardar. ¿Volver sin guardar?')) return;
+  dirty = false; location.hash = '#blog';
+});
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's' && !$('#postEditor').classList.contains('hidden')) {
+    e.preventDefault(); savePost(cur.status === 'published' ? 'published' : 'draft');
+  }
 });
 
-// ===================== CMS =====================
-async function loadContent(){
-  const site = $('#site').value;
-  try{
-    const r = await fetch(`${API_CONTENT}?site=${encodeURIComponent(site)}&raw=1`);
-    rows = await r.json();
-    if (!Array.isArray(rows)) { $('#cmsFields').innerHTML = `<p class="muted">Error: ${JSON.stringify(rows)}</p>`; return; }
-    renderFields(rows);
-  }catch(e){ $('#cmsFields').innerHTML = `<p class="muted">No se pudo cargar: ${e.message}</p>`; }
+// toolbar
+function wrapSel(before, after = before, placeholder = 'texto') {
+  const ta = $('#body'); const s = ta.selectionStart; const e = ta.selectionEnd;
+  const sel = ta.value.slice(s, e) || placeholder;
+  ta.setRangeText(before + sel + after, s, e, 'end');
+  ta.focus(); ta.setSelectionRange(s + before.length, s + before.length + sel.length);
+  ta.dispatchEvent(new Event('input'));
 }
+function linePrefix(prefix, numbered = false) {
+  const ta = $('#body'); const v = ta.value;
+  const s = v.lastIndexOf('\n', ta.selectionStart - 1) + 1;
+  let e = v.indexOf('\n', ta.selectionEnd); if (e === -1) e = v.length;
+  const block = v.slice(s, e).split('\n').map((l, i) => (numbered ? `${i + 1}. ` : prefix) + l.replace(/^(#{1,4}\s|[-*]\s|\d+\.\s|>\s?)/, '')).join('\n');
+  ta.setRangeText(block, s, e, 'end'); ta.focus(); ta.dispatchEvent(new Event('input'));
+}
+function insertBlock(text) {
+  const ta = $('#body'); const v = ta.value; const pos = ta.selectionEnd;
+  const pre = pos > 0 && v[pos - 1] !== '\n' ? '\n\n' : (pos > 1 && v[pos - 2] !== '\n' ? '\n' : '');
+  ta.setRangeText(pre + text + '\n', pos, pos, 'end'); ta.focus(); ta.dispatchEvent(new Event('input'));
+}
+$('#toolbar').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  const k = b.dataset.md;
+  if (k === 'h2') linePrefix('## ');
+  else if (k === 'h3') linePrefix('### ');
+  else if (k === 'b') wrapSel('**');
+  else if (k === 'i') wrapSel('*');
+  else if (k === 'ul') linePrefix('- ');
+  else if (k === 'ol') linePrefix('', true);
+  else if (k === 'quote') linePrefix('> ');
+  else if (k === 'link') {
+    const url = prompt('Pega el enlace (por ejemplo /diagnostico o https://…):', '/diagnostico');
+    if (url) wrapSel('[', `](${url.trim()})`, 'texto del enlace');
+  }
+  else if (k === 'diag') insertBlock('**¿Quieres saber qué tan blindado estás hoy?** [Haz tu diagnóstico gratis](/diagnostico): son 3 minutos y ves tu resultado en pantalla.');
+  else if (k === 'disc') {
+    if (/rentabilidades pasadas no garantizan/i.test($('#body').value)) return toast('El aviso legal ya está en el artículo.');
+    const ta = $('#body'); ta.setSelectionRange(ta.value.length, ta.value.length); insertBlock('---\n\n' + DISCLAIMER);
+  }
+});
 
-function renderFields(list){
-  const groups = {};
-  list.forEach(row => { const g = row.grp || row.field.split('.')[0]; (groups[g] ||= []).push(row); });
-  const wrap = $('#cmsFields'); wrap.innerHTML = '';
-  Object.keys(groups).sort().forEach(g => {
-    const det = document.createElement('details'); det.className='group'; det.open = true;
-    det.innerHTML = `<summary>${g}</summary>`;
-    groups[g].forEach(row => {
-      const isJson = row.value_json !== null && row.value_json !== undefined;
-      const isAsset = !!row.asset_url;
-      const val = isJson ? JSON.stringify(row.value_json, null, 2) : (isAsset ? row.asset_url : (row.value_text || ''));
-      const type = isJson ? 'json' : (isAsset ? 'asset' : 'text');
-      const field = document.createElement('div'); field.className='field';
-      const ctrl = isJson || (val && val.length > 60)
-        ? `<textarea data-field="${row.field}" data-type="${type}">${escapeHtml(val)}</textarea>`
-        : `<input type="text" data-field="${row.field}" data-type="${type}" value="${escapeHtml(val)}" />`;
-      field.innerHTML = `<label>${row.field}<span class="meta">${type}${isAsset?' · URL imagen/video':''}</span></label><div>${ctrl}</div>`;
-      det.appendChild(field);
-    });
-    wrap.appendChild(det);
+// cover
+function setCover(url) {
+  cur.cover_url = url || '';
+  const box = $('#coverBox');
+  box.style.backgroundImage = url ? `url('${url.replace(/'/g, '%27')}')` : '';
+  box.classList.toggle('has', !!url);
+  $('#removeCover').classList.toggle('hidden', !url);
+}
+$('#frames').innerHTML = FRAMES.map((u) => `<button type="button" data-u="${u}" style="background-image:url('${u}')" title="Usar esta imagen"></button>`).join('');
+$('#frames').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  setCover(b.dataset.u); dirty = true; refreshEditorChrome();
+});
+$('#removeCover').addEventListener('click', () => { setCover(''); dirty = true; refreshEditorChrome(); });
+$('#coverBox').addEventListener('click', () => $('#coverFile').click());
+$('#coverFile').addEventListener('change', async (e) => {
+  const file = e.target.files && e.target.files[0]; e.target.value = '';
+  if (!file) return;
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type)) return toast('Usa una imagen JPG, PNG o WebP.', true);
+  const box = $('#coverBox'); box.textContent = 'Subiendo…'; box.classList.remove('has');
+  try {
+    const blob = await shrink(file);
+    const base = slugify(readForm().slug || file.name.replace(/\.[^.]+$/, '')) || 'portada';
+    const path = `${SITE}/blog/${new Date().toISOString().slice(0, 10)}-${base}-${Math.random().toString(36).slice(2, 7)}.${blob.type === 'image/webp' ? 'webp' : file.name.split('.').pop().toLowerCase()}`;
+    const { error } = await sb.storage.from(BUCKET).upload(path, blob, { contentType: blob.type, cacheControl: '31536000', upsert: false });
+    if (error) throw error;
+    const { data } = sb.storage.from(BUCKET).getPublicUrl(path);
+    box.textContent = '';
+    setCover(data.publicUrl); dirty = true; refreshEditorChrome();
+    toast('Portada lista. Recuerda guardar.');
+  } catch (err) {
+    box.innerHTML = 'Toca para subir una imagen<br>(JPG, PNG o WebP · horizontal)';
+    setCover(cur.cover_url);
+    toast('No se pudo subir la imagen: ' + friendly(err), true);
+  }
+});
+// Big photos from the phone → max 1600 px wide WebP, so the blog stays fast.
+function shrink(file) {
+  return new Promise((resolve) => {
+    if (file.size < 400 * 1024) return resolve(file);
+    const img = new Image(); const url = URL.createObjectURL(file);
+    img.onload = () => {
+      const scale = Math.min(1, 1600 / img.naturalWidth);
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.naturalWidth * scale); c.height = Math.round(img.naturalHeight * scale);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      c.toBlob((b) => resolve(b && b.size < file.size ? b : file), 'image/webp', 0.85);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+    img.src = url;
   });
 }
 
-async function saveAll(){
-  if(!adminKey){ toast('Falta admin key'); return; }
-  const site = $('#site').value;
-  const inputs = document.querySelectorAll('[data-field]');
-  const fields = [];
-  inputs.forEach(el => {
-    const f = el.dataset.field, type = el.dataset.type, v = el.value;
-    const row = { site, field: f };
-    if (type === 'json') { try { row.value_json = JSON.parse(v); } catch(e){ throw new Error(`JSON inválido en ${f}`); } }
-    else if (type === 'asset') row.asset_url = v;
-    else row.value_text = v;
-    fields.push(row);
+// preview
+$('#previewBtn').addEventListener('click', () => {
+  const f = readForm();
+  $('#pvTags').textContent = f.tags.length ? f.tags.join(' · ') : 'Blog';
+  $('#pvTitle').textContent = f.title || 'Sin título';
+  $('#pvMeta').textContent = `${cur.author || 'Mindset Caro'} · ${new Date(cur.published_at || Date.now()).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+  const c = $('#pvCover'); c.classList.toggle('hidden', !cur.cover_url); if (cur.cover_url) { c.src = cur.cover_url; c.alt = f.cover_alt || ''; }
+  $('#pvExcerpt').textContent = f.excerpt || '';
+  $('#pvBody').innerHTML = mdToHtml(f.body);
+  $('#previewWrap').classList.remove('hidden'); document.body.style.overflow = 'hidden';
+});
+const closePv = () => { $('#previewWrap').classList.add('hidden'); document.body.style.overflow = ''; };
+$('#closePreview').addEventListener('click', closePv);
+$('#previewWrap').addEventListener('click', (e) => { if (e.target.id === 'previewWrap') closePv(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePv(); });
+
+// ───────────────────────── Site copy ─────────────────────────
+let copyRows = {};   // field -> saved value (string)
+function copyDirty() { return !!document.querySelector('.copy-item.changed'); }
+async function loadCopy() {
+  const { data, error } = await sb.from('mc_content').select('field,value_text,asset_url,value_json').eq('site', 'landing');
+  const el = $('#copyList');
+  if (error) { el.innerHTML = `<p class="empty">No pude cargar los textos: ${esc(friendly(error))}</p>`; return; }
+  copyRows = {};
+  (data || []).forEach((r) => { copyRows[r.field] = r.value_text ?? r.asset_url ?? (r.value_json != null ? JSON.stringify(r.value_json) : ''); });
+  el.innerHTML = COPY.map((g) => `<div class="copy-group"><h3>${esc(g.group)}</h3>${g.items.map((it) => {
+    const v = copyRows[it.field] || '';
+    const ctrl = it.long
+      ? `<textarea data-field="${esc(it.field)}" rows="3" placeholder="${esc(it.def)}">${esc(v)}</textarea>`
+      : `<input type="text" data-field="${esc(it.field)}" placeholder="${esc(it.def)}" value="${esc(v)}" />`;
+    return `<div class="copy-item"><div class="row"><label class="f" style="margin:0">${esc(it.label)}</label>${v ? '<span class="tag-custom">Personalizado</span>' : ''}</div>${ctrl}
+      <div class="def">${it.hint ? esc(it.hint) + ' · ' : ''}Original: ${esc(it.def)}${v ? ` · <a href="#" data-reset="${esc(it.field)}">volver al original</a>` : ''}</div></div>`;
+  }).join('')}</div>`).join('');
+  el.querySelectorAll('[data-field]').forEach((inp) => inp.addEventListener('input', () => {
+    inp.closest('.copy-item').classList.toggle('changed', inp.value.trim() !== (copyRows[inp.dataset.field] || '').trim());
+    $('#saveCopy').disabled = !copyDirty();
+  }));
+  el.querySelectorAll('[data-reset]').forEach((a) => a.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (!confirm('¿Volver al texto original?')) return;
+    const { error: err } = await sb.from('mc_content').delete().eq('site', 'landing').eq('field', a.dataset.reset);
+    if (err) return toast(friendly(err), true);
+    toast('Listo, volvió al texto original.'); loadCopy();
+  }));
+  $('#saveCopy').disabled = true;
+}
+$('#saveCopy').addEventListener('click', async () => {
+  const changed = [...document.querySelectorAll('.copy-item.changed [data-field]')];
+  if (!changed.length) return;
+  const upserts = []; const deletes = [];
+  changed.forEach((inp) => {
+    const field = inp.dataset.field; const val = inp.value.trim();
+    if (!val) deletes.push(field);
+    else upserts.push({ site: 'landing', field, grp: field.split('.')[0], value_text: val, value_json: null, asset_url: null });
   });
-  try{
-    const r = await fetch(API_CONTENT, { method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ admin_key: adminKey, fields }) });
-    const data = await r.json();
-    if(!r.ok){ toast('Error: '+(data.error||r.status)); return; }
-    toast(`Guardado (${data.saved} campos)`);
-  }catch(e){ toast(e.message); }
-}
-
-$('#reload').addEventListener('click', loadContent);
-$('#site').addEventListener('change', loadContent);
-$('#saveAll').addEventListener('click', () => { try{ saveAll(); }catch(e){ toast(e.message);} });
-
-// ===================== INCOMING DATA =====================
-async function loadEvents(){
-  if(!adminKey){ toast('Falta admin key'); return; }
-  const app = $('#filterApp').value.trim();
-  const q = `?admin_key=${encodeURIComponent(adminKey)}&limit=200${app?`&source_app=${encodeURIComponent(app)}`:''}`;
-  try{
-    const r = await fetch(API_INGEST + q);
-    const data = await r.json();
-    if(!Array.isArray(data)){ toast('Error: '+(data.error||'')); return; }
-    renderEvents(data);
-  }catch(e){ toast('No se pudo cargar: '+e.message); }
-}
-
-function renderEvents(list){
-  // stats
-  const apps = new Set(list.map(e=>e.source_app));
-  const visitors = new Set(list.map(e=>e.visitor_id).filter(Boolean));
-  $('#stats').innerHTML = `
-    <div class="stat"><b>${list.length}</b><span>eventos (últimos)</span></div>
-    <div class="stat"><b>${apps.size}</b><span>apps fuente</span></div>
-    <div class="stat"><b>${visitors.size}</b><span>visitantes únicos</span></div>`;
-  const tb = $('#eventsTable tbody');
-  if(!list.length){ tb.innerHTML = '<tr><td colspan="6" class="muted">Sin eventos.</td></tr>'; return; }
-  tb.innerHTML = list.map(e => {
-    const t = new Date(e.received_at).toLocaleString('es-CO');
-    const utm = e.utm && Object.keys(e.utm).length ? `<div class="muted">utm: ${escapeHtml(JSON.stringify(e.utm))}</div>` : '';
-    return `<tr>
-      <td>${t}</td>
-      <td><span class="pill">${escapeHtml(e.source_app||'')}</span></td>
-      <td>${escapeHtml(e.event||'')}</td>
-      <td class="muted">${escapeHtml((e.visitor_id||'').slice(0,12))}</td>
-      <td class="payload">${escapeHtml(JSON.stringify(e.payload||{}))}</td>
-      <td>${escapeHtml((e.url||'').slice(0,60))}${utm}</td>
-    </tr>`;
-  }).join('');
-}
-
-$('#reloadData').addEventListener('click', loadEvents);
-$('#filterApp').addEventListener('keydown', e => { if(e.key==='Enter') loadEvents(); });
-$('#autoRefresh').addEventListener('change', e => {
-  clearInterval(autoTimer);
-  if(e.target.checked) autoTimer = setInterval(loadEvents, 10000);
+  $('#saveCopy').disabled = true;
+  if (upserts.length) {
+    const { error } = await sb.from('mc_content').upsert(upserts, { onConflict: 'site,field' });
+    if (error) { $('#saveCopy').disabled = false; return toast(friendly(error), true); }
+  }
+  if (deletes.length) {
+    const { error } = await sb.from('mc_content').delete().eq('site', 'landing').in('field', deletes);
+    if (error) { $('#saveCopy').disabled = false; return toast(friendly(error), true); }
+  }
+  toast('Textos guardados. Se ven en el sitio en menos de un minuto.');
+  loadCopy();
 });
 
-function escapeHtml(s){ return String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-
-// boot
-if (adminKey) loadContent();
+// ───────────────────────── Boot ─────────────────────────
+(async () => {
+  const { data } = await sb.auth.getSession();
+  if (data.session) enter(data.session); else show('login');
+})();
+sb.auth.onAuthStateChange((evt) => { if (evt === 'SIGNED_OUT' && me) { me = null; show('login'); } });
+})();
 </script>
 </body>
 </html>

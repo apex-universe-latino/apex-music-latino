@@ -1,3 +1,5 @@
+-- ⚠ SUPERSEDED 2026-11-07: mc_content + mc_posts now live in CUBO FRM prod (laykneyclcirdionugxt),
+--   FRM repo migration 064_mindset_caro_site_store.sql (editor allow-list + RLS). Kept for history.
 -- Mindset Caro — Supabase Schema
 -- Brand: Mindset Caro (Diana Carolina) · Apex MODELOS Latino (influencer world)
 -- ⚠ Run this in the dedicated APEX MODELOS LATINO Supabase project — NOT the music one.

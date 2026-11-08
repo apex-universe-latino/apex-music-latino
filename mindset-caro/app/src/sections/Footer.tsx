@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Brand from '../components/Brand';
-import { BIO, COMMUNITY_URL, DISCLAIMER } from '../config';
+import { BIO, COMMUNITY_URL, DISCLAIMER, media } from '../config';
 import { useGoToSection } from '../lib/nav';
 
 export default function Footer() {
@@ -47,6 +47,12 @@ export default function Footer() {
           <p className="mt-3 text-xs leading-relaxed text-white/35">
             La información de este sitio es educativa y no constituye asesoría financiera personalizada ni una oferta de un producto específico.
             &copy; {new Date().getFullYear()} Mindset Caro.
+          </p>
+          <p className="mt-4 text-xs text-white/35">
+            <a href="https://gsd500bpo.com" className="inline-flex items-center gap-2 transition-colors hover:text-white/70">
+              <img src={media('brand/gsd500bpo.webp')} alt="GSD 500 BPO" width={18} height={18} loading="lazy" className="rounded-sm opacity-80" />
+              Desarrollado por GSD 500 BPO
+            </a>
           </p>
         </div>
       </div>
