@@ -58,7 +58,7 @@ function HeroVisual({ photo }: { photo: string }) {
       <div data-slot="blindaje.hero.photo" data-filled={photo ? 'yes' : 'no'}
         className="bezel relative aspect-[4/5] overflow-hidden rounded-[28px] bg-dark-light" style={{ ['--bezel-o' as string]: 0.9 }}>
         {photo ? (
-          <img src={photo} alt="Carolina, Mindset Caro" className="h-full w-full object-cover" width={720} height={900} fetchPriority="high" />
+          <img src={photo} alt="Carolina, Mindset Caro" className="h-full w-full object-cover" style={{ objectPosition: "50% 22%" }} width={720} height={900} fetchPriority="high" />
         ) : (
           <video ref={vid} src={HERO_LOOP} poster={HERO_POSTER} muted loop playsInline preload="metadata" aria-hidden
             className="h-full w-full object-cover" style={{ objectPosition: '100% 50%' }} />

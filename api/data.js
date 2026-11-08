@@ -710,9 +710,12 @@ async function handleSitemap(req, res) {
   res.setHeader('Content-Type', 'application/xml; charset=utf-8');
   let urls = [];
   if (isMindsetHost(req)) {
-    const B = 'https://mindsetcaro.com';
+    const B = 'https://www.mindsetcaro.com';
     urls.push({ loc: `${B}/`, priority: '1.0' });
+    urls.push({ loc: `${B}/diagnostico`, priority: '0.9' });
     urls.push({ loc: `${B}/blog`, priority: '0.7' });
+    urls.push({ loc: `${B}/privacidad`, priority: '0.2' });
+    urls.push({ loc: `${B}/terminos`, priority: '0.2' });
     const SUPABASE_URL = modelosUrl();
     const KEY = modelosServiceKey();
     if (SUPABASE_URL && KEY) {

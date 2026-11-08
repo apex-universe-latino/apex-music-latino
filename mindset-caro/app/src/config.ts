@@ -35,7 +35,7 @@ export const VIDEOS: VideoItem[] = [
  *  ~1080×1350, < 250 KB) and set HERO_PHOTO = media('media/caro/hero.webp'), or set the
  *  CMS key `blindaje.hero.photo` to an image URL. Empty = the hero shows the shield loop
  *  from her Blindaje video (non-person imagery). */
-export const HERO_PHOTO = '';
+export const HERO_PHOTO = media('media/caro/hero.webp');
 export const HERO_LOOP = media('media/hero-loop.mp4');
 export const HERO_POSTER = media('media/frames/escudo.webp');
 
