@@ -183,25 +183,25 @@ export default function CaroBot({ open, intent, onClose }: { open: boolean; inte
   const placeholder = mode === 'ask_name' ? 'Tu nombre' : mode === 'ask_whatsapp' ? 'Tu WhatsApp' : 'Escribe tu pregunta…';
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 flex h-[85dvh] flex-col overflow-hidden rounded-t-3xl border border-white/10 bg-dark-light shadow-2xl sm:inset-x-auto sm:bottom-6 sm:right-6 sm:h-[600px] sm:w-[390px] sm:rounded-3xl"
+    <div className="fixed inset-x-0 bottom-0 z-50 flex h-[85dvh] flex-col overflow-hidden rounded-t-3xl border border-graphite/10 bg-dark-light shadow-2xl sm:inset-x-auto sm:bottom-6 sm:right-6 sm:h-[600px] sm:w-[390px] sm:rounded-3xl"
       role="dialog" aria-label="Caro IA">
-      <header className="flex items-center gap-3 border-b border-white/10 bg-gradient-to-r from-crimson-deep to-dark-light px-4 py-3">
+      <header className="flex items-center gap-3 border-b border-graphite/10 bg-gradient-to-r from-crimson-deep to-dark-light px-4 py-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-crimson font-black">C</div>
         <div className="flex-1">
           <p className="font-extrabold leading-tight">Caro IA</p>
-          <p className="text-xs text-white/60">Asistente virtual automática de Carolina</p>
+          <p className="text-xs text-graphite/60">Asistente virtual automática de Carolina</p>
         </div>
-        <button type="button" onClick={onClose} className="rounded-lg p-2 text-white/70 hover:text-white" aria-label="Cerrar chat"><X className="h-5 w-5" /></button>
+        <button type="button" onClick={onClose} className="rounded-lg p-2 text-graphite/70 hover:text-graphite" aria-label="Cerrar chat"><X className="h-5 w-5" /></button>
       </header>
 
       <div className="flex-1 space-y-3 overflow-y-auto px-4 py-4" aria-live="polite">
         {msgs.map((m, k) => (
           <div key={k} className={m.from === 'user' ? 'flex justify-end' : ''}>
             <div className={`max-w-[88%] whitespace-pre-line rounded-2xl px-4 py-2.5 text-[15px] leading-relaxed ${
-              m.from === 'user' ? 'rounded-br-md bg-crimson text-white' : 'rounded-bl-md bg-dark text-white/90'}`}>
+              m.from === 'user' ? 'rounded-br-md bg-crimson text-graphite' : 'rounded-bl-md bg-dark text-graphite/90'}`}>
               {m.text}
               {m.privacyLink && (
-                <span className="mt-2 block text-xs text-white/60">
+                <span className="mt-2 block text-xs text-graphite/60">
                   Soy mayor de 18 años y autorizo el tratamiento de mis datos personales (Ley 1581) según la{' '}
                   <Link to="/privacidad" target="_blank" className="underline">política de privacidad</Link>.
                 </span>
@@ -211,7 +211,7 @@ export default function CaroBot({ open, intent, onClose }: { open: boolean; inte
               <div className="mt-2 flex flex-wrap gap-2">
                 {m.chips.map((c) => (
                   <button key={c.action + c.label} type="button" onClick={() => onChip(c)}
-                    className="min-h-[40px] rounded-full border border-crimson/50 px-3.5 py-2 text-left text-sm font-semibold text-white hover:bg-crimson/20">
+                    className="min-h-[40px] rounded-full border border-crimson/50 px-3.5 py-2 text-left text-sm font-semibold text-graphite hover:bg-crimson/20">
                     {c.label}
                   </button>
                 ))}
@@ -219,18 +219,18 @@ export default function CaroBot({ open, intent, onClose }: { open: boolean; inte
             )}
           </div>
         ))}
-        {typing && <div className="w-16 rounded-2xl bg-dark px-4 py-3 text-center tracking-[0.3em] text-white/60">···</div>}
+        {typing && <div className="w-16 rounded-2xl bg-dark px-4 py-3 text-center tracking-[0.3em] text-graphite/60">···</div>}
         <div ref={endRef} />
       </div>
 
-      <form onSubmit={onSend} className="flex gap-2 border-t border-white/10 p-3">
+      <form onSubmit={onSend} className="flex gap-2 border-t border-graphite/10 p-3">
         <input ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)} placeholder={placeholder}
           type={mode === 'ask_whatsapp' ? 'tel' : 'text'} inputMode={mode === 'ask_whatsapp' ? 'tel' : 'text'}
           disabled={mode === 'ask_consent' || mode === 'done'}
-          className="min-w-0 flex-1 rounded-xl border border-white/15 bg-dark px-4 py-3 text-base text-white placeholder-white/35 focus:border-crimson focus:outline-none disabled:opacity-50" />
-        <button type="submit" className="rounded-xl bg-crimson px-4 text-white hover:bg-crimson-glow" aria-label="Enviar"><Send className="h-5 w-5" /></button>
+          className="min-w-0 flex-1 rounded-xl border border-graphite/15 bg-dark px-4 py-3 text-base text-graphite placeholder-graphite/35 focus:border-crimson focus:outline-none disabled:opacity-50" />
+        <button type="submit" className="rounded-xl bg-crimson px-4 text-graphite hover:bg-crimson-glow" aria-label="Enviar"><Send className="h-5 w-5" /></button>
       </form>
-      <p className="px-4 pb-3 text-[11px] leading-snug text-white/40">Respuestas informativas, no son asesoría personalizada ni prometen rentabilidades.</p>
+      <p className="px-4 pb-3 text-[11px] leading-snug text-graphite/40">Respuestas informativas, no son asesoría personalizada ni prometen rentabilidades.</p>
     </div>
   );
 }

@@ -82,7 +82,7 @@ export default function App() {
 
   return (
     <UiContext.Provider value={ui}>
-      <div className="min-h-screen bg-dark text-white">
+      <div className="min-h-screen bg-dark text-graphite">
         <SiteHeader />
 
         <main className="pt-[65px]">

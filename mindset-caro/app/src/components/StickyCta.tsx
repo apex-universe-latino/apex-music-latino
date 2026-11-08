@@ -12,7 +12,7 @@ export default function StickyCta() {
     return () => window.removeEventListener('scroll', on);
   }, []);
   return (
-    <div className={`fixed inset-x-0 bottom-0 z-30 border-t border-white/10 bg-dark/95 p-3 backdrop-blur transition-transform duration-300 sm:hidden ${show ? 'translate-y-0' : 'translate-y-full'}`}>
+    <div className={`fixed inset-x-0 bottom-0 z-30 border-t border-graphite/10 bg-dark/95 p-3 backdrop-blur transition-transform duration-300 sm:hidden ${show ? 'translate-y-0' : 'translate-y-full'}`}>
       <button type="button" onClick={openDiagnostic} className="btn-primary w-full pr-20">Haz tu diagnóstico gratis</button>
     </div>
   );

@@ -13,23 +13,23 @@ const PILLARS = [
 export default function Pilares() {
   const { cms } = useUi();
   return (
-    <section id="pilares" className="section border-t border-white/10">
+    <section id="pilares" className="section border-t border-graphite/10">
       <div className="wrap">
         <Reveal>
           <p className="eyebrow">Mindset Caro</p>
           <h2 className="h2 mt-3 max-w-3xl">Tus 3 pilares de crecimiento.</h2>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/65">
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-graphite/65">
             El éxito verdadero necesita una base sólida. Nos enfocamos en las áreas que de verdad transforman tu realidad.
           </p>
         </Reveal>
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           {PILLARS.map((p, i) => (
-            <Reveal key={p.k} i={i} className="group rounded-2xl border border-white/10 bg-dark-lighter p-6 transition-all duration-300 hover:-translate-y-1 hover:border-crimson/50">
+            <Reveal key={p.k} i={i} className="group rounded-2xl border border-graphite/10 bg-dark-lighter p-6 transition-all duration-300 hover:-translate-y-1 hover:border-crimson/50">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-crimson/10 text-crimson transition-colors group-hover:bg-crimson/20">
                 <p.icon className="h-6 w-6" aria-hidden />
               </div>
-              <h3 className="mt-5 text-xl font-extrabold tracking-tight text-white">{String(cms?.[`pillars.${p.k}.title`] || p.t)}</h3>
-              <p className="mt-2 leading-relaxed text-white/65">{String(cms?.[`pillars.${p.k}.desc`] || p.d)}</p>
+              <h3 className="mt-5 text-xl font-extrabold tracking-tight text-graphite">{String(cms?.[`pillars.${p.k}.title`] || p.t)}</h3>
+              <p className="mt-2 leading-relaxed text-graphite/65">{String(cms?.[`pillars.${p.k}.desc`] || p.d)}</p>
             </Reveal>
           ))}
         </div>

@@ -2,38 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Apex "bezel" rainbow — same stops as the Apex hero compose (hgrad RAIN). Used ONLY as thin
-   accents: hairlines, frame edges, CTA edge glow. No hot pink anywhere. */
+/* Mindset Caro: calm, confident patrimonial planning. */
 :root {
-  --rainbow: linear-gradient(90deg, #e63946, #f4a261, #ffd166, #06d6a0, #118ab2, #7b2d8b, #e63946);
+  --forest: #173b38;
+  --champagne: #d6c3a1;
+  --ivory: #f5f1e9;
+  --graphite: #292c2b;
+  --rainbow: linear-gradient(110deg, #173b38, #d6c3a1, #f5f1e9, #d6c3a1, #173b38);
+  color-scheme: light;
 }
 
 @layer base {
   html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
   section[id], div[id] { scroll-margin-top: 84px; }
-  body { @apply bg-dark text-white font-sans antialiased; }
-  ::selection { background: #e60000; color: #fff; }
-  :focus-visible { outline: 2px solid #ff1a1a; outline-offset: 3px; }
+  body { background: var(--ivory); color: var(--graphite); @apply font-sans antialiased; }
+  ::selection { background: var(--forest); color: var(--ivory); }
+  :focus-visible { outline: 2px solid var(--champagne); outline-offset: 3px; }
 }
 
 @layer components {
-  .eyebrow { @apply font-mono text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] text-crimson-glow; }
+  .eyebrow { color: var(--forest); @apply font-mono text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em]; }
   .btn-primary {
-    @apply relative isolate inline-flex items-center justify-center gap-2 rounded-xl bg-crimson px-6 py-4 text-base font-extrabold text-white
-           shadow-[0_10px_30px_-10px_rgba(230,0,0,.8)] transition-transform duration-200 hover:bg-crimson-glow active:scale-[.98] min-h-[52px];
+    background: var(--forest); color: var(--ivory);
+    @apply relative isolate inline-flex items-center justify-center gap-2 rounded-xl px-6 py-4 text-base font-extrabold
+           shadow-[0_10px_30px_-10px_rgba(23,59,56,.35)] transition-transform duration-200 hover:brightness-110 active:scale-[.98] min-h-[52px];
   }
   .btn-ghost {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 px-6 py-4 text-base font-bold text-white
-           transition-colors hover:border-white/60 min-h-[52px];
+    border-color: rgb(23 59 56 / .28); color: var(--forest);
+    @apply relative inline-flex items-center justify-center gap-2 rounded-xl border px-6 py-4 text-base font-bold
+           transition-colors hover:border-[#173B38] min-h-[52px];
   }
-  .btn-dark { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-dark px-6 py-4 text-base font-extrabold text-white min-h-[52px] hover:bg-black; }
+  .btn-dark { background: var(--forest); color: var(--ivory); @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-4 text-base font-extrabold min-h-[52px] hover:brightness-110; }
   .section { @apply px-4 sm:px-6 py-20 sm:py-28; }
   .wrap { @apply mx-auto max-w-6xl; }
   .h2 { @apply text-[2.1rem] leading-[1.05] sm:text-5xl font-black tracking-[-0.03em]; }
   .num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
 }
 
-/* ---------- Rainbow flow accents ---------- */
+/* ---------- Champagne and forest photo-frame accents ---------- */
 @keyframes flow { to { background-position: 200% 0; } }
 .rainbow-line { height: 1px; background: var(--rainbow); background-size: 200% 100%; animation: flow 14s linear infinite; }
 .rainbow-divider { height: 1px; background: var(--rainbow); background-size: 200% 100%; animation: flow 18s linear infinite;
@@ -46,7 +52,7 @@
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); pointer-events: none; z-index: 2; }
 .bezel-hover::before { opacity: 0; transition: opacity .35s ease; }
 .bezel-hover:hover::before, .bezel-hover:focus-visible::before, .bezel-hover[aria-current='true']::before { opacity: .8; }
-/* CTA edge glow: a soft rainbow halo just outside the crimson button. */
+/* CTA edge glow: a restrained champagne halo. */
 .btn-primary::after { content: ''; position: absolute; inset: -1px; border-radius: inherit; z-index: -1; background: var(--rainbow);
   background-size: 200% 100%; animation: flow 10s linear infinite; filter: blur(9px); opacity: .28; transition: opacity .3s ease; }
 .btn-primary:hover::after, .btn-primary:focus-visible::after { opacity: .6; }
@@ -102,21 +108,21 @@
 }
 
 /* Blog article body (Markdown → HTML from api/data.js; same look in the /cms preview) */
-.mc-prose { color: rgba(255,255,255,.82); font-size: 1.075rem; line-height: 1.8; }
+  .mc-prose { color: rgb(41 44 43 / .84); font-size: 1.075rem; line-height: 1.8; }
 .mc-prose > * + * { margin-top: 1.15em; }
-.mc-prose h2 { margin-top: 2.2em; font-size: 1.6rem; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; color: #fff; }
-.mc-prose h3 { margin-top: 1.8em; font-size: 1.25rem; line-height: 1.3; font-weight: 800; color: #fff; }
-.mc-prose h4 { margin-top: 1.5em; font-weight: 700; color: #fff; }
-.mc-prose a { color: #ff1a1a; text-decoration: underline; text-underline-offset: 3px; }
-.mc-prose a:hover { color: #fff; }
-.mc-prose strong { color: #fff; font-weight: 700; }
+.mc-prose h2 { margin-top: 2.2em; font-size: 1.6rem; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; color: #173b38; }
+.mc-prose h3 { margin-top: 1.8em; font-size: 1.25rem; line-height: 1.3; font-weight: 800; color: #173b38; }
+.mc-prose h4 { margin-top: 1.5em; font-weight: 700; color: #173b38; }
+.mc-prose a { color: #173b38; text-decoration: underline; text-decoration-color: #d6c3a1; text-underline-offset: 3px; }
+.mc-prose a:hover { color: #292c2b; }
+.mc-prose strong { color: #173b38; font-weight: 700; }
 .mc-prose ul, .mc-prose ol { padding-left: 1.3em; }
 .mc-prose ul { list-style: disc; }
 .mc-prose ol { list-style: decimal; }
 .mc-prose li + li { margin-top: .45em; }
-.mc-prose li::marker { color: #e60000; }
-.mc-prose blockquote { border-left: 3px solid #e60000; padding: .2em 0 .2em 1.1em; color: #fff; font-weight: 600; }
-.mc-prose hr { border: 0; border-top: 1px solid rgba(255,255,255,.12); margin: 2.2em 0; }
-.mc-prose img { border-radius: 1rem; border: 1px solid rgba(255,255,255,.1); }
-.mc-prose code { font-family: "Space Mono", monospace; font-size: .9em; background: rgba(255,255,255,.07); padding: .1em .35em; border-radius: .3em; }
-.mc-prose p:last-child em:only-child, .mc-prose .disclaimer { font-size: .85rem; color: rgba(255,255,255,.5); }
+.mc-prose li::marker { color: #173b38; }
+.mc-prose blockquote { border-left: 3px solid #d6c3a1; padding: .2em 0 .2em 1.1em; color: #173b38; font-weight: 600; }
+.mc-prose hr { border: 0; border-top: 1px solid rgba(23,59,56,.16); margin: 2.2em 0; }
+.mc-prose img { border-radius: 1rem; border: 1px solid rgba(23,59,56,.16); }
+.mc-prose code { font-family: "Space Mono", monospace; font-size: .9em; background: rgba(23,59,56,.07); padding: .1em .35em; border-radius: .3em; }
+.mc-prose p:last-child em:only-child, .mc-prose .disclaimer { font-size: .85rem; color: rgba(41,44,43,.62); }

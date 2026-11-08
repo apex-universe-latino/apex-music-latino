@@ -15,9 +15,9 @@ export default function DiagCta() {
       <div aria-hidden className="pointer-events-none absolute -right-24 top-0 h-96 w-96 rounded-full bg-crimson/30 blur-[120px]" />
       <div className="wrap relative grid items-center gap-10 md:grid-cols-2">
         <Reveal>
-          <p className="eyebrow !text-white/80">Diagnóstico gratis · 3 minutos</p>
+          <p className="eyebrow !text-graphite/80">Diagnóstico gratis · 3 minutos</p>
           <h2 className="h2 mt-3">¿Qué tan blindado estás?</h2>
-          <p className="mt-4 text-lg leading-relaxed text-white/80">
+          <p className="mt-4 text-lg leading-relaxed text-graphite/80">
             Responde 5 preguntas sencillas, sin datos de salud ni documentos, y recibe al instante:
           </p>
           <ul className="mt-5 space-y-2">
@@ -31,12 +31,12 @@ export default function DiagCta() {
           </div>
         </Reveal>
         <div ref={ref} className="mx-auto">
-          <div className="relative flex h-60 w-60 items-center justify-center rounded-full border border-white/15 bg-dark/60 sm:h-72 sm:w-72">
+          <div className="relative flex h-60 w-60 items-center justify-center rounded-full border border-graphite/15 bg-dark/60 sm:h-72 sm:w-72">
             <div className="absolute inset-3 rounded-full border-2 border-dashed border-crimson/40" />
             <div className="text-center">
               <p className="num font-mono text-7xl font-bold sm:text-8xl">{Math.round(v)}</p>
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/60">preguntas</p>
-              <p className="mt-2 text-sm font-semibold text-white/80">y sabes dónde estás parado</p>
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-graphite/60">preguntas</p>
+              <p className="mt-2 text-sm font-semibold text-graphite/80">y sabes dónde estás parado</p>
             </div>
           </div>
         </div>

@@ -6,22 +6,22 @@ export default function Privacidad() {
   return (
     <article className="px-4 py-14 sm:px-6">
       <SEOHead title="Política de tratamiento de datos" description="Cómo Mindset Caro trata tus datos personales conforme a la Ley 1581 de 2012." canonicalUrl="https://www.mindsetcaro.com/privacidad" />
-      <div className="mx-auto max-w-3xl space-y-5 leading-relaxed text-white/75 [&_h2]:mt-10 [&_h2]:text-xl [&_h2]:font-extrabold [&_h2]:text-white">
+      <div className="mx-auto max-w-3xl space-y-5 leading-relaxed text-graphite/75 [&_h2]:mt-10 [&_h2]:text-xl [&_h2]:font-extrabold [&_h2]:text-graphite">
         <p className="eyebrow">Ley 1581 de 2012 · Decreto 1377 de 2013</p>
-        <h1 className="text-4xl font-black tracking-tight text-white">Política de tratamiento de datos personales</h1>
+        <h1 className="text-4xl font-black tracking-tight text-graphite">Política de tratamiento de datos personales</h1>
         <p>
           En Mindset Caro respetamos tu privacidad. Esta política explica qué datos recogemos en www.mindsetcaro.com, para qué los usamos
           y cómo puedes ejercer tus derechos como titular, conforme a la Ley Estatutaria 1581 de 2012 y sus decretos reglamentarios.
         </p>
 
         <h2>1. Responsable del tratamiento</h2>
-        <p>Diana Carolina Cepeda Acevedo, marca Mindset Caro. Correo de contacto para temas de datos personales: <a className="text-white underline" href={`mailto:${CONTACT}`}>{CONTACT}</a>.</p>
+        <p>Diana Carolina Cepeda Acevedo, marca Mindset Caro. Correo de contacto para temas de datos personales: <a className="text-graphite underline" href={`mailto:${CONTACT}`}>{CONTACT}</a>.</p>
 
         <h2>2. Datos que recogemos</h2>
         <p>
           Nombre, número de WhatsApp, correo electrónico (opcional), tus respuestas al Diagnóstico de Blindaje Patrimonial y al asistente
           Caro IA (por ejemplo: metas, rangos de ahorro o ingreso, número de personas a cargo), y datos de navegación como la campaña o
-          el anuncio por el que llegaste. <b className="text-white">No solicitamos datos de salud</b> ni otros datos sensibles en este sitio.
+          el anuncio por el que llegaste. <b className="text-graphite">No solicitamos datos de salud</b> ni otros datos sensibles en este sitio.
           El sitio está dirigido a personas mayores de 18 años.
         </p>
 
@@ -43,7 +43,7 @@ export default function Privacidad() {
 
         <h2>5. Cómo ejercerlos</h2>
         <p>
-          Escríbenos a <a className="text-white underline" href={`mailto:${CONTACT}`}>{CONTACT}</a> indicando tu nombre, tu número de
+          Escríbenos a <a className="text-graphite underline" href={`mailto:${CONTACT}`}>{CONTACT}</a> indicando tu nombre, tu número de
           WhatsApp y tu solicitud. Atendemos consultas en máximo 10 días hábiles y reclamos en máximo 15 días hábiles, según la ley.
         </p>
 

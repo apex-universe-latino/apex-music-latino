@@ -14,7 +14,7 @@ export default function QueEs() {
         <Reveal>
           <p className="eyebrow">Qué es</p>
           <h2 className="h2 mt-3 max-w-xl">Protección y ahorro, en un solo plan.</h2>
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/65">
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-graphite/65">
             El Blindaje Patrimonial es un seguro de vida con ahorro e inversión a largo plazo. Tu capital queda protegido
             desde el primer día, y lo que ahorras se construye hacia la meta que tú elijas.
           </p>
@@ -24,7 +24,7 @@ export default function QueEs() {
                 <span className="num font-mono text-sm font-bold text-crimson-glow">{n}</span>
                 <div>
                   <h3 className="text-lg font-extrabold tracking-tight">{t}</h3>
-                  <p className="mt-1 leading-relaxed text-white/60">{d}</p>
+                  <p className="mt-1 leading-relaxed text-graphite/60">{d}</p>
                 </div>
               </li>
             ))}
@@ -40,7 +40,7 @@ export default function QueEs() {
             <img src={FRAMES.liquidezActivos} alt="¿Cuánto tarda en volverse efectivo? Casa, CDT, acciones" loading="lazy"
               width={540} height={675} className="aspect-[4/5] w-full object-cover object-top" />
           </figure>
-          <p className="col-span-2 text-center font-mono text-[10px] uppercase tracking-widest text-white/35">Escenas de los videos de Caro</p>
+          <p className="col-span-2 text-center font-mono text-[10px] uppercase tracking-widest text-graphite/35">Escenas de los videos de Caro</p>
         </Reveal>
       </div>
     </section>

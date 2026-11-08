@@ -32,14 +32,14 @@ export default function BlogPost({ slug, apiBase = '', basePath = '/blog' }: { s
       .catch(() => { setPost(null); setLoading(false); });
   }, [apiBase, slug]);
 
-  if (loading) return <div className="mx-auto max-w-2xl px-6 py-20 text-white/50">Cargando…</div>;
+  if (loading) return <div className="mx-auto max-w-2xl px-6 py-20 text-graphite/50">Cargando…</div>;
   if (post === null) return <NotFound blog />;
 
   const cover = post.cover_url && !RETIRED_ASSET_RE.test(post.cover_url) ? post.cover_url : null;
   const coverAbs = cover ? (cover.startsWith('http') ? cover : `${SITE}${cover}`) : undefined;
 
   return (
-    <article className="mx-auto max-w-2xl px-5 py-14 text-white sm:px-6 sm:py-20">
+    <article className="mx-auto max-w-2xl px-5 py-14 text-graphite sm:px-6 sm:py-20">
       <SEOHead
         title={post.seo_title || `${post.title} | Mindset Caro`}
         rawTitle
@@ -49,19 +49,19 @@ export default function BlogPost({ slug, apiBase = '', basePath = '/blog' }: { s
         type="article"
       />
       <a href={basePath} className="font-mono text-[11px] uppercase tracking-[0.2em] text-crimson-glow hover:underline">← Blog</a>
-      {!!post.tags?.length && <div className="mt-6 font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">{post.tags.join(' · ')}</div>}
+      {!!post.tags?.length && <div className="mt-6 font-mono text-[10px] uppercase tracking-[0.2em] text-graphite/45">{post.tags.join(' · ')}</div>}
       <h1 className="mt-2 text-[2.1rem] font-black leading-[1.05] tracking-tight sm:text-5xl">{post.title}</h1>
-      <div className="mt-4 font-mono text-[12px] text-white/45">
+      <div className="mt-4 font-mono text-[12px] text-graphite/45">
         {post.author || 'Mindset Caro'}{post.published_at ? ` · ${new Date(post.published_at).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}` : ''}
       </div>
-      {cover && <img src={cover} alt={post.cover_alt || post.title} className="mt-8 w-full rounded-2xl border border-white/10" />}
-      {post.excerpt && <p className="mt-8 text-lg leading-relaxed text-white/75">{post.excerpt}</p>}
+      {cover && <img src={cover} alt={post.cover_alt || post.title} className="mt-8 w-full rounded-2xl border border-graphite/10" />}
+      {post.excerpt && <p className="mt-8 text-lg leading-relaxed text-graphite/75">{post.excerpt}</p>}
       <div className="mc-prose mt-6" dangerouslySetInnerHTML={{ __html: post.body_html ?? post.body ?? '' }} />
 
       <aside className="mt-14 rounded-2xl border border-crimson/40 bg-dark-lighter p-6 sm:p-8">
         <p className="eyebrow">Diagnóstico gratis · 3 minutos</p>
         <p className="mt-3 text-2xl font-extrabold tracking-tight">¿Qué tan blindado estás hoy?</p>
-        <p className="mt-2 text-white/65">Responde 5 preguntas y ve tu resultado en pantalla, sin compromiso.</p>
+        <p className="mt-2 text-graphite/65">Responde 5 preguntas y ve tu resultado en pantalla, sin compromiso.</p>
         <button type="button" onClick={openDiagnostic} className="btn-primary group mt-5">
           Haz tu diagnóstico gratis <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
         </button>

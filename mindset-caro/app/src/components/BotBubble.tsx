@@ -30,7 +30,7 @@ export default function BotBubble({ hidden, onOpen }: { hidden: boolean; onOpen:
         </button>
       )}
       <button type="button" onClick={() => { setHint(false); onOpen(); }} aria-label="Abrir chat con Caro IA"
-        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-crimson text-white shadow-[0_10px_30px_-5px_rgba(230,0,0,.7)] hover:bg-crimson-glow">
+        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-crimson text-graphite shadow-[0_10px_30px_-5px_rgba(230,0,0,.7)] hover:bg-crimson-glow">
         <MessageCircle className="h-7 w-7" />
         <span className="absolute -top-1 -right-1 rounded-full bg-white px-1.5 py-0.5 font-mono text-[9px] font-bold text-crimson">IA</span>
       </button>

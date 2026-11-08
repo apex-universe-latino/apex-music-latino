@@ -22,7 +22,7 @@ export default function Multi() {
           {GOALS.map((g, i) => (
             <Reveal key={g.t} i={i} className="group rounded-2xl border border-dark/10 bg-white p-6 shadow-sm transition-shadow hover:shadow-xl">
               <div id={g.id} className="scroll-mt-28" />
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-crimson text-white">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-crimson text-graphite">
                 <g.icon className="h-6 w-6" aria-hidden />
               </div>
               <h3 className="mt-5 text-xl font-extrabold tracking-tight">{g.t}</h3>

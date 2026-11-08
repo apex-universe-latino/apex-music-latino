@@ -91,21 +91,21 @@ export default function Diagnostic({ variant, onClose }: { variant: 'modal' | 'p
     <div className={frame} style={{ ['--bezel-o' as string]: 0.5 }}>
       <div className="mb-6 flex items-center gap-3">
         {i > 0 && step.kind !== 'result' ? (
-          <button type="button" onClick={() => setI((n) => n - 1)} className="-ml-2 rounded-lg p-2 text-white/60 hover:text-white" aria-label="Atrás">
+          <button type="button" onClick={() => setI((n) => n - 1)} className="-ml-2 rounded-lg p-2 text-graphite/60 hover:text-graphite" aria-label="Atrás">
             <ChevronLeft className="h-6 w-6" />
           </button>
         ) : <span className="w-2" />}
         <div className="flex-1">
-          <div className="flex justify-between gap-3 font-mono text-[11px] uppercase tracking-widest text-white/50">
+          <div className="flex justify-between gap-3 font-mono text-[11px] uppercase tracking-widest text-graphite/50">
             <span>Diagnóstico</span>
             {step.kind !== 'result' && total > 0 && <span>{Math.min(done + 1, total)} / {total}</span>}
           </div>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={done}>
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-graphite/10" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={done}>
             <div className="h-full rounded-full bg-crimson transition-[width] duration-500" style={{ width: `${step.kind === 'result' ? 100 : (done / Math.max(total, 1)) * 100}%` }} />
           </div>
         </div>
         {onClose && (
-          <button type="button" onClick={onClose} className="-mr-2 rounded-lg p-2 text-white/60 hover:text-white" aria-label="Cerrar">
+          <button type="button" onClick={onClose} className="-mr-2 rounded-lg p-2 text-graphite/60 hover:text-graphite" aria-label="Cerrar">
             <X className="h-6 w-6" />
           </button>
         )}
@@ -115,7 +115,7 @@ export default function Diagnostic({ variant, onClose }: { variant: 'modal' | 'p
         {step.kind === 'welcome' && (
           <div>
             <h2 className="text-3xl font-black tracking-tight">¡Hola de nuevo{profile.contact?.nombre ? `, ${profile.contact.nombre.split(' ')[0]}` : ''}!</h2>
-            <p className="mt-3 text-lg text-white/70">Ya tienes tu diagnóstico. Responde {plan.questions.length} preguntas rápidas más y afinamos tu Mapa de Blindaje.</p>
+            <p className="mt-3 text-lg text-graphite/70">Ya tienes tu diagnóstico. Responde {plan.questions.length} preguntas rápidas más y afinamos tu Mapa de Blindaje.</p>
             <div className="mt-8 flex flex-col gap-3">
               <button type="button" onClick={() => setI(1)} className="btn-primary">Afinar mi resultado <ArrowRight className="h-5 w-5" /></button>
               <button type="button" onClick={() => setI(steps.length - 1)} className="btn-ghost">Ver mi resultado</button>
@@ -134,12 +134,12 @@ function QuestionScreen({ q, value, onAnswer }: { q: Question; value?: string; o
   return (
     <fieldset>
       <legend className="text-2xl font-black leading-tight tracking-tight sm:text-3xl">{q.q}</legend>
-      {q.hint && <p className="mt-2 text-sm text-white/55">{q.hint}</p>}
+      {q.hint && <p className="mt-2 text-sm text-graphite/55">{q.hint}</p>}
       <div className="mt-6 grid gap-3">
         {q.options.map((o) => (
           <button key={o.value} type="button" onClick={() => onAnswer(q.key, o.value)}
             className={`min-h-[56px] rounded-2xl border px-5 py-4 text-left text-lg font-semibold transition-colors active:scale-[.99] ${
-              value === o.value ? 'border-crimson bg-crimson/15' : 'border-white/15 bg-dark hover:border-crimson/70 hover:bg-crimson/10'}`}>
+              value === o.value ? 'border-crimson bg-crimson/15' : 'border-graphite/15 bg-dark hover:border-crimson/70 hover:bg-crimson/10'}`}>
             {o.label}
           </button>
         ))}
@@ -161,49 +161,49 @@ function ContactScreen({ sending, initial, onSubmit }: {
   const waOk = isValidWhatsapp(whatsapp);
   const emailOk = !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const valid = nombre.trim().length >= 2 && waOk && emailOk && consent;
-  const input = 'w-full rounded-xl border border-white/15 bg-dark px-4 py-3.5 text-lg text-white placeholder-white/30 focus:border-crimson focus:outline-none';
+  const input = 'w-full rounded-xl border border-graphite/15 bg-dark px-4 py-3.5 text-lg text-graphite placeholder-graphite/30 focus:border-crimson focus:outline-none';
 
   return (
     <form noValidate onSubmit={(e) => { e.preventDefault(); setTouched(true); if (valid && !sending) onSubmit({ nombre, whatsapp, email, marketing }); }}>
       <h2 className="text-2xl font-black leading-tight tracking-tight sm:text-3xl">¡Listo! ¿A quién le enviamos tu Mapa de Blindaje?</h2>
-      <p className="mt-2 text-white/60">Tu resultado aparece en pantalla al instante, y Caro te envía el mapa completo por WhatsApp.</p>
+      <p className="mt-2 text-graphite/60">Tu resultado aparece en pantalla al instante, y Caro te envía el mapa completo por WhatsApp.</p>
       <div className="mt-6 space-y-4">
         <label className="block">
-          <span className="mb-1.5 block text-sm font-semibold text-white/80">Nombre *</span>
+          <span className="mb-1.5 block text-sm font-semibold text-graphite/80">Nombre *</span>
           <input className={input} autoComplete="given-name" value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="Tu nombre" />
           {touched && nombre.trim().length < 2 && <span className="mt-1 block text-sm text-crimson-glow">Escribe tu nombre.</span>}
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-sm font-semibold text-white/80">WhatsApp *</span>
+          <span className="mb-1.5 block text-sm font-semibold text-graphite/80">WhatsApp *</span>
           <div className="flex">
-            <span className="flex items-center rounded-l-xl border border-r-0 border-white/15 bg-dark-lighter px-3 font-mono text-white/60">+57</span>
+            <span className="flex items-center rounded-l-xl border border-r-0 border-graphite/15 bg-dark-lighter px-3 font-mono text-graphite/60">+57</span>
             <input className={`${input} rounded-l-none`} type="tel" inputMode="tel" autoComplete="tel-national" value={whatsapp}
               onChange={(e) => setWhatsapp(e.target.value)} placeholder="300 123 4567" />
           </div>
           {touched && !waOk && <span className="mt-1 block text-sm text-crimson-glow">Revisa tu número de WhatsApp (10 dígitos).</span>}
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-sm font-semibold text-white/80">Correo <span className="font-normal text-white/45">(opcional)</span></span>
+          <span className="mb-1.5 block text-sm font-semibold text-graphite/80">Correo <span className="font-normal text-graphite/45">(opcional)</span></span>
           <input className={input} type="email" inputMode="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="tu@correo.com" />
           {touched && !emailOk && <span className="mt-1 block text-sm text-crimson-glow">Revisa tu correo.</span>}
         </label>
-        <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-dark p-3">
-          <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#e60000]" />
-          <span className="text-sm leading-relaxed text-white/75">
+        <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-graphite/10 bg-dark p-3">
+          <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#173b38]" />
+          <span className="text-sm leading-relaxed text-graphite/75">
             Soy mayor de 18 años y autorizo el tratamiento de mis datos personales (Ley 1581) según la{' '}
-            <Link to="/privacidad" target="_blank" className="font-semibold text-white underline">política de privacidad</Link>. *
+            <Link to="/privacidad" target="_blank" className="font-semibold text-graphite underline">política de privacidad</Link>. *
           </span>
         </label>
         {touched && !consent && <span className="-mt-2 block text-sm text-crimson-glow">Necesitamos tu autorización para enviarte el resultado.</span>}
         <label className="flex cursor-pointer items-start gap-3 px-3">
-          <input type="checkbox" checked={marketing} onChange={(e) => setMarketing(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#e60000]" />
-          <span className="text-sm leading-relaxed text-white/60">Quiero recibir contenidos y novedades de Mindset Caro por WhatsApp o correo (opcional).</span>
+          <input type="checkbox" checked={marketing} onChange={(e) => setMarketing(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#173b38]" />
+          <span className="text-sm leading-relaxed text-graphite/60">Quiero recibir contenidos y novedades de Mindset Caro por WhatsApp o correo (opcional).</span>
         </label>
       </div>
       <button type="submit" disabled={sending} className="btn-primary mt-6 w-full disabled:opacity-60">
         {sending ? 'Calculando…' : <>Ver mi resultado <ArrowRight className="h-5 w-5" /></>}
       </button>
-      <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-white/45"><Lock className="h-3.5 w-3.5" /> Sin spam. Nunca pedimos datos de salud aquí.</p>
+      <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-graphite/45"><Lock className="h-3.5 w-3.5" /> Sin spam. Nunca pedimos datos de salud aquí.</p>
     </form>
   );
 }
@@ -231,30 +231,30 @@ function ResultScreen({ profile, sendFailed, retrying, onRetry }: { profile: Pro
       <div className="mt-4 flex items-center gap-5">
         <svg viewBox="0 0 120 120" className="h-32 w-32 shrink-0 -rotate-90" aria-hidden>
           <circle cx="60" cy="60" r="52" fill="none" stroke="#ffffff" strokeOpacity=".1" strokeWidth="12" />
-          <circle cx="60" cy="60" r="52" fill="none" stroke="#e60000" strokeWidth="12" strokeLinecap="round"
+          <circle cx="60" cy="60" r="52" fill="none" stroke="#173b38" strokeWidth="12" strokeLinecap="round"
             strokeDasharray={C} strokeDashoffset={C * (1 - s / 100)} />
         </svg>
         <div>
-          <p className="num font-mono text-5xl font-bold"><span className={s >= r.score ? 'land inline-block' : ''}>{Math.round(s)}</span><span className="text-xl text-white/50">/100</span></p>
+          <p className="num font-mono text-5xl font-bold"><span className={s >= r.score ? 'land inline-block' : ''}>{Math.round(s)}</span><span className="text-xl text-graphite/50">/100</span></p>
           <p className="mt-1 text-xl font-black">{label.title}</p>
         </div>
       </div>
-      <p className="mt-4 text-white/75">{label.body}</p>
+      <p className="mt-4 text-graphite/75">{label.body}</p>
 
       <div className="mt-6 grid gap-3">
         <div className="rounded-2xl border border-crimson/40 bg-crimson/10 p-5">
-          <p className="font-mono text-[11px] uppercase tracking-widest text-white/60">Brecha de protección estimada</p>
+          <p className="font-mono text-[11px] uppercase tracking-widest text-graphite/60">Brecha de protección estimada</p>
           <p className="num mt-1 text-3xl font-black">{formatCOP(r.gap_cop)}</p>
-          <p className="mt-2 text-sm leading-relaxed text-white/65">
+          <p className="mt-2 text-sm leading-relaxed text-graphite/65">
             Lo que le faltaría a tu familia para sostener unos {r.years_support} {r.years_support === 1 ? 'año' : 'años'} de ingresos
             {r.income_is_estimate ? ' (ingreso estimado a partir de tu capacidad de ahorro)' : ''}
             {r.covered_cop ? ', descontando una cobertura típica para el seguro que ya tienes' : ''}.
           </p>
         </div>
-        <div className="rounded-2xl border border-white/15 bg-dark p-5">
-          <p className="font-mono text-[11px] uppercase tracking-widest text-white/60">Tu ahorro a {YEARS} años · ilustrativo</p>
+        <div className="rounded-2xl border border-graphite/15 bg-dark p-5">
+          <p className="font-mono text-[11px] uppercase tracking-widest text-graphite/60">Tu ahorro a {YEARS} años · ilustrativo</p>
           <p className="num mt-1 text-3xl font-black">{formatCOP(r.projection_low)} – {formatCOP(r.projection_cop)}</p>
-          <p className="mt-2 text-sm leading-relaxed text-white/65">
+          <p className="mt-2 text-sm leading-relaxed text-graphite/65">
             Si apartas cerca de {formatCOP(r.monthly)} al mes para {meta}: aportarías {formatCOP(r.contributed)} en {YEARS} años. El rango usa
             rendimientos hipotéticos de {Math.round(RATE_CONSERVATIVE * 100)} % y {Math.round(RATE_MODERATE * 100)} % anual sobre el ahorro invertido en un índice S&amp;P 500.
             No es una promesa: el mercado sube y baja, y el plan real descuenta el costo de la protección.
@@ -262,14 +262,14 @@ function ResultScreen({ profile, sendFailed, retrying, onRetry }: { profile: Pro
         </div>
       </div>
 
-      <p className="mt-4 text-xs leading-relaxed text-white/45">
+      <p className="mt-4 text-xs leading-relaxed text-graphite/45">
         Supuestos ilustrativos basados en rangos, no es una cotización ni asesoría personalizada. {DISCLAIMER}
       </p>
       {sendFailed && (
-        <div role="status" className="mt-4 rounded-xl border border-white/15 p-4 text-sm text-white/70">
+        <div role="status" className="mt-4 rounded-xl border border-graphite/15 p-4 text-sm text-graphite/70">
           <p>Tu resultado está listo, pero no pudimos enviarle tus datos a Caro en este momento.{wa ? ' Escríbele directamente y te ayuda.' : ''}</p>
           <button type="button" onClick={onRetry} disabled={retrying}
-            className="mt-3 rounded-lg border border-white/25 px-3 py-2 font-semibold text-white hover:border-white/60 disabled:opacity-50">
+            className="mt-3 rounded-lg border border-graphite/25 px-3 py-2 font-semibold text-graphite hover:border-graphite/60 disabled:opacity-50">
             {retrying ? 'Enviando…' : 'Reintentar envío'}
           </button>
         </div>

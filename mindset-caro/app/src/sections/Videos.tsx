@@ -14,7 +14,7 @@ export default function Videos() {
   } catch { /* keep config */ }
   if (!items.length) return null;
   return (
-    <section className="section border-t border-white/10">
+    <section className="section border-t border-graphite/10">
       <div className="wrap">
         <Reveal>
           <p className="eyebrow">Caro te lo explica</p>
@@ -24,8 +24,8 @@ export default function Videos() {
           {items.map((v) => (
             <figure key={v.src} className="w-[240px] shrink-0 snap-start sm:w-[270px]">
               <video src={v.src} poster={v.poster} controls playsInline preload="none"
-                className="aspect-[9/16] w-full rounded-2xl border border-white/10 bg-dark-lighter object-cover" />
-              <figcaption className="mt-2 text-sm font-semibold text-white/80">{v.title}</figcaption>
+                className="aspect-[9/16] w-full rounded-2xl border border-graphite/10 bg-dark-lighter object-cover" />
+              <figcaption className="mt-2 text-sm font-semibold text-graphite/80">{v.title}</figcaption>
             </figure>
           ))}
         </div>

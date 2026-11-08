@@ -93,7 +93,7 @@ export default function SiteHeader() {
   };
   const recruit = () => { setOpen(null); setDrawer(false); openBot('recruit'); };
 
-  const navLink = 'rounded-full px-3 py-2 text-sm font-semibold text-white/70 transition-colors hover:text-white focus-visible:text-white';
+  const navLink = 'rounded-full px-3 py-2 text-sm font-semibold text-graphite/70 transition-colors hover:text-graphite focus-visible:text-graphite';
 
   return (
     <header ref={headerRef} className={`fixed top-0 w-full ${drawer ? 'z-[60]' : 'z-40'}`} onMouseLeave={hoverClose} onMouseEnter={() => window.clearTimeout(closeTimer.current)}>
@@ -112,7 +112,7 @@ export default function SiteHeader() {
                     aria-controls={`${uid}-${g.id}`}
                     onClick={(e) => clickToggle(g.id, e.timeStamp)}
                     onMouseEnter={(e) => hoverOpen(g.id, e.timeStamp)}
-                    className={`${navLink} inline-flex items-center gap-1 ${open === g.id ? 'text-white' : ''}`}
+                    className={`${navLink} inline-flex items-center gap-1 ${open === g.id ? 'text-graphite' : ''}`}
                   >
                     {g.id === 'blindaje' ? 'Blindaje' : g.label}
                     <ChevronDown className={`h-4 w-4 transition-transform ${open === g.id ? 'rotate-180' : ''}`} aria-hidden />
@@ -137,7 +137,7 @@ export default function SiteHeader() {
               <span>Diagnóstico<span className="hidden sm:inline"> gratis</span></span>
             </button>
             <button type="button" onClick={() => setDrawer(true)} aria-label="Abrir menú" aria-expanded={drawer}
-              className="-mr-2 rounded-full p-2 text-white/80 hover:text-white lg:hidden">
+              className="-mr-2 rounded-full p-2 text-graphite/80 hover:text-graphite lg:hidden">
               <Menu className="h-6 w-6" />
             </button>
           </div>
@@ -155,7 +155,7 @@ type Actions = { onGo: (s: string) => void; onDiag: () => void; onTalk: () => vo
 function MegaPanel({ id, group, onGo, onDiag, onTalk, onRecruit }: { id: string; group: Group } & Actions) {
   return (
     <div id={id} className="absolute inset-x-0 top-full px-4 pt-3 sm:px-6" role="region" aria-label={group.label}>
-      <div className="step-in bezel mx-auto max-w-6xl rounded-3xl border border-white/[.06] bg-[#141414] p-6 shadow-[0_40px_80px_-20px_rgba(0,0,0,.95)]"
+      <div className="step-in bezel mx-auto max-w-6xl rounded-3xl border border-white/[.06] bg-[#f5f1e9] p-6 shadow-[0_40px_80px_-20px_rgba(0,0,0,.95)]"
         style={{ ['--bezel-o' as string]: 0.45 }}>
         <div className="grid grid-cols-[1.5fr_.9fr_1fr] gap-6">
           <div>
@@ -169,8 +169,8 @@ function MegaPanel({ id, group, onGo, onDiag, onTalk, onRecruit }: { id: string;
                       <it.icon className="h-5 w-5" aria-hidden />
                     </span>
                     <span>
-                      <span className="block font-bold text-white">{it.label}</span>
-                      <span className="mt-0.5 block text-sm leading-snug text-white/55">{it.desc}</span>
+                      <span className="block font-bold text-graphite">{it.label}</span>
+                      <span className="mt-0.5 block text-sm leading-snug text-graphite/55">{it.desc}</span>
                     </span>
                   </button>
                 </li>
@@ -179,13 +179,13 @@ function MegaPanel({ id, group, onGo, onDiag, onTalk, onRecruit }: { id: string;
           </div>
 
           <div className="border-l border-white/[.07] pl-6">
-            <p className="eyebrow mb-3 !text-white/45">Explora</p>
+            <p className="eyebrow mb-3 !text-graphite/45">Explora</p>
             <ul className="space-y-1 text-sm font-semibold">
-              <li><button type="button" onClick={() => onGo('casos')} className="flex items-center gap-2 py-1.5 text-white/75 hover:text-white"><PlayCircle className="h-4 w-4" aria-hidden /> Casos / Videos</button></li>
-              <li><Link to="/blog" className="flex items-center gap-2 py-1.5 text-white/75 hover:text-white"><BookOpen className="h-4 w-4" aria-hidden /> Blog</Link></li>
-              <li><a href={COMMUNITY_URL} className="flex items-center gap-2 py-1.5 text-white/75 hover:text-white"><Users className="h-4 w-4" aria-hidden /> Comunidad</a></li>
-              <li><button type="button" onClick={onTalk} className="flex items-center gap-2 py-1.5 text-white/75 hover:text-white"><MessageCircle className="h-4 w-4" aria-hidden /> Habla con Caro</button></li>
-              <li className="pt-2"><button type="button" onClick={onRecruit} className="flex items-center gap-2 py-1.5 text-white/45 hover:text-white"><Briefcase className="h-4 w-4" aria-hidden /> Trabaja con Caro</button></li>
+              <li><button type="button" onClick={() => onGo('casos')} className="flex items-center gap-2 py-1.5 text-graphite/75 hover:text-graphite"><PlayCircle className="h-4 w-4" aria-hidden /> Casos / Videos</button></li>
+              <li><Link to="/blog" className="flex items-center gap-2 py-1.5 text-graphite/75 hover:text-graphite"><BookOpen className="h-4 w-4" aria-hidden /> Blog</Link></li>
+              <li><a href={COMMUNITY_URL} className="flex items-center gap-2 py-1.5 text-graphite/75 hover:text-graphite"><Users className="h-4 w-4" aria-hidden /> Comunidad</a></li>
+              <li><button type="button" onClick={onTalk} className="flex items-center gap-2 py-1.5 text-graphite/75 hover:text-graphite"><MessageCircle className="h-4 w-4" aria-hidden /> Habla con Caro</button></li>
+              <li className="pt-2"><button type="button" onClick={onRecruit} className="flex items-center gap-2 py-1.5 text-graphite/45 hover:text-graphite"><Briefcase className="h-4 w-4" aria-hidden /> Trabaja con Caro</button></li>
             </ul>
           </div>
 
@@ -214,8 +214,8 @@ function FeatureCard({ img, imgPos, kicker, title, body, cta, onClick }: {
       <span className="relative">
         <span className="eyebrow block">{kicker}</span>
         <span className="mt-1 block text-xl font-black tracking-tight">{title}</span>
-        <span className="mt-1 block text-sm text-white/65">{body}</span>
-        <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-white">
+        <span className="mt-1 block text-sm text-graphite/65">{body}</span>
+        <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-graphite">
           {cta} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
         </span>
       </span>
@@ -226,19 +226,19 @@ function FeatureCard({ img, imgPos, kicker, title, body, cta, onClick }: {
 function Drawer({ onClose, onGo, onDiag, onTalk, onRecruit }: { onClose: () => void } & Actions) {
   const closeRef = useRef<HTMLButtonElement>(null);
   useEffect(() => { closeRef.current?.focus(); }, []);
-  const row = 'flex w-full items-center gap-3 rounded-xl px-2 py-3 text-left text-lg font-semibold text-white/85 hover:bg-white/[.04] hover:text-white';
+  const row = 'flex w-full items-center gap-3 rounded-xl px-2 py-3 text-left text-lg font-semibold text-graphite/85 hover:bg-white/[.04] hover:text-graphite';
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-dark lg:hidden" role="dialog" aria-modal="true" aria-label="Menú">
       <div className="flex h-16 shrink-0 items-center justify-between px-4 sm:px-6">
         <Brand size="md" />
-        <button ref={closeRef} type="button" onClick={onClose} aria-label="Cerrar menú" className="-mr-2 rounded-full p-2 text-white/80 hover:text-white">
+        <button ref={closeRef} type="button" onClick={onClose} aria-label="Cerrar menú" className="-mr-2 rounded-full p-2 text-graphite/80 hover:text-graphite">
           <X className="h-6 w-6" />
         </button>
       </div>
       <div className="rainbow-line" aria-hidden />
       <div className="flex-1 overflow-y-auto px-4 pb-10 pt-6 sm:px-6">
         <button type="button" onClick={onDiag} className="btn-primary w-full">Haz tu diagnóstico gratis <ArrowRight className="h-5 w-5" /></button>
-        <p className="mt-2 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-white/45">3 minutos · Sin costo · Resultado al instante</p>
+        <p className="mt-2 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-graphite/45">3 minutos · Sin costo · Resultado al instante</p>
 
         {GROUPS.map((g) => (
           <div key={g.id} className="mt-8">
@@ -257,11 +257,11 @@ function Drawer({ onClose, onGo, onDiag, onTalk, onRecruit }: { onClose: () => v
 
         <div className="rainbow-divider mt-8" aria-hidden />
         <ul className="mt-4">
-          <li><button type="button" onClick={() => onGo('casos')} className={row}><PlayCircle className="h-5 w-5 shrink-0 text-white/50" aria-hidden /> Casos / Videos</button></li>
-          <li><Link to="/blog" onClick={onClose} className={row}><BookOpen className="h-5 w-5 shrink-0 text-white/50" aria-hidden /> Blog</Link></li>
-          <li><a href={COMMUNITY_URL} className={row}><Users className="h-5 w-5 shrink-0 text-white/50" aria-hidden /> Comunidad</a></li>
-          <li><button type="button" onClick={onTalk} className={row}><MessageCircle className="h-5 w-5 shrink-0 text-white/50" aria-hidden /> Habla con Caro</button></li>
-          <li><button type="button" onClick={onRecruit} className={`${row} !text-base !text-white/55`}><Briefcase className="h-5 w-5 shrink-0 text-white/40" aria-hidden /> Trabaja con Caro</button></li>
+          <li><button type="button" onClick={() => onGo('casos')} className={row}><PlayCircle className="h-5 w-5 shrink-0 text-graphite/50" aria-hidden /> Casos / Videos</button></li>
+          <li><Link to="/blog" onClick={onClose} className={row}><BookOpen className="h-5 w-5 shrink-0 text-graphite/50" aria-hidden /> Blog</Link></li>
+          <li><a href={COMMUNITY_URL} className={row}><Users className="h-5 w-5 shrink-0 text-graphite/50" aria-hidden /> Comunidad</a></li>
+          <li><button type="button" onClick={onTalk} className={row}><MessageCircle className="h-5 w-5 shrink-0 text-graphite/50" aria-hidden /> Habla con Caro</button></li>
+          <li><button type="button" onClick={onRecruit} className={`${row} !text-base !text-graphite/55`}><Briefcase className="h-5 w-5 shrink-0 text-graphite/40" aria-hidden /> Trabaja con Caro</button></li>
         </ul>
       </div>
     </div>

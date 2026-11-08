@@ -17,21 +17,21 @@ export default function Recruit() {
             <span className="flex-1">
               <span className="eyebrow block">Comunidad</span>
               <span className="mt-2 block text-xl font-black tracking-tight">Únete a la comunidad Mindset Caro</span>
-              <span className="mt-2 block text-white/60">Contenidos, eventos y respuestas de Caro sobre protección, ahorro e inversión.</span>
+              <span className="mt-2 block text-graphite/60">Contenidos, eventos y respuestas de Caro sobre protección, ahorro e inversión.</span>
             </span>
-            <ArrowUpRight className="h-5 w-5 shrink-0 text-white/40 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
+            <ArrowUpRight className="h-5 w-5 shrink-0 text-graphite/40 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
           </a>
         </Reveal>
         <Reveal i={1}>
           <button type="button" onClick={() => openBot('recruit')}
             className="bezel bezel-hover group flex h-full w-full items-start gap-5 rounded-3xl border border-white/[.07] bg-dark-light p-6 text-left sm:p-8">
-            <Briefcase className="h-8 w-8 shrink-0 text-white/50" aria-hidden />
+            <Briefcase className="h-8 w-8 shrink-0 text-graphite/50" aria-hidden />
             <span className="flex-1">
-              <span className="eyebrow block !text-white/50">Trabaja con Caro</span>
+              <span className="eyebrow block !text-graphite/50">Trabaja con Caro</span>
               <span className="mt-2 block text-xl font-black tracking-tight">¿Te apasiona ayudar a familias a proteger su patrimonio?</span>
-              <span className="mt-2 block text-white/60">Caro está formando un equipo de asesores en Colombia. Te enseña su método y te acompaña.</span>
+              <span className="mt-2 block text-graphite/60">Caro está formando un equipo de asesores en Colombia. Te enseña su método y te acompaña.</span>
             </span>
-            <ArrowUpRight className="h-5 w-5 shrink-0 text-white/40 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
+            <ArrowUpRight className="h-5 w-5 shrink-0 text-graphite/40 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
           </button>
         </Reveal>
       </div>

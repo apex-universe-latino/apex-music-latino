@@ -18,13 +18,13 @@ export default function Hero() {
       <div aria-hidden className="pointer-events-none absolute -top-48 right-[-10%] h-[520px] w-[720px] rounded-full bg-crimson/[.13] blur-[130px]" />
       <div className="wrap relative grid items-center gap-12 md:grid-cols-[1.1fr_.9fr] lg:gap-16">
         <div>
-          <p className="eyebrow mb-6 !text-white/55">Seguro de vida · ahorro · inversión</p>
+          <p className="eyebrow mb-6 !text-graphite/55">Seguro de vida · ahorro · inversión</p>
           <h1 className="text-[3.1rem] font-black leading-[.92] tracking-[-0.045em] min-[400px]:text-[3.4rem] sm:text-7xl lg:text-[5.4rem]">
             <span className="kin-w" style={{ ['--i' as string]: 0 }}>Blindaje</span>{' '}
             <span className="kin-w text-crimson" style={{ ['--i' as string]: 1 }}>Patrimonial</span>
           </h1>
-          <p className="mt-6 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">{sub}</p>
-          <p className="mt-4 max-w-xl text-base leading-relaxed text-white/65 sm:text-lg">{body}</p>
+          <p className="mt-6 text-2xl font-extrabold tracking-tight text-graphite sm:text-3xl">{sub}</p>
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-graphite/65 sm:text-lg">{body}</p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <button type="button" onClick={openDiagnostic} className="btn-primary group">
@@ -33,8 +33,8 @@ export default function Hero() {
             </button>
             <CaroCta />
           </div>
-          <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.16em] text-white/45">3 minutos · Sin costo · Resultado al instante</p>
-          <p className="mt-8 max-w-md border-l border-white/15 pl-4 text-sm leading-relaxed text-white/55">{BIO}</p>
+          <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.16em] text-graphite/45">3 minutos · Sin costo · Resultado al instante</p>
+          <p className="mt-8 max-w-md border-l border-graphite/15 pl-4 text-sm leading-relaxed text-graphite/55">{BIO}</p>
         </div>
 
         <HeroVisual photo={photo} />
@@ -69,13 +69,13 @@ function HeroVisual({ photo }: { photo: string }) {
             <div className="rounded-xl border border-crimson/40 bg-dark/70 px-3 py-2.5 backdrop-blur">
               <span className="block text-crimson-glow">Día 1</span>Protección activa
             </div>
-            <div className="rounded-xl border border-white/15 bg-dark/70 px-3 py-2.5 backdrop-blur">
-              <span className="block text-white/50">Año 10</span>Tu capital + rendimientos*
+            <div className="rounded-xl border border-graphite/15 bg-dark/70 px-3 py-2.5 backdrop-blur">
+              <span className="block text-graphite/50">Año 10</span>Tu capital + rendimientos*
             </div>
           </div>
         </div>
       </div>
-      <p className="mt-3 text-right font-mono text-[10px] uppercase tracking-widest text-white/35">*Ilustrativo · según condiciones del plan</p>
+      <p className="mt-3 text-right font-mono text-[10px] uppercase tracking-widest text-graphite/35">*Ilustrativo · según condiciones del plan</p>
     </div>
   );
 }

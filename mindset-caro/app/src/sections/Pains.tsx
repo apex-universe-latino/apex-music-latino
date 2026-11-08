@@ -21,7 +21,7 @@ export default function Pains() {
             <Reveal key={p.t} i={i} className="bezel bezel-hover rounded-2xl border border-white/[.07] bg-dark p-6">
               <p.icon className="h-7 w-7 text-crimson" aria-hidden />
               <h3 className="mt-4 text-xl font-extrabold tracking-tight">{p.t}</h3>
-              <p className="mt-2 leading-relaxed text-white/65">{p.d}</p>
+              <p className="mt-2 leading-relaxed text-graphite/65">{p.d}</p>
             </Reveal>
           ))}
         </div>
